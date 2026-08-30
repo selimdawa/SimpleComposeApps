@@ -23,6 +23,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Little Compose Apps"
+rootProject.name = "Simple Compose Apps"
 include(":app")
- 

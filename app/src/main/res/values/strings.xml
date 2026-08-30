@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Simple Compose Apps</string>
+    <string name="none_display">There are no items to display</string>
+    <string name="name">Name :</string>
+    <string name="dagger_hilt">Dagger-Hilt :</string>
+    <string name="navigation">Navigation :</string>
+    <string name="room">Room :</string>
+    <string name="coroutines">Coroutines :</string>
+    <string name="app_features_mvvm">App Features - MVVM</string>
+    <string name="number_placeholder">%1$d</string>
 </resources>

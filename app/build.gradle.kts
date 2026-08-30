@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.flatcode.simplecomposeapps"
-        minSdk = 37
+        minSdk = 24
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -41,15 +41,17 @@ android {
 }
 
 dependencies {
-    // Compose
-    implementation(platform(libs.androidx.compose.bom))
+    val composeBom = platform(libs.androidx.compose.bom)
+    //Compose
+    implementation(composeBom)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.lifecycle.runtime.compose) // Added for convenience
-    // Core & UI
+    //Core & UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.ktx)
@@ -57,15 +59,15 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.material)
     implementation(libs.multicolors)
-    // Lifecycle
+    //Lifecycle
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-    // Image & Video
+    //Image & Video
     implementation(libs.coil)
     implementation(libs.coil.video)
     implementation(libs.shimmer)
-    // Networking
+    //Networking
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
     implementation(platform(libs.okhttp.bom))
@@ -74,26 +76,26 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.gson)
     implementation(libs.jsoup)
-    // Coroutines
+    //Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    // Navigation
+    //Navigation
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     // Room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
-    // Hilt
+    //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.fragment)
-    // Media & PDF
+    //Media & PDF
     implementation(libs.android.pdf.viewer)
     implementation(libs.appintro)
     implementation(libs.exoplayer)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
-    // Others
+    //Other's
     implementation(libs.intuit.ssp)
     implementation(libs.intuit.sdp)
     implementation(libs.exp4j)
@@ -101,11 +103,13 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.datastore.preferences)
     implementation(libs.timber)
-    // Testing
+    //Testing
     testImplementation(libs.junit)
+    androidTestImplementation(composeBom)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    debugImplementation(composeBom)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
