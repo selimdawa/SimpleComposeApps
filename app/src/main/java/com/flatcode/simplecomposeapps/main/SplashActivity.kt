@@ -23,26 +23,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.R
-import com.flatcode.simplecomposeapps.main.ui.rememberColorAttr
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.openActivity
+import io.selimdawa.multicolors.MultiColorManager
 
 class SplashActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            SplashScreen()
+            SimpleComposeAppsTheme {
+                SplashScreen()
+            }
         }
 
         Handler(Looper.getMainLooper()).postDelayed({ launch() }, TIME_PER_MILLIS.toLong())
@@ -60,17 +64,18 @@ class SplashActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen()
+    SimpleComposeAppsTheme {
+        SplashScreen()
+    }
 }
 
 @Composable
 fun SplashScreen() {
-    val context = LocalContext.current
-    val mcTrackColor = rememberColorAttr(context, "mc_track")
+    val mcTrackColor = AppTheme.colors.track
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = AppIcons.Background),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -82,7 +87,7 @@ fun SplashScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo),
+                painter = painterResource(id = AppIcons.Logo),
                 contentDescription = null,
                 modifier = Modifier.size(200.dp)
             )
@@ -90,7 +95,7 @@ fun SplashScreen() {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = Strings.APP_NAME,
                 color = Color.White,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,

@@ -17,12 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.main.MainViewModel
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun MainScreen(
@@ -50,7 +49,7 @@ fun MainScreen(
                 )
             } else if (items.isEmpty()) {
                 Text(
-                    text = stringResource(id = R.string.none_display),
+                    text = Strings.NONE_DISPLAY,
                     color = MaterialTheme.colorScheme.error,
                     fontSize = 32.sp,
                     modifier = Modifier

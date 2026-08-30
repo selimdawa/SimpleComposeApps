@@ -21,6 +21,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["appName"] = "Simple Compose Apps"
     }
 
     buildTypes {
@@ -41,9 +42,8 @@ android {
 }
 
 dependencies {
-    val composeBom = platform(libs.androidx.compose.bom)
     //Compose
-    implementation(composeBom)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
@@ -105,11 +105,9 @@ dependencies {
     implementation(libs.timber)
     //Testing
     testImplementation(libs.junit)
-    androidTestImplementation(composeBom)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-    debugImplementation(composeBom)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

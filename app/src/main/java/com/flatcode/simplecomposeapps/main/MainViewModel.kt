@@ -3,7 +3,7 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
 
 class MainViewModel : ViewModel() {
@@ -26,31 +26,31 @@ class MainViewModel : ViewModel() {
 
     private val data: List<Main>
         get() = listOf(
-            Main(R.drawable.ic_stop_watch, DATA.STOP_WATCH, counts[0], null),
-            Main(R.drawable.ic_candy_crush, DATA.CANDY_CRUSH, counts[1], null),
-            Main(R.drawable.ic_multi_delete, DATA.MULTI_DELETE, counts[2], null),
-            Main(R.drawable.ic_random, DATA.RANDOM_IMAGE, counts[3], null),
-            Main(R.drawable.ic_blogger, DATA.BLOGGER, counts[4], null),
-            Main(R.drawable.ic_joke, DATA.JOKE, counts[5], null),
-            Main(R.drawable.ic_live_tv, DATA.LIVE_TV, counts[6], null),
-            Main(R.drawable.ic_news, DATA.NEWS_MULTI, counts[7], null),
-            Main(R.drawable.ic_pdf_reader, DATA.PDF_READER, counts[8], null),
-            Main(R.drawable.ic_video_player, DATA.VIDEO_PLAYER, counts[9], null),
-            Main(R.drawable.ic_web, DATA.WEB_APP, counts[10], null),
-            Main(R.drawable.ic_wordpress, DATA.WORDPRESS, counts[11], null),
-            Main(R.drawable.ic_home_work, DATA.DOGS, counts[12], null),
-            Main(R.drawable.ic_flag, DATA.COUNTRIES, counts[13], null),
-            Main(R.drawable.ic_calculate, DATA.CALCULATOR, counts[14], null),
-            Main(R.drawable.ic_monetization, DATA.CRYPTO, counts[15], null),
-            Main(R.drawable.ic_words, DATA.DICTIONARY, counts[16], null),
-            Main(R.drawable.ic_meal, DATA.MEALS, counts[17], null),
-            Main(R.drawable.ic_game, DATA.POP, counts[18], null),
-            Main(R.drawable.ic_movie, DATA.MOVIE, counts[19], null),
-            Main(R.drawable.ic_feed, DATA.NEWS, counts[20], null),
-            Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, counts[21], null),
-            Main(R.drawable.ic_nights, DATA.WEATHER, counts[22], null),
-            Main(R.drawable.ic_gamepad, DATA.POKE, counts[23], null),
-            Main(R.drawable.ic_note, DATA.TODO_NOTE, counts[24], null),
-            Main(R.drawable.ic_company, DATA.STOCK_MARKET, counts[25], null)
+            Main(AppIcons.StopWatch, DATA.STOP_WATCH, counts[0], null),
+            Main(AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], null),
+            Main(AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], null),
+            Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], null),
+            Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], null),
+            Main(AppIcons.Joke, DATA.JOKE, counts[5], null),
+            Main(AppIcons.LiveTv, DATA.LIVE_TV, counts[6], null),
+            Main(AppIcons.NewsMulti, DATA.NEWS_MULTI, counts[7], null),
+            Main(AppIcons.PdfReader, DATA.PDF_READER, counts[8], null),
+            Main(AppIcons.VideoPlayer, DATA.VIDEO_PLAYER, counts[9], null),
+            Main(AppIcons.WebApp, DATA.WEB_APP, counts[10], null),
+            Main(AppIcons.WordPress, DATA.WORDPRESS, counts[11], null),
+            Main(AppIcons.Dogs, DATA.DOGS, counts[12], null),
+            Main(AppIcons.Countries, DATA.COUNTRIES, counts[13], null),
+            Main(AppIcons.Calculator, DATA.CALCULATOR, counts[14], null),
+            Main(AppIcons.Crypto, DATA.CRYPTO, counts[15], null),
+            Main(AppIcons.Dictionary, DATA.DICTIONARY, counts[16], null),
+            Main(AppIcons.Meals, DATA.MEALS, counts[17], null),
+            Main(AppIcons.Pop, DATA.POP, counts[18], null),
+            Main(AppIcons.Movie, DATA.MOVIE, counts[19], null),
+            Main(AppIcons.News, DATA.NEWS, counts[20], null),
+            Main(AppIcons.RickAndMorty, DATA.RICK_AND_MORTY, counts[21], null),
+            Main(AppIcons.Weather, DATA.WEATHER, counts[22], null),
+            Main(AppIcons.Poke, DATA.POKE, counts[23], null),
+            Main(AppIcons.TodoNote, DATA.TODO_NOTE, counts[24], null),
+            Main(AppIcons.StockMarket, DATA.STOCK_MARKET, counts[25], null)
         )
 }

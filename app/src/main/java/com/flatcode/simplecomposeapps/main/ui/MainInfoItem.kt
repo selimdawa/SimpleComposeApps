@@ -17,19 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.main.MainInfo
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun MainInfoItem(item: MainInfo) {
-    val context = LocalContext.current
-    val mcTrackColor = rememberColorAttr(context, "mc_track")
+    val mcTrackColor = AppTheme.colors.track
 
     Card(
         modifier = Modifier
@@ -52,7 +50,7 @@ fun MainInfoItem(item: MainInfo) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.name),
+                    text = Strings.NAME,
                     color = mcTrackColor,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -67,22 +65,22 @@ fun MainInfoItem(item: MainInfo) {
             }
 
             FeatureStatusRow(
-                label = stringResource(id = R.string.dagger_hilt),
+                label = Strings.DAGGER_HILT,
                 status = item.s == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
-                label = stringResource(id = R.string.navigation),
+                label = Strings.NAVIGATION,
                 status = item.s2 == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
-                label = stringResource(id = R.string.room),
+                label = Strings.ROOM,
                 status = item.s3 == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
-                label = stringResource(id = R.string.coroutines),
+                label = Strings.COROUTINES,
                 status = item.s4 == 1,
                 color = mcTrackColor
             )
@@ -103,7 +101,7 @@ fun FeatureStatusRow(label: String, status: Boolean, color: Color) {
         )
         Spacer(modifier = Modifier.width(10.dp))
         Image(
-            painter = painterResource(id = if (status) R.drawable.circle_green else R.drawable.circle_red),
+            imageVector = if (status) AppIcons.CircleGreen else AppIcons.CircleRed,
             contentDescription = null,
             modifier = Modifier.size(25.dp)
         )
