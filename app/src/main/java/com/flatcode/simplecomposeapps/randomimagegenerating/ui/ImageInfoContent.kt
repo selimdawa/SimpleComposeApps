@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.randomimagegenerating.ImageInfoViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
@@ -52,7 +52,7 @@ fun ImageInfoContent(
     Box(modifier = modifier) {
         // Background
         Image(
-            painter = painterResource(id = R.drawable.blur),
+            painter = painterResource(id = AppIcons.Blur),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -73,7 +73,7 @@ fun ImageInfoContent(
                     elevation = CardDefaults.cardElevation(6.dp)
                 ) {
                     AsyncImage(
-                        model = info.imageUrl.ifEmpty { R.drawable.hellokitty },
+                        model = info.imageUrl.ifEmpty { AppIcons.HelloKitty },
                         contentDescription = "Cat Image",
                         modifier = Modifier
                             .fillMaxWidth()

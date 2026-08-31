@@ -12,6 +12,7 @@ import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 
 class MainViewModel : ViewModel() {
 
@@ -45,7 +46,9 @@ class MainViewModel : ViewModel() {
             Main(AppIcons.Joke, DATA.JOKE, counts[5], JokeAppActivity::class.java),
             Main(AppIcons.NewsMulti, DATA.NEWS, counts[6], NewsAppActivity::class.java),
             Main(AppIcons.PdfReader, DATA.PDF_READER, counts[7], PdfReaderActivity::class.java),
-            Main(AppIcons.VideoPlayer, DATA.VIDEO_PLAYER, counts[8], null),
+            Main(
+                AppIcons.VideoPlayer, DATA.VIDEO_PLAYER, counts[8], VideoPlayerActivity::class.java
+            ),
             Main(AppIcons.WebApp, DATA.WEB_APP, counts[9], null),
             Main(AppIcons.WordPress, DATA.WORDPRESS, counts[10], null),
             Main(AppIcons.Dogs, DATA.DOGS, counts[11], null),

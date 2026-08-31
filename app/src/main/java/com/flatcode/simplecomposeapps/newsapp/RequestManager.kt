@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.newsapp.model.NewsApiResponse
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

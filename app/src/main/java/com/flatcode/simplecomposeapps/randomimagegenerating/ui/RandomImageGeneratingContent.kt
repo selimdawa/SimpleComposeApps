@@ -30,7 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingViewModel
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorManager
@@ -50,7 +50,7 @@ fun RandomImageGeneratingContent(
     ) {
         // Background
         Image(
-            painter = painterResource(id = R.drawable.blur),
+            painter = painterResource(id = AppIcons.Blur),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -70,7 +70,7 @@ fun RandomImageGeneratingContent(
                 elevation = CardDefaults.cardElevation(6.dp)
             ) {
                 AsyncImage(
-                    model = imageUrl.ifEmpty { R.drawable.hellokitty },
+                    model = imageUrl.ifEmpty { AppIcons.HelloKitty },
                     contentDescription = "Cat Image",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -98,7 +98,7 @@ fun RandomImageGeneratingContent(
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.info),
+                            painter = painterResource(id = AppIcons.InfoIcon),
                             contentDescription = "Info",
                             tint = Color.White,
                             modifier = Modifier.size(30.dp)
@@ -117,7 +117,7 @@ fun RandomImageGeneratingContent(
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.down),
+                            painter = painterResource(id = AppIcons.Down),
                             contentDescription = "Download",
                             tint = Color.White,
                             modifier = Modifier.size(30.dp)
@@ -136,7 +136,7 @@ fun RandomImageGeneratingContent(
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.refresh),
+                            painter = painterResource(id = AppIcons.Refresh),
                             contentDescription = "Refresh",
                             tint = Color.White,
                             modifier = Modifier.size(30.dp)

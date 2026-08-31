@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.floor
@@ -14,8 +14,8 @@ class CandyCrushViewModel : ViewModel() {
 
     val noOfBlocks = 8
     val candies = intArrayOf(
-        R.drawable.bluecandy, R.drawable.greencandy, R.drawable.redcandy,
-        R.drawable.orangecandy, R.drawable.yellowcandy, R.drawable.purplecandy
+        AppIcons.BlueCandy, AppIcons.GreenCandy, AppIcons.RedCandy,
+        AppIcons.OrangeCandy, AppIcons.YellowCandy, AppIcons.PurpleCandy
     )
     val notCandy = -1
 

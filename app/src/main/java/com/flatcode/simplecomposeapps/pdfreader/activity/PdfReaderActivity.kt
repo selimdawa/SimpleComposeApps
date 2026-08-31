@@ -20,6 +20,7 @@ import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -64,7 +65,7 @@ class PdfReaderActivity : ComponentActivity() {
                 putExtra(Intent.EXTRA_STREAM, it)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-            startActivity(Intent.createChooser(intent, getString(R.string.share_file)))
+            startActivity(Intent.createChooser(intent, Strings.SHARE_FILE))
         }
     }
 

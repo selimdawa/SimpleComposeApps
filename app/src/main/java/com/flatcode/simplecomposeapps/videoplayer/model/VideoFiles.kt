@@ -1,0 +1,13 @@
+package com.flatcode.simplecomposeapps.videoplayer.model
+
+data class VideoFiles(
+    val id: String? = null,
+    val path: String? = null,
+    val uriString: String? = null,
+    val title: String? = null,
+    val fileName: String? = null,
+    val size: String? = null,
+    val dateAdded: String? = null,
+    val duration: String? = null,
+    val bucketName: String? = null
+)

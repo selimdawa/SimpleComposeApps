@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +58,7 @@ fun CandyCrushScreen(
             containerColor = Color.Transparent,
             topBar = {
                 CommonTopAppBar(
-                    title = stringResource(R.string.candy_crush_game)
+                    title = Strings.CANDY_CRUSH_GAME
                 )
             }
         ) { paddingValues ->
@@ -122,7 +122,7 @@ fun ScoreCard(score: Int) {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(R.string.score_label),
+                text = Strings.SCORE_LABEL,
                 color = Color.White,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold

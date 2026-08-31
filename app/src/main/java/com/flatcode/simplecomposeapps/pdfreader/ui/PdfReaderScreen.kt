@@ -21,6 +21,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 
@@ -44,19 +45,19 @@ fun PdfReaderScreen(
                     containerColor = mcTrack,
                     actions = {
                         IconButton(onClick = onPickFile) {
-                            Icon(imageVector = AppIcons.FolderOpen, contentDescription = "Pick File", tint = Color.White)
+                            Icon(imageVector = AppIcons.FolderOpen, contentDescription = Strings.PICK_FILE, tint = Color.White)
                         }
                         IconButton(onClick = onMeta) {
-                            Icon(imageVector = AppIcons.Info, contentDescription = "Meta", tint = Color.White)
+                            Icon(imageVector = AppIcons.Info, contentDescription = Strings.META, tint = Color.White)
                         }
                         IconButton(onClick = onShare) {
-                            Icon(imageVector = AppIcons.Share, contentDescription = "Share", tint = Color.White)
+                            Icon(imageVector = AppIcons.Share, contentDescription = Strings.SHARE_FILE, tint = Color.White)
                         }
                         IconButton(onClick = onPrint) {
-                            Icon(imageVector = AppIcons.Print, contentDescription = "Print", tint = Color.White)
+                            Icon(imageVector = AppIcons.Print, contentDescription = Strings.PRINT, tint = Color.White)
                         }
                         IconButton(onClick = onFullscreen) {
-                            Icon(imageVector = AppIcons.Fullscreen, contentDescription = "Fullscreen", tint = Color.White)
+                            Icon(imageVector = AppIcons.Fullscreen, contentDescription = Strings.FULL_SCREEN, tint = Color.White)
                         }
                     }
                 )
@@ -112,7 +113,7 @@ fun PdfReaderScreen(
                 }
                 else -> {
                     Text(
-                        text = "Pick a PDF file to read",
+                        text = Strings.PICK_FILE,
                         modifier = Modifier.align(Alignment.Center),
                         style = MaterialTheme.typography.bodyLarge
                     )

@@ -15,6 +15,30 @@ object AppIcons {
     val NewsMulti = R.drawable.ic_news
     val WebApp = R.drawable.ic_web
     val WordPress = R.drawable.ic_wordpress
+    val Support = R.drawable.ic_support
+    val Twitter = R.drawable.ic_twitter
+    val Website = R.drawable.ic_website
+    val AboutUs = R.drawable.ic_about_us
+    val Facebook = R.drawable.ic_facebook
+    val Instagram = R.drawable.ic_instagram
+    val Rate = R.drawable.ic_rate
+    val Email = R.drawable.email
+    val Phone = R.drawable.ic_phone
+    val Blur = R.drawable.blur
+    val HelloKitty = R.drawable.hellokitty
+    val InfoIcon = R.drawable.info
+    val Down = R.drawable.down
+    val Refresh = R.drawable.refresh
+    val CandyBackground = R.drawable.ccs_82_background
+    val PermissionsPattern = R.drawable.patterns_permissions
+
+    // Candies
+    val BlueCandy = R.drawable.bluecandy
+    val GreenCandy = R.drawable.greencandy
+    val RedCandy = R.drawable.redcandy
+    val OrangeCandy = R.drawable.orangecandy
+    val YellowCandy = R.drawable.yellowcandy
+    val PurpleCandy = R.drawable.purplecandy
 
     // Vectors (ImageVector)
     val StopWatch: ImageVector = AppVectors.StopWatch
