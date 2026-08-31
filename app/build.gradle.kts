@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     //Image & Video
     implementation(libs.coil)
+    implementation(libs.coil.compose)
     implementation(libs.coil.video)
     implementation(libs.shimmer)
     //Networking

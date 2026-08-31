@@ -9,7 +9,15 @@ object Strings {
     const val ROOM = "Room :"
     const val COROUTINES = "Coroutines :"
     const val APP_FEATURES_MVVM = "App Features - MVVM"
-    
+
+    const val RANDOM_IMAGE_GENERATING = "Random Image Generating"
+    const val IMAGE_INFO = "Image Info"
+    const val TEMPERAMENT = "Temperament"
+    const val WIKIPEDIA = "Wikipedia"
+    const val MORE_INFO = "More Info"
+    const val STOP_WATCH = "Stop Watch"
+    const val LAST_TIME_LABEL = "Last Time : "
+
     fun numberPlaceholder(number: Int) = number.toString()
     fun selectedPlaceholder(count: Int) = "Selected $count"
     fun youClickedPlaceholder(text: String) = "You clicked $text"

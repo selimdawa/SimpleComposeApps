@@ -17,13 +17,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.CommonTopAppBar
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -40,7 +39,7 @@ fun StopWatchScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CommonTopAppBar(
-                title = stringResource(id = R.string.stop_watch)
+                title = Strings.STOP_WATCH
             )
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -62,7 +61,7 @@ fun StopWatchScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.last_time_label),
+                    text = Strings.LAST_TIME_LABEL,
                     color = colorError,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
