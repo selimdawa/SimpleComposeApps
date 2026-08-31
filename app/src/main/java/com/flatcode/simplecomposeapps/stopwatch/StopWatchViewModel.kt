@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import java.util.Locale
@@ -70,7 +69,6 @@ class StopWatchViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        super.onCleared()
         handler.removeCallbacks(runnable)
     }
 }

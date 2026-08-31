@@ -11,4 +11,6 @@ object Strings {
     const val APP_FEATURES_MVVM = "App Features - MVVM"
     
     fun numberPlaceholder(number: Int) = number.toString()
+    fun selectedPlaceholder(count: Int) = "Selected $count"
+    fun youClickedPlaceholder(text: String) = "You clicked $text"
 }
