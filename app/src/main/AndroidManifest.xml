@@ -75,6 +75,26 @@
             android:name=".videoplayer.activity.PlayerActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".webapp.WebAppActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".webapp.WebViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wordpress.activity.WordpressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wordpress.activity.WordpressDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wordpress.activity.WordpressFavoritesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

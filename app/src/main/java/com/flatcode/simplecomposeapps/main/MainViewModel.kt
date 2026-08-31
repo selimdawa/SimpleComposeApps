@@ -13,6 +13,8 @@ import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
+import com.flatcode.simplecomposeapps.webapp.WebAppActivity
+import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 
 class MainViewModel : ViewModel() {
 
@@ -49,8 +51,8 @@ class MainViewModel : ViewModel() {
             Main(
                 AppIcons.VideoPlayer, DATA.VIDEO_PLAYER, counts[8], VideoPlayerActivity::class.java
             ),
-            Main(AppIcons.WebApp, DATA.WEB_APP, counts[9], null),
-            Main(AppIcons.WordPress, DATA.WORDPRESS, counts[10], null),
+            Main(AppIcons.WebApp, DATA.WEB_APP, counts[9], WebAppActivity::class.java),
+            Main(AppIcons.WordPress, DATA.WORDPRESS, counts[10], WordpressActivity::class.java),
             Main(AppIcons.Dogs, DATA.DOGS, counts[11], null),
             Main(AppIcons.Countries, DATA.COUNTRIES, counts[12], null),
             Main(AppIcons.Calculator, DATA.CALCULATOR, counts[13], null),
