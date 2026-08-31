@@ -18,6 +18,18 @@ object Strings {
     const val STOP_WATCH = "Stop Watch"
     const val LAST_TIME_LABEL = "Last Time : "
 
+    // Blogger
+    const val BLOGGER_NAME = "Tip Top Blogger"
+    const val BLOGGER_PAGES = "Tip Top Pages"
+    const val POST_DETAILS = "Post Details"
+    const val PAGE_DETAILS = "Page Details"
+    const val LOAD_MORE = "Load More"
+    const val COMMENTS = "Comments"
+    const val LABELS = "Labels"
+    const val NO_MORE_POSTS = "No more posts"
+    const val REACHED_END_OF_PAGE = "Reached end of page"
+    fun publishInfo(name: String, date: String) = "By $name $date"
+
     fun numberPlaceholder(number: Int) = number.toString()
     fun selectedPlaceholder(count: Int) = "Selected $count"
     fun youClickedPlaceholder(text: String) = "You clicked $text"

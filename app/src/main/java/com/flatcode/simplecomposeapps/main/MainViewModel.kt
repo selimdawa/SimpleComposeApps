@@ -3,6 +3,7 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
 import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
@@ -33,7 +34,7 @@ class MainViewModel : ViewModel() {
             Main(AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], CandyCrushGameActivity::class.java),
             Main(AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], MultiDeleteActivity::class.java),
             Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], null),
-            Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], null),
+            Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], BloggerAppActivity::class.java),
             Main(AppIcons.Joke, DATA.JOKE, counts[5], null),
             Main(AppIcons.LiveTv, DATA.LIVE_TV, counts[6], null),
             Main(AppIcons.NewsMulti, DATA.NEWS_MULTI, counts[7], null),
