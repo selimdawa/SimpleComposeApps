@@ -14,6 +14,32 @@ fun Context.openActivity(activityClass: Class<out Activity>?, finish: Boolean = 
     }
 }
 
+inline fun <reified T : Activity> Context.openActivity(finish: Boolean = false) {
+    val intent = Intent(this, T::class.java)
+    startActivity(intent)
+    if (finish && this is Activity) {
+        this.finish()
+    }
+}
+
+fun Context.intent1(cls: Class<*>, block: Intent.() -> Unit) {
+    val intent = Intent(this, cls)
+    intent.apply(block)
+    startActivity(intent)
+}
+
+inline fun <reified T : Activity> Context.launchActivity(
+    finish: Boolean = false,
+    noinline block: Intent.() -> Unit = {}
+) {
+    val intent = Intent(this, T::class.java)
+    intent.apply(block)
+    startActivity(intent)
+    if (finish && this is Activity) {
+        this.finish()
+    }
+}
+
 fun Long.formatDuration(): String {
     val seconds = (this / 1000) % 60
     val minutes = (this / (1000 * 60)) % 60

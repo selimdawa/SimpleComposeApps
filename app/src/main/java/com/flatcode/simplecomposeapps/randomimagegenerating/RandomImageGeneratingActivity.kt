@@ -1,16 +1,16 @@
 package com.flatcode.simplecomposeapps.randomimagegenerating
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.randomimagegenerating.ui.RandomImageGeneratingScreen
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.utils.intent1
+import com.flatcode.simplecomposeapps.utils.launchActivity
 import io.selimdawa.multicolors.MultiColorManager
 
 class RandomImageGeneratingActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ class RandomImageGeneratingActivity : AppCompatActivity() {
                     onNavigateToInfo = {
                         val catInfo = viewModel.catBreedInfo.value
                         if (catInfo != null) {
-                            intent1(ImageInfoActivity::class.java) {
+                            launchActivity<ImageInfoActivity> {
                                 putExtra(DATA.KEY_NAME, catInfo.name)
                                 putExtra(DATA.KEY_ORIGIN, catInfo.origin)
                                 putExtra(DATA.KEY_DESC, catInfo.description)
@@ -44,9 +44,9 @@ class RandomImageGeneratingActivity : AppCompatActivity() {
                         }
                     },
                     onDownload = { url ->
-                        val browser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        val browser = Intent(Intent.ACTION_VIEW, url.toUri())
                         startActivity(browser)
-                    }
+                    },
                 )
             }
         }

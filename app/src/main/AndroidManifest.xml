@@ -47,6 +47,14 @@
             android:name=".joke.activity.JokeAppActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".newsapp.activity.NewsAppActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".newsapp.activity.NewsAppDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
