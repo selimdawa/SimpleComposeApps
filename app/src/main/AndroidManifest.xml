@@ -55,6 +55,14 @@
             android:name=".newsapp.activity.NewsAppDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".pdfreader.activity.PdfReaderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pdfreader.activity.PdfReaderIntroActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

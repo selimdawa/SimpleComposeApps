@@ -8,6 +8,7 @@ import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
 import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
 import com.flatcode.simplecomposeapps.newsapp.activity.NewsAppActivity
+import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -33,13 +34,17 @@ class MainViewModel : ViewModel() {
     private val data: List<Main>
         get() = listOf(
             Main(AppIcons.StopWatch, DATA.STOP_WATCH, counts[0], StopWatchActivity::class.java),
-            Main(AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], CandyCrushGameActivity::class.java),
-            Main(AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], MultiDeleteActivity::class.java),
+            Main(
+                AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], CandyCrushGameActivity::class.java
+            ),
+            Main(
+                AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], MultiDeleteActivity::class.java
+            ),
             Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], null),
             Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], BloggerAppActivity::class.java),
             Main(AppIcons.Joke, DATA.JOKE, counts[5], JokeAppActivity::class.java),
-            Main(AppIcons.NewsMulti, DATA.NEWS_MULTI, counts[6], NewsAppActivity::class.java),
-            Main(AppIcons.PdfReader, DATA.PDF_READER, counts[7], null),
+            Main(AppIcons.NewsMulti, DATA.NEWS, counts[6], NewsAppActivity::class.java),
+            Main(AppIcons.PdfReader, DATA.PDF_READER, counts[7], PdfReaderActivity::class.java),
             Main(AppIcons.VideoPlayer, DATA.VIDEO_PLAYER, counts[8], null),
             Main(AppIcons.WebApp, DATA.WEB_APP, counts[9], null),
             Main(AppIcons.WordPress, DATA.WORDPRESS, counts[10], null),
@@ -51,7 +56,7 @@ class MainViewModel : ViewModel() {
             Main(AppIcons.Meals, DATA.MEALS, counts[16], null),
             Main(AppIcons.Pop, DATA.POP, counts[17], null),
             Main(AppIcons.Movie, DATA.MOVIE, counts[18], null),
-            Main(AppIcons.News, DATA.NEWS, counts[19], NewsAppActivity::class.java),
+            Main(AppIcons.News, DATA.NEWS_2, counts[19], null),
             Main(AppIcons.RickAndMorty, DATA.RICK_AND_MORTY, counts[20], null),
             Main(AppIcons.Weather, DATA.WEATHER, counts[21], null),
             Main(AppIcons.Poke, DATA.POKE, counts[22], null),
