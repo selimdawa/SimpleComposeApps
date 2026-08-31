@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.main
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
@@ -14,7 +14,7 @@ import com.flatcode.simplecomposeapps.main.ui.MainScreen
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import io.selimdawa.multicolors.MultiColorManager
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mainInfoViewModel: MainInfoViewModel

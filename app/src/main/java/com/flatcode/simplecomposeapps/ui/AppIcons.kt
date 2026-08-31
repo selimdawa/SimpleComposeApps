@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.ui.theme
+package com.flatcode.simplecomposeapps.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.flatcode.simplecomposeapps.R
@@ -39,7 +39,12 @@ object AppIcons {
     val Info: ImageVector = AppVectors.Info
     val Load: ImageVector = AppVectors.Load
     val ConnectionError: ImageVector = AppVectors.ConnectionError
-    
+
     val CircleGreen: ImageVector = AppVectors.CircleGreen
     val CircleRed: ImageVector = AppVectors.CircleRed
+
+    val Play: ImageVector = AppVectors.Play
+    val Pause: ImageVector = AppVectors.Pause
+    val Stop: ImageVector = AppVectors.Stop
+    val Back: ImageVector = AppVectors.Back
 }

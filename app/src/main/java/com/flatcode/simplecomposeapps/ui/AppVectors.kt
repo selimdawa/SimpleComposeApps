@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.ui.theme
+package com.flatcode.simplecomposeapps.ui
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -975,5 +975,73 @@ object AppVectors {
         moveToRelative(-10f, 0f)
         arcTo(10f, 10f, 0f, true, true, 22f, 12f)
         arcTo(10f, 10f, 0f, true, true, 2f, 12f)
+    }.build()
+
+    val Play: ImageVector = ImageVector.Builder(
+        name = "Play",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).path(fill = SolidColor(Color.White)) {
+        moveTo(8f, 5f)
+        verticalLineToRelative(14f)
+        lineToRelative(11f, -7f)
+        close()
+    }.build()
+
+    val Pause: ImageVector = ImageVector.Builder(
+        name = "Pause",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).path(fill = SolidColor(Color.White)) {
+        moveTo(6f, 19f)
+        horizontalLineToRelative(4f)
+        verticalLineTo(5f)
+        horizontalLineTo(6f)
+        verticalLineToRelative(14f)
+        close()
+        moveTo(14f, 5f)
+        verticalLineToRelative(14f)
+        horizontalLineToRelative(4f)
+        verticalLineTo(5f)
+        horizontalLineToRelative(-4f)
+        close()
+    }.build()
+
+    val Stop: ImageVector = ImageVector.Builder(
+        name = "Stop",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).path(fill = SolidColor(Color.White)) {
+        moveTo(6f, 6f)
+        horizontalLineToRelative(12f)
+        verticalLineToRelative(12f)
+        horizontalLineTo(6f)
+        close()
+    }.build()
+
+    val Back: ImageVector = ImageVector.Builder(
+        name = "Back",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).path(fill = SolidColor(Color.White)) {
+        moveTo(20f, 11f)
+        horizontalLineTo(7.83f)
+        lineToRelative(5.59f, -5.59f)
+        lineTo(12f, 4f)
+        lineToRelative(-8f, 8f)
+        lineToRelative(8f, 8f)
+        lineToRelative(1.41f, -1.41f)
+        lineTo(7.83f, 13f)
+        horizontalLineTo(20f)
+        verticalLineToRelative(-2f)
+        close()
     }.build()
 }
