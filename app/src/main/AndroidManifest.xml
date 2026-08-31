@@ -35,6 +35,10 @@
             android:name=".stopwatch.StopWatchActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".candycrushgame.CandyCrushGameActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -28,7 +29,7 @@ class MainViewModel : ViewModel() {
     private val data: List<Main>
         get() = listOf(
             Main(AppIcons.StopWatch, DATA.STOP_WATCH, counts[0], StopWatchActivity::class.java),
-            Main(AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], null),
+            Main(AppIcons.CandyCrush, DATA.CANDY_CRUSH, counts[1], CandyCrushGameActivity::class.java),
             Main(AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], null),
             Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], null),
             Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], null),
