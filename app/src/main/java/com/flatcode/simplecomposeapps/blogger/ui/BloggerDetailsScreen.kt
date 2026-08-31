@@ -2,12 +2,27 @@ package com.flatcode.simplecomposeapps.blogger.ui
 
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -24,15 +39,12 @@ import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BloggerDetailsScreen(
-    viewModel: BloggerViewModel,
-    id: String,
-    isPage: Boolean = false,
-    onBack: () -> Unit
+    viewModel: BloggerViewModel, id: String, isPage: Boolean = false, onBack: () -> Unit
 ) {
     val details = viewModel.details.value
     val labels = viewModel.labels
@@ -56,23 +68,24 @@ fun BloggerDetailsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = if (isPage) Strings.PAGE_DETAILS else Strings.POST_DETAILS,
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = if (isPage) Strings.PAGE_DETAILS else Strings.POST_DETAILS,
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+            }, navigationIcon = {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = AppIcons.Back,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
             )
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -92,10 +105,11 @@ fun BloggerDetailsScreen(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     val formattedDate = try {
                         val date = inputDateFormat.parse(details.published ?: DATA.EMPTY)
-                        if (date != null) outputDateFormat.format(date) else details.published ?: DATA.EMPTY
+                        if (date != null) outputDateFormat.format(date) else details.published
+                            ?: DATA.EMPTY
                     } catch (_: Exception) {
                         details.published ?: DATA.EMPTY
                     }
@@ -109,14 +123,16 @@ fun BloggerDetailsScreen(
 
                     AndroidView(
                         factory = { context ->
-                            WebView(context).apply {
-                                webViewClient = WebViewClient()
-                                settings.javaScriptEnabled = true
-                                setBackgroundColor(0) // Transparent
-                            }
-                        },
+                        WebView(context).apply {
+                            webViewClient = WebViewClient()
+                            settings.javaScriptEnabled = true
+                            setBackgroundColor(0) // Transparent
+                        }
+                    },
                         update = { webView ->
-                            webView.loadDataWithBaseURL(null, details.content ?: "", "text/html", "UTF-8", null)
+                            webView.loadDataWithBaseURL(
+                                null, details.content ?: "", "text/html", "UTF-8", null
+                            )
                         },
                         modifier = Modifier
                             .fillMaxWidth()

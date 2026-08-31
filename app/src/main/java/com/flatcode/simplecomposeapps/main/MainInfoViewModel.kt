@@ -7,11 +7,11 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 class MainInfoViewModel : ViewModel() {
 
-    private val _dataMainInfo = MutableLiveData<List<MainInfo>>()
-    val dataMainInfo: LiveData<List<MainInfo>> = _dataMainInfo
+    val dataMainInfo: LiveData<List<MainInfo>>
+        field = MutableLiveData<List<MainInfo>>()
 
     fun getInfoItems() {
-        _dataMainInfo.value = dataInfo
+        dataMainInfo.value = dataInfo
     }
 
     private val dataInfo: List<MainInfo>
@@ -22,7 +22,6 @@ class MainInfoViewModel : ViewModel() {
             MainInfo(DATA.RANDOM_IMAGE, 0, 0, 0, 0),
             MainInfo(DATA.BLOGGER, 0, 0, 0, 0),
             MainInfo(DATA.JOKE, 0, 0, 0, 0),
-            MainInfo(DATA.LIVE_TV, 0, 0, 0, 0),
             MainInfo(DATA.NEWS_MULTI, 0, 0, 0, 0),
             MainInfo(DATA.PDF_READER, 0, 0, 0, 0),
             MainInfo(DATA.VIDEO_PLAYER, 0, 0, 0, 0),

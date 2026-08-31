@@ -1,9 +1,15 @@
 package com.flatcode.simplecomposeapps.blogger.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,10 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.blogger.model.Comment
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @Composable
 fun BloggerCommentItem(comment: Comment) {
@@ -60,17 +65,13 @@ fun BloggerCommentItem(comment: Comment) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = formattedDate,
-                    color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 12.sp
+                    text = formattedDate, color = Color.White.copy(alpha = 0.7f), fontSize = 12.sp
                 )
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = comment.comment ?: DATA.EMPTY,
-            color = Color.White,
-            fontSize = 14.sp
+            text = comment.comment ?: DATA.EMPTY, color = Color.White, fontSize = 14.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider(color = Color.White.copy(alpha = 0.2f))

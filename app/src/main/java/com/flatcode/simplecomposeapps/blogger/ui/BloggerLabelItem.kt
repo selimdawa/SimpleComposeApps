@@ -1,9 +1,7 @@
 package com.flatcode.simplecomposeapps.blogger.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +16,7 @@ import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 fun BloggerLabelItem(label: Label) {
     val mcTrack = AppTheme.colors.track
     Surface(
-        color = mcTrack,
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.padding(4.dp)
+        color = mcTrack, shape = RoundedCornerShape(16.dp), modifier = Modifier.padding(4.dp)
     ) {
         Text(
             text = label.label ?: "",

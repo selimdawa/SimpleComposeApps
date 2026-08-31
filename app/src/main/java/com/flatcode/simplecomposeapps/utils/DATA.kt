@@ -10,7 +10,6 @@ object DATA {
     const val RANDOM_IMAGE = "Random Image Generating"
     const val BLOGGER = "Blogger"
     const val JOKE = "Joke"
-    const val LIVE_TV = "Live TV"
     const val NEWS_MULTI = "News"
     const val PDF_READER = "Pdf Reader"
     const val VIDEO_PLAYER = "Video Player"

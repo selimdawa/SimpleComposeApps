@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.main
 
 class MainInfo(
     var title: String? = null,
-    var s: Int? = null,
-    var s2: Int? = null,
-    var s3: Int? = null,
-    var s4: Int? = null,
+    var hilt: Int? = null,
+    var navigation: Int? = null,
+    var room: Int? = null,
+    var coroutines: Int? = null,
 )

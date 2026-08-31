@@ -66,22 +66,22 @@ fun MainInfoItem(item: MainInfo) {
 
             FeatureStatusRow(
                 label = Strings.DAGGER_HILT,
-                status = item.s == 1,
+                status = item.hilt == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
                 label = Strings.NAVIGATION,
-                status = item.s2 == 1,
+                status = item.navigation == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
                 label = Strings.ROOM,
-                status = item.s3 == 1,
+                status = item.room == 1,
                 color = mcTrackColor
             )
             FeatureStatusRow(
                 label = Strings.COROUTINES,
-                status = item.s4 == 1,
+                status = item.coroutines == 1,
                 color = mcTrackColor
             )
         }

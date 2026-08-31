@@ -12,17 +12,17 @@ import org.json.JSONException
 
 class RandomImageGeneratingViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _imageUrl = mutableStateOf("")
-    val imageUrl: State<String> = _imageUrl
+    val imageUrl: State<String>
+        field = mutableStateOf("")
 
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    val isLoading: State<Boolean>
+        field = mutableStateOf(false)
 
-    private val _errorMessage = mutableStateOf<String?>(null)
-    val errorMessage: State<String?> = _errorMessage
+    val errorMessage: State<String?>
+        field = mutableStateOf<String?>(null)
 
-    private val _catBreedInfo = mutableStateOf<CatBreedInfo?>(null)
-    val catBreedInfo: State<CatBreedInfo?> = _catBreedInfo
+    val catBreedInfo: State<CatBreedInfo?>
+        field = mutableStateOf<CatBreedInfo?>(null)
 
     init {
         getImage()
@@ -30,21 +30,21 @@ class RandomImageGeneratingViewModel(application: Application) : AndroidViewMode
 
     fun getImage() {
         val url = DATA.API_RANDOM_IMAGE
-        _isLoading.value = true
-        _errorMessage.value = null
+        isLoading.value = true
+        errorMessage.value = null
 
         val queue = Volley.newRequestQueue(getApplication())
         val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
                 val kittyData = response.getJSONObject(0)
                 val catUrl = kittyData.getString(DATA.JSON_URL)
-                _imageUrl.value = catUrl
+                imageUrl.value = catUrl
 
                 try {
                     val breedsInfo = kittyData.getJSONArray(DATA.JSON_BREEDS)
                     if (!breedsInfo.isNull(0)) {
                         val breedsData = breedsInfo.getJSONObject(0)
-                        _catBreedInfo.value = CatBreedInfo(
+                        catBreedInfo.value = CatBreedInfo(
                             name = if (breedsData.has(DATA.JSON_NAME)) breedsData.getString(DATA.JSON_NAME) else DATA.EMPTY,
                             origin = if (breedsData.has(DATA.JSON_ORIGIN)) breedsData.getString(DATA.JSON_ORIGIN) else DATA.EMPTY,
                             description = if (breedsData.has(DATA.JSON_DESCRIPTION)) breedsData.getString(DATA.JSON_DESCRIPTION) else DATA.EMPTY,
@@ -54,19 +54,19 @@ class RandomImageGeneratingViewModel(application: Application) : AndroidViewMode
                             imageUrl = catUrl
                         )
                     } else {
-                        _catBreedInfo.value = null
+                        catBreedInfo.value = null
                     }
                 } catch (e: JSONException) {
-                    _catBreedInfo.value = null
+                    catBreedInfo.value = null
                 }
             } catch (e: JSONException) {
-                _errorMessage.value = "Failed to parse data"
+                errorMessage.value = "Failed to parse data"
             } finally {
-                _isLoading.value = false
+                isLoading.value = false
             }
         }, { error ->
-            _errorMessage.value = error.message ?: "Unknown error"
-            _isLoading.value = false
+            errorMessage.value = error.message ?: "Unknown error"
+            isLoading.value = false
         })
         queue.add(arrayRequest)
     }

@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 
 class ImageInfoViewModel : ViewModel() {
 
-    private val _catInfo = mutableStateOf<CatBreedInfo?>(null)
-    val catInfo: State<CatBreedInfo?> = _catInfo
+    val catInfo: State<CatBreedInfo?>
+        field = mutableStateOf<CatBreedInfo?>(null)
 
     fun setCatInfo(info: CatBreedInfo) {
-        _catInfo.value = info
+        catInfo.value = info
     }
 }

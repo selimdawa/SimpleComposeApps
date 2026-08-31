@@ -10,14 +10,14 @@ import java.util.Locale
 
 class StopWatchViewModel : ViewModel() {
 
-    private val _timeDisplay = mutableStateOf("00:00:00")
-    val timeDisplay: State<String> = _timeDisplay
+    val timeDisplay: State<String>
+        field = mutableStateOf("00:00:00")
 
-    private val _lastTime = mutableStateOf("00:00:00")
-    val lastTime: State<String> = _lastTime
+    val lastTime: State<String>
+        field = mutableStateOf("00:00:00")
 
-    private val _isRunning = mutableStateOf(false)
-    val isRunning: State<Boolean> = _isRunning
+    val isRunning: State<Boolean>
+        field = mutableStateOf(false)
 
     private var handler = Handler(Looper.getMainLooper())
     private var tMilliSec = 0L
@@ -37,26 +37,26 @@ class StopWatchViewModel : ViewModel() {
             sec %= 60
             milliSec = (tUpdate % 100).toInt()
 
-            _timeDisplay.value = String.format(Locale.US, "%02d:%02d:%02d", min, sec, milliSec)
+            timeDisplay.value = String.format(Locale.US, "%02d:%02d:%02d", min, sec, milliSec)
             handler.postDelayed(this, 60)
         }
     }
 
     fun startOrPause() {
-        if (!_isRunning.value) {
+        if (!isRunning.value) {
             tStart = SystemClock.uptimeMillis()
             handler.postDelayed(runnable, 0)
-            _isRunning.value = true
+            isRunning.value = true
         } else {
             tBuff += tMilliSec
             handler.removeCallbacks(runnable)
-            _isRunning.value = false
+            isRunning.value = false
         }
     }
 
     fun stop() {
-        if (!_isRunning.value) {
-            _lastTime.value = _timeDisplay.value
+        if (!isRunning.value) {
+            lastTime.value = timeDisplay.value
             tMilliSec = 0L
             tStart = 0L
             tBuff = 0L
@@ -64,7 +64,7 @@ class StopWatchViewModel : ViewModel() {
             sec = 0
             min = 0
             milliSec = 0
-            _timeDisplay.value = "00:00:00"
+            timeDisplay.value = "00:00:00"
         }
     }
 

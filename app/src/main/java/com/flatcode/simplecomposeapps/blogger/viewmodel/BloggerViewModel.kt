@@ -17,34 +17,35 @@ import org.json.JSONObject
 
 class BloggerViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _posts = mutableStateListOf<Post>()
-    val posts: List<Post> get() = _posts
+    val posts: List<Post>
+        field = mutableStateListOf<Post>()
 
-    private val _pages = mutableStateListOf<Page>()
-    val pages: List<Page> get() = _pages
+    val pages: List<Page>
+        field = mutableStateListOf<Page>()
 
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    val isLoading: State<Boolean>
+        field = mutableStateOf(false)
 
-    private val _nextPageToken = mutableStateOf(DATA.EMPTY)
-    val hasMore: Boolean get() = _nextPageToken.value != "end"
+    private val nextPageToken = mutableStateOf(DATA.EMPTY)
 
-    private val _details = mutableStateOf<Post?>(null)
-    val details: State<Post?> = _details
+    val hasMore: Boolean get() = nextPageToken.value != "end"
 
-    private val _labels = mutableStateListOf<Label>()
-    val labels: List<Label> get() = _labels
+    val details: State<Post?>
+        field = mutableStateOf<Post?>(null)
 
-    private val _comments = mutableStateListOf<Comment>()
-    val comments: List<Comment> get() = _comments
+    val labels: List<Label>
+        field = mutableStateListOf<Label>()
+
+    val comments: List<Comment>
+        field = mutableStateListOf<Comment>()
 
     private var currentQuery = DATA.EMPTY
 
     fun loadPosts(isLoadMore: Boolean = false) {
-        if (isLoadMore && _nextPageToken.value == "end") return
+        if (isLoadMore && nextPageToken.value == "end") return
         if (!isLoadMore) {
-            _posts.clear()
-            _nextPageToken.value = DATA.EMPTY
+            posts.clear()
+            nextPageToken.value = DATA.EMPTY
             currentQuery = DATA.EMPTY
         }
 
@@ -57,10 +58,10 @@ class BloggerViewModel(application: Application) : AndroidViewModel(application)
             return
         }
 
-        if (isLoadMore && _nextPageToken.value == "end") return
+        if (isLoadMore && nextPageToken.value == "end") return
         if (!isLoadMore) {
-            _posts.clear()
-            _nextPageToken.value = DATA.EMPTY
+            posts.clear()
+            nextPageToken.value = DATA.EMPTY
             currentQuery = query
         }
 
@@ -68,50 +69,51 @@ class BloggerViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private fun fetchPosts(isSearch: Boolean) {
-        _isLoading.value = true
+        isLoading.value = true
         val url = if (isSearch) {
-            when (_nextPageToken.value) {
+            when (nextPageToken.value) {
                 DATA.EMPTY -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/search?q=$currentQuery&key=${DATA.BLOGGER_API}"
-                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/search?q=$currentQuery&pageToken=${_nextPageToken.value}&key=${DATA.BLOGGER_API}"
+                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/search?q=$currentQuery&pageToken=${nextPageToken.value}&key=${DATA.BLOGGER_API}"
             }
         } else {
-            when (_nextPageToken.value) {
+            when (nextPageToken.value) {
                 DATA.EMPTY -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts?maxResults=${DATA.MAX_POST_RESULTS}&key=${DATA.BLOGGER_API}"
-                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts?maxResults=${DATA.MAX_POST_RESULTS}&pageToken=${_nextPageToken.value}&key=${DATA.BLOGGER_API}"
+                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts?maxResults=${DATA.MAX_POST_RESULTS}&pageToken=${nextPageToken.value}&key=${DATA.BLOGGER_API}"
             }
         }
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
+            isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                _nextPageToken.value = jsonObject.optString("nextPageToken", "end")
+                nextPageToken.value = jsonObject.optString("nextPageToken", "end")
 
                 val jsonArray = jsonObject.optJSONArray("items")
                 if (jsonArray != null) {
                     for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
-                        _posts.add(parsePost(item))
+                        posts.add(parsePost(item))
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPages() {
-        _isLoading.value = true
-        _pages.clear()
-        val url = "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages?key=${DATA.BLOGGER_API}"
+        isLoading.value = true
+        pages.clear()
+        val url =
+            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages?key=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
+            isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
@@ -119,83 +121,86 @@ class BloggerViewModel(application: Application) : AndroidViewModel(application)
                 if (jsonArray != null) {
                     for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
-                        _pages.add(parsePage(item))
+                        pages.add(parsePage(item))
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPostDetails(postId: String) {
-        _isLoading.value = true
-        _details.value = null
-        _labels.clear()
-        _comments.clear()
+        isLoading.value = true
+        details.value = null
+        labels.clear()
+        comments.clear()
 
-        val url = "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId?key=${DATA.BLOGGER_API}"
+        val url =
+            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId?key=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             if (response.isNullOrEmpty()) {
-                _isLoading.value = false
+                isLoading.value = false
                 return@StringRequest
             }
             try {
                 val jsonObject = JSONObject(response)
-                _details.value = parsePost(jsonObject)
+                details.value = parsePost(jsonObject)
 
                 val labelsArray = jsonObject.optJSONArray("labels")
                 if (labelsArray != null) {
                     for (i in 0 until labelsArray.length()) {
-                        _labels.add(Label(labelsArray.getString(i)))
+                        labels.add(Label(labelsArray.getString(i)))
                     }
                 }
                 loadComments(postId)
             } catch (e: Exception) {
                 e.printStackTrace()
-                _isLoading.value = false
+                isLoading.value = false
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPageDetails(pageId: String) {
-        _isLoading.value = true
-        _details.value = null
-        _labels.clear()
-        _comments.clear()
+        isLoading.value = true
+        details.value = null
+        labels.clear()
+        comments.clear()
 
-        val url = "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages/$pageId?key=${DATA.BLOGGER_API}"
+        val url =
+            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages/$pageId?key=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
+            isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                _details.value = parsePost(jsonObject)
+                details.value = parsePost(jsonObject)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     private fun loadComments(postId: String) {
-        val url = "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId/comments?key=${DATA.BLOGGER_API}"
+        val url =
+            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId/comments?key=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
+            isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
@@ -205,7 +210,7 @@ class BloggerViewModel(application: Application) : AndroidViewModel(application)
                         val item = jsonArray.getJSONObject(i)
                         val author = item.getJSONObject("author")
                         val image = author.getJSONObject("image").getString("url")
-                        _comments.add(
+                        comments.add(
                             Comment(
                                 id = item.getString("id"),
                                 name = author.getString("displayName"),
@@ -220,7 +225,7 @@ class BloggerViewModel(application: Application) : AndroidViewModel(application)
                 e.printStackTrace()
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)

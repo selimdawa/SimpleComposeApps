@@ -7,58 +7,58 @@ import androidx.lifecycle.ViewModel
 
 class MultiDeleteViewModel : ViewModel() {
 
-    private val _items = mutableStateListOf<String>()
-    val items: List<String> get() = _items
+    val items: List<String>
+        field = mutableStateListOf<String>()
 
-    private val _selectedItems = mutableStateListOf<String>()
-    val selectedItems: List<String> get() = _selectedItems
+    val selectedItems: List<String>
+        field = mutableStateListOf<String>()
 
-    private val _isSelectionMode = mutableStateOf(false)
-    val isSelectionMode: State<Boolean> = _isSelectionMode
+    val isSelectionMode: State<Boolean>
+        field = mutableStateOf(false)
 
     fun setItems(initialItems: List<String>) {
-        if (_items.isEmpty()) {
-            _items.addAll(initialItems)
+        if (items.isEmpty()) {
+            items.addAll(initialItems)
         }
     }
 
     fun toggleSelection(item: String) {
-        if (_selectedItems.contains(item)) {
-            _selectedItems.remove(item)
-            if (_selectedItems.isEmpty()) {
-                _isSelectionMode.value = false
+        if (selectedItems.contains(item)) {
+            selectedItems.remove(item)
+            if (selectedItems.isEmpty()) {
+                isSelectionMode.value = false
             }
         } else {
-            _selectedItems.add(item)
-            _isSelectionMode.value = true
+            selectedItems.add(item)
+            isSelectionMode.value = true
         }
     }
 
     fun enterSelectionMode(item: String) {
-        _isSelectionMode.value = true
-        if (!_selectedItems.contains(item)) {
-            _selectedItems.add(item)
+        isSelectionMode.value = true
+        if (!selectedItems.contains(item)) {
+            selectedItems.add(item)
         }
     }
 
     fun exitSelectionMode() {
-        _isSelectionMode.value = false
-        _selectedItems.clear()
+        isSelectionMode.value = false
+        selectedItems.clear()
     }
 
     fun selectAll() {
-        if (_selectedItems.size == _items.size) {
-            _selectedItems.clear()
-            _isSelectionMode.value = false
+        if (selectedItems.size == items.size) {
+            selectedItems.clear()
+            isSelectionMode.value = false
         } else {
-            _selectedItems.clear()
-            _selectedItems.addAll(_items)
-            _isSelectionMode.value = true
+            selectedItems.clear()
+            selectedItems.addAll(items)
+            isSelectionMode.value = true
         }
     }
 
     fun deleteSelected() {
-        _items.removeAll(_selectedItems)
+        items.removeAll(selectedItems)
         exitSelectionMode()
     }
 }
