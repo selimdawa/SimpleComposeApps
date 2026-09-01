@@ -17,8 +17,8 @@ android {
         applicationId = "com.flatcode.simplecomposeapps"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appName"] = "Simple Compose Apps"
@@ -50,7 +50,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.lifecycle.runtime.compose) // Added for convenience
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     //Core & UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -71,6 +73,7 @@ dependencies {
     //Networking
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.moshi)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)
@@ -90,6 +93,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.fragment)
+    implementation(libs.androidx.hilt.navigation.compose)
     //Media & PDF
     implementation(libs.android.pdf.viewer)
     implementation(libs.appintro)
@@ -104,6 +108,9 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.datastore.preferences)
     implementation(libs.timber)
+    implementation(libs.opencsv)
+    implementation(libs.compose.destinations.core)
+    ksp(libs.compose.destinations.ksp)
     //Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

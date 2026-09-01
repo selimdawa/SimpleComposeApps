@@ -236,4 +236,42 @@ object Strings {
     const val CHANNEL_INFO = "Channel Info"
     const val CHANNEL_DESCRIPTION = "Channel Description"
     const val CHANNEL_NAME = "Channel Name"
+    const val SHARE_LINK = "Share link!"
+
+    val BREEDS_LIST = listOf(
+        "Affenpinscher", "African", "Airedale", "Akita", "Appenzeller", "Australian Shepherd",
+        "Basenji", "Beagle", "Bluetick", "Borzoi", "Bouvier", "Boxer", "Brabancon", "Briard",
+        "Buhund Norwegian", "Bulldog Boston", "Bulldog English", "Bulldog French",
+        "Bullterrier Staffordshire", "Cattledog Australian", "Chihuahua", "Chow", "Clumber",
+        "Cockapoo", "Collie Border", "Coonhound", "Corgi Cardigan", "Cotondetulear", "Dachshund",
+        "Dalmatian", "Dane Great", "Deerhound Scottish", "Dhole", "Dingo", "Doberman",
+        "Elkhound Norwegian", "Entlebucher", "Eskimo", "Finnish Lapphund", "Frise Bichon",
+        "Germanshepherd", "Golden", "Greyhound Italian", "Groenendael", "Havanese", "Hound Afghan",
+        "Hound Basset", "Hound Blood", "Hound English", "Hound Ibizan", "Hound Plott",
+        "Hound Walker", "Husky", "Keeshond", "Kelpie", "Komondor", "Kuvasz", "Labradoodle",
+        "Labrador", "Leonberg", "Lhasa", "Malamute", "Malinois", "Maltese", "Mastiff Bull",
+        "Mastiff English", "Mastiff Tibetan", "Mexicanhairless", "Mix", "Mountain Bernese",
+        "Mountain Swiss", "Newfoundland", "Otterhound", "Ovcharka Caucasian", "Papillon",
+        "Pekinese", "Pembroke", "Pinscher Miniature", "Pitbull", "Pointer German",
+        "Pointer Germanlonghair", "Pomeranian", "Poodle Medium", "Poodle Miniature",
+        "Poodle Standard", "Poodle Toy", "Pug", "Puggle", "Pyrenees", "Redbone",
+        "Retriever Chesapeake", "Retriever Curly", "Retriever Flatcoated", "Retriever Golden",
+        "Ridgeback Rhodesian", "Rottweiler", "Saluki", "Samoyed", "Schipperke", "Schnauzer Giant",
+        "Schnauzer Miniature", "Segugio Italian", "Setter English", "Setter Gordon",
+        "Setter Irish", "Sharpei", "Sheepdog English", "Sheepdog Shetland", "Shiba", "Shihtzu",
+        "Spaniel Blenheim", "Spaniel Brittany", "Spaniel Cocker", "Spaniel Irish",
+        "Spaniel Japanese", "Spaniel Sussex", "Spaniel Welsh", "Springer English", "Stbernard",
+        "Terrier America", "Terrier Australia", "Terrier Bedlington", "Terrier Borde",
+        "Terrier Cairn", "Terrier Dandi", "Terrier Fox", "Terrier Irish", "Terrier Kerryblue",
+        "Terrier Lakeland", "Terrier Norfolk", "Terrier Norwich", "Terrier Patterdale",
+        "Terrier Russell", "Terrier Scottish", "Terrier Sealyham", "Terrier Silky",
+        "Terrier Tibetan", "Terrier Toy", "Terrier Welsh", "Terrier Westhighland",
+        "Terrier Wheaten", "Terrier Yorkshire", "Tervuren", "Vizsla", "Waterdog Spanis",
+        "Weimaraner", "Whippet", "Wolfhound Irish"
+    )
+
+    val MULTI_DELETE_VALUES = listOf(
+        "One", "Two", "Three", "Five", "Sex", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"
+    )
 }

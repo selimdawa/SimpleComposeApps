@@ -2078,6 +2078,35 @@ object AppVectors {
         close()
     }.build()
 
+    val TodoCheck: ImageVector = ImageVector.Builder(
+        name = "TodoCheck",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f
+    ).path(fill = SolidColor(Color.White)) {
+        moveTo(18f, 7f)
+        lineToRelative(-1.41f, -1.41f)
+        lineToRelative(-6.34f, 6.34f)
+        lineToRelative(1.41f, 1.41f)
+        lineTo(18f, 7f)
+        close()
+        moveTo(22.24f, 5.59f)
+        lineTo(11.66f, 16.17f)
+        lineTo(7.48f, 12f)
+        lineToRelative(-1.41f, 1.41f)
+        lineTo(11.66f, 19f)
+        lineTo(23.23f, 7f)
+        lineToRelative(-1.42f, -1.41f)
+        close()
+        moveTo(0.41f, 13.41f)
+        lineTo(6f, 19f)
+        lineToRelative(1.41f, -1.41f)
+        lineTo(1.83f, 12f)
+        lineTo(0.41f, 13.41f)
+        close()
+    }.build()
+
     val Loading: ImageVector = ImageVector.Builder(
         name = "Loading",
         defaultWidth = 24.dp,

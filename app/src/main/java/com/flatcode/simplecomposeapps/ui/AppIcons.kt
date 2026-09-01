@@ -99,6 +99,7 @@ object AppIcons {
     val Person: ImageVector = AppVectors.Person
     val SelectAll: ImageVector = AppVectors.SelectAll
     val Star: ImageVector = AppVectors.Star
+    val TodoCheck: ImageVector = AppVectors.TodoCheck
     val Video: ImageVector = AppVectors.Video
     val InfoOutline: ImageVector = AppVectors.InfoOutline
     val Loading: ImageVector = AppVectors.Loading
