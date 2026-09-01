@@ -28,7 +28,6 @@ class RandomImageGeneratingActivity : AppCompatActivity() {
             SimpleComposeAppsTheme {
                 RandomImageGeneratingScreen(
                     viewModel = viewModel,
-                    onBack = { finish() },
                     onNavigateToInfo = {
                         val catInfo = viewModel.catBreedInfo.value
                         if (catInfo != null) {

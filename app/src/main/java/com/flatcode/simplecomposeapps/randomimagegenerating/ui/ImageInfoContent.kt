@@ -50,14 +50,6 @@ fun ImageInfoContent(
     val catInfo by viewModel.catInfo
 
     Box(modifier = modifier) {
-        // Background
-        Image(
-            painter = painterResource(id = AppIcons.Blur),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-
         catInfo?.let { info ->
             Column(
                 modifier = Modifier

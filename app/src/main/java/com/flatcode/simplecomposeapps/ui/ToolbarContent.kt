@@ -35,14 +35,15 @@ fun ToolbarContent(
     onBackClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     navigationIcon: @Composable (() -> Unit)? = null,
-    actions: @Composable (() -> Unit)? = null
+    actions: @Composable (() -> Unit)? = null,
+    includeStatusBarsPadding: Boolean = true
 ) {
     val mcBgColor = AppTheme.colors.background
 
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .then(if (includeStatusBarsPadding) Modifier.statusBarsPadding() else Modifier)
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),

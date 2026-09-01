@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.randomimagegenerating.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,8 +29,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingViewModel
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -45,103 +44,96 @@ fun RandomImageGeneratingContent(
     val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
     val imageUrl by viewModel.imageUrl
 
-    Box(
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Background
-        Image(
-            painter = painterResource(id = AppIcons.Blur),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-
-        Column(
+        Card(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+            shape = RoundedCornerShape(10.dp),
+            elevation = CardDefaults.cardElevation(6.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp),
-                elevation = CardDefaults.cardElevation(6.dp)
-            ) {
-                AsyncImage(
-                    model = imageUrl.ifEmpty { AppIcons.HelloKitty },
-                    contentDescription = "Cat Image",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            }
+            AsyncImage(
+                model = imageUrl.ifEmpty { AppIcons.HelloKitty },
+                contentDescription = "Cat Image",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
 
-            Card(
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            shape = RoundedCornerShape(6.dp),
+            elevation = CardDefaults.cardElevation(0.dp)
+        ) {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp),
-                shape = RoundedCornerShape(6.dp),
-                elevation = CardDefaults.cardElevation(0.dp)
+                    .background(mcBg)
+                    .padding(10.dp)
+                    .height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(mcBg)
-                        .padding(10.dp)
-                        .height(IntrinsicSize.Min),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                        .weight(1f)
+                        .clickable { onNavigateToInfo() },
+                    contentAlignment = Alignment.Center
                 ) {
-                    IconButton(
-                        onClick = { onNavigateToInfo() },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = AppIcons.InfoIcon),
-                            contentDescription = "Info",
-                            tint = Color.White,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-
-                    VerticalDivider(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(1.dp),
-                        color = Color.White
+                    Icon(
+                        painter = painterResource(id = AppIcons.InfoIcon),
+                        contentDescription = "Info",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
                     )
+                }
 
-                    IconButton(
-                        onClick = { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = AppIcons.Down),
-                            contentDescription = "Download",
-                            tint = Color.White,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
+                VerticalDivider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp),
+                    color = Color.White
+                )
 
-                    VerticalDivider(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(1.dp),
-                        color = Color.White
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = AppIcons.Down),
+                        contentDescription = "Download",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
                     )
+                }
 
-                    IconButton(
-                        onClick = { viewModel.getImage() },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = AppIcons.Refresh),
-                            contentDescription = "Refresh",
-                            tint = Color.White,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
+                VerticalDivider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp),
+                    color = Color.White
+                )
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { viewModel.getImage() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = AppIcons.Refresh),
+                        contentDescription = "Refresh",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
                 }
             }
         }
