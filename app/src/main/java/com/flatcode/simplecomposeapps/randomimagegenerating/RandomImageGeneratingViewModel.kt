@@ -12,17 +12,17 @@ import org.json.JSONException
 
 class RandomImageGeneratingViewModel(application: Application) : AndroidViewModel(application) {
 
-    val imageUrl: State<String>
-        field = mutableStateOf("")
+    private val _imageUrl = mutableStateOf("")
+    val imageUrl: State<String> = _imageUrl
 
-    val isLoading: State<Boolean>
-        field = mutableStateOf(false)
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
 
-    val errorMessage: State<String?>
-        field = mutableStateOf<String?>(null)
+    private val _errorMessage = mutableStateOf<String?>(null)
+    val errorMessage: State<String?> = _errorMessage
 
-    val catBreedInfo: State<CatBreedInfo?>
-        field = mutableStateOf<CatBreedInfo?>(null)
+    private val _catBreedInfo = mutableStateOf<CatBreedInfo?>(null)
+    val catBreedInfo: State<CatBreedInfo?> = _catBreedInfo
 
     init {
         getImage()
@@ -30,43 +30,51 @@ class RandomImageGeneratingViewModel(application: Application) : AndroidViewMode
 
     fun getImage() {
         val url = DATA.API_RANDOM_IMAGE
-        isLoading.value = true
-        errorMessage.value = null
+        _isLoading.value = true
+        _errorMessage.value = null
 
         val queue = Volley.newRequestQueue(getApplication())
         val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
                 val kittyData = response.getJSONObject(0)
                 val catUrl = kittyData.getString(DATA.JSON_URL)
-                imageUrl.value = catUrl
+                _imageUrl.value = catUrl
 
                 try {
                     val breedsInfo = kittyData.getJSONArray(DATA.JSON_BREEDS)
                     if (!breedsInfo.isNull(0)) {
                         val breedsData = breedsInfo.getJSONObject(0)
-                        catBreedInfo.value = CatBreedInfo(
+                        _catBreedInfo.value = CatBreedInfo(
                             name = if (breedsData.has(DATA.JSON_NAME)) breedsData.getString(DATA.JSON_NAME) else DATA.EMPTY,
                             origin = if (breedsData.has(DATA.JSON_ORIGIN)) breedsData.getString(DATA.JSON_ORIGIN) else DATA.EMPTY,
-                            description = if (breedsData.has(DATA.JSON_DESCRIPTION)) breedsData.getString(DATA.JSON_DESCRIPTION) else DATA.EMPTY,
-                            temperament = if (breedsData.has(DATA.JSON_TEMPERAMENT)) breedsData.getString(DATA.JSON_TEMPERAMENT) else DATA.EMPTY,
-                            wikiUrl = if (breedsData.has(DATA.JSON_WIKIPEDIA_URL)) breedsData.getString(DATA.JSON_WIKIPEDIA_URL) else DATA.EMPTY,
-                            moreLink = if (breedsData.has(DATA.JSON_VCA_HOSPITALS_URL)) breedsData.getString(DATA.JSON_VCA_HOSPITALS_URL) else DATA.EMPTY,
+                            description = if (breedsData.has(DATA.JSON_DESCRIPTION)) breedsData.getString(
+                                DATA.JSON_DESCRIPTION
+                            ) else DATA.EMPTY,
+                            temperament = if (breedsData.has(DATA.JSON_TEMPERAMENT)) breedsData.getString(
+                                DATA.JSON_TEMPERAMENT
+                            ) else DATA.EMPTY,
+                            wikiUrl = if (breedsData.has(DATA.JSON_WIKIPEDIA_URL)) breedsData.getString(
+                                DATA.JSON_WIKIPEDIA_URL
+                            ) else DATA.EMPTY,
+                            moreLink = if (breedsData.has(DATA.JSON_VCA_HOSPITALS_URL)) breedsData.getString(
+                                DATA.JSON_VCA_HOSPITALS_URL
+                            ) else DATA.EMPTY,
                             imageUrl = catUrl
                         )
                     } else {
-                        catBreedInfo.value = null
+                        _catBreedInfo.value = null
                     }
                 } catch (e: JSONException) {
-                    catBreedInfo.value = null
+                    _catBreedInfo.value = null
                 }
             } catch (e: JSONException) {
-                errorMessage.value = "Failed to parse data"
+                _errorMessage.value = "Failed to parse data"
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }, { error ->
-            errorMessage.value = error.message ?: "Unknown error"
-            isLoading.value = false
+            _errorMessage.value = error.message ?: "Unknown error"
+            _isLoading.value = false
         })
         queue.add(arrayRequest)
     }

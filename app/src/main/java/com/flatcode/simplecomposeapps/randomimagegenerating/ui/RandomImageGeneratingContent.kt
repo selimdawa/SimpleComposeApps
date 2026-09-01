@@ -2,6 +2,7 @@ package com.flatcode.simplecomposeapps.randomimagegenerating.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +45,7 @@ fun RandomImageGeneratingContent(
     val themeId by MultiColorManager.currentThemeId.collectAsState()
     val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
     val imageUrl by viewModel.imageUrl
+    val interactionSource = remember { MutableInteractionSource() }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -83,7 +86,10 @@ fun RandomImageGeneratingContent(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onNavigateToInfo() },
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) { onNavigateToInfo() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -104,7 +110,10 @@ fun RandomImageGeneratingContent(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -125,7 +134,10 @@ fun RandomImageGeneratingContent(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { viewModel.getImage() },
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) { viewModel.getImage() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
