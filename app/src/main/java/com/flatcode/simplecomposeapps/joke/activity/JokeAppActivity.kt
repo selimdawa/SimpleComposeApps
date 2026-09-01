@@ -20,7 +20,7 @@ class JokeAppActivity : ComponentActivity() {
             SimpleComposeAppsTheme {
                 JokeScreen(
                     viewModel = viewModel,
-                ) { finish() }
+                )
             }
         }
     }

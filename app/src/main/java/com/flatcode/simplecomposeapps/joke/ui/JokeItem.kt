@@ -10,48 +10,50 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.joke.model.Joke
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun JokeItem(joke: Joke) {
-    val mcBg = AppTheme.colors.background
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
+    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = mcBg),
+        colors = CardDefaults.cardColors(containerColor = colorOnBackground),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 21.dp, vertical = 15.dp),
         ) {
             if (joke.type == "single") {
                 Text(
                     text = joke.joke ?: DATA.EMPTY,
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium,
+                    color = colorError,
+                    fontSize = 16.sp,
                 )
             } else {
                 Text(
                     text = joke.setup ?: DATA.EMPTY,
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
+                    color = colorError,
+                    fontSize = 16.sp,
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(15.dp))
                 Text(
                     text = joke.delivery ?: DATA.EMPTY,
-                    color = Color.White.copy(alpha = 0.9f),
+                    color = colorError,
                     fontSize = 16.sp,
                 )
             }
