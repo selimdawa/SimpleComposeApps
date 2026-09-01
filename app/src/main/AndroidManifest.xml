@@ -152,6 +152,38 @@
             android:name=".stockmarket.StockMarketActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".randomimagegenerating.RandomImageGeneratingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".randomimagegenerating.ImageInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".blogger.activity.BloggerAppActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".blogger.activity.PageDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".blogger.activity.PagesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".blogger.activity.PostDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".stockmarket.presentation.main.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".stockmarket.presentation.splash.SplashActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

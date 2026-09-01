@@ -23,7 +23,8 @@ class StopWatchActivity : AppCompatActivity() {
         setContent {
             SimpleComposeAppsTheme {
                 StopWatchScreen(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onBack = { finish() }
                 )
             }
         }

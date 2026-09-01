@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,13 +31,18 @@ fun ToolbarContent(
     onLeftClick: (() -> Unit)? = null,
     rightIcon: ImageVector? = null,
     onRightClick: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    hasBack: Boolean = false,
+    onBackClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    navigationIcon: @Composable (() -> Unit)? = null,
+    actions: @Composable (() -> Unit)? = null
 ) {
     val mcBgColor = AppTheme.colors.background
 
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .statusBarsPadding()
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
@@ -47,14 +53,38 @@ fun ToolbarContent(
                 .fillMaxWidth()
                 .height(45.dp)
         ) {
-            if (leftIcon != null) {
+            val finalNavigationIcon: @Composable (() -> Unit)? = navigationIcon ?: if (hasBack) {
+                {
+                    Box(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable(enabled = onBackClick != null) { onBackClick?.invoke() }
+                    ) {
+                        Icon(
+                            imageVector = AppIcons.Back,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
+            } else null
+
+            if (finalNavigationIcon != null) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 10.dp)
+                ) {
+                    finalNavigationIcon()
+                }
+            } else if (leftIcon != null) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 10.dp)
                         .size(30.dp)
-                        .clickable(enabled = onLeftClick != null) { onLeftClick?.invoke() }
-                ) {
+                        .clickable(enabled = onLeftClick != null) { onLeftClick?.invoke() }) {
                     Icon(
                         imageVector = leftIcon,
                         contentDescription = null,
@@ -73,14 +103,21 @@ fun ToolbarContent(
                 textAlign = TextAlign.Center
             )
 
-            if (rightIcon != null) {
+            if (actions != null) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 10.dp)
+                ) {
+                    actions()
+                }
+            } else if (rightIcon != null) {
                 Box(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 15.dp)
                         .size(30.dp)
-                        .clickable(enabled = onRightClick != null) { onRightClick?.invoke() }
-                ) {
+                        .clickable(enabled = onRightClick != null) { onRightClick?.invoke() }) {
                     Icon(
                         imageVector = rightIcon,
                         contentDescription = null,
