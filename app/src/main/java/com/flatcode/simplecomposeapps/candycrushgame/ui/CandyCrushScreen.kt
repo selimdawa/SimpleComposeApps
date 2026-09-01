@@ -36,12 +36,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushViewModel
-import com.flatcode.simplecomposeapps.ui.CommonTopAppBar
+import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import kotlin.math.abs
 
 @Composable
 fun CandyCrushScreen(
-    viewModel: CandyCrushViewModel
+    viewModel: CandyCrushViewModel,
+    onBack: () -> Unit
 ) {
     val score by viewModel.score
     val board = viewModel.board
@@ -57,8 +59,10 @@ fun CandyCrushScreen(
         Scaffold(
             containerColor = Color.Transparent,
             topBar = {
-                CommonTopAppBar(
-                    title = Strings.CANDY_CRUSH_GAME
+                ToolbarContent(
+                    title = Strings.CANDY_CRUSH_GAME,
+                    hasBack = false,
+                    onBackClick = onBack
                 )
             }
         ) { paddingValues ->

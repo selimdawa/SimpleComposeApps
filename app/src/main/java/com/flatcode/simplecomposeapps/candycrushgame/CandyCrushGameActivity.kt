@@ -23,7 +23,8 @@ class CandyCrushGameActivity : AppCompatActivity() {
         setContent {
             SimpleComposeAppsTheme {
                 CandyCrushScreen(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onBack = { finish() }
                 )
             }
         }
