@@ -2,6 +2,16 @@ package com.flatcode.simplecomposeapps.utils
 
 @Suppress("SpellCheckingInspection")
 object DATA {
+    //Database
+    const val EMPTY = ""
+    const val DATA = "data"
+    const val DATA_BASE = "data"
+    const val SPACE = " "
+    const val UNKNOWN = "Unknown"
+    var searchStatus = false
+
+    //Shared
+    var FIRST_INSTALL = "firstInstall"
 
     //Main
     const val STOP_WATCH = "Stop Watch"
@@ -36,15 +46,6 @@ object DATA {
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
     const val CATEGORY_MEALS = "Category Meals"
     const val DETAILS_POKE = "Pokémon Details"
-
-    //Database
-    const val DATA_BASE = "data"
-    const val UNKNOWN = "Unknown"
-    const val SPACE = " "
-    var searchStatus = false
-
-    //Shared
-    var FIRST_INSTALL = "firstInstall"
 
     //Blogger
     const val BLOGGER_API = "AIzaSyDAq5n9ShBngyuSoWrFBnuena94qPm2Gk0" // API your blogger

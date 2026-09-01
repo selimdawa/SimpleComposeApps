@@ -11,12 +11,26 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoOkHttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoLoggingInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @CryptoLoggingInterceptor
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -25,9 +39,10 @@ object NetworkModule {
         }
     }
 
+    @CryptoOkHttpClient
     @Provides
     @Singleton
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(@CryptoLoggingInterceptor loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -35,9 +50,10 @@ object NetworkModule {
             .build()
     }
 
+    @CryptoRetrofit
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(@CryptoOkHttpClient okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(DATA.BASE_URL_CRYPTO)
             .client(okHttpClient)
@@ -47,7 +63,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCryptoApi(retrofit: Retrofit): CryptoApi {
+    fun provideCryptoApi(@CryptoRetrofit retrofit: Retrofit): CryptoApi {
         return retrofit.create(CryptoApi::class.java)
     }
 }

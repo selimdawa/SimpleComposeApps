@@ -25,9 +25,9 @@ import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
+import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 
 @Composable
 fun CharacterItem(

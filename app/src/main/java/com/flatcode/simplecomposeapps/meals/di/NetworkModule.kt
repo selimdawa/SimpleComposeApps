@@ -8,12 +8,18 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MealRetrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @MealRetrofit
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -25,7 +31,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMealApi(retrofit: Retrofit): MealApi {
+    fun provideMealApi(@MealRetrofit retrofit: Retrofit): MealApi {
         return retrofit.create(MealApi::class.java)
     }
 }

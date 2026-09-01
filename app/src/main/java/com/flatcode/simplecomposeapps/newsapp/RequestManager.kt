@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.newsapp
 
 import android.content.Context
 import android.widget.Toast
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.newsapp.model.NewsApiResponse
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -32,7 +31,7 @@ class RequestManager(private val context: Context) {
             ) {
                 val responseBody = response.body()
                 if (!response.isSuccessful || responseBody == null) {
-                    Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, Strings.ERROR, Toast.LENGTH_SHORT).show()
                     listener.onError("Request Failed or Empty Body")
                     return
                 }
@@ -40,7 +39,7 @@ class RequestManager(private val context: Context) {
             }
 
             override fun onFailure(call: Call<NewsApiResponse>, t: Throwable) {
-                listener.onError(context.getString(R.string.error))
+                listener.onError(Strings.ERROR)
             }
         })
     }

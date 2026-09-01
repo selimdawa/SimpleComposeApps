@@ -8,12 +8,18 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class PokeRetrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @PokeRetrofit
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -25,7 +31,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePokeApi(retrofit: Retrofit): ApiService {
+    fun providePokeApi(@PokeRetrofit retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 }

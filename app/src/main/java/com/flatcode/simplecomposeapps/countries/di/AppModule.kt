@@ -13,12 +13,18 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CountryRetrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @CountryRetrofit
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -30,7 +36,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCountryAPI(retrofit: Retrofit): CountryAPI {
+    fun provideCountryAPI(@CountryRetrofit retrofit: Retrofit): CountryAPI {
         return retrofit.create(CountryAPI::class.java)
     }
 

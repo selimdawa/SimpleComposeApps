@@ -2,6 +2,7 @@ package com.flatcode.simplecomposeapps.pokemon.data
 
 import com.flatcode.simplecomposeapps.pokemon.data.database.dao.PokeDao
 import com.flatcode.simplecomposeapps.pokemon.data.database.entities.toDomain
+import com.flatcode.simplecomposeapps.pokemon.data.model.toDomain
 import com.flatcode.simplecomposeapps.pokemon.data.network.ApiService
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItemDetails

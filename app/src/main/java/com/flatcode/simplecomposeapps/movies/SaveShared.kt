@@ -3,7 +3,12 @@ package com.flatcode.simplecomposeapps.movies
 import android.content.Context
 import android.content.SharedPreferences
 
-class SaveShared(context: Context) {
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class SaveShared @Inject constructor(@ApplicationContext context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("movies_prefs", Context.MODE_PRIVATE)
 

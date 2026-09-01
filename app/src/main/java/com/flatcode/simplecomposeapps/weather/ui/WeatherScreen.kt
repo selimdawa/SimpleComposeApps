@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.weather.WeatherViewModel
-import com.flatcode.simplecomposeapps.weather.model.WeatherModel
+import com.flatcode.simplecomposeapps.weather.db.WeatherModel
 
 @Composable
 fun WeatherScreen(

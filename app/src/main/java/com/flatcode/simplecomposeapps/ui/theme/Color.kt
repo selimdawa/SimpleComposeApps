@@ -14,6 +14,7 @@ val Pink40 = Color(0xFF7D5260)
 // App Colors
 val ColorPrimary = Color(0xFFFFFFFF)
 val ImageProfile = Color(0xFFE0E0E0)
+val image_profile = Color(0xFF090909)
 val Dark = Color(0xFF000000)
 val Black = Color(0xFF212121)
 val White = Color(0xFFFFFFFF)
