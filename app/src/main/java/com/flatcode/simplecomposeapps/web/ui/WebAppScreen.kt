@@ -2,6 +2,8 @@ package com.flatcode.simplecomposeapps.web.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,6 +22,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,18 +39,22 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.R
-import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun getMcBgColor(): Color {
-    return MaterialTheme.colorScheme.secondaryContainer
+    return AppTheme.colors.background
 }
 
 @Composable
 fun getMcTickColor(): Color {
-    return MaterialTheme.colorScheme.primary
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    return rememberAttributeColor("mc_track", MaterialTheme.colorScheme.primary, themeId)
 }
 
 val CardTextSize = 18.sp
@@ -54,20 +64,33 @@ val SocialMarginHorizontal = 5.dp
 val SocialPadding = 5.dp
 
 @Composable
-fun MainScreen() {
+fun WebAppScreen(
+    onWebSite: () -> Unit,
+    onInstagram: () -> Unit,
+    onTwitter: () -> Unit,
+    onFacebook: () -> Unit,
+    onAboutUs: () -> Unit,
+    onSupport: () -> Unit,
+    onShareApp: () -> Unit,
+    onRateApp: () -> Unit
+) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val colorOnBackground =
+        rememberAttributeColor("colorOnBackground", MaterialTheme.colorScheme.onBackground, themeId)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.onBackground)
+            .background(colorOnBackground)
     ) {
         ToolbarContent(
-            title = Strings.WEB_APP,
-            hasBack = false
+            title = Strings.WEB_APP, hasBack = false
         )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarsPadding()
                 .padding(start = 5.dp, end = 5.dp, bottom = 5.dp)
         ) {
             Row(
@@ -87,7 +110,8 @@ fun MainScreen() {
                     imageSize = 80.dp,
                     text = Strings.SUPPORT,
                     textColor = Color.White,
-                    textSize = CardTextSize
+                    textSize = CardTextSize,
+                    onClick = onSupport
                 )
 
                 CardItem(
@@ -101,7 +125,8 @@ fun MainScreen() {
                     imageSize = 80.dp,
                     text = Strings.ABOUT_US,
                     textColor = Color.White,
-                    textSize = CardTextSize
+                    textSize = CardTextSize,
+                    onClick = onAboutUs
                 )
             }
 
@@ -123,7 +148,8 @@ fun MainScreen() {
                     imageSize = 100.dp,
                     text = Strings.WEB_SITE,
                     textColor = Color.White,
-                    textSize = 24.sp
+                    textSize = 24.sp,
+                    onClick = onWebSite
                 )
             }
 
@@ -144,7 +170,8 @@ fun MainScreen() {
                     imageSize = 80.dp,
                     text = Strings.SHARE_APP,
                     textColor = Color.White,
-                    textSize = CardTextSize
+                    textSize = CardTextSize,
+                    onClick = onShareApp
                 )
 
                 CardItem(
@@ -159,7 +186,8 @@ fun MainScreen() {
                     imageHeight = 80.dp,
                     text = Strings.RATE_APP,
                     textColor = Color.White,
-                    textSize = CardTextSize
+                    textSize = CardTextSize,
+                    onClick = onRateApp
                 )
             }
 
@@ -171,17 +199,20 @@ fun MainScreen() {
             ) {
                 SocialIcon(
                     modifier = Modifier.weight(1f),
-                    imageResId = AppIcons.Facebook
+                    imageResId = AppIcons.Facebook,
+                    onClick = onFacebook
                 )
 
                 SocialIcon(
                     modifier = Modifier.weight(1f),
-                    imageResId = AppIcons.Instagram
+                    imageResId = AppIcons.Instagram,
+                    onClick = onInstagram
                 )
 
                 SocialIcon(
                     modifier = Modifier.weight(1f),
-                    imageResId = AppIcons.Twitter
+                    imageResId = AppIcons.Twitter,
+                    onClick = onTwitter
                 )
             }
         }
@@ -200,23 +231,23 @@ fun CardItem(
     imageHeight: Dp? = null,
     text: String,
     textColor: Color,
-    textSize: TextUnit
+    textSize: TextUnit,
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxHeight(),
+        modifier = modifier.fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = cardModifier,
+            modifier = cardModifier.clickable(
+                interactionSource = remember { MutableInteractionSource() }, indication = null
+            ) { onClick() },
             shape = RoundedCornerShape(cornerRadius),
-            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+            colors = CardDefaults.cardColors(containerColor = getMcBgColor())
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(getMcBgColor()),
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -228,6 +259,7 @@ fun CardItem(
                         (imageWidth != null && imageHeight != null) -> Modifier
                             .width(imageWidth)
                             .height(imageHeight)
+
                         else -> Modifier.size(80.dp)
                     },
                     colorFilter = ColorFilter.tint(imageTint)
@@ -249,14 +281,15 @@ fun CardItem(
 
 @Composable
 fun SocialIcon(
-    modifier: Modifier = Modifier,
-    imageResId: Int
+    modifier: Modifier = Modifier, imageResId: Int, onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxHeight()
             .padding(horizontal = SocialMarginHorizontal)
-    ) {
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() }, indication = null
+            ) { onClick() }) {
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = null,
@@ -270,8 +303,16 @@ fun SocialIcon(
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreenPreview() {
+fun WebAppScreenPreview() {
     MaterialTheme {
-        MainScreen()
+        WebAppScreen(
+            onWebSite = {},
+            onInstagram = {},
+            onTwitter = {},
+            onFacebook = {},
+            onAboutUs = {},
+            onSupport = {},
+            onShareApp = {},
+            onRateApp = {})
     }
 }

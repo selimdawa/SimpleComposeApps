@@ -27,9 +27,7 @@ class WebViewActivity : ComponentActivity() {
         setContent {
             SimpleComposeAppsTheme {
                 WebViewScreen(
-                    url = url,
-                    title = webName,
-                    onBack = { finish() }
+                    url = url
                 )
             }
         }
