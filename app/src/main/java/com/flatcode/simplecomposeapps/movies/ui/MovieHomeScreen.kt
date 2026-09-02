@@ -24,6 +24,7 @@ import com.flatcode.simplecomposeapps.movies.MovieHomeViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.movies.models.MoviesUiState
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -37,11 +38,12 @@ fun MovieHomeScreen(
 
     Scaffold(
         topBar = {
-            MoviesTopAppBar(
+            ToolbarContent(
                 title = Strings.MOVIES,
-                onBack = onBack,
-                actionIcon = AppIcons.Favorite,
-                onActionClick = onFavoriteClick
+                hasBack = false,
+                onBackClick = onBack,
+                rightIcon = AppIcons.Favorite,
+                onRightClick = onFavoriteClick
             )
         },
         containerColor = MaterialTheme.colorScheme.background

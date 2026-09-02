@@ -48,8 +48,7 @@ fun RandomImageGeneratingContent(
     val interactionSource = remember { MutableInteractionSource() }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
             modifier = Modifier
@@ -87,10 +86,8 @@ fun RandomImageGeneratingContent(
                     modifier = Modifier
                         .weight(1f)
                         .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ) { onNavigateToInfo() },
-                    contentAlignment = Alignment.Center
+                            interactionSource = interactionSource, indication = null
+                        ) { onNavigateToInfo() }, contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(id = AppIcons.InfoIcon),
@@ -103,16 +100,14 @@ fun RandomImageGeneratingContent(
                 VerticalDivider(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(1.dp),
-                    color = Color.White
+                        .width(1.dp), color = Color.White
                 )
 
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
+                            interactionSource = interactionSource, indication = null
                         ) { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
                     contentAlignment = Alignment.Center
                 ) {
@@ -127,18 +122,15 @@ fun RandomImageGeneratingContent(
                 VerticalDivider(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(1.dp),
-                    color = Color.White
+                        .width(1.dp), color = Color.White
                 )
 
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ) { viewModel.getImage() },
-                    contentAlignment = Alignment.Center
+                            interactionSource = interactionSource, indication = null
+                        ) { viewModel.getImage() }, contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = painterResource(id = AppIcons.Refresh),

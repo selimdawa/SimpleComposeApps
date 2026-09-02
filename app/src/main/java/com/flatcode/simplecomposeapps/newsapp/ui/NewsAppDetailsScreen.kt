@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
-import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -24,27 +24,14 @@ fun NewsAppDetailsScreen(
     headline: NewsHeadlines,
     onBack: () -> Unit
 ) {
-    val mcTrack = AppTheme.colors.track
     val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = "News Details",
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+            ToolbarContent(
+                title = "News Details",
+                hasBack = true,
+                onBackClick = onBack,
             )
         },
         containerColor = MaterialTheme.colorScheme.background

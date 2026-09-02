@@ -1,15 +1,12 @@
 package com.flatcode.simplecomposeapps.randomimagegenerating.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,26 +24,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.randomimagegenerating.ImageInfoViewModel
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun ImageInfoContent(
-    modifier: Modifier = Modifier,
-    viewModel: ImageInfoViewModel,
-    onOpenUrl: (String) -> Unit
+    modifier: Modifier = Modifier, viewModel: ImageInfoViewModel, onOpenUrl: (String) -> Unit
 ) {
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTick = rememberAttributeColor("mc_tick", Color.Gray, themeId)
+    val mcTick = rememberAttributeColor("mc_track", Color.Gray, themeId)
     val catInfo by viewModel.catInfo
 
     Box(modifier = modifier) {
@@ -59,8 +53,7 @@ fun ImageInfoContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     elevation = CardDefaults.cardElevation(6.dp)
                 ) {

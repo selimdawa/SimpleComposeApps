@@ -144,7 +144,7 @@ object Strings {
     const val MORE_INFO = "More Info"
 
     fun numberPlaceholder(n: Int) = n.toString()
-    fun selectedPlaceholder(count: Int) = "Selected $count"
+    fun selectedPlaceholder(count: Int) = "$count Selected"
     fun youClickedPlaceholder(text: String) = "You clicked $text"
 
     // Stop Watch

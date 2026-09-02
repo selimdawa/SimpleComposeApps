@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "pops")
 data class PopItem(
-    @PrimaryKey val name: String,
-    val series: String? = null
+    @PrimaryKey val id: Int,
+    val name: String,
+    val img: String,
+    val series: String
 )

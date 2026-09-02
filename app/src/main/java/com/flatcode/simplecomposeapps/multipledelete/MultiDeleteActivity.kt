@@ -9,14 +9,12 @@ import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.multipledelete.ui.MultiDeleteScreen
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import io.selimdawa.multicolors.MultiColorManager
 
 class MultiDeleteActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MultiDeleteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

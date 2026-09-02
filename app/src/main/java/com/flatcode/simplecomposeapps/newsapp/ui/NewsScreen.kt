@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.newsapp.viewmodel.NewsViewModel
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 
@@ -42,9 +43,9 @@ fun NewsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    if (isSearchMode) {
+            if (isSearchMode) {
+                TopAppBar(
+                    title = {
                         TextField(
                             value = searchQuery,
                             onValueChange = { searchQuery = it },
@@ -66,18 +67,8 @@ fun NewsScreen(
                                 viewModel.searchNews(searchQuery)
                             })
                         )
-                    } else {
-                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            Text(
-                                text = "News App",
-                                color = Color.White,
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                        }
-                    }
-                },
-                navigationIcon = {
-                    if (isSearchMode) {
+                    },
+                    navigationIcon = {
                         IconButton(onClick = {
                             isSearchMode = false
                             searchQuery = ""
@@ -85,21 +76,18 @@ fun NewsScreen(
                         }) {
                             Icon(imageVector = AppIcons.Close, contentDescription = null, tint = Color.White)
                         }
-                    } else {
-                        IconButton(onClick = onBack) {
-                            Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
-                        }
-                    }
-                },
-                actions = {
-                    if (!isSearchMode) {
-                        IconButton(onClick = { isSearchMode = true }) {
-                            Icon(imageVector = AppIcons.Search, contentDescription = null, tint = Color.White)
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
-            )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+                )
+            } else {
+                ToolbarContent(
+                    title = "News App",
+                    hasBack = false,
+                    onBackClick = onBack,
+                    rightIcon = AppIcons.Search,
+                    onRightClick = { isSearchMode = true }
+                )
+            }
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

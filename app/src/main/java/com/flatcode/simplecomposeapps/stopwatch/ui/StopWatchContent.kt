@@ -32,7 +32,7 @@ fun StopWatchContent(
     viewModel: StopWatchViewModel
 ) {
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTick = rememberAttributeColor("mc_tick", Color.LightGray, themeId)
+    val mcTick = rememberAttributeColor("mc_track", Color.LightGray, themeId)
 
     val timeDisplay by viewModel.timeDisplay
     val isRunning by viewModel.isRunning

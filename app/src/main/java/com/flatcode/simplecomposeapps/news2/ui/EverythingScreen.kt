@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.news2.NewsEverythingViewModel
 import com.flatcode.simplecomposeapps.news2.common.Resource
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -36,7 +37,11 @@ fun EverythingScreen(
 
     Scaffold(
         topBar = {
-            NewsTopAppBar(title = Strings.EVERYTHING, onBack = onBack)
+            ToolbarContent(
+                title = Strings.EVERYTHING,
+                hasBack = false,
+                onBackClick = onBack,
+            )
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

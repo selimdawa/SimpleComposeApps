@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.news2.NewsTopArticlesViewModel
 import com.flatcode.simplecomposeapps.news2.common.Resource
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -36,7 +37,11 @@ fun TopArticlesScreen(
 
     Scaffold(
         topBar = {
-            NewsTopAppBar(title = Strings.TOP_ARTICLES, onBack = onBack)
+            ToolbarContent(
+                title = Strings.TOP_ARTICLES,
+                hasBack = false,
+                onBackClick = onBack,
+            )
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

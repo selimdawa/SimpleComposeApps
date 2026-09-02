@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.movies.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -49,7 +50,11 @@ fun MovieDetailScreen(
 
     Scaffold(
         topBar = {
-            MoviesTopAppBar(title = Strings.DETAILS_MOVIE, onBack = onBack)
+            ToolbarContent(
+                title = Strings.DETAILS_MOVIE,
+                hasBack = true,
+                onBackClick = onBack
+            )
         },
         floatingActionButton = {
             FloatingActionButton(

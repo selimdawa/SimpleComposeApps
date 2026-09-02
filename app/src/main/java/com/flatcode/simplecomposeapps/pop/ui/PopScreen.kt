@@ -1,13 +1,18 @@
 package com.flatcode.simplecomposeapps.pop.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -24,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.pop.PopViewModel
+import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -35,6 +42,7 @@ fun PopScreen(
     val pops by viewModel.pops.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val error by viewModel.error.collectAsState()
 
     Scaffold(
         topBar = {
@@ -52,28 +60,68 @@ fun PopScreen(
                 onValueChange = { viewModel.onSearchQueryChanged(it) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
                 placeholder = { Text(text = Strings.SEARCH_ET, color = Color.Gray) },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        Icon(
+                            imageVector = AppIcons.Close,
+                            contentDescription = "Clear",
+                            modifier = Modifier.clickable { viewModel.onSearchQueryChanged("") },
+                            tint = Color.Gray
+                        )
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = AppIcons.Search,
+                        contentDescription = "Search",
+                        tint = Color.Gray
+                    )
+                },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF339999),
-                    unfocusedBorderColor = Color.Gray
-                )
+                    focusedBorderColor = AppTheme.colors.track,
+                    unfocusedBorderColor = Color.Gray,
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
+                    cursorColor = AppTheme.colors.track
+                ),
+                shape = RoundedCornerShape(8.dp),
+                singleLine = true
             )
 
             Box(modifier = Modifier.fillMaxSize()) {
                 if (isLoading && pops.isEmpty()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = AppTheme.colors.track
+                    )
+                } else if (error != null && pops.isEmpty()) {
+                    Text(
+                        text = error ?: Strings.ERROR,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.error
+                    )
                 } else if (pops.isEmpty()) {
                     Text(
                         text = Strings.NONE_DISPLAY,
-                        modifier = Modifier.align(Alignment.Center).padding(16.dp),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
+                        fontSize = 18.sp,
                         color = MaterialTheme.colorScheme.error
                     )
                 } else {
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(pops) { pop ->
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(5.dp)
+                    ) {
+                        items(pops, key = { it.id }) { pop ->
                             PopItem(item = pop)
                         }
                     }

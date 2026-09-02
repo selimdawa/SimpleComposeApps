@@ -40,6 +40,7 @@ import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.dogs.DogUiState
 import com.flatcode.simplecomposeapps.dogs.DogViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -57,9 +58,10 @@ fun DogsScreen(
 
     Scaffold(
         topBar = {
-            DogsTopAppBar(
+            ToolbarContent(
                 title = DATA.DOGS,
-                onBack = onBack
+                hasBack = false,
+                onBackClick = onBack
             )
         },
         containerColor = MaterialTheme.colorScheme.background

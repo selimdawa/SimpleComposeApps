@@ -11,9 +11,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.webapp.ui.WebAboutDialog
-import com.flatcode.simplecomposeapps.webapp.ui.WebAppScreen
-import com.flatcode.simplecomposeapps.webapp.ui.WebSupportDialog
 import com.flatcode.simplecomposeapps.webapp.viewmodel.WebAppViewModel
 
 class WebAppActivity : ComponentActivity() {
@@ -28,7 +25,7 @@ class WebAppActivity : ComponentActivity() {
             SimpleComposeAppsTheme {
                 val uiState by viewModel.uiState.collectAsState()
 
-                WebAppScreen(
+                /*WebAppScreen(
                     onBack = { finish() },
                     onWebSite = { openWebView(DATA.WEBSITE) },
                     onInstagram = { openWebView(DATA.INSTAGRAM) },
@@ -38,18 +35,18 @@ class WebAppActivity : ComponentActivity() {
                     onSupport = { viewModel.showSupportDialog(true) },
                     onShareApp = { shareApp() },
                     onRateApp = { rateApp() }
-                )
+                )*/
 
                 if (uiState.showAboutDialog) {
-                    WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
+                    //WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
                 }
 
                 if (uiState.showSupportDialog) {
-                    WebSupportDialog(
+                    /*WebSupportDialog(
                         onDismiss = { viewModel.showSupportDialog(false) },
                         onEmail = { sendEmail() },
                         onPhone = { callPhone() }
-                    )
+                    )*/
                 }
             }
         }

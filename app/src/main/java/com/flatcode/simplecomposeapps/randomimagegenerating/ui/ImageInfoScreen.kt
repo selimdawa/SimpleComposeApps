@@ -17,9 +17,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun ImageInfoScreen(
-    viewModel: ImageInfoViewModel,
-    onBack: () -> Unit,
-    onOpenUrl: (String) -> Unit
+    viewModel: ImageInfoViewModel, onBack: () -> Unit, onOpenUrl: (String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -29,16 +27,14 @@ fun ImageInfoScreen(
             contentScale = ContentScale.Crop
         )
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
+            modifier = Modifier.fillMaxSize(), topBar = {
                 ToolbarContent(
                     title = Strings.IMAGE_INFO,
                     hasBack = true,
                     onBackClick = onBack,
                     includeStatusBarsPadding = true
                 )
-            },
-            containerColor = Color.Transparent
+            }, containerColor = Color.Transparent
         ) { paddingValues ->
             ImageInfoContent(
                 modifier = Modifier

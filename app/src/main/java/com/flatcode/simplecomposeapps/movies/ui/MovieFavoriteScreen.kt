@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.movies.MovieFavoriteViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -33,9 +35,10 @@ fun MovieFavoriteScreen(
 
     Scaffold(
         topBar = {
-            MoviesTopAppBar(
+            ToolbarContent(
                 title = Strings.FAVORITE_MOVIES,
-                onBack = onBack
+                hasBack = false,
+                onBackClick = onBack
             )
         },
         containerColor = MaterialTheme.colorScheme.background

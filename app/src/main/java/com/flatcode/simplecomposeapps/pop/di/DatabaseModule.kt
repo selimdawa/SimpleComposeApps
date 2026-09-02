@@ -22,7 +22,7 @@ object DatabaseModule {
             context,
             PopDatabase::class.java,
             "pop_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

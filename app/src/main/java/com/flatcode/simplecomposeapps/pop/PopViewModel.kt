@@ -36,7 +36,7 @@ class PopViewModel @Inject constructor(
         } else {
             pops.filter { 
                 it.name.contains(query, ignoreCase = true) || 
-                (it.series?.contains(query, ignoreCase = true) == true)
+                it.series.contains(query, ignoreCase = true)
             }
         }
     }.stateIn(
