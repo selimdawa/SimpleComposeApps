@@ -1,6 +1,6 @@
-package com.flatcode.simplecomposeapps.newsapp
+package com.flatcode.simplecomposeapps.news
 
-import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 
 interface OnFetchDataListener<NewsApiResponse> {
     fun onFetchData(list: List<NewsHeadlines?>?, message: String?)

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.newsapp.ui
+package com.flatcode.simplecomposeapps.news.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor

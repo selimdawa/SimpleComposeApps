@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.webapp.viewmodel
+package com.flatcode.simplecomposeapps.web.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

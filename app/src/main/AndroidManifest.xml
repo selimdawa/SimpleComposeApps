@@ -48,11 +48,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".newsapp.activity.NewsAppActivity"
+            android:name=".news.activity.NewsAppActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".newsapp.activity.NewsAppDetailsActivity"
+            android:name=".news.activity.NewsAppDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -76,11 +76,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".webapp.WebAppActivity"
+            android:name=".web.WebAppActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".webapp.WebViewActivity"
+            android:name=".web.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

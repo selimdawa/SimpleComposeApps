@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.webapp
+package com.flatcode.simplecomposeapps.web
 
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.webapp.viewmodel.WebAppViewModel
+import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 
 class WebAppActivity : ComponentActivity() {
 

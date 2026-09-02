@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.webapp.ui
+package com.flatcode.simplecomposeapps.web.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,26 +33,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-
-@Composable
-fun ToolbarName() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .background(MaterialTheme.colorScheme.primary),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = Strings.WEB_APP,
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.headlineSmall
-        )
-    }
-}
 
 @Composable
 fun getMcBgColor(): Color {
@@ -77,7 +60,10 @@ fun MainScreen() {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.onBackground)
     ) {
-        ToolbarName()
+        ToolbarContent(
+            title = Strings.WEB_APP,
+            hasBack = false
+        )
 
         Column(
             modifier = Modifier

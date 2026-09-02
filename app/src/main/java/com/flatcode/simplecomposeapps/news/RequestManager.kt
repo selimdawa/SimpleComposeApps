@@ -1,8 +1,8 @@
-package com.flatcode.simplecomposeapps.newsapp
+package com.flatcode.simplecomposeapps.news
 
 import android.content.Context
 import android.widget.Toast
-import com.flatcode.simplecomposeapps.newsapp.model.NewsApiResponse
+import com.flatcode.simplecomposeapps.news.model.NewsApiResponse
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import retrofit2.Call

@@ -21,14 +21,14 @@ import com.flatcode.simplecomposeapps.weather.WeatherActivity
 import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
 import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
-import com.flatcode.simplecomposeapps.newsapp.activity.NewsAppActivity
+import com.flatcode.simplecomposeapps.news.activity.NewsAppActivity
 import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
 import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
-import com.flatcode.simplecomposeapps.webapp.WebAppActivity
+import com.flatcode.simplecomposeapps.web.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 
 class MainViewModel : ViewModel() {

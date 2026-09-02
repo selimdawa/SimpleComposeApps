@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.newsapp.ui
+package com.flatcode.simplecomposeapps.news.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -37,8 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
-import com.flatcode.simplecomposeapps.newsapp.viewmodel.NewsViewModel
+import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme

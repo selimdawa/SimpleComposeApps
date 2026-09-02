@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.webapp.ui
+package com.flatcode.simplecomposeapps.web.ui
 
 import android.view.View
 import android.webkit.WebView

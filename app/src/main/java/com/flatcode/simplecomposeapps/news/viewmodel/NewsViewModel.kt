@@ -1,14 +1,14 @@
-package com.flatcode.simplecomposeapps.newsapp.viewmodel
+package com.flatcode.simplecomposeapps.news.viewmodel
 
 import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import com.flatcode.simplecomposeapps.newsapp.OnFetchDataListener
-import com.flatcode.simplecomposeapps.newsapp.RequestManager
-import com.flatcode.simplecomposeapps.newsapp.model.NewsApiResponse
-import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.news.OnFetchDataListener
+import com.flatcode.simplecomposeapps.news.RequestManager
+import com.flatcode.simplecomposeapps.news.model.NewsApiResponse
+import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
