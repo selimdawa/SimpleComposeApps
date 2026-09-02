@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData

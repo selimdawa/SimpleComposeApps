@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.meals.MealsHomeViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CategoriesMealsScreen(

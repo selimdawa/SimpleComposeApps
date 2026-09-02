@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.movies.MovieFavoriteViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 

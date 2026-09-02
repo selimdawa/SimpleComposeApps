@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData

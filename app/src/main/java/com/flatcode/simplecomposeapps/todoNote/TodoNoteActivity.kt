@@ -19,12 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.todoNote.ui.AddEditNoteScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen

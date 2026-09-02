@@ -32,7 +32,6 @@ import com.flatcode.simplecomposeapps.meals.ui.HomeMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.MealDetailScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 

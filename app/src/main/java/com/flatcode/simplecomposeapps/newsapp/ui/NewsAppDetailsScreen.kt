@@ -5,7 +5,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -15,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @OptIn(ExperimentalMaterial3Api::class)

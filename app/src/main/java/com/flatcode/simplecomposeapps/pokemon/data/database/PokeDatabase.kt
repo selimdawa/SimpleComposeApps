@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.pokemon.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.flatcode.simplecomposeapps.pokemon.data.database.dao.PokeDao
 import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeDetailEntity
 import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeEntity

@@ -16,7 +16,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
 import androidx.lifecycle.ViewModelProvider
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme

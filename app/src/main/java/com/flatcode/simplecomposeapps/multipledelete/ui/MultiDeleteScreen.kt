@@ -28,7 +28,7 @@ import io.selimdawa.multicolors.MultiColorManager
 fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
     val items = viewModel.items
     val selectedItems = viewModel.selectedItems
-    val isSelectionMode = viewModel.isSelectionMode.value
+    val isSelectionMode by viewModel.isSelectionMode
     val context = LocalContext.current
     val themeId by MultiColorManager.currentThemeId.collectAsState()
     val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)

@@ -7,14 +7,12 @@ import androidx.lifecycle.ViewModel
 
 class MultiDeleteViewModel : ViewModel() {
 
-    val items: List<String>
-        field = mutableStateListOf<String>()
+    val items = mutableStateListOf<String>()
 
-    val selectedItems: List<String>
-        field = mutableStateListOf<String>()
+    val selectedItems = mutableStateListOf<String>()
 
-    val isSelectionMode: State<Boolean>
-        field = mutableStateOf(false)
+    private val _isSelectionMode = mutableStateOf(false)
+    val isSelectionMode: State<Boolean> = _isSelectionMode
 
     fun setItems(initialItems: List<String>) {
         if (items.isEmpty()) {
@@ -26,34 +24,34 @@ class MultiDeleteViewModel : ViewModel() {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item)
             if (selectedItems.isEmpty()) {
-                isSelectionMode.value = false
+                _isSelectionMode.value = false
             }
         } else {
             selectedItems.add(item)
-            isSelectionMode.value = true
+            _isSelectionMode.value = true
         }
     }
 
     fun enterSelectionMode(item: String) {
-        isSelectionMode.value = true
+        _isSelectionMode.value = true
         if (!selectedItems.contains(item)) {
             selectedItems.add(item)
         }
     }
 
     fun exitSelectionMode() {
-        isSelectionMode.value = false
+        _isSelectionMode.value = false
         selectedItems.clear()
     }
 
     fun selectAll() {
         if (selectedItems.size == items.size) {
             selectedItems.clear()
-            isSelectionMode.value = false
+            _isSelectionMode.value = false
         } else {
             selectedItems.clear()
             selectedItems.addAll(items)
-            isSelectionMode.value = true
+            _isSelectionMode.value = true
         }
     }
 

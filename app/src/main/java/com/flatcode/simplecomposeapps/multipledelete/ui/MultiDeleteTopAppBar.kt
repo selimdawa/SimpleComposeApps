@@ -13,19 +13,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorManager
-import androidx.compose.runtime.collectAsState
 
 @Composable
 fun MultiDeleteTopAppBar(
@@ -41,8 +40,7 @@ fun MultiDeleteTopAppBar(
     val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     Surface(
-        color = colorOnBackground,
-        modifier = Modifier
+        color = colorOnBackground, modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
     ) {
@@ -80,8 +78,7 @@ fun MultiDeleteTopAppBar(
             // Actions
             if (isSelectionMode) {
                 IconButton(
-                    onClick = onDelete,
-                    modifier = Modifier.size(32.dp)
+                    onClick = onDelete, modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
                         imageVector = AppIcons.Delete,
@@ -90,12 +87,11 @@ fun MultiDeleteTopAppBar(
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 IconButton(
-                    onClick = onSelectAll,
-                    modifier = Modifier.size(32.dp)
+                    onClick = onSelectAll, modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
                         imageVector = AppIcons.SelectAll,
