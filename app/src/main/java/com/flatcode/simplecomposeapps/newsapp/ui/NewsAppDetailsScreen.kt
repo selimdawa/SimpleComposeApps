@@ -2,9 +2,12 @@ package com.flatcode.simplecomposeapps.newsapp.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -14,7 +17,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.newsapp.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,16 +29,20 @@ fun NewsAppDetailsScreen(
     onBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", AppTheme.colors.background, themeId)
+    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
+    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = "News Details",
+                title = headline.source?.name ?: DATA.EMPTY,
                 hasBack = true,
                 onBackClick = onBack,
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = colorOnBackground
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -40,52 +50,74 @@ fun NewsAppDetailsScreen(
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
         ) {
-            AsyncImage(
-                model = headline.urlToImage,
-                contentDescription = null,
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Column(modifier = Modifier.padding(16.dp)) {
+                    .padding(10.dp)
+            ) {
                 Text(
                     text = headline.title ?: DATA.EMPTY,
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    color = colorError,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 5.dp)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(
-                        text = headline.author ?: "Unknown Author",
-                        color = Color.White.copy(alpha = 0.7f),
-                        fontSize = 14.sp
-                    )
-                    Text(
-                        text = headline.publishedAt ?: DATA.EMPTY,
-                        color = Color.White.copy(alpha = 0.7f),
-                        fontSize = 14.sp
-                    )
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
-                HorizontalDivider(color = Color.White.copy(alpha = 0.2f))
-                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    shape = RoundedCornerShape(6.dp),
+                    elevation = CardDefaults.cardElevation(0.dp),
+                    colors = CardDefaults.cardColors(containerColor = mcBg)
+                ) {
+                    Column {
+                        AsyncImage(
+                            model = headline.urlToImage ?: DATA.EMPTY,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(2f / 1.4f),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Text(
+                            text = headline.author ?: DATA.EMPTY,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+
+                        )
+
+                        Text(
+                            text = headline.publishedAt ?: DATA.EMPTY,
+                            color = Color.White,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+                        )
+                    }
+                }
 
                 Text(
                     text = headline.description ?: DATA.EMPTY,
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp
+                    color = colorError,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    thickness = 1.dp,
+                    color = colorError
+                )
+
                 Text(
                     text = headline.content ?: DATA.EMPTY,
-                    color = Color.White.copy(alpha = 0.9f),
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp
+                    color = colorError,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
