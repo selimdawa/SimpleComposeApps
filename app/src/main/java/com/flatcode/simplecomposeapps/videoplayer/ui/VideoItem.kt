@@ -2,82 +2,82 @@ package com.flatcode.simplecomposeapps.videoplayer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.formatDuration
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
-import java.io.File
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
-    val mcBg = AppTheme.colors.background
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .padding(10.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = mcBg)
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
+        Card(
+            modifier = Modifier.size(width = 112.dp, height = 62.dp),
+            shape = RoundedCornerShape(5.dp),
+            elevation = CardDefaults.cardElevation(0.dp)
         ) {
-            Box(modifier = Modifier.weight(1f)) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 AsyncImage(
-                    model = File(video.path ?: ""),
+                    model = video.uriString,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(ImageProfile),
                     contentScale = ContentScale.Crop
                 )
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
-                        .padding(4.dp)
-                        .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(4.dp))
-                        .padding(horizontal = 4.dp, vertical = 2.dp)
+                        .background(Color(0x99000000), RoundedCornerShape(5.dp))
+                        .padding(horizontal = 5.dp)
                 ) {
                     val durationMs = video.duration?.toLongOrNull() ?: 0L
                     Text(
-                        text = durationMs.formatDuration(),
-                        color = Color.White,
-                        fontSize = 12.sp
+                        text = durationMs.formatDuration(), color = Color.White, fontSize = 12.sp
                     )
                 }
             }
-            Column(
-                modifier = Modifier
-                    .weight(2f)
-                    .padding(8.dp)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = video.title ?: "Unknown",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
         }
+
+        Text(
+            text = video.title ?: "Unknown",
+            color = colorError,
+            fontSize = 14.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .padding(start = 15.dp, end = 15.dp)
+                .weight(1f)
+        )
     }
 }
