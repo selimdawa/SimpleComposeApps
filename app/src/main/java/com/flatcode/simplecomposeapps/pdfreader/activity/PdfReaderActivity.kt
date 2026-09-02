@@ -47,10 +47,10 @@ class PdfReaderActivity : ComponentActivity() {
                 PdfReaderScreen(
                     viewModel = viewModel,
                     onPickFile = { documentPickerLauncher.launch(arrayOf("application/pdf")) },
-                    onMeta = { /* TODO */ },
+                    onMeta = { /* Reverted */ },
                     onShare = { shareFile() },
                     onPrint = { printDocument() },
-                    onFullscreen = { /* TODO */ }
+                    onFullscreen = { viewModel.toggleBottomBar() }
                 )
             }
         }

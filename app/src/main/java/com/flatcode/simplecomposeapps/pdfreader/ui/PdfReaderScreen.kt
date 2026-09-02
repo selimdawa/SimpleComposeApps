@@ -1,14 +1,17 @@
 package com.flatcode.simplecomposeapps.pdfreader.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,13 +20,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
+import com.github.barteksc.pdfviewer.util.FitPolicy
+import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,87 +44,156 @@ fun PdfReaderScreen(
     onFullscreen: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val mcTrack = AppTheme.colors.track
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcTrack = rememberAttributeColor("mc_track", AppTheme.colors.track, themeId)
+    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
 
     Scaffold(
         bottomBar = {
             if (uiState.isBottomBarVisible) {
-                BottomAppBar(
-                    containerColor = mcTrack,
-                    actions = {
-                        IconButton(onClick = onPickFile) {
-                            Icon(imageVector = AppIcons.FolderOpen, contentDescription = Strings.PICK_FILE, tint = Color.White)
-                        }
-                        IconButton(onClick = onMeta) {
-                            Icon(imageVector = AppIcons.Info, contentDescription = Strings.META, tint = Color.White)
-                        }
-                        IconButton(onClick = onShare) {
-                            Icon(imageVector = AppIcons.Share, contentDescription = Strings.SHARE_FILE, tint = Color.White)
-                        }
-                        IconButton(onClick = onPrint) {
-                            Icon(imageVector = AppIcons.Print, contentDescription = Strings.PRINT, tint = Color.White)
-                        }
-                        IconButton(onClick = onFullscreen) {
-                            Icon(imageVector = AppIcons.Fullscreen, contentDescription = Strings.FULL_SCREEN, tint = Color.White)
-                        }
-                    }
-                )
+                NavigationBar(
+                    containerColor = colorOnBackground,
+                ) {
+                    NavigationBarItem(
+                        selected = false, onClick = onPickFile, icon = {
+                            Icon(
+                                imageVector = AppIcons.FolderOpen,
+                                contentDescription = Strings.PICK_FILE
+                            )
+                        }, colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = mcTrack,
+                            selectedIconColor = mcTrack,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                    NavigationBarItem(
+                        selected = false, onClick = onMeta, icon = {
+                            Icon(
+                                imageVector = AppIcons.MetaInfo, contentDescription = Strings.META
+                            )
+                        }, colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = mcTrack,
+                            selectedIconColor = mcTrack,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                    NavigationBarItem(
+                        selected = false, onClick = onShare, icon = {
+                            Icon(
+                                imageVector = AppIcons.Share,
+                                contentDescription = Strings.SHARE_FILE
+                            )
+                        }, colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = mcTrack,
+                            selectedIconColor = mcTrack,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                    NavigationBarItem(
+                        selected = false, onClick = onPrint, icon = {
+                            Icon(
+                                imageVector = AppIcons.Print, contentDescription = Strings.PRINT
+                            )
+                        }, colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = mcTrack,
+                            selectedIconColor = mcTrack,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                    NavigationBarItem(
+                        selected = false, onClick = onFullscreen, icon = {
+                            Icon(
+                                imageVector = AppIcons.Fullscreen,
+                                contentDescription = Strings.FULL_SCREEN
+                            )
+                        }, colors = NavigationBarItemDefaults.colors(
+                            unselectedIconColor = mcTrack,
+                            selectedIconColor = mcTrack,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                }
             }
-        }
+        }, containerColor = ImageProfile // Whole screen image_profile
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            when {
-                uiState.isLoading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-                uiState.errorMessage != null -> {
-                    Text(
-                        text = uiState.errorMessage!!,
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-                uiState.uri != null -> {
-                    AndroidView(
-                        factory = { context ->
-                            PDFView(context, null).apply {
-                                setBackgroundColor(android.graphics.Color.LTGRAY)
-                            }
-                        },
-                        update = { pdfView ->
-                            val configurator = if (uiState.uri?.scheme?.startsWith("http") == true) {
-                                uiState.pdfData?.let { pdfView.fromBytes(it) }
-                            } else {
-                                pdfView.fromUri(uiState.uri)
-                            }
+            if (uiState.isLoading) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth(), color = mcTrack
+                )
+            }
 
-                            configurator?.apply {
-                                defaultPage(uiState.currentPage)
-                                onPageChange { page, pageCount -> viewModel.onPageChange(page, pageCount) }
-                                enableAnnotationRendering(true)
-                                onTap { _ ->
-                                    viewModel.toggleBottomBar()
-                                    true
+            Box(modifier = Modifier.fillMaxSize()) {
+                when {
+                    uiState.errorMessage != null -> {
+                        Text(
+                            text = uiState.errorMessage!!,
+                            modifier = Modifier.align(Alignment.Center),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+
+                    uiState.uri != null -> {
+                        AndroidView(
+                            factory = { context ->
+                                PDFView(context, null).apply {
+                                    setBackgroundColor(ImageProfile.toArgb())
                                 }
-                                scrollHandle(DefaultScrollHandle(pdfView.context))
-                                spacing(10)
-                                onError { t -> viewModel.onError(t) }
-                                load()
-                            }
-                        },
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-                else -> {
-                    Text(
-                        text = Strings.PICK_FILE,
-                        modifier = Modifier.align(Alignment.Center),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                            },
+                            update = { pdfView ->
+                                // Use a tag to avoid reloading the same URI
+                                if (pdfView.tag != uiState.uri) {
+                                    pdfView.tag = uiState.uri
+                                    val configurator =
+                                        if (uiState.uri?.scheme?.startsWith("http") == true) {
+                                            uiState.pdfData?.let { pdfView.fromBytes(it) }
+                                        } else {
+                                            pdfView.fromUri(uiState.uri)
+                                        }
+
+                                    configurator?.apply {
+                                        defaultPage(uiState.currentPage)
+                                        onPageChange { page, pageCount ->
+                                            viewModel.onPageChange(page, pageCount)
+                                        }
+                                        enableAnnotationRendering(true)
+                                        onTap { _ ->
+                                            viewModel.toggleBottomBar()
+                                            true
+                                        }
+                                        scrollHandle(DefaultScrollHandle(pdfView.context))
+                                        spacing(10)
+                                        enableSwipe(true)
+                                        swipeHorizontal(false)
+                                        pageSnap(false) // Continuous scroll
+                                        pageFling(true) // Momentum scroll
+                                        autoSpacing(false)
+                                        fitEachPage(false) // Normal continuous look
+                                        pageFitPolicy(FitPolicy.WIDTH)
+                                        enableDoubletap(true)
+                                        enableAntialiasing(true)
+                                        onError { t -> viewModel.onError(t) }
+                                        load()
+                                    }
+                                }
+                            },
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    else -> {
+                        if (!uiState.isLoading) {
+                            Text(
+                                text = Strings.PICK_FILE,
+                                modifier = Modifier.align(Alignment.Center),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    }
                 }
             }
         }
