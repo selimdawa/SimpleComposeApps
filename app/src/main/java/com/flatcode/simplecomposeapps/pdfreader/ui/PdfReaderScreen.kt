@@ -45,7 +45,7 @@ fun PdfReaderScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", AppTheme.colors.track, themeId)
+    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
 
     Scaffold(

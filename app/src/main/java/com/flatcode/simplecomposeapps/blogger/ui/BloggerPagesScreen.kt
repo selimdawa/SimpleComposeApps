@@ -18,6 +18,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,8 @@ import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +38,8 @@ fun BloggerPagesScreen(
 ) {
     val pages = viewModel.pages
     val isLoading = viewModel.isLoading.value
-    val mcTrack = com.flatcode.simplecomposeapps.ui.theme.AppTheme.colors.track
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
 
     LaunchedEffect(Unit) {
         viewModel.loadPages()

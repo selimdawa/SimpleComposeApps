@@ -1,7 +1,6 @@
 package com.flatcode.simplecomposeapps.dictionary.ui
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,14 +36,12 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.dictionary.DictionaryViewModel
 import com.flatcode.simplecomposeapps.dictionary.utils.UiState
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun DictionaryScreen(
-    viewModel: DictionaryViewModel,
-    onBack: () -> Unit,
-    onDefinitionFound: () -> Unit
+    viewModel: DictionaryViewModel, onBack: () -> Unit, onDefinitionFound: () -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
@@ -58,12 +55,10 @@ fun DictionaryScreen(
 
     Scaffold(
         topBar = {
-            DictionaryTopAppBar(
-                title = DATA.DICTIONARY,
-                onBack = onBack
+            ToolbarContent(
+                title = DATA.DICTIONARY, hasBack = false, onBackClick = onBack
             )
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = Modifier

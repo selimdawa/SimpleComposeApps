@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.pokemon.PokeViewModel
 import com.flatcode.simplecomposeapps.pokemon.data.model.PokeResult
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -35,9 +36,10 @@ fun PokemonScreen(
 
     Scaffold(
         topBar = {
-            PokemonTopAppBar(
+            ToolbarContent(
                 title = DATA.POKE,
-                onBack = onBack
+                hasBack = false,
+                onBackClick = onBack
             )
         },
         containerColor = MaterialTheme.colorScheme.background

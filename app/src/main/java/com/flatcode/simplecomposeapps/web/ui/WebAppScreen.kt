@@ -48,7 +48,8 @@ import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun getMcBgColor(): Color {
-    return AppTheme.colors.background
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    return rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
 }
 
 @Composable

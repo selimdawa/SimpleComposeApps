@@ -24,9 +24,6 @@ import androidx.core.view.WindowCompat
 import io.selimdawa.multicolors.MultiColorManager
 
 data class ExtraColors(
-    val track: Color = Color.Unspecified,
-    val track2: Color = Color.Unspecified,
-    val background: Color = Color.Unspecified,
     val primaryGradient: Brush = Brush.linearGradient(listOf(Color.Gray, Color.Gray))
 )
 
@@ -72,7 +69,7 @@ fun SimpleComposeAppsTheme(
     // Observe theme changes from the MultiColors library
     val themeId by MultiColorManager.currentThemeId.collectAsState()
 
-    // Fetch gradient colors from the selected theme (e.g., G2 themes)
+    // Fetch colors from the selected theme (e.g., G2 themes)
     val mcTrack = rememberAttributeColor("mc_track", McTrackColor, themeId)
     val mcTrack2 = rememberAttributeColor("mc_track_2", mcTrack, themeId)
     val mcBg = rememberAttributeColor("mc_bg", McBgColor, themeId)
@@ -113,9 +110,6 @@ fun SimpleComposeAppsTheme(
 
     CompositionLocalProvider(
         LocalAppColors provides ExtraColors(
-            track = mcTrack,
-            track2 = mcTrack2,
-            background = mcBg,
             primaryGradient = Brush.linearGradient(listOf(mcTrack, mcTrack2))
         )
     ) {

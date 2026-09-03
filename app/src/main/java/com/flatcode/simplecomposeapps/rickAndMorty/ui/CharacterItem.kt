@@ -8,6 +8,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -25,13 +27,17 @@ import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CharacterItem(
     item: Character,
     modifier: Modifier = Modifier
 ) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -41,7 +47,7 @@ fun CharacterItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(AppTheme.colors.background)
+                .background(mcBg)
         ) {
             Box(
                 modifier = Modifier

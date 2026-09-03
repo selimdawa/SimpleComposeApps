@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.MealsHomeViewModel
 import com.flatcode.simplecomposeapps.meals.pojo.Meal
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -55,7 +56,7 @@ fun HomeMealsScreen(
 
     Scaffold(
         topBar = {
-            MealsTopAppBar(title = DATA.MEALS, onBack = onBack)
+            ToolbarContent(title = DATA.MEALS, hasBack = false, onBackClick = onBack)
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

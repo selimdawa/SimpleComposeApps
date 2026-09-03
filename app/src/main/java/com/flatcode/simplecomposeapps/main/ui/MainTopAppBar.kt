@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,14 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import io.selimdawa.multicolors.MultiColorButton
+import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopAppBar(onInfoClick: () -> Unit) {
-    val mcBgColor = AppTheme.colors.background
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
 
     Card(
         modifier = Modifier
@@ -43,7 +47,8 @@ fun MainTopAppBar(onInfoClick: () -> Unit) {
             .statusBarsPadding()
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
-        elevation = CardDefaults.cardElevation(0.dp)
+        elevation = CardDefaults.cardElevation(0.dp),
+        colors = CardDefaults.cardColors(containerColor = mcBg)
     ) {
         CenterAlignedTopAppBar(
             title = {
@@ -82,7 +87,7 @@ fun MainTopAppBar(onInfoClick: () -> Unit) {
                 }
             }
         }, colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = mcBgColor
+            containerColor = Color.Transparent
         ), windowInsets = WindowInsets(0, 0, 0, 0), modifier = Modifier.height(45.dp)
         )
     }

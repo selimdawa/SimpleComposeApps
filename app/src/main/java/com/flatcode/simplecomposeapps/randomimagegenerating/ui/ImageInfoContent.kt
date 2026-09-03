@@ -40,7 +40,7 @@ fun ImageInfoContent(
     modifier: Modifier = Modifier, viewModel: ImageInfoViewModel, onOpenUrl: (String) -> Unit
 ) {
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTick = rememberAttributeColor("mc_track", Color.Gray, themeId)
+    val mcTrack = rememberAttributeColor("mc_track", Color.Gray, themeId)
     val catInfo by viewModel.catInfo
 
     Box(modifier = modifier) {
@@ -125,7 +125,7 @@ fun ImageInfoContent(
                     Button(
                         onClick = { onOpenUrl(info.wikiUrl) },
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = mcTick),
+                        colors = ButtonDefaults.buttonColors(containerColor = mcTrack),
                         shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(text = Strings.WIKIPEDIA, color = Color.White)
@@ -134,7 +134,7 @@ fun ImageInfoContent(
                     Button(
                         onClick = { onOpenUrl(info.moreLink) },
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = mcTick),
+                        colors = ButtonDefaults.buttonColors(containerColor = mcTrack),
                         shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(text = Strings.MORE_INFO, color = Color.White)

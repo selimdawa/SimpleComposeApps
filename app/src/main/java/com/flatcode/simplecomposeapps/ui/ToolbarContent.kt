@@ -14,6 +14,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun ToolbarContent(
@@ -38,7 +41,8 @@ fun ToolbarContent(
     actions: @Composable (() -> Unit)? = null,
     includeStatusBarsPadding: Boolean = true
 ) {
-    val mcBgColor = AppTheme.colors.background
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
 
     Card(
         modifier = modifier
@@ -47,7 +51,7 @@ fun ToolbarContent(
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = mcBgColor)
+        colors = CardDefaults.cardColors(containerColor = mcBg)
     ) {
         Box(
             modifier = Modifier

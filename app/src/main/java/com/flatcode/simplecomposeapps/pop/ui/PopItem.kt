@@ -10,6 +10,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,14 +25,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.pop.model.PopItem
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun PopItem(
     item: PopItem,
     modifier: Modifier = Modifier
 ) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -41,7 +47,7 @@ fun PopItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(AppTheme.colors.track)
+                .background(Color.Transparent) // Use card background or transparent
         ) {
             AsyncImage(
                 model = item.img,
@@ -58,7 +64,7 @@ fun PopItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(AppTheme.colors.background)
+                    .background(mcBg)
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

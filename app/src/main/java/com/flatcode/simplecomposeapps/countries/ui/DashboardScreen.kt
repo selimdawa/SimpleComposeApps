@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.countries.DashboardViewModel
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -40,9 +41,10 @@ fun DashboardScreen(
 
     Scaffold(
         topBar = {
-            CountriesTopAppBar(
+            ToolbarContent(
                 title = DATA.COUNTRIES,
-                onBack = onBack
+                hasBack = false,
+                onBackClick = onBack
             )
         },
         containerColor = MaterialTheme.colorScheme.background

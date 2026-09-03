@@ -3,7 +3,6 @@ package com.flatcode.simplecomposeapps.wordpress.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -37,31 +36,15 @@ fun WordpressScreen(
     onFavoritesClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val mcTrack = AppTheme.colors.track
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = Strings.WORDPRESS_APP,
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onFavoritesClick) {
-                        Icon(imageVector = AppIcons.Favorite, contentDescription = null, tint = Color.White)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+            ToolbarContentFav(
+                title = Strings.WORDPRESS_APP,
+                showBack = true,
+                showFavorite = true,
+                onBackClick = onBack,
+                onFavoriteClick = onFavoritesClick
             )
         },
         containerColor = MaterialTheme.colorScheme.background

@@ -34,7 +34,7 @@ import io.selimdawa.multicolors.MultiColorManager
 @Composable
 fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", AppTheme.colors.background, themeId)
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
 
     Column(
         modifier = Modifier

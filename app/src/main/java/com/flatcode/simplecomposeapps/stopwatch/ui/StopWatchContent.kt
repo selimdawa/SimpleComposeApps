@@ -32,7 +32,7 @@ fun StopWatchContent(
     viewModel: StopWatchViewModel
 ) {
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTick = rememberAttributeColor("mc_track", Color.LightGray, themeId)
+    val mcTrack = rememberAttributeColor("mc_track", Color.LightGray, themeId)
 
     val timeDisplay by viewModel.timeDisplay
     val isRunning by viewModel.isRunning
@@ -40,7 +40,7 @@ fun StopWatchContent(
     Card(
         modifier = Modifier.size(300.dp),
         shape = CircleShape,
-        colors = CardDefaults.cardColors(containerColor = mcTick),
+        colors = CardDefaults.cardColors(containerColor = mcTrack),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Column(

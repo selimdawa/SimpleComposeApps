@@ -7,6 +7,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -16,15 +18,19 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.countries.model.Country
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CountryItem(
     item: Country,
     modifier: Modifier = Modifier
 ) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -35,7 +41,7 @@ fun CountryItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(AppTheme.colors.background)
+                .background(mcBg)
         ) {
             Box(
                 modifier = Modifier

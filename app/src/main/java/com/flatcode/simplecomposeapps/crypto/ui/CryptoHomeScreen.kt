@@ -44,9 +44,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.crypto.CryptoHomeViewModel
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CryptoHomeScreen(
@@ -79,9 +81,10 @@ fun CryptoHomeScreen(
 
     Scaffold(
         topBar = {
-            CryptoTopAppBar(
+            ToolbarContent(
                 title = DATA.CRYPTO,
-                onBack = onBack
+                hasBack = false,
+                onBackClick = onBack
             )
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -128,6 +131,9 @@ fun CryptoDataItem(
     item: Data,
     onClick: () -> Unit
 ) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -140,7 +146,7 @@ fun CryptoDataItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .background(AppTheme.colors.background),
+                .background(mcBg),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(

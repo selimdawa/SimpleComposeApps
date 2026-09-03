@@ -53,7 +53,7 @@ fun NewsScreen(
     val headlines = viewModel.headlines
     val selectedCategory = viewModel.selectedCategory.value
     val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", AppTheme.colors.background, themeId)
+    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
     val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
     val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 

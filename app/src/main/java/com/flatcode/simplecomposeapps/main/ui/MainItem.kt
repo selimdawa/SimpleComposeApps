@@ -25,8 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.Main
@@ -37,7 +39,7 @@ import com.flatcode.simplecomposeapps.utils.openActivity
 
 @Composable
 fun MainItem(item: Main) {
-    val context = androidx.compose.ui.platform.LocalContext.current
+    val context = LocalContext.current
     val gradientBrush = AppTheme.colors.primaryGradient
 
     Card(
@@ -110,7 +112,7 @@ fun MainItem(item: Main) {
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Start
+                textAlign = TextAlign.Start
             )
         }
     }

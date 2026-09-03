@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -34,8 +35,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.pokemon.PokemonDetailsViewModel
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun PokemonDetailScreen(
@@ -158,6 +160,8 @@ fun PokeTypeBadge(type: String) {
 
 @Composable
 fun PokeStatRow(label: String, value: String) {
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -173,7 +177,7 @@ fun PokeStatRow(label: String, value: String) {
         )
         Text(
             text = value,
-            color = AppTheme.colors.track,
+            color = mcTrack,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )

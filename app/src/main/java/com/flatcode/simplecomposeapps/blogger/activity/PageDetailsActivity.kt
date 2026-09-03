@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerDetailsScreen
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
+import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 class PageDetailsActivity : ComponentActivity() {
 

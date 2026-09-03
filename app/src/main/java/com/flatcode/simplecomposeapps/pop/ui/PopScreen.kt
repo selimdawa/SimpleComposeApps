@@ -30,9 +30,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.pop.PopViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun PopScreen(
@@ -44,9 +46,12 @@ fun PopScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     val error by viewModel.error.collectAsState()
 
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
+
     Scaffold(
         topBar = {
-            PopTopAppBar(title = DATA.POP, onBack = onBack)
+            ToolbarContent(title = DATA.POP, hasBack = false, onBackClick = onBack)
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
@@ -80,11 +85,11 @@ fun PopScreen(
                     )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = AppTheme.colors.track,
+                    focusedBorderColor = mcTrack,
                     unfocusedBorderColor = Color.Gray,
                     focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
-                    cursorColor = AppTheme.colors.track
+                    cursorColor = mcTrack
                 ),
                 shape = RoundedCornerShape(8.dp),
                 singleLine = true
@@ -94,7 +99,7 @@ fun PopScreen(
                 if (isLoading && pops.isEmpty()) {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center),
-                        color = AppTheme.colors.track
+                        color = mcTrack
                     )
                 } else if (error != null && pops.isEmpty()) {
                     Text(

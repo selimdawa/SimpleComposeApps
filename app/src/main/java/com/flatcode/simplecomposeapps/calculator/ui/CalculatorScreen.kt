@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -32,9 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.calculator.CalculatorViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
+import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CalculatorScreen(
@@ -47,6 +49,9 @@ fun CalculatorScreen(
 
     val errorColor = Color(0xFFF13A3A)
     val onBackgroundColor = Color(0xFF212121)
+
+    val themeId by MultiColorManager.currentThemeId.collectAsState()
+    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
 
     Scaffold(
         topBar = {
@@ -131,9 +136,9 @@ fun CalculatorScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    CalculatorKey(text = DATA.SEVEN, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.SEVEN) })
-                    CalculatorKey(text = DATA.EIGHT, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.EIGHT) })
-                    CalculatorKey(text = DATA.NINE, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.NINE) })
+                    CalculatorKey(text = DATA.SEVEN, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.SEVEN) })
+                    CalculatorKey(text = DATA.EIGHT, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.EIGHT) })
+                    CalculatorKey(text = DATA.NINE, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.NINE) })
                     CalculatorKey(
                         text = Strings.MULTIPLY,
                         color = errorColor,
@@ -147,9 +152,9 @@ fun CalculatorScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    CalculatorKey(text = DATA.FOUR, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.FOUR) })
-                    CalculatorKey(text = DATA.FIVE, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.FIVE) })
-                    CalculatorKey(text = DATA.SIX, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.SIX) })
+                    CalculatorKey(text = DATA.FOUR, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.FOUR) })
+                    CalculatorKey(text = DATA.FIVE, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.FIVE) })
+                    CalculatorKey(text = DATA.SIX, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.SIX) })
                     CalculatorIconButton(
                         icon = AppIcons.Minus,
                         color = errorColor,
@@ -163,9 +168,9 @@ fun CalculatorScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    CalculatorKey(text = DATA.ONE, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.ONE) })
-                    CalculatorKey(text = DATA.TWO, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.TWO) })
-                    CalculatorKey(text = DATA.THREE, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.THREE) })
+                    CalculatorKey(text = DATA.ONE, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.ONE) })
+                    CalculatorKey(text = DATA.TWO, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.TWO) })
+                    CalculatorKey(text = DATA.THREE, color = mcTrack, modifier = Modifier.weight(1f), onClick = { viewModel.appendValue(DATA.THREE) })
                     CalculatorIconButton(
                         icon = AppIcons.Add,
                         color = errorColor,
@@ -181,6 +186,7 @@ fun CalculatorScreen(
                 ) {
                     CalculatorKey(
                         text = DATA.ZERO,
+                        color = mcTrack,
                         modifier = Modifier.weight(2f),
                         onClick = { viewModel.appendValue(DATA.ZERO) }
                     )
@@ -208,7 +214,7 @@ fun CalculatorScreen(
 fun CalculatorKey(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = AppTheme.colors.track,
+    color: Color,
     contentColor: Color = Color.White,
     fontSize: Int = 26,
     onClick: () -> Unit
@@ -234,7 +240,7 @@ fun CalculatorKey(
 fun CalculatorIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
-    color: Color = AppTheme.colors.track,
+    color: Color,
     contentColor: Color = Color.White,
     onClick: () -> Unit
 ) {

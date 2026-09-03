@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.RickLocationsViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 
 @Composable
 fun RickLocationsScreen(
@@ -34,7 +35,7 @@ fun RickLocationsScreen(
 
     Scaffold(
         topBar = {
-            RickTopAppBar(title = "Locations", onBack = onBack)
+            ToolbarContent(title = "Locations", hasBack = false, onBackClick = onBack)
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

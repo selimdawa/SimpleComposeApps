@@ -1,7 +1,6 @@
 package com.flatcode.simplecomposeapps.wordpress.ui
 
 import android.webkit.WebView
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +48,6 @@ fun WordpressDetailsScreen(
     onBack: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
-    val mcTrack = AppTheme.colors.track
     val scrollState = rememberScrollState()
     var mediaUrl by remember { mutableStateOf<String?>(null) }
 
@@ -59,39 +57,19 @@ fun WordpressDetailsScreen(
                 val media = WordPressClient.apiService.getPostThumbnail(featuredMediaId)
                 mediaUrl = media.guid?.rendered
             } catch (e: Exception) {
-                // Ignore errors for now
             }
         }
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = title,
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 1
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onToggleFavorite) {
-                        Icon(
-                            imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+            ToolbarContentFav(
+                title = title,
+                showBack = true,
+                showFavorite = true,
+                isFavorite = isFavorite,
+                onBackClick = onBack,
+                onFavoriteClick = onToggleFavorite
             )
         },
         containerColor = MaterialTheme.colorScheme.background
