@@ -66,7 +66,14 @@ class WordpressViewModel(application: Application) : AndroidViewModel(applicatio
                 if (db.getDbPostIsFav(post.id)) {
                     db.delete(post.id)
                 } else {
-                    db.insert(post.id, post.title?.rendered, post.excerpt?.rendered, true)
+                    db.insert(
+                        wpPostID = post.id,
+                        wpTitle = post.title?.rendered,
+                        wpExcerpt = post.excerpt?.rendered,
+                        wpContent = post.content?.rendered,
+                        featuredMedia = post.featuredMedia,
+                        isFavorite = true
+                    )
                 }
                 loadFavorites()
                 // Update post list if it contains this post

@@ -17,6 +17,8 @@ class PostDB private constructor(context: Context) {
         const val COLNAME_POSTID = "postID"
         const val COLNAME_TITLE = "title"
         const val COLNAME_EXCERPT = "excerpt"
+        const val COLNAME_CONTENT = "content"
+        const val COLNAME_FEATURED_MEDIA = "featuredMedia"
         const val COLNAME_ISFAV = "isFavorite"
     }
 
@@ -25,7 +27,13 @@ class PostDB private constructor(context: Context) {
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(SQL_CREATE_ENTRIES)
         }
-        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
+
+        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            if (oldVersion < 2) {
+                db.execSQL("ALTER TABLE ${PostItem.TABLE_NAME} ADD COLUMN ${PostItem.COLNAME_CONTENT} TEXT")
+                db.execSQL("ALTER TABLE ${PostItem.TABLE_NAME} ADD COLUMN ${PostItem.COLNAME_FEATURED_MEDIA} INT DEFAULT 0")
+            }
+        }
     }
 
     val allDbPosts: List<Post>
@@ -34,7 +42,15 @@ class PostDB private constructor(context: Context) {
             dbHelper.readableDatabase.use { db ->
                 db.query(
                     PostItem.TABLE_NAME,
-                    arrayOf(BaseColumns._ID, PostItem.COLNAME_POSTID, PostItem.COLNAME_TITLE, PostItem.COLNAME_EXCERPT, PostItem.COLNAME_ISFAV),
+                    arrayOf(
+                        BaseColumns._ID,
+                        PostItem.COLNAME_POSTID,
+                        PostItem.COLNAME_TITLE,
+                        PostItem.COLNAME_EXCERPT,
+                        PostItem.COLNAME_CONTENT,
+                        PostItem.COLNAME_FEATURED_MEDIA,
+                        PostItem.COLNAME_ISFAV
+                    ),
                     null,
                     null,
                     null,
@@ -48,7 +64,9 @@ class PostDB private constructor(context: Context) {
                                 wpPostId = cursor.getInt(1),
                                 wpTitle = cursor.getString(2),
                                 wpExcerpt = cursor.getString(3),
-                                isFavorite = cursor.getInt(4) == 1
+                                wpContent = cursor.getString(4),
+                                featuredMedia = cursor.getInt(5),
+                                isFavorite = cursor.getInt(6) == 1
                             )
                         )
                     }
@@ -65,7 +83,9 @@ class PostDB private constructor(context: Context) {
                 arrayOf(PostItem.COLNAME_ISFAV),
                 "${PostItem.COLNAME_POSTID} = ?",
                 arrayOf(postID.toString()),
-                null, null, null
+                null,
+                null,
+                null
             ).use { cursor ->
                 if (cursor.moveToFirst()) {
                     isFavorite = cursor.getInt(0) == 1
@@ -75,12 +95,21 @@ class PostDB private constructor(context: Context) {
         return isFavorite
     }
 
-    fun insert(wpPostID: Int, wpTitle: String?, wpExcerpt: String?, isFavorite: Boolean): Long {
+    fun insert(
+        wpPostID: Int,
+        wpTitle: String?,
+        wpExcerpt: String?,
+        wpContent: String?,
+        featuredMedia: Int,
+        isFavorite: Boolean
+    ): Long {
         return dbHelper.writableDatabase.use { db ->
             val values = ContentValues().apply {
                 put(PostItem.COLNAME_POSTID, wpPostID)
                 put(PostItem.COLNAME_TITLE, wpTitle)
                 put(PostItem.COLNAME_EXCERPT, wpExcerpt)
+                put(PostItem.COLNAME_CONTENT, wpContent)
+                put(PostItem.COLNAME_FEATURED_MEDIA, featuredMedia)
                 put(PostItem.COLNAME_ISFAV, if (isFavorite) 1 else 0)
             }
             db.insert(PostItem.TABLE_NAME, null, values)
@@ -90,15 +119,13 @@ class PostDB private constructor(context: Context) {
     fun delete(postID: Int): Int {
         return dbHelper.writableDatabase.use { db ->
             db.delete(
-                PostItem.TABLE_NAME,
-                "${PostItem.COLNAME_POSTID} = ?",
-                arrayOf(postID.toString())
+                PostItem.TABLE_NAME, "${PostItem.COLNAME_POSTID} = ?", arrayOf(postID.toString())
             )
         }
     }
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "Post.db"
 
         @Volatile
@@ -111,11 +138,7 @@ class PostDB private constructor(context: Context) {
             }
         }
 
-        private const val SQL_CREATE_ENTRIES = "CREATE TABLE ${PostItem.TABLE_NAME} (" +
-                "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "${PostItem.COLNAME_POSTID} INT," +
-                "${PostItem.COLNAME_TITLE} TEXT," +
-                "${PostItem.COLNAME_EXCERPT} TEXT," +
-                "${PostItem.COLNAME_ISFAV} TINYINT(1))"
+        private const val SQL_CREATE_ENTRIES =
+            "CREATE TABLE ${PostItem.TABLE_NAME} (" + "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," + "${PostItem.COLNAME_POSTID} INT," + "${PostItem.COLNAME_TITLE} TEXT," + "${PostItem.COLNAME_EXCERPT} TEXT," + "${PostItem.COLNAME_CONTENT} TEXT," + "${PostItem.COLNAME_FEATURED_MEDIA} INT," + "${PostItem.COLNAME_ISFAV} TINYINT(1))"
     }
 }

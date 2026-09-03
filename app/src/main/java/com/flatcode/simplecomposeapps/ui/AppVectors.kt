@@ -1314,7 +1314,7 @@ object AppVectors {
         defaultHeight = 24.dp,
         viewportWidth = 24f,
         viewportHeight = 24f
-    ).path(fill = SolidColor(Color.Red)) {
+    ).path(fill = SolidColor(Color.White)) {
         moveTo(12f, 21.35f)
         lineToRelative(-1.45f, -1.32f)
         curveTo(5.4f, 15.36f, 2f, 12.28f, 2f, 8.5f)
@@ -1333,7 +1333,7 @@ object AppVectors {
         defaultHeight = 24.dp,
         viewportWidth = 24f,
         viewportHeight = 24f
-    ).path(fill = SolidColor(Color.Red)) {
+    ).path(fill = SolidColor(Color.White)) {
         moveTo(16.5f, 3f)
         curveToRelative(-1.74f, 0f, -3.41f, 0.81f, -4.5f, 2.09f)
         curveTo(10.91f, 3.81f, 9.24f, 3f, 7.5f, 3f)

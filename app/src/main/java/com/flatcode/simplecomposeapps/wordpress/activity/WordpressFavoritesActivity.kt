@@ -30,15 +30,14 @@ class WordpressFavoritesActivity : ComponentActivity() {
                     onPostClick = { post ->
                         val intent = WordpressDetailsActivity.createIntent(
                             this@WordpressFavoritesActivity,
-                            post.id,
+                            if (post.id != 0) post.id else post.wpPostId,
                             post.featuredMedia,
-                            post.title?.rendered,
-                            post.excerpt?.rendered,
-                            post.content?.rendered
+                            post.title?.rendered ?: post.wpTitle,
+                            post.excerpt?.rendered ?: post.wpExcerpt,
+                            post.content?.rendered ?: post.wpContent
                         )
                         startActivity(intent)
-                    }
-                )
+                    })
             }
         }
     }

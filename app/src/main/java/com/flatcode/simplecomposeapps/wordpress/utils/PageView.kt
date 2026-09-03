@@ -5,9 +5,29 @@ import android.webkit.WebViewClient
 
 fun WebView.loadWordPressContent(content: String?) {
     val htmlContent = """
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <script src="prism.js"></script>
-        <div class="content">$content</div>
+        <html>
+        <head>
+            <style>
+                body {
+                    background-color: transparent;
+                    color: white;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    line-height: 1.6;
+                }
+                .content img {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                }
+                a {
+                    color: #BB86FC;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="content">$content</div>
+        </body>
+        </html>
     """.trimIndent()
 
     this.apply {

@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,7 +59,11 @@ fun ToolbarContent(
                     Box(
                         modifier = Modifier
                             .size(30.dp)
-                            .clickable(enabled = onBackClick != null) { onBackClick?.invoke() }) {
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                enabled = onBackClick != null
+                            ) { onBackClick?.invoke() }) {
                         Icon(
                             imageVector = AppIcons.Back,
                             contentDescription = null,
@@ -82,7 +88,11 @@ fun ToolbarContent(
                         .align(Alignment.CenterStart)
                         .padding(start = 10.dp)
                         .size(30.dp)
-                        .clickable(enabled = onLeftClick != null) { onLeftClick?.invoke() }) {
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            enabled = onLeftClick != null
+                        ) { onLeftClick?.invoke() }) {
                     Icon(
                         imageVector = leftIcon,
                         contentDescription = null,
@@ -115,7 +125,11 @@ fun ToolbarContent(
                         .align(Alignment.CenterEnd)
                         .padding(end = 15.dp)
                         .size(30.dp)
-                        .clickable(enabled = onRightClick != null) { onRightClick?.invoke() }) {
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            enabled = onRightClick != null
+                        ) { onRightClick?.invoke() }) {
                     Icon(
                         imageVector = rightIcon,
                         contentDescription = null,
