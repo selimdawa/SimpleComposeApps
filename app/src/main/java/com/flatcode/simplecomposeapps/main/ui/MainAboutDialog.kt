@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.main.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.flatcode.simplecomposeapps.main.MainInfoViewModel
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -40,13 +39,11 @@ fun MainAboutDialog(
                 .width(250.dp)
                 .wrapContentHeight(),
             shape = RoundedCornerShape(30.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = CardDefaults.cardColors(containerColor = MC_BG),
             elevation = CardDefaults.cardElevation(3.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary)
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = Strings.APP_FEATURES_MVVM,

@@ -6,6 +6,7 @@ object Strings {
     // Dogs
     const val NONE_DISPLAY = "There are no items to display"
     const val HINT_TEXT_BREEDS = "Breeds list"
+    const val SELECT_BREED = "Please select a breed"
     const val DOGS = "photo dogs"
 
     // Calculator

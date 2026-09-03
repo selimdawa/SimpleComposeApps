@@ -17,8 +17,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 @Composable
 fun DogListItem(
-    imageUrl: String,
-    modifier: Modifier = Modifier
+    imageUrl: String, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -31,8 +30,7 @@ fun DogListItem(
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(2.dp),
-            shape = RoundedCornerShape(10.dp)
+                .padding(2.dp), shape = RoundedCornerShape(10.dp)
         ) {
             AsyncImage(
                 model = imageUrl,
