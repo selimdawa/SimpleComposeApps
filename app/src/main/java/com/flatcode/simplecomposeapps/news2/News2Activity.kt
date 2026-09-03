@@ -26,7 +26,6 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.news2.ui.EverythingScreen
 import com.flatcode.simplecomposeapps.news2.ui.TopArticlesScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -39,19 +38,17 @@ class News2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        NewsBottomNavigation(navController = navController)
-                    }
-                ) { paddingValues ->
-                    NewsNavHost(
-                        navController = navController,
-                        modifier = Modifier.padding(paddingValues),
-                        onBack = { finish() }
-                    )
+            val navController = rememberNavController()
+            Scaffold(
+                bottomBar = {
+                    NewsBottomNavigation(navController = navController)
                 }
+            ) { paddingValues ->
+                NewsNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(paddingValues),
+                    onBack = { finish() }
+                )
             }
         }
     }

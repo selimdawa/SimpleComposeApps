@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.randomimagegenerating.ui.ImageInfoScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -35,18 +34,16 @@ class ImageInfoActivity : AppCompatActivity() {
         viewModel.setCatInfo(catInfo)
 
         setContent {
-            SimpleComposeAppsTheme {
-                ImageInfoScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() },
-                    onOpenUrl = { url ->
-                        if (url.isNotEmpty()) {
-                            val browser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                            startActivity(browser)
-                        }
+            ImageInfoScreen(
+                viewModel = viewModel,
+                onBack = { finish() },
+                onOpenUrl = { url ->
+                    if (url.isNotEmpty()) {
+                        val browser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(browser)
                     }
-                )
-            }
+                }
+            )
         }
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
@@ -27,13 +26,11 @@ class PlayerActivity : ComponentActivity() {
         }
 
         setContent {
-            SimpleComposeAppsTheme {
-                PlayerScreen(
-                    videos = myFiles,
-                    initialPosition = position,
-                    onBack = { finish() }
-                )
-            }
+            PlayerScreen(
+                videos = myFiles,
+                initialPosition = position,
+                onBack = { finish() }
+            )
         }
     }
 }

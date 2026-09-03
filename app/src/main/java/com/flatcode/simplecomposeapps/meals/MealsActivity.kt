@@ -31,7 +31,6 @@ import com.flatcode.simplecomposeapps.meals.ui.FavoritesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.HomeMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.MealDetailScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -44,19 +43,17 @@ class MealsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        MealsBottomNavigation(navController = navController)
-                    }
-                ) { paddingValues ->
-                    MealsNavHost(
-                        navController = navController,
-                        modifier = Modifier.padding(paddingValues),
-                        onBack = { finish() }
-                    )
+            val navController = rememberNavController()
+            Scaffold(
+                bottomBar = {
+                    MealsBottomNavigation(navController = navController)
                 }
+            ) { paddingValues ->
+                MealsNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(paddingValues),
+                    onBack = { finish() }
+                )
             }
         }
     }

@@ -11,7 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.dictionary.ui.DefinitionScreen
 import com.flatcode.simplecomposeapps.dictionary.ui.DictionaryScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -24,9 +23,7 @@ class DictionaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                DictionaryAppNavHost(onBack = { finish() })
-            }
+            DictionaryAppNavHost(onBack = { finish() })
         }
     }
 }

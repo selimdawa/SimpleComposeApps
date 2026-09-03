@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.wordpress.model.Post
 import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressDetailsScreen
@@ -38,24 +37,22 @@ class WordpressDetailsActivity : ComponentActivity() {
         )
 
         setContent {
-            SimpleComposeAppsTheme {
-                val uiState by viewModel.uiState.collectAsState()
-                
-                // For details, we might want to check the DB directly or use a specific state
-                // But let's use the toggleFavorite from ViewModel
-                
-                WordpressDetailsScreen(
-                    id = id,
-                    featuredMediaId = featuredMedia,
-                    title = title,
-                    content = contentPost,
-                    isFavorite = uiState.favoritePosts.any { it.wpPostId == id },
-                    onBack = { finish() },
-                    onToggleFavorite = {
-                        viewModel.toggleFavorite(post)
-                    }
-                )
-            }
+            val uiState by viewModel.uiState.collectAsState()
+
+            // For details, we might want to check the DB directly or use a specific state
+            // But let's use the toggleFavorite from ViewModel
+
+            WordpressDetailsScreen(
+                id = id,
+                featuredMediaId = featuredMedia,
+                title = title,
+                content = contentPost,
+                isFavorite = uiState.favoritePosts.any { it.wpPostId == id },
+                onBack = { finish() },
+                onToggleFavorite = {
+                    viewModel.toggleFavorite(post)
+                }
+            )
         }
     }
 

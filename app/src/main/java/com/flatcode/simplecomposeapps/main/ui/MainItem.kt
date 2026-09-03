@@ -33,14 +33,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.Main
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.openActivity
 
 @Composable
 fun MainItem(item: Main) {
     val context = LocalContext.current
-    val gradientBrush = AppTheme.colors.primaryGradient
 
     Card(
         modifier = Modifier
@@ -48,15 +47,14 @@ fun MainItem(item: Main) {
             .padding(bottom = 10.dp)
             .fillMaxWidth()
             .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
+                interactionSource = remember { MutableInteractionSource() }, indication = null
             ) { item.c?.let { context.openActivity(it) } },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Column(
             modifier = Modifier
-                .background(gradientBrush)
+                .background(MC_BG)
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -79,6 +77,7 @@ fun MainItem(item: Main) {
                                 colorFilter = ColorFilter.tint(Color.Black)
                             )
                         }
+
                         is Int -> {
                             Image(
                                 painter = painterResource(id = image),

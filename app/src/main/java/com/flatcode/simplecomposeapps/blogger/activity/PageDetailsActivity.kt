@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerDetailsScreen
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 class PageDetailsActivity : ComponentActivity() {
 
@@ -19,13 +17,11 @@ class PageDetailsActivity : ComponentActivity() {
         val pageId = intent.getStringExtra("pageId") ?: ""
 
         setContent {
-            SimpleComposeAppsTheme {
-                BloggerDetailsScreen(
-                    viewModel = viewModel,
-                    id = pageId,
-                    isPage = true,
-                    onBack = { onBackPressedDispatcher.onBackPressed() })
-            }
+            BloggerDetailsScreen(
+                viewModel = viewModel,
+                id = pageId,
+                isPage = true,
+                onBack = { onBackPressedDispatcher.onBackPressed() })
         }
     }
 }

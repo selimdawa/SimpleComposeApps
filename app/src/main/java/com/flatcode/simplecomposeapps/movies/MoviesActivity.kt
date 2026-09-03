@@ -14,7 +14,6 @@ import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.movies.ui.MovieDetailScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieFavoriteScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieHomeScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 import com.google.gson.Gson
@@ -28,9 +27,7 @@ class MoviesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                MoviesAppNavHost(onBack = { finish() })
-            }
+            MoviesAppNavHost(onBack = { finish() })
         }
     }
 }

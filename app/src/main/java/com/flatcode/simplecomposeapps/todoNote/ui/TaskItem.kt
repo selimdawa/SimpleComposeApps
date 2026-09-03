@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Task
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun TaskItem(
@@ -45,7 +47,7 @@ fun TaskItem(
                 .padding(start = 8.dp)
                 .weight(1f),
             fontSize = 20.sp,
-            color = if (task.important) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground,
+            color = if (task.important) COLOR_ERROR else MaterialTheme.colorScheme.onBackground,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -55,7 +57,7 @@ fun TaskItem(
                 imageVector = Icons.Default.PriorityHigh,
                 contentDescription = "Important",
                 modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.error
+                tint = MC_TRACK
             )
         }
     }

@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressScreen
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 
@@ -19,28 +18,26 @@ class WordpressActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                WordpressScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() },
-                    onPostClick = { index ->
-                        val post = viewModel.uiState.value.posts[index]
-                        val intent = WordpressDetailsActivity.createIntent(
-                            this,
-                            post.id,
-                            post.featuredMedia,
-                            post.title?.rendered,
-                            post.excerpt?.rendered,
-                            post.content?.rendered
-                        )
-                        startActivity(intent)
-                    },
-                    onFavoritesClick = {
-                        val intent = Intent(this, WordpressFavoritesActivity::class.java)
-                        startActivity(intent)
-                    }
-                )
-            }
+            WordpressScreen(
+                viewModel = viewModel,
+                onBack = { finish() },
+                onPostClick = { index ->
+                    val post = viewModel.uiState.value.posts[index]
+                    val intent = WordpressDetailsActivity.createIntent(
+                        this,
+                        post.id,
+                        post.featuredMedia,
+                        post.title?.rendered,
+                        post.excerpt?.rendered,
+                        post.content?.rendered
+                    )
+                    startActivity(intent)
+                },
+                onFavoritesClick = {
+                    val intent = Intent(this, WordpressFavoritesActivity::class.java)
+                    startActivity(intent)
+                }
+            )
         }
     }
 }

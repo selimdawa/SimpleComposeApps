@@ -22,12 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import androidx.compose.ui.platform.LocalContext
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 
 @Composable
 fun CharacterItem(
@@ -37,7 +39,7 @@ fun CharacterItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Row(
@@ -52,11 +54,13 @@ fun CharacterItem(
                     .background(image_profile)
             ) {
                 AsyncImage(
-                    model = item.image,
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(item.image)
+                        .transformations(SimpleBlurTransformation(50f))
+                        .build(),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .blur(10.dp),
+                        .fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
                 AsyncImage(
@@ -154,22 +158,20 @@ fun CharacterItem(
 @Preview
 @Composable
 fun CharacterItemPreview() {
-    SimpleComposeAppsTheme {
-        CharacterItem(
-            item = Character(
-                id = 1,
-                name = "Rick Sanchez",
-                status = "Alive",
-                species = "Human",
-                type = "",
-                gender = "Male",
-                origin = LocationShort("Earth", ""),
-                location = LocationShort("Citadel of Ricks", ""),
-                image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                episode = emptyList(),
-                url = "",
-                created = ""
-            )
+    CharacterItem(
+        item = Character(
+            id = 1,
+            name = "Rick Sanchez",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = LocationShort("Earth", ""),
+            location = LocationShort("Citadel of Ricks", ""),
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            episode = emptyList(),
+            url = "",
+            created = ""
         )
-    }
+    )
 }

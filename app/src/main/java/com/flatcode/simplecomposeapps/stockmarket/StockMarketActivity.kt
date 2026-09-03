@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,12 +23,10 @@ class StockMarketActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            SimpleComposeAppsTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(), color = COLOR_ON_BACKGROUND
-                ) {
-                    DestinationsNavHost(navGraph = NavGraphs.root)
-                }
+            Surface(
+                modifier = Modifier.fillMaxSize(), color = COLOR_ON_BACKGROUND
+            ) {
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }

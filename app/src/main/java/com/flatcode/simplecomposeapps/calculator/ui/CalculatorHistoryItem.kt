@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorEntity
 import com.flatcode.simplecomposeapps.ui.theme.Gray2
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 @Composable
 fun CalculatorHistoryItem(
@@ -48,11 +47,9 @@ fun CalculatorHistoryItem(
 @Preview(showBackground = true)
 @Composable
 fun CalculatorHistoryItemPreview() {
-    SimpleComposeAppsTheme {
-        CalculatorHistoryItem(
-            item = CalculatorEntity(
-                expression = "10 + 20", result = "30"
-            )
+    CalculatorHistoryItem(
+        item = CalculatorEntity(
+            expression = "10 + 20", result = "30"
         )
-    }
+    )
 }

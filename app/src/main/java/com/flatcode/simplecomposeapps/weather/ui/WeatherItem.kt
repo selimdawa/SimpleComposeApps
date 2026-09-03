@@ -29,7 +29,7 @@ fun WeatherItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0x38FFFFFF)), // white_22 equivalent
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)

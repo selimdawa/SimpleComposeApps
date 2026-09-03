@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 @Composable
 fun EpisodeItem(
@@ -30,7 +29,7 @@ fun EpisodeItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Column(
@@ -86,17 +85,15 @@ fun EpisodeItem(
 @Preview
 @Composable
 fun EpisodeItemPreview() {
-    SimpleComposeAppsTheme {
-        EpisodeItem(
-            item = Episode(
-                id = 1,
-                name = "Pilot",
-                airDate = "December 2, 2013",
-                episode = "S01E01",
-                characters = emptyList(),
-                url = "",
-                created = "2017-11-10T12:56:33.798Z"
-            )
+    EpisodeItem(
+        item = Episode(
+            id = 1,
+            name = "Pilot",
+            airDate = "December 2, 2013",
+            episode = "S01E01",
+            characters = emptyList(),
+            url = "",
+            created = "2017-11-10T12:56:33.798Z"
         )
-    }
+    )
 }

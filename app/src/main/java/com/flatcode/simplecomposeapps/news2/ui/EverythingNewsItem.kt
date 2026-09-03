@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.news2.models.EverythingNewsItem
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 @Composable
 fun EverythingNewsItem(
@@ -30,7 +29,7 @@ fun EverythingNewsItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Row(
@@ -56,13 +55,11 @@ fun EverythingNewsItem(
 @Preview
 @Composable
 fun EverythingNewsItemPreview() {
-    SimpleComposeAppsTheme {
-        EverythingNewsItem(
-            item = EverythingNewsItem(
-                id = "1",
-                title = "Everything News Title",
-                url = ""
-            )
+    EverythingNewsItem(
+        item = EverythingNewsItem(
+            id = "1",
+            title = "Everything News Title",
+            url = ""
         )
-    }
+    )
 }

@@ -27,7 +27,6 @@ import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickCharactersScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickEpisodesScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickLocationsScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -40,19 +39,17 @@ class RickAndMortyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        RickBottomNavigation(navController = navController)
-                    }
-                ) { paddingValues ->
-                    RickNavHost(
-                        navController = navController,
-                        modifier = Modifier.padding(paddingValues),
-                        onBack = { finish() }
-                    )
+            val navController = rememberNavController()
+            Scaffold(
+                bottomBar = {
+                    RickBottomNavigation(navController = navController)
                 }
+            ) { paddingValues ->
+                RickNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(paddingValues),
+                    onBack = { finish() }
+                )
             }
         }
     }

@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
 import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
@@ -25,31 +24,29 @@ class WebAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                val uiState by viewModel.uiState.collectAsState()
+            val uiState by viewModel.uiState.collectAsState()
 
-                WebAppScreen(
-                    onWebSite = { openWebView(DATA.WEBSITE) },
-                    onInstagram = { openWebView(DATA.INSTAGRAM) },
-                    onTwitter = { openWebView(DATA.TWITTER) },
-                    onFacebook = { openWebView(DATA.FACEBOOK) },
-                    onAboutUs = { viewModel.showAboutDialog(true) },
-                    onSupport = { viewModel.showSupportDialog(true) },
-                    onShareApp = { shareApp() },
-                    onRateApp = { rateApp() }
+            WebAppScreen(
+                onWebSite = { openWebView(DATA.WEBSITE) },
+                onInstagram = { openWebView(DATA.INSTAGRAM) },
+                onTwitter = { openWebView(DATA.TWITTER) },
+                onFacebook = { openWebView(DATA.FACEBOOK) },
+                onAboutUs = { viewModel.showAboutDialog(true) },
+                onSupport = { viewModel.showSupportDialog(true) },
+                onShareApp = { shareApp() },
+                onRateApp = { rateApp() }
+            )
+
+            if (uiState.showAboutDialog) {
+                WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
+            }
+
+            if (uiState.showSupportDialog) {
+                WebSupportDialog(
+                    onDismiss = { viewModel.showSupportDialog(false) },
+                    onEmail = { sendEmail() },
+                    onPhone = { callPhone() }
                 )
-
-                if (uiState.showAboutDialog) {
-                    WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
-                }
-
-                if (uiState.showSupportDialog) {
-                    WebSupportDialog(
-                        onDismiss = { viewModel.showSupportDialog(false) },
-                        onEmail = { sendEmail() },
-                        onPhone = { callPhone() }
-                    )
-                }
             }
         }
     }

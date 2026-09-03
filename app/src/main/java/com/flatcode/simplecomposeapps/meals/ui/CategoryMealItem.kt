@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.pojo.Category
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable
@@ -32,9 +31,7 @@ fun CategoryMealItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(
-                horizontal = 5.dp, vertical = 5.dp
-            ), // XML has marginBottom 10sp, marginHorizontal 5sp
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
@@ -68,14 +65,12 @@ fun CategoryMealItem(
 @Preview
 @Composable
 fun CategoryMealItemPreview() {
-    SimpleComposeAppsTheme {
-        CategoryMealItem(
-            item = Category(
-                idCategory = "1",
-                strCategory = "Beef",
-                strCategoryDescription = "",
-                strCategoryThumb = "https://www.themealdb.com/images/category/beef.png"
-            )
+    CategoryMealItem(
+        item = Category(
+            idCategory = "1",
+            strCategory = "Beef",
+            strCategoryDescription = "",
+            strCategoryThumb = "https://www.themealdb.com/images/category/beef.png"
         )
-    }
+    )
 }

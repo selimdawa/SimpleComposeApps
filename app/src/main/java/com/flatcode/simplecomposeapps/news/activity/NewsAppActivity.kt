@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.news.ui.NewsScreen
 import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 
 class NewsAppActivity : ComponentActivity() {
@@ -19,18 +18,16 @@ class NewsAppActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                NewsScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() },
-                    onNewsClick = { headline ->
-                        val intent = Intent(this, NewsAppDetailsActivity::class.java).apply {
-                            putExtra(DATA.DATA, headline)
-                        }
-                        startActivity(intent)
+            NewsScreen(
+                viewModel = viewModel,
+                onBack = { finish() },
+                onNewsClick = { headline ->
+                    val intent = Intent(this, NewsAppDetailsActivity::class.java).apply {
+                        putExtra(DATA.DATA, headline)
                     }
-                )
-            }
+                    startActivity(intent)
+                }
+            )
         }
     }
 }

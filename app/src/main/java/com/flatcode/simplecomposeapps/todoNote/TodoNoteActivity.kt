@@ -28,7 +28,6 @@ import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.TasksScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -41,19 +40,17 @@ class TodoNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        TodoBottomNavigation(navController = navController)
-                    }
-                ) { paddingValues ->
-                    TodoNavHost(
-                        navController = navController,
-                        modifier = Modifier.padding(paddingValues),
-                        onBack = { finish() }
-                    )
+            val navController = rememberNavController()
+            Scaffold(
+                bottomBar = {
+                    TodoBottomNavigation(navController = navController)
                 }
+            ) { paddingValues ->
+                TodoNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(paddingValues),
+                    onBack = { finish() }
+                )
             }
         }
     }

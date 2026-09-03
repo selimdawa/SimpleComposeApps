@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.calculator.ui.CalculatorScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -23,12 +22,10 @@ class CalculatorActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[CalculatorViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                CalculatorScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() }
-                )
-            }
+            CalculatorScreen(
+                viewModel = viewModel,
+                onBack = { finish() }
+            )
         }
     }
 }

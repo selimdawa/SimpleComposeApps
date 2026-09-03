@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 @Composable
 fun DogListItem(
@@ -24,9 +24,9 @@ fun DogListItem(
         modifier = modifier
             .fillMaxWidth()
             .height(320.dp)
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.error)
+        colors = CardDefaults.cardColors(containerColor = COLOR_ERROR)
     ) {
         Card(
             modifier = Modifier

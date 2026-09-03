@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.joke.ui.JokeScreen
 import com.flatcode.simplecomposeapps.joke.viewmodel.JokeViewModel
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 class JokeAppActivity : ComponentActivity() {
 
@@ -17,11 +16,9 @@ class JokeAppActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(this)[JokeViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                JokeScreen(
-                    viewModel = viewModel,
-                )
-            }
+            JokeScreen(
+                viewModel = viewModel,
+            )
         }
     }
 }

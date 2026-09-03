@@ -11,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.main.ui.MainAboutDialog
 import com.flatcode.simplecomposeapps.main.ui.MainScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import io.selimdawa.multicolors.MultiColorManager
 
 class MainActivity : AppCompatActivity() {
@@ -30,19 +29,17 @@ class MainActivity : AppCompatActivity() {
         mainInfoViewModel = ViewModelProvider(this)[MainInfoViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                var showAboutDialog by remember { mutableStateOf(false) }
+            var showAboutDialog by remember { mutableStateOf(false) }
 
-                MainScreen(
-                    viewModel = mainViewModel, onInfoClick = {
-                        mainInfoViewModel.getInfoItems()
-                        showAboutDialog = true
-                    })
+            MainScreen(
+                viewModel = mainViewModel, onInfoClick = {
+                    mainInfoViewModel.getInfoItems()
+                    showAboutDialog = true
+                })
 
-                if (showAboutDialog) {
-                    MainAboutDialog(
-                        infoViewModel = mainInfoViewModel, onDismiss = { showAboutDialog = false })
-                }
+            if (showAboutDialog) {
+                MainAboutDialog(
+                    infoViewModel = mainInfoViewModel, onDismiss = { showAboutDialog = false })
             }
         }
 

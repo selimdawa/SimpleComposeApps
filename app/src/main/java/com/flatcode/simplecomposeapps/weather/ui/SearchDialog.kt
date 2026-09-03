@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -116,7 +115,5 @@ fun SearchDialogContent(
 @Preview
 @Composable
 fun SearchDialogPreview() {
-    SimpleComposeAppsTheme {
-        SearchDialogContent(onConfirm = {}, onDismiss = {})
-    }
+    SearchDialogContent(onConfirm = {}, onDismiss = {})
 }

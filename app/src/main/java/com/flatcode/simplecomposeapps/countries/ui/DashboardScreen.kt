@@ -2,6 +2,7 @@ package com.flatcode.simplecomposeapps.countries.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,14 +17,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.countries.DashboardViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -34,7 +36,7 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val countries by viewModel.countries.observeAsState(emptyList())
-    val isLoading by viewModel.countryLoading.observeAsState(false)
+    val isLoading by viewModel.countryLoading.observeAsState(true)
     val isError by viewModel.countryError.observeAsState(false)
 
     LaunchedEffect(Unit) {
@@ -44,12 +46,9 @@ fun DashboardScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.COUNTRIES,
-                hasBack = false,
-                onBackClick = onBack
+                title = DATA.COUNTRIES, hasBack = false, onBackClick = onBack
             )
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -57,14 +56,16 @@ fun DashboardScreen(
                 .padding(paddingValues)
         ) {
             if (isLoading && countries.isEmpty()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                )
             } else if (isError) {
                 Text(
                     text = "Error loading countries",
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.error
+                    color = COLOR_ERROR
                 )
-            } else if (countries.isEmpty() && !isLoading) {
+            } else if (!isLoading && countries.isEmpty()) {
                 Text(
                     text = Strings.NONE_DISPLAY,
                     modifier = Modifier
@@ -72,15 +73,16 @@ fun DashboardScreen(
                         .padding(16.dp),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.error
+                    color = COLOR_ERROR
                 )
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 10.dp)
+                ) {
                     items(countries) { country ->
                         CountryItem(
                             item = country,
-                            modifier = Modifier.clickable { onCountryClick(country.uuid) }
-                        )
+                            modifier = Modifier.clickable { onCountryClick(country.uuid) })
                     }
                 }
             }

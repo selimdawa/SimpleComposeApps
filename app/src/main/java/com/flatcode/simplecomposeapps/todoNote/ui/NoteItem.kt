@@ -25,6 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun NoteItem(
@@ -42,7 +44,7 @@ fun NoteItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(MC_TRACK)
                 .padding(10.dp)
         ) {
             Text(
@@ -50,7 +52,7 @@ fun NoteItem(
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = COLOR_ON_BACKGROUND
             )
 
             Text(
@@ -61,7 +63,7 @@ fun NoteItem(
                 fontSize = 14.sp,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = COLOR_ON_BACKGROUND
             )
 
             Row(
@@ -72,7 +74,7 @@ fun NoteItem(
                     imageVector = Icons.Default.CalendarToday,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = COLOR_ON_BACKGROUND
                 )
 
                 Text(
@@ -81,7 +83,7 @@ fun NoteItem(
                         .padding(start = 5.dp)
                         .weight(1f),
                     fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = COLOR_ON_BACKGROUND
                 )
 
                 IconButton(

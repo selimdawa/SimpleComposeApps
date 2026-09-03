@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.os.BundleCompat
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.ui.NewsAppDetailsScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.utils.DATA
 
 class NewsAppDetailsActivity : ComponentActivity() {
@@ -26,12 +25,10 @@ class NewsAppDetailsActivity : ComponentActivity() {
         }
 
         setContent {
-            SimpleComposeAppsTheme {
-                NewsAppDetailsScreen(
-                    headline = headlines,
-                    onBack = { finish() }
-                )
-            }
+            NewsAppDetailsScreen(
+                headline = headlines,
+                onBack = { finish() }
+            )
         }
     }
 }

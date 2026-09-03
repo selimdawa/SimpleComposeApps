@@ -12,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.pokemon.ui.PokemonDetailScreen
 import com.flatcode.simplecomposeapps.pokemon.ui.PokemonScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -25,9 +24,7 @@ class PokemonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                PokemonAppNavHost(onBack = { finish() })
-            }
+            PokemonAppNavHost(onBack = { finish() })
         }
     }
 }

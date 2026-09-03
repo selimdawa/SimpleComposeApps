@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.candycrushgame.ui.CandyCrushScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import io.selimdawa.multicolors.MultiColorManager
 
 class CandyCrushGameActivity : AppCompatActivity() {
@@ -21,12 +20,10 @@ class CandyCrushGameActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[CandyCrushViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                CandyCrushScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() }
-                )
-            }
+            CandyCrushScreen(
+                viewModel = viewModel,
+                onBack = { finish() }
+            )
         }
     }
 }

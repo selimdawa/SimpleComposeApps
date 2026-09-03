@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 @Composable
 fun LocationItem(
@@ -29,7 +28,7 @@ fun LocationItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Column(
@@ -63,17 +62,15 @@ fun LocationItem(
 @Preview
 @Composable
 fun LocationItemPreview() {
-    SimpleComposeAppsTheme {
-        LocationItem(
-            item = Location(
-                id = 1,
-                name = "Earth (C-137)",
-                type = "Planet",
-                dimension = "Dimension C-137",
-                residents = emptyList(),
-                url = "https://rickandmortyapi.com/api/location/1",
-                created = ""
-            )
+    LocationItem(
+        item = Location(
+            id = 1,
+            name = "Earth (C-137)",
+            type = "Planet",
+            dimension = "Dimension C-137",
+            residents = emptyList(),
+            url = "https://rickandmortyapi.com/api/location/1",
+            created = ""
         )
-    }
+    )
 }

@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.stopwatch.ui.StopWatchScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import io.selimdawa.multicolors.MultiColorManager
 
 class StopWatchActivity : AppCompatActivity() {
@@ -21,12 +20,10 @@ class StopWatchActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StopWatchViewModel::class.java]
 
         setContent {
-            SimpleComposeAppsTheme {
-                StopWatchScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() }
-                )
-            }
+            StopWatchScreen(
+                viewModel = viewModel,
+                onBack = { finish() }
+            )
         }
     }
 }

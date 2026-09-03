@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinEntity
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 
 @Composable
 fun CryptoItem(
@@ -32,7 +31,7 @@ fun CryptoItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
@@ -111,14 +110,12 @@ fun CryptoItem(
 @Preview
 @Composable
 fun CryptoItemPreview() {
-    SimpleComposeAppsTheme {
-        CryptoItem(
-            item = CoinEntity(
-                id = 1,
-                name = "Bitcoin",
-                symbol = "BTC",
-                price = 50000.0
-            )
+    CryptoItem(
+        item = CoinEntity(
+            id = 1,
+            name = "Bitcoin",
+            symbol = "BTC",
+            price = 50000.0
         )
-    }
+    )
 }

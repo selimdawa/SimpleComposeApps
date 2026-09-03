@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.news2.models.TopArticlesNewsItem
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable
 fun TopArticleItem(
@@ -37,7 +40,7 @@ fun TopArticleItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .background(MC_BG)
                 .height(100.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -46,7 +49,7 @@ fun TopArticleItem(
                 contentDescription = null,
                 modifier = Modifier
                     .size(100.dp)
-                    .background(MaterialTheme.colorScheme.secondaryContainer),
+                    .background(image_profile),
                 contentScale = ContentScale.Crop
             )
 
@@ -55,7 +58,7 @@ fun TopArticleItem(
                 modifier = Modifier
                     .padding(10.dp)
                     .weight(1f),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = Color.White,
                 fontSize = 16.sp,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis

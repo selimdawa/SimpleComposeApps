@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
 import com.flatcode.simplecomposeapps.videoplayer.ui.VideoPlayerScreen
@@ -39,27 +38,25 @@ class VideoPlayerActivity : ComponentActivity() {
         checkAndRequestPermissions()
 
         setContent {
-            SimpleComposeAppsTheme {
-                VideoPlayerScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() },
-                    onVideoClick = { position ->
-                        VideoData.videoFile = ArrayList(viewModel.uiState.value.videoFiles)
-                        // Navigate to PlayerActivity
-                        val intent = Intent(this, PlayerActivity::class.java).apply {
-                            putExtra("position", position)
-                            putExtra("sender", "FilesIsSending")
-                        }
-                        startActivity(intent)
-                    },
-                    onFolderClick = { folderPath ->
-                        val intent = Intent(this, VideoFolderActivity::class.java).apply {
-                            putExtra("folderName", folderPath)
-                        }
-                        startActivity(intent)
+            VideoPlayerScreen(
+                viewModel = viewModel,
+                onBack = { finish() },
+                onVideoClick = { position ->
+                    VideoData.videoFile = ArrayList(viewModel.uiState.value.videoFiles)
+                    // Navigate to PlayerActivity
+                    val intent = Intent(this, PlayerActivity::class.java).apply {
+                        putExtra("position", position)
+                        putExtra("sender", "FilesIsSending")
                     }
-                )
-            }
+                    startActivity(intent)
+                },
+                onFolderClick = { folderPath ->
+                    val intent = Intent(this, VideoFolderActivity::class.java).apply {
+                        putExtra("folderName", folderPath)
+                    }
+                    startActivity(intent)
+                }
+            )
         }
     }
 

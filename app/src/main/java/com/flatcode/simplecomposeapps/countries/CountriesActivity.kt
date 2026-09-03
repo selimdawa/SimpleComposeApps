@@ -12,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.countries.ui.CountryDetailScreen
 import com.flatcode.simplecomposeapps.countries.ui.DashboardScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -25,9 +24,7 @@ class CountriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                CountriesAppNavHost(onBack = { finish() })
-            }
+            CountriesAppNavHost(onBack = { finish() })
         }
     }
 }

@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import java.io.FileOutputStream
 import java.io.IOException
@@ -43,16 +42,14 @@ class PdfReaderActivity : ComponentActivity() {
         }
 
         setContent {
-            SimpleComposeAppsTheme {
-                PdfReaderScreen(
-                    viewModel = viewModel,
-                    onPickFile = { documentPickerLauncher.launch(arrayOf("application/pdf")) },
-                    onMeta = { /* Reverted */ },
-                    onShare = { shareFile() },
-                    onPrint = { printDocument() },
-                    onFullscreen = { viewModel.toggleBottomBar() }
-                )
-            }
+            PdfReaderScreen(
+                viewModel = viewModel,
+                onPickFile = { documentPickerLauncher.launch(arrayOf("application/pdf")) },
+                onMeta = { /* Reverted */ },
+                onShare = { shareFile() },
+                onPrint = { printDocument() },
+                onFullscreen = { viewModel.toggleBottomBar() }
+            )
         }
     }
 

@@ -12,7 +12,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoDetailScreen
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoHomeScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -25,9 +24,7 @@ class CryptoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SimpleComposeAppsTheme {
-                CryptoAppNavHost(onBack = { finish() })
-            }
+            CryptoAppNavHost(onBack = { finish() })
         }
     }
 }

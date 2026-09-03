@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.multipledelete.ui.MultiDeleteScreen
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 class MultiDeleteActivity : AppCompatActivity() {
@@ -22,12 +21,10 @@ class MultiDeleteActivity : AppCompatActivity() {
         viewModel.setItems(Strings.MULTI_DELETE_VALUES)
 
         setContent {
-            SimpleComposeAppsTheme {
-                MultiDeleteScreen(
-                    viewModel = viewModel,
-                    onBack = { finish() }
-                )
-            }
+            MultiDeleteScreen(
+                viewModel = viewModel,
+                onBack = { finish() }
+            )
         }
     }
 }

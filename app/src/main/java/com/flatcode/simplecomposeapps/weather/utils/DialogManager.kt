@@ -3,7 +3,6 @@ package com.flatcode.simplecomposeapps.weather.utils
 import android.app.AlertDialog
 import android.content.Context
 import androidx.compose.ui.platform.ComposeView
-import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.weather.ui.SearchDialogContent
 
 object DialogManager {
@@ -25,18 +24,16 @@ object DialogManager {
     fun searchByNameDialog(context: Context, listener: Listener) {
         val composeView = ComposeView(context).apply {
             setContent {
-                SimpleComposeAppsTheme {
-                    SearchDialogContent(
-                        onConfirm = { name ->
-                            listener.onClick(name)
-                            // We need to dismiss the AlertDialog. How?
-                            // We'll store it below.
-                        },
-                        onDismiss = {
-                            // We'll store it below.
-                        }
-                    )
-                }
+                SearchDialogContent(
+                    onConfirm = { name ->
+                        listener.onClick(name)
+                        // We need to dismiss the AlertDialog. How?
+                        // We'll store it below.
+                    },
+                    onDismiss = {
+                        // We'll store it below.
+                    }
+                )
             }
         }
 
@@ -46,17 +43,15 @@ object DialogManager {
 
         // Update the callbacks to dismiss the dialog
         composeView.setContent {
-            SimpleComposeAppsTheme {
-                SearchDialogContent(
-                    onConfirm = { name ->
-                        listener.onClick(name)
-                        dialog.dismiss()
-                    },
-                    onDismiss = {
-                        dialog.dismiss()
-                    }
-                )
-            }
+            SearchDialogContent(
+                onConfirm = { name ->
+                    listener.onClick(name)
+                    dialog.dismiss()
+                },
+                onDismiss = {
+                    dialog.dismiss()
+                }
+            )
         }
 
         dialog.show()
