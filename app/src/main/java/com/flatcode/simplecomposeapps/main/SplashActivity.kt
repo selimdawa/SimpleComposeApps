@@ -85,7 +85,7 @@ fun SplashScreen() {
                 modifier = Modifier.size(200.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
                 text = Strings.APP_NAME,
@@ -99,7 +99,7 @@ fun SplashScreen() {
                         color = MC_TRACK, shape = RoundedCornerShape(10.dp)
                     )
                     .padding(
-                        horizontal = 30.dp, vertical = 5.dp
+                        horizontal = 30.dp, vertical = 10.dp
                     )
             )
 

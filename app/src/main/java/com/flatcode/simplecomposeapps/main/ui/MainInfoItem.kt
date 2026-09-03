@@ -11,11 +11,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.MainInfo
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -66,24 +64,16 @@ fun MainInfoItem(item: MainInfo) {
             }
 
             FeatureStatusRow(
-                label = Strings.DAGGER_HILT,
-                status = item.hilt == 1,
-                color = MC_TRACK
+                label = Strings.DAGGER_HILT, status = item.hilt == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.NAVIGATION,
-                status = item.navigation == 1,
-                color = MC_TRACK
+                label = Strings.NAVIGATION, status = item.navigation == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.ROOM,
-                status = item.room == 1,
-                color = MC_TRACK
+                label = Strings.ROOM, status = item.room == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.COROUTINES,
-                status = item.coroutines == 1,
-                color = MC_TRACK
+                label = Strings.COROUTINES, status = item.coroutines == 1, color = COLOR_ERROR
             )
         }
     }

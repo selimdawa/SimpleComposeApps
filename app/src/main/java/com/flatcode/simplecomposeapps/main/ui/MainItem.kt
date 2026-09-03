@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -33,8 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.Main
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.openActivity
 
 @Composable
@@ -56,14 +57,13 @@ fun MainItem(item: Main) {
             modifier = Modifier
                 .background(MC_BG)
                 .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(Color.White, CircleShape)
+                        .background(White, CircleShape)
                         .align(Alignment.CenterStart), contentAlignment = Alignment.Center
                 ) {
                     val image = item.image ?: AppIcons.Load
@@ -74,7 +74,7 @@ fun MainItem(item: Main) {
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp),
                                 contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(Color.Black)
+                                colorFilter = ColorFilter.tint(Dark)
                             )
                         }
 
@@ -84,7 +84,7 @@ fun MainItem(item: Main) {
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp),
                                 contentScale = ContentScale.Crop,
-                                colorFilter = ColorFilter.tint(Color.Black)
+                                colorFilter = ColorFilter.tint(Dark)
                             )
                         }
                     }
@@ -93,7 +93,7 @@ fun MainItem(item: Main) {
                 if (item.number != 0) {
                     Text(
                         text = Strings.numberPlaceholder(item.number),
-                        color = Color.White,
+                        color = White,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -107,10 +107,9 @@ fun MainItem(item: Main) {
 
             Text(
                 text = item.title ?: "",
-                color = Color.White,
+                color = White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
             )
         }
