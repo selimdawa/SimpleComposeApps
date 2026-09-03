@@ -23,18 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.pojo.Meal
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun MealItem(
     item: Meal,
     modifier: Modifier = Modifier
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -48,7 +45,7 @@ fun MealItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(mcTrack),
+                    .background(MC_TRACK),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
@@ -57,7 +54,7 @@ fun MealItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
-                        .background(ImageProfile),
+                        .background(image_profile),
                     contentScale = ContentScale.Crop
                 )
                 Text(

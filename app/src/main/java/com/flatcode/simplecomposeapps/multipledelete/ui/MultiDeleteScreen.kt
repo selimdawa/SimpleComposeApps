@@ -20,9 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteViewModel
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
@@ -30,9 +30,6 @@ fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
     val selectedItems = viewModel.selectedItems
     val isSelectionMode by viewModel.isSelectionMode
     val context = LocalContext.current
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     Scaffold(
         topBar = {
@@ -45,7 +42,7 @@ fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
                     onSelectAll = { viewModel.selectAll() },
                     onClearSelection = { viewModel.exitSelectionMode() })
             }
-        }, containerColor = colorOnBackground
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -55,7 +52,7 @@ fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
             if (items.isEmpty()) {
                 Text(
                     text = Strings.NO_DATA_FOUND,
-                    color = colorError,
+                    color = COLOR_ERROR,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier

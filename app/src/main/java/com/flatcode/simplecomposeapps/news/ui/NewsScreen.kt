@@ -41,9 +41,9 @@ import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,10 +52,6 @@ fun NewsScreen(
 ) {
     val headlines = viewModel.headlines
     val selectedCategory = viewModel.selectedCategory.value
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     var searchQuery by remember { mutableStateOf("") }
 
@@ -69,7 +65,7 @@ fun NewsScreen(
                 hasBack = false,
                 onBackClick = onBack,
             )
-        }, containerColor = colorOnBackground
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -85,7 +81,7 @@ fun NewsScreen(
                 items(categories) { category ->
                     val isSelected = category == selectedCategory
                     Surface(
-                        color = if (isSelected) mcBg else colorError,
+                        color = if (isSelected) MC_BG else COLOR_ERROR,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.clickable(
                             interactionSource = remember { MutableInteractionSource() },
@@ -93,7 +89,7 @@ fun NewsScreen(
                         ) { viewModel.loadNews(category) }) {
                         Text(
                             text = category.replaceFirstChar { it.uppercase() },
-                            color = if (isSelected) colorError else colorOnBackground,
+                            color = if (isSelected) COLOR_ERROR else COLOR_ON_BACKGROUND,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
@@ -108,7 +104,7 @@ fun NewsScreen(
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 shape = RoundedCornerShape(6.dp),
                 elevation = CardDefaults.cardElevation(0.dp),
-                colors = CardDefaults.cardColors(containerColor = mcBg)
+                colors = CardDefaults.cardColors(containerColor = MC_BG)
             ) {
                 TextField(
                     value = searchQuery,

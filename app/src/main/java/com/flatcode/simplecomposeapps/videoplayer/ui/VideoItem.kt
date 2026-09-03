@@ -23,17 +23,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.formatDuration
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,7 +48,7 @@ fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(ImageProfile),
+                        .background(image_profile),
                     contentScale = ContentScale.Crop
                 )
                 Box(
@@ -71,7 +67,7 @@ fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
 
         Text(
             text = video.title ?: "Unknown",
-            color = colorError,
+            color = COLOR_ERROR,
             fontSize = 14.sp,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

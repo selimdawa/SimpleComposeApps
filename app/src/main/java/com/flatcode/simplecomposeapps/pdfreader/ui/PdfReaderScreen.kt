@@ -24,14 +24,13 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
-import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,15 +43,12 @@ fun PdfReaderScreen(
     onFullscreen: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
 
     Scaffold(
         bottomBar = {
             if (uiState.isBottomBarVisible) {
                 NavigationBar(
-                    containerColor = colorOnBackground,
+                    containerColor = COLOR_ON_BACKGROUND,
                 ) {
                     NavigationBarItem(
                         selected = false, onClick = onPickFile, icon = {
@@ -61,8 +57,8 @@ fun PdfReaderScreen(
                                 contentDescription = Strings.PICK_FILE
                             )
                         }, colors = NavigationBarItemDefaults.colors(
-                            unselectedIconColor = mcTrack,
-                            selectedIconColor = mcTrack,
+                            unselectedIconColor = MC_TRACK,
+                            selectedIconColor = MC_TRACK,
                             indicatorColor = Color.Transparent
                         )
                     )
@@ -72,8 +68,8 @@ fun PdfReaderScreen(
                                 imageVector = AppIcons.MetaInfo, contentDescription = Strings.META
                             )
                         }, colors = NavigationBarItemDefaults.colors(
-                            unselectedIconColor = mcTrack,
-                            selectedIconColor = mcTrack,
+                            unselectedIconColor = MC_TRACK,
+                            selectedIconColor = MC_TRACK,
                             indicatorColor = Color.Transparent
                         )
                     )
@@ -84,8 +80,8 @@ fun PdfReaderScreen(
                                 contentDescription = Strings.SHARE_FILE
                             )
                         }, colors = NavigationBarItemDefaults.colors(
-                            unselectedIconColor = mcTrack,
-                            selectedIconColor = mcTrack,
+                            unselectedIconColor = MC_TRACK,
+                            selectedIconColor = MC_TRACK,
                             indicatorColor = Color.Transparent
                         )
                     )
@@ -95,8 +91,8 @@ fun PdfReaderScreen(
                                 imageVector = AppIcons.Print, contentDescription = Strings.PRINT
                             )
                         }, colors = NavigationBarItemDefaults.colors(
-                            unselectedIconColor = mcTrack,
-                            selectedIconColor = mcTrack,
+                            unselectedIconColor = MC_TRACK,
+                            selectedIconColor = MC_TRACK,
                             indicatorColor = Color.Transparent
                         )
                     )
@@ -107,14 +103,14 @@ fun PdfReaderScreen(
                                 contentDescription = Strings.FULL_SCREEN
                             )
                         }, colors = NavigationBarItemDefaults.colors(
-                            unselectedIconColor = mcTrack,
-                            selectedIconColor = mcTrack,
+                            unselectedIconColor = MC_TRACK,
+                            selectedIconColor = MC_TRACK,
                             indicatorColor = Color.Transparent
                         )
                     )
                 }
             }
-        }, containerColor = ImageProfile // Whole screen image_profile
+        }, containerColor = image_profile // Whole screen image_profile
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -123,7 +119,7 @@ fun PdfReaderScreen(
         ) {
             if (uiState.isLoading) {
                 LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth(), color = mcTrack
+                    modifier = Modifier.fillMaxWidth(), color = MC_TRACK
                 )
             }
 
@@ -141,7 +137,7 @@ fun PdfReaderScreen(
                         AndroidView(
                             factory = { context ->
                                 PDFView(context, null).apply {
-                                    setBackgroundColor(ImageProfile.toArgb())
+                                    setBackgroundColor(image_profile.toArgb())
                                 }
                             },
                             update = { pdfView ->

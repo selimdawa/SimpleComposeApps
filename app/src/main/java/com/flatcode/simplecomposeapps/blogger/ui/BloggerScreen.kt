@@ -15,11 +15,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -47,7 +49,7 @@ fun BloggerScreen(
                 onPagesClick = onPagesClick,
                 onBack = onBack
             )
-        }, containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

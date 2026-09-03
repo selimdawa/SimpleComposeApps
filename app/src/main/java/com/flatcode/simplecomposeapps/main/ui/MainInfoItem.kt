@@ -24,15 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.MainInfo
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun MainInfoItem(item: MainInfo) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrackColor = rememberAttributeColor("mc_track", Color.White, themeId)
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +37,7 @@ fun MainInfoItem(item: MainInfo) {
             .padding(bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+        colors = CardDefaults.cardColors(containerColor = COLOR_ON_BACKGROUND)
     ) {
         Column(
             modifier = Modifier
@@ -55,14 +52,14 @@ fun MainInfoItem(item: MainInfo) {
             ) {
                 Text(
                     text = Strings.NAME,
-                    color = mcTrackColor,
+                    color = MC_TRACK,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = item.title ?: "",
-                    color = mcTrackColor,
+                    color = MC_TRACK,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -71,22 +68,22 @@ fun MainInfoItem(item: MainInfo) {
             FeatureStatusRow(
                 label = Strings.DAGGER_HILT,
                 status = item.hilt == 1,
-                color = mcTrackColor
+                color = MC_TRACK
             )
             FeatureStatusRow(
                 label = Strings.NAVIGATION,
                 status = item.navigation == 1,
-                color = mcTrackColor
+                color = MC_TRACK
             )
             FeatureStatusRow(
                 label = Strings.ROOM,
                 status = item.room == 1,
-                color = mcTrackColor
+                color = MC_TRACK
             )
             FeatureStatusRow(
                 label = Strings.COROUTINES,
                 status = item.coroutines == 1,
-                color = mcTrackColor
+                color = MC_TRACK
             )
         }
     }

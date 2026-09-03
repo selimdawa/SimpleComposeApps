@@ -21,7 +21,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,8 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @Composable
 fun RandomImageGeneratingContent(
@@ -42,8 +40,6 @@ fun RandomImageGeneratingContent(
     onNavigateToInfo: () -> Unit,
     onDownload: (String) -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
     val imageUrl by viewModel.imageUrl
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -76,7 +72,7 @@ fun RandomImageGeneratingContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(mcBg)
+                    .background(MC_BG)
                     .padding(10.dp)
                     .height(IntrinsicSize.Min),
                 horizontalArrangement = Arrangement.SpaceEvenly,

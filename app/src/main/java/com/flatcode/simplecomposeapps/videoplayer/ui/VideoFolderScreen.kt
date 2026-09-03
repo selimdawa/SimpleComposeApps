@@ -13,12 +13,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
-import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,15 +27,13 @@ fun VideoFolderScreen(
     onVideoClick: (Int, List<VideoFiles>) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    
+
     val filteredVideos = remember(uiState.videoFiles, folderPath) {
         uiState.videoFiles.filter { it.path?.substringBeforeLast('/', "") == folderPath }
     }
 
     Scaffold(
-        containerColor = colorOnBackground
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         PullToRefreshBox(
             isRefreshing = uiState.isRefreshing,
@@ -47,12 +43,11 @@ fun VideoFolderScreen(
                 .padding(paddingValues)
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(vertical = 8.dp)
+                modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(vertical = 8.dp)
             ) {
                 items(filteredVideos.indices.toList()) { index ->
-                    VideoItem(video = filteredVideos[index], onClick = { 
-                        onVideoClick(index, filteredVideos) 
+                    VideoItem(video = filteredVideos[index], onClick = {
+                        onVideoClick(index, filteredVideos)
                     })
                 }
             }

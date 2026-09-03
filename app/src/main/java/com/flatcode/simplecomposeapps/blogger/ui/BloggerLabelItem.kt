@@ -5,22 +5,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.blogger.model.Label
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun BloggerLabelItem(label: Label) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     Surface(
-        color = mcTrack, shape = RoundedCornerShape(16.dp), modifier = Modifier.padding(4.dp)
+        color = MC_TRACK, shape = RoundedCornerShape(16.dp), modifier = Modifier.padding(4.dp)
     ) {
         Text(
             text = label.label ?: "",

@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.countries.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -32,15 +30,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.countries.DetailViewModel
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CountryDetailScreen(
-    countryUuid: Int,
-    onBack: () -> Unit,
-    viewModel: DetailViewModel = hiltViewModel()
+    countryUuid: Int, onBack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()
 ) {
     val country by viewModel.countryLiveData.observeAsState()
 
@@ -51,11 +47,9 @@ fun CountryDetailScreen(
     Scaffold(
         topBar = {
             CountriesTopAppBar(
-                title = DATA.COUNTRY_DETAILS,
-                onBack = onBack
+                title = DATA.COUNTRY_DETAILS, onBack = onBack
             )
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         country?.let { item ->
             Column(
@@ -76,13 +70,17 @@ fun CountryDetailScreen(
                         AsyncImage(
                             model = item.imageURL,
                             contentDescription = null,
-                            modifier = Modifier.fillMaxSize().blur(20.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .blur(20.dp),
                             contentScale = ContentScale.Crop
                         )
                         AsyncImage(
                             model = item.imageURL,
                             contentDescription = null,
-                            modifier = Modifier.fillMaxSize().padding(16.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
                             contentScale = ContentScale.Fit
                         )
                     }
@@ -102,18 +100,13 @@ fun CountryDetailScreen(
 
 @Composable
 fun DetailInfoRow(label: String, value: String) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     Column(modifier = Modifier.padding(vertical = 8.dp)) {
         Text(
-            text = label,
-            color = Color.White,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
+            text = label, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold
         )
         Text(
             text = value,
-            color = mcTrack,
+            color = MC_TRACK,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 4.dp)

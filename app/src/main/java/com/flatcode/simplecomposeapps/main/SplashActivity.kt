@@ -34,9 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.openActivity
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -74,9 +74,6 @@ fun SplashScreenPreview() {
 
 @Composable
 fun SplashScreen() {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrackColor = rememberAttributeColor("mc_track", Color.White, themeId)
-
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = AppIcons.Background),
@@ -107,7 +104,7 @@ fun SplashScreen() {
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .background(
-                        color = mcTrackColor, shape = RoundedCornerShape(10.dp)
+                        color = MC_TRACK, shape = RoundedCornerShape(10.dp)
                     )
                     .padding(
                         horizontal = 30.dp, vertical = 5.dp

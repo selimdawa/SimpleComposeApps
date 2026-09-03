@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,10 +44,10 @@ import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.crypto.CryptoHomeViewModel
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CryptoHomeScreen(
@@ -58,7 +57,7 @@ fun CryptoHomeScreen(
 ) {
     val cryptoList by viewModel.cryptoList.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    
+
     val listState = rememberLazyListState()
     val shouldLoadMore by remember {
         derivedStateOf {
@@ -87,7 +86,7 @@ fun CryptoHomeScreen(
                 onBackClick = onBack
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -131,9 +130,6 @@ fun CryptoDataItem(
     item: Data,
     onClick: () -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -146,14 +142,14 @@ fun CryptoDataItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .background(mcBg),
+                .background(MC_BG),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
                     .width(100.dp)
                     .fillMaxHeight()
-                    .background(ImageProfile),
+                    .background(image_profile),
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(

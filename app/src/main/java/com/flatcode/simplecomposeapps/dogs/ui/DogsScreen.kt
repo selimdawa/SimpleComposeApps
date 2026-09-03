@@ -20,7 +20,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -41,7 +40,8 @@ import com.flatcode.simplecomposeapps.dogs.DogUiState
 import com.flatcode.simplecomposeapps.dogs.DogViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +64,7 @@ fun DogsScreen(
                 onBackClick = onBack
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -159,7 +159,7 @@ fun DogPhotoItem(photo: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
-                .background(ImageProfile),
+                .background(image_profile),
             contentScale = ContentScale.Crop
         )
     }

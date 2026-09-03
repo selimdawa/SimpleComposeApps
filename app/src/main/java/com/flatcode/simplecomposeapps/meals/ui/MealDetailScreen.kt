@@ -17,7 +17,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +35,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.MealDetailViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun MealDetailScreen(
@@ -54,23 +54,19 @@ fun MealDetailScreen(
 
     Scaffold(
         topBar = {
-            MealsTopAppBar(title = name, onBack = onBack)
-        },
-        floatingActionButton = {
-            meal?.let { m ->
-                FloatingActionButton(
-                    onClick = {
-                        viewModel.insertMeal(m)
-                        Toast.makeText(context, "Meal saved", Toast.LENGTH_SHORT).show()
-                    },
-                    containerColor = Color(0xFF339999),
-                    contentColor = Color.White
-                ) {
-                    Icon(imageVector = AppIcons.FavoriteBorder, contentDescription = "Save")
-                }
+        MealsTopAppBar(title = name, onBack = onBack)
+    }, floatingActionButton = {
+        meal?.let { m ->
+            FloatingActionButton(
+                onClick = {
+                    viewModel.insertMeal(m)
+                    Toast.makeText(context, "Meal saved", Toast.LENGTH_SHORT).show()
+                }, containerColor = Color(0xFF339999), contentColor = Color.White
+            ) {
+                Icon(imageVector = AppIcons.FavoriteBorder, contentDescription = "Save")
             }
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }
+    }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -140,9 +136,7 @@ fun MealDetailScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = m.strInstructions ?: "",
-                            color = Color.White,
-                            lineHeight = 24.sp
+                            text = m.strInstructions ?: "", color = Color.White, lineHeight = 24.sp
                         )
                     }
                 }

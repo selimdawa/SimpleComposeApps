@@ -15,12 +15,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.RickCharactersViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun RickCharactersScreen(
@@ -37,7 +39,7 @@ fun RickCharactersScreen(
         topBar = {
             ToolbarContent(title = "Characters", hasBack = false, onBackClick = onBack)
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun TodoToolbar(
@@ -30,7 +31,7 @@ fun TodoToolbar(
         if (showTitle) {
             Text(
                 text = title,
-                color = MaterialTheme.colorScheme.background,
+                color = COLOR_ON_BACKGROUND,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )

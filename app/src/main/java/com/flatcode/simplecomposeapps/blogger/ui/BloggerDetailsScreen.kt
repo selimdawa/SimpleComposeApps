@@ -25,7 +25,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,10 +36,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -53,8 +52,6 @@ fun BloggerDetailsScreen(
     val labels = viewModel.labels
     val comments = viewModel.comments
     val isLoading = viewModel.isLoading.value
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
     val scrollState = rememberScrollState()
 
     val inputDateFormat = remember { SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH) }
@@ -87,9 +84,9 @@ fun BloggerDetailsScreen(
                         tint = Color.White
                     )
                 }
-            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
             )
-        }, containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

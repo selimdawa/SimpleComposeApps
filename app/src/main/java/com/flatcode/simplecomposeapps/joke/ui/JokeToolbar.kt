@@ -19,18 +19,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun JokeToolbar(
     title: String,
     modifier: Modifier = Modifier,
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -38,7 +34,7 @@ fun JokeToolbar(
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = colorOnBackground)
+        colors = CardDefaults.cardColors(containerColor = COLOR_ON_BACKGROUND)
     ) {
         Box(
             modifier = Modifier
@@ -48,7 +44,7 @@ fun JokeToolbar(
             Text(
                 text = title,
                 modifier = Modifier.align(Alignment.Center),
-                color = colorError,
+                color = COLOR_ERROR,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center

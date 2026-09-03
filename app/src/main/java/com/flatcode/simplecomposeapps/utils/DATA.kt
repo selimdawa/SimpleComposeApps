@@ -161,4 +161,11 @@ object DATA {
     //Weather
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
     const val BASE_URL_WEATHER = "https://api.weatherapi.com/v1/forecast.json?key="
+
+    // Theme Attributes
+    const val COLOR_ERROR = "colorError"
+    const val COLOR_ON_BACKGROUND = "colorOnBackground"
+    const val MC_TRACK = "mc_track"
+    const val MC_TICK = "mc_tick"
+    const val MC_BG = "mc_bg"
 }

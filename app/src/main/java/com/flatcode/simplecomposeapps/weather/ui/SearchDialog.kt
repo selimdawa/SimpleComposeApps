@@ -28,10 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun SearchDialog(
@@ -49,12 +48,10 @@ fun SearchDialogContent(
     onDismiss: () -> Unit
 ) {
     var cityName by remember { mutableStateOf("") }
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
     
     Surface(
         shape = RoundedCornerShape(24.dp),
-        color = mcBg,
+        color = MC_BG,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(

@@ -24,23 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun StopWatchContent(
     viewModel: StopWatchViewModel
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.LightGray, themeId)
-
     val timeDisplay by viewModel.timeDisplay
     val isRunning by viewModel.isRunning
 
     Card(
         modifier = Modifier.size(300.dp),
         shape = CircleShape,
-        colors = CardDefaults.cardColors(containerColor = mcTrack),
+        colors = CardDefaults.cardColors(containerColor = MC_TRACK),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Column(

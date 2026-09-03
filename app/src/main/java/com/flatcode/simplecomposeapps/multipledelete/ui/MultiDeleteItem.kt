@@ -11,8 +11,6 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,8 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -32,9 +29,7 @@ fun MultiDeleteItem(
     onLongClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color(0xFF3C415E), themeId)
-    val backgroundColor = if (isSelected) Color.LightGray else mcTrack
+    val backgroundColor = if (isSelected) Color.LightGray else MC_TRACK
 
     Row(
         modifier = Modifier

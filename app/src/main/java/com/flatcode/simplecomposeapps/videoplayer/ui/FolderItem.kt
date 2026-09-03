@@ -12,24 +12,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.videoplayer.model.Folder
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun FolderItem(folder: Folder, onClick: () -> Unit) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
-
     Box(modifier = Modifier
         .fillMaxWidth()
         .clickable { onClick() }
@@ -37,7 +31,7 @@ fun FolderItem(folder: Folder, onClick: () -> Unit) {
         Icon(
             imageVector = AppIcons.Folder,
             contentDescription = null,
-            tint = mcTrack,
+            tint = MC_TRACK,
             modifier = Modifier
                 .padding(start = 10.dp)
                 .size(80.dp)
@@ -59,7 +53,7 @@ fun FolderItem(folder: Folder, onClick: () -> Unit) {
 
         Text(
             text = folder.name,
-            color = colorError,
+            color = COLOR_ERROR,
             fontSize = 14.sp,
             modifier = Modifier
                 .align(Alignment.CenterStart)

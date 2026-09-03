@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.AddEditNoteViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun AddEditNoteScreen(
@@ -50,7 +51,7 @@ fun AddEditNoteScreen(
                 Icon(imageVector = AppIcons.Check, contentDescription = "Save Note")
             }
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier

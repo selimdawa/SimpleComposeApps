@@ -26,16 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +42,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             elevation = CardDefaults.cardElevation(6.dp),
-            colors = CardDefaults.cardColors(containerColor = mcBg)
+            colors = CardDefaults.cardColors(containerColor = MC_BG)
         ) {
             Row(
                 modifier = Modifier

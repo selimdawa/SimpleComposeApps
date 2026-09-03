@@ -31,6 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.main.MainViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import io.selimdawa.multicolors.MultiColorButton
 
@@ -72,7 +73,7 @@ fun MainScreen(
                     }
                 }
             )
-        }, containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

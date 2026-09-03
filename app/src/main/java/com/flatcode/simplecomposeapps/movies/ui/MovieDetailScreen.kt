@@ -11,7 +11,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,14 +31,13 @@ import com.flatcode.simplecomposeapps.movies.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun MovieDetailScreen(
-    movie: MovieItemModel,
-    onBack: () -> Unit,
-    viewModel: MovieDetailViewModel = hiltViewModel()
+    movie: MovieItemModel, onBack: () -> Unit, viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     var isFavorite by remember { mutableStateOf(false) }
 
@@ -49,28 +47,24 @@ fun MovieDetailScreen(
 
     Scaffold(
         topBar = {
-            ToolbarContent(
-                title = Strings.DETAILS_MOVIE,
-                hasBack = true,
-                onBackClick = onBack
+        ToolbarContent(
+            title = Strings.DETAILS_MOVIE, hasBack = true, onBackClick = onBack
+        )
+    }, floatingActionButton = {
+        FloatingActionButton(
+            onClick = {
+                viewModel.toggleFavorite(movie, isFavorite)
+                isFavorite = !isFavorite
+            },
+            containerColor = if (isFavorite) Color.Red else Color.Gray,
+            contentColor = Color.White
+        ) {
+            Icon(
+                imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,
+                contentDescription = "Favorite"
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.toggleFavorite(movie, isFavorite)
-                    isFavorite = !isFavorite
-                },
-                containerColor = if (isFavorite) Color.Red else Color.Gray,
-                contentColor = Color.White
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,
-                    contentDescription = "Favorite"
-                )
-            }
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }
+    }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -106,10 +100,7 @@ fun MovieDetailScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = movie.overview,
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp
+                    text = movie.overview, color = Color.White, fontSize = 16.sp, lineHeight = 24.sp
                 )
             }
         }

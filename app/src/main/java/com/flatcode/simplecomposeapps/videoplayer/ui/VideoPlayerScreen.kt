@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.videoplayer.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,10 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
-import io.selimdawa.multicolors.MultiColorManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,44 +37,51 @@ fun VideoPlayerScreen(
     onFolderClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    
+
     var selectedTab by remember { mutableIntStateOf(0) }
 
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = colorOnBackground) {
+            NavigationBar(containerColor = COLOR_ON_BACKGROUND) {
                 NavigationBarItem(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    icon = { Icon(imageVector = AppIcons.Folder, contentDescription = Strings.FOLDERS) },
+                    icon = {
+                        Icon(
+                            imageVector = AppIcons.Folder,
+                            contentDescription = Strings.FOLDERS
+                        )
+                    },
                     label = { Text(Strings.FOLDERS) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = mcTrack,
-                        selectedTextColor = mcTrack,
-                        unselectedIconColor = mcTrack.copy(alpha = 0.6f),
-                        unselectedTextColor = mcTrack.copy(alpha = 0.6f),
+                        selectedIconColor = MC_TRACK,
+                        selectedTextColor = MC_TRACK,
+                        unselectedIconColor = MC_TRACK.copy(alpha = 0.6f),
+                        unselectedTextColor = MC_TRACK.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
                 NavigationBarItem(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    icon = { Icon(imageVector = AppIcons.Video, contentDescription = Strings.FILES) },
+                    icon = {
+                        Icon(
+                            imageVector = AppIcons.Video,
+                            contentDescription = Strings.FILES
+                        )
+                    },
                     label = { Text(Strings.FILES) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = mcTrack,
-                        selectedTextColor = mcTrack,
-                        unselectedIconColor = mcTrack.copy(alpha = 0.6f),
-                        unselectedTextColor = mcTrack.copy(alpha = 0.6f),
+                        selectedIconColor = MC_TRACK,
+                        selectedTextColor = MC_TRACK,
+                        unselectedIconColor = MC_TRACK.copy(alpha = 0.6f),
+                        unselectedTextColor = MC_TRACK.copy(alpha = 0.6f),
                         indicatorColor = Color.Transparent
                     )
                 )
             }
         },
-        containerColor = colorOnBackground
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         PullToRefreshBox(
             isRefreshing = uiState.isRefreshing,
@@ -90,11 +96,15 @@ fun VideoPlayerScreen(
             ) {
                 if (selectedTab == 0) {
                     items(uiState.folderList) { folder ->
-                        FolderItem(folder = folder, onClick = { folder.path?.let { onFolderClick(it) } })
+                        FolderItem(
+                            folder = folder,
+                            onClick = { folder.path?.let { onFolderClick(it) } })
                     }
                 } else {
                     items(uiState.videoFiles.indices.toList()) { index ->
-                        VideoItem(video = uiState.videoFiles[index], onClick = { onVideoClick(index) })
+                        VideoItem(
+                            video = uiState.videoFiles[index],
+                            onClick = { onVideoClick(index) })
                     }
                 }
             }

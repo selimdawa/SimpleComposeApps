@@ -31,16 +31,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.randomimagegenerating.ImageInfoViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun ImageInfoContent(
     modifier: Modifier = Modifier, viewModel: ImageInfoViewModel, onOpenUrl: (String) -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.Gray, themeId)
     val catInfo by viewModel.catInfo
 
     Box(modifier = modifier) {
@@ -125,7 +122,7 @@ fun ImageInfoContent(
                     Button(
                         onClick = { onOpenUrl(info.wikiUrl) },
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = mcTrack),
+                        colors = ButtonDefaults.buttonColors(containerColor = MC_TRACK),
                         shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(text = Strings.WIKIPEDIA, color = Color.White)
@@ -134,7 +131,7 @@ fun ImageInfoContent(
                     Button(
                         onClick = { onOpenUrl(info.moreLink) },
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(containerColor = mcTrack),
+                        colors = ButtonDefaults.buttonColors(containerColor = MC_TRACK),
                         shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(text = Strings.MORE_INFO, color = Color.White)

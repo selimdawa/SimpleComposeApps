@@ -17,20 +17,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.joke.viewmodel.JokeViewModel
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun JokeScreen(viewModel: JokeViewModel) {
@@ -39,10 +36,6 @@ fun JokeScreen(viewModel: JokeViewModel) {
     val errorMessage = viewModel.errorMessage.value
     val selectedCategory = viewModel.selectedCategory.value
     val categories = viewModel.categories
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
 
     Scaffold(
         topBar = {
@@ -50,7 +43,7 @@ fun JokeScreen(viewModel: JokeViewModel) {
                 title = DATA.JOKE,
             )
         },
-        containerColor = mcBg,
+        containerColor = MC_BG,
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -67,7 +60,7 @@ fun JokeScreen(viewModel: JokeViewModel) {
                 items(categories) { category ->
                     val isSelected = category == selectedCategory
                     Surface(
-                        color = if (isSelected) colorError else colorOnBackground,
+                        color = if (isSelected) COLOR_ERROR else COLOR_ON_BACKGROUND,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.clickable(
                             interactionSource = remember { MutableInteractionSource() },
@@ -75,7 +68,7 @@ fun JokeScreen(viewModel: JokeViewModel) {
                         ) { viewModel.onCategorySelected(category) }) {
                         Text(
                             text = category,
-                            color = if (isSelected) colorOnBackground else colorError,
+                            color = if (isSelected) COLOR_ON_BACKGROUND else COLOR_ERROR,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
@@ -91,7 +84,7 @@ fun JokeScreen(viewModel: JokeViewModel) {
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),
-                        color = colorError
+                        color = COLOR_ERROR
                     )
                 } else if (!isLoading) {
                     LazyColumn(

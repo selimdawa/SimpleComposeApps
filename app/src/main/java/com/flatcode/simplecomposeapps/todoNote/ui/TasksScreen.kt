@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.TasksViewModel
 import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun TasksScreen(
@@ -48,7 +49,7 @@ fun TasksScreen(
                 Icon(imageVector = AppIcons.Add, contentDescription = "Add Task")
             }
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

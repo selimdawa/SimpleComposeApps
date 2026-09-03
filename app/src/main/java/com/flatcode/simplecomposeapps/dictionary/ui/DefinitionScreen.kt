@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.dictionary.DictionaryViewModel
 import com.flatcode.simplecomposeapps.dictionary.utils.UiState
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
@@ -35,7 +36,7 @@ fun DefinitionScreen(
                 onBack = onBack
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier

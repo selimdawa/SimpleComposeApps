@@ -22,17 +22,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun StopWatchScreen(
     viewModel: StopWatchViewModel, onBack: () -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
-
     val lastTimeValue by viewModel.lastTime
 
     Scaffold(
@@ -40,7 +37,7 @@ fun StopWatchScreen(
             ToolbarContent(
                 title = Strings.STOP_WATCH, hasBack = false, onBackClick = onBack
             )
-        }, containerColor = MaterialTheme.colorScheme.background
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -60,13 +57,13 @@ fun StopWatchScreen(
             ) {
                 Text(
                     text = Strings.LAST_TIME_LABEL,
-                    color = colorError,
+                    color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = lastTimeValue,
-                    color = colorError,
+                    color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
                 )

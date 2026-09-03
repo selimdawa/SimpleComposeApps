@@ -15,16 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.wordpress.model.Post
-import io.selimdawa.multicolors.MultiColorManager
 import org.jsoup.Jsoup
 
 @Composable
 fun WordpressItem(post: Post, onClick: () -> Unit) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +28,7 @@ fun WordpressItem(post: Post, onClick: () -> Unit) {
             .clickable { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(3.dp),
-        colors = CardDefaults.cardColors(containerColor = mcBg)
+        colors = CardDefaults.cardColors(containerColor = MC_BG)
     ) {
         Column(
             modifier = Modifier

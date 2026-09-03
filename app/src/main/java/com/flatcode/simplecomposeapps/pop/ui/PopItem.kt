@@ -25,18 +25,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.pop.model.PopItem
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun PopItem(
     item: PopItem,
     modifier: Modifier = Modifier
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -64,7 +60,7 @@ fun PopItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(mcBg)
+                    .background(MC_BG)
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

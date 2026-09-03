@@ -13,18 +13,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun MultiDeleteTopAppBar(
@@ -35,12 +32,8 @@ fun MultiDeleteTopAppBar(
     onSelectAll: () -> Unit,
     onClearSelection: () -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorOnBackground = rememberAttributeColor("colorOnBackground", Color.White, themeId)
-    val colorError = rememberAttributeColor("colorError", Color.Red, themeId)
-
     Surface(
-        color = colorOnBackground, modifier = Modifier
+        color = COLOR_ON_BACKGROUND, modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
     ) {
@@ -59,7 +52,7 @@ fun MultiDeleteTopAppBar(
                 Icon(
                     imageVector = if (isSelectionMode) AppIcons.Close else AppIcons.Back,
                     contentDescription = "Back",
-                    tint = colorError,
+                    tint = COLOR_ERROR,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -69,7 +62,7 @@ fun MultiDeleteTopAppBar(
             // Title
             Text(
                 text = if (isSelectionMode) Strings.selectedPlaceholder(selectedCount) else "Multi Delete",
-                color = colorError,
+                color = COLOR_ERROR,
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f)
@@ -83,7 +76,7 @@ fun MultiDeleteTopAppBar(
                     Icon(
                         imageVector = AppIcons.Delete,
                         contentDescription = "Delete",
-                        tint = colorError,
+                        tint = COLOR_ERROR,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -96,7 +89,7 @@ fun MultiDeleteTopAppBar(
                     Icon(
                         imageVector = AppIcons.SelectAll,
                         contentDescription = "Select All",
-                        tint = colorError,
+                        tint = COLOR_ERROR,
                         modifier = Modifier.size(24.dp)
                     )
                 }

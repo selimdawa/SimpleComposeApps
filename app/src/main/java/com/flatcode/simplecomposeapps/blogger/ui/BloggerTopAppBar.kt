@@ -13,7 +13,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +36,6 @@ fun BloggerTopAppBar(
 ) {
     var isSearchMode by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcTrack = rememberAttributeColor("mc_track", Color.White, themeId)
 
     TopAppBar(
         title = {
@@ -113,6 +109,6 @@ fun BloggerTopAppBar(
                 )
             }
         }
-    }, colors = TopAppBarDefaults.topAppBarColors(containerColor = mcTrack)
+    }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
     )
 }

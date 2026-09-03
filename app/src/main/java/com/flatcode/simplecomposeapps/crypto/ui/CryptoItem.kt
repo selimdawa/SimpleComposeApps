@@ -8,8 +8,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,19 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinEntity
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun CryptoItem(
     item: CoinEntity,
     modifier: Modifier = Modifier
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -45,14 +39,14 @@ fun CryptoItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(mcBg),
+                .background(MC_BG),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
                     .width(100.dp)
                     .fillMaxHeight()
-                    .background(ImageProfile),
+                    .background(image_profile),
                 contentAlignment = Alignment.Center
             ) {
                 // XML has ShapeableImageView with transparent src, but usually it's for icon

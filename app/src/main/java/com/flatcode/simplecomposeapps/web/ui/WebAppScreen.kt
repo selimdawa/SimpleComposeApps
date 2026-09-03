@@ -41,22 +41,10 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.AppTheme
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
-
-@Composable
-fun getMcBgColor(): Color {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    return rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-}
-
-@Composable
-fun getMcTickColor(): Color {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    return rememberAttributeColor("mc_track", MaterialTheme.colorScheme.primary, themeId)
-}
 
 val CardTextSize = 18.sp
 val CardCornerRadius = 15.dp
@@ -75,14 +63,10 @@ fun WebAppScreen(
     onShareApp: () -> Unit,
     onRateApp: () -> Unit
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorOnBackground =
-        rememberAttributeColor("colorOnBackground", MaterialTheme.colorScheme.onBackground, themeId)
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorOnBackground)
+            .background(COLOR_ON_BACKGROUND)
     ) {
         ToolbarContent(
             title = Strings.WEB_APP, hasBack = false
@@ -245,7 +229,7 @@ fun CardItem(
                 interactionSource = remember { MutableInteractionSource() }, indication = null
             ) { onClick() },
             shape = RoundedCornerShape(cornerRadius),
-            colors = CardDefaults.cardColors(containerColor = getMcBgColor())
+            colors = CardDefaults.cardColors(containerColor = MC_BG)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -297,7 +281,7 @@ fun SocialIcon(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(SocialPadding),
-            colorFilter = ColorFilter.tint(getMcTickColor())
+            colorFilter = ColorFilter.tint(MC_TRACK)
         )
     }
 }

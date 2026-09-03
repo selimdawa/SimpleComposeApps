@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun WebSupportDialog(
@@ -80,7 +80,7 @@ fun WebSupportDialog(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             ) { onPhone() },
-                        colorFilter = ColorFilter.tint(getMcTickColor())
+                        colorFilter = ColorFilter.tint(MC_TRACK)
                     )
                 }
 
@@ -88,7 +88,7 @@ fun WebSupportDialog(
                     text = "Close",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(getMcTickColor())
+                        .background(MC_TRACK)
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
@@ -106,9 +106,6 @@ fun WebSupportDialog(
 
 @Composable
 fun WebAboutDialog(onDismiss: () -> Unit) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val colorError = rememberAttributeColor("colorError", MaterialTheme.colorScheme.error, themeId)
-
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier = Modifier
@@ -129,14 +126,14 @@ fun WebAboutDialog(onDismiss: () -> Unit) {
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = colorError
+                    color = COLOR_ERROR
                 )
 
                 Text(
                     text = "Close",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(getMcTickColor())
+                        .background(MC_TRACK)
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null

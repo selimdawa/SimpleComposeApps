@@ -14,8 +14,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,8 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @Composable
 fun ToolbarContent(
@@ -41,9 +38,6 @@ fun ToolbarContent(
     actions: @Composable (() -> Unit)? = null,
     includeStatusBarsPadding: Boolean = true
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -51,7 +45,7 @@ fun ToolbarContent(
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = mcBg)
+        colors = CardDefaults.cardColors(containerColor = MC_BG)
     ) {
         Box(
             modifier = Modifier
@@ -63,8 +57,7 @@ fun ToolbarContent(
                     Box(
                         modifier = Modifier
                             .size(30.dp)
-                            .clickable(enabled = onBackClick != null) { onBackClick?.invoke() }
-                    ) {
+                            .clickable(enabled = onBackClick != null) { onBackClick?.invoke() }) {
                         Icon(
                             imageVector = AppIcons.Back,
                             contentDescription = null,

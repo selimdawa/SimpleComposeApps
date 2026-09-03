@@ -19,18 +19,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.news2.models.EverythingNewsItem
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
 
 @Composable
 fun EverythingNewsItem(
     item: EverythingNewsItem,
     modifier: Modifier = Modifier
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +36,7 @@ fun EverythingNewsItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(mcBg),
+                .background(MC_BG),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

@@ -24,20 +24,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
-import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.SimpleComposeAppsTheme
-import com.flatcode.simplecomposeapps.ui.theme.ImageProfile
-import com.flatcode.simplecomposeapps.ui.theme.rememberAttributeColor
-import io.selimdawa.multicolors.MultiColorManager
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable
 fun CharacterItem(
     item: Character,
     modifier: Modifier = Modifier
 ) {
-    val themeId by MultiColorManager.currentThemeId.collectAsState()
-    val mcBg = rememberAttributeColor("mc_bg", Color.DarkGray, themeId)
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -47,13 +43,13 @@ fun CharacterItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(mcBg)
+                .background(MC_BG)
         ) {
             Box(
                 modifier = Modifier
                     .width(120.dp)
                     .fillMaxHeight()
-                    .background(ImageProfile)
+                    .background(image_profile)
             ) {
                 AsyncImage(
                     model = item.image,

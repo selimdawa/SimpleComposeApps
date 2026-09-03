@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.NotesViewModel
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun NotesScreen(
@@ -50,7 +51,7 @@ fun NotesScreen(
                 Icon(imageVector = AppIcons.Add, contentDescription = "Add Note")
             }
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
