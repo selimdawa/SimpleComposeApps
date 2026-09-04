@@ -31,7 +31,7 @@ object Strings {
 
     // Dictionary
     const val HINT_SEARCH = "Enter your word"
-    const val BUTTON_FIND = "find"
+    const val BUTTON_FIND = "Find"
 
     // Pokémon
     const val POKEMON_IMAGE = "Pokémon Image"

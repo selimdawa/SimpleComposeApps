@@ -22,9 +22,6 @@ class DictionaryViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState<String>>(UiState.Idle)
     val uiState: StateFlow<UiState<String>> = _uiState.asStateFlow()
 
-    private val _navigationEvent = MutableSharedFlow<Unit>()
-    val navigationEvent: SharedFlow<Unit> = _navigationEvent.asSharedFlow()
-
     fun searchWord(word: String) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
@@ -32,7 +29,6 @@ class DictionaryViewModel @Inject constructor(
                 val definition = repository.getWordDefinition(word)
                 if (definition != "No definition found") {
                     _uiState.value = UiState.Success(definition)
-                    _navigationEvent.emit(Unit)
                 } else {
                     _uiState.value = UiState.Error("No definition found")
                 }
