@@ -80,6 +80,7 @@ object AppIcons {
     val Check: ImageVector = AppVectors.Check
     val DateRange: ImageVector = AppVectors.DateRange
     val Delete: ImageVector = AppVectors.Delete
+    val DeleteCal: ImageVector = AppVectors.DeleteCal
     val Favorite: ImageVector = AppVectors.Favorite
     val FavoriteBorder: ImageVector = AppVectors.FavoriteBorder
     val PriorityHigh: ImageVector = AppVectors.PriorityHigh

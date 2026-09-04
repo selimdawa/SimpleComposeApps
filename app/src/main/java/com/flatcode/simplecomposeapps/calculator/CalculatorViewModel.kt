@@ -48,16 +48,18 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
         if (currentExpression.isNotEmpty()) {
             viewModelScope.launch {
                 try {
-                    val finalResult = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-                        val expression = net.objecthunter.exp4j.ExpressionBuilder(currentExpression).build()
-                        val result = expression.evaluate()
-                        val longResult = result.toLong()
-                        if (result == longResult.toDouble()) {
-                            "= $longResult"
-                        } else {
-                            "= $result"
+                    val finalResult =
+                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                            val expression =
+                                net.objecthunter.exp4j.ExpressionBuilder(currentExpression).build()
+                            val result = expression.evaluate()
+                            val longResult = result.toLong()
+                            if (result == longResult.toDouble()) {
+                                "= $longResult"
+                            } else {
+                                "= $result"
+                            }
                         }
-                    }
                     setResultValue(finalResult)
                     saveToHistory(currentExpression, finalResult)
                 } catch (e: Exception) {

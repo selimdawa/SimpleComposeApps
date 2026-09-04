@@ -49,7 +49,7 @@ fun CalculatorHistoryItem(
 fun CalculatorHistoryItemPreview() {
     CalculatorHistoryItem(
         item = CalculatorEntity(
-            expression = "10 + 20", result = "30"
+            expression = "10 + 20", result = "= 30"
         )
     )
 }
