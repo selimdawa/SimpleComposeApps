@@ -3,6 +3,8 @@ package com.flatcode.simplecomposeapps.crypto
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
+import com.flatcode.simplecomposeapps.crypto.model.home.Quote
+import com.flatcode.simplecomposeapps.crypto.model.home.Usd
 import com.flatcode.simplecomposeapps.crypto.ui.home.HomeRepository
 import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,6 +36,22 @@ class CryptoHomeViewModel @Inject constructor(
     fun getData(apiKey: String, limit: String) {
         viewModelScope.launch {
             _isLoading.value = true
+            
+            // Try cache first if it's the first page
+            if (currentPage == 1 && _cryptoList.value.isEmpty()) {
+                val cached = repository.getCachedCoins()
+                if (cached.isNotEmpty()) {
+                    _cryptoList.value = cached.map { entity ->
+                        Data(
+                            id = entity.id,
+                            name = entity.name,
+                            symbol = entity.symbol,
+                            quote = Quote(usd = Usd(price = entity.price))
+                        )
+                    }
+                }
+            }
+
             val result = repository.getLatestCrypto(apiKey, limit, currentPage.toString())
             handleResult(result)
             _isLoading.value = false

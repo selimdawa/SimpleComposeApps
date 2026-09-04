@@ -23,7 +23,7 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "crypto_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

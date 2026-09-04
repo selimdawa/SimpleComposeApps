@@ -1,7 +1,19 @@
 package com.flatcode.simplecomposeapps.crypto.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -12,49 +24,53 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.crypto.db.entity.CoinEntity
-import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import coil.compose.AsyncImage
+import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CryptoItem(
-    item: CoinEntity,
-    modifier: Modifier = Modifier
+    item: Data, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(IntrinsicSize.Min)
                 .background(MC_BG),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .width(100.dp)
+                    .width(90.dp)
                     .fillMaxHeight()
                     .background(image_profile),
                 contentAlignment = Alignment.Center
             ) {
-                // XML has ShapeableImageView with transparent src, but usually it's for icon
-                Box(
+                AsyncImage(
+                    model = "${DATA.IMAGE_CRYPTO}${item.id}.png",
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(70.dp)
-                        .clip(CircleShape)
-                        .background(Color.Transparent)
                         .padding(5.dp)
+                        .size(60.dp)
+                        .clip(CircleShape)
                 )
             }
 
@@ -66,12 +82,13 @@ fun CryptoItem(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 5.dp),
+                        .padding(vertical = 5.dp)
+                        .fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = item.name,
+                        text = item.name ?: "",
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
@@ -81,7 +98,7 @@ fun CryptoItem(
                         modifier = Modifier.padding(vertical = 5.dp)
                     )
                     Text(
-                        text = item.symbol,
+                        text = item.symbol ?: "",
                         color = Color.White,
                         fontSize = 16.sp,
                         maxLines = 1,
@@ -92,11 +109,12 @@ fun CryptoItem(
                 }
 
                 Text(
-                    text = item.price.toString(),
+                    text = String.format("%.6f $", item.quote?.usd?.price ?: 0.0),
                     modifier = Modifier
                         .weight(0.8f)
                         .padding(horizontal = 10.dp, vertical = 10.dp)
-                        .align(Alignment.CenterVertically),
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.CenterVertically),
                     color = Color.White,
                     fontSize = 14.sp,
                     fontStyle = FontStyle.Italic,
@@ -105,17 +123,4 @@ fun CryptoItem(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun CryptoItemPreview() {
-    CryptoItem(
-        item = CoinEntity(
-            id = 1,
-            name = "Bitcoin",
-            symbol = "BTC",
-            price = 50000.0
-        )
-    )
 }

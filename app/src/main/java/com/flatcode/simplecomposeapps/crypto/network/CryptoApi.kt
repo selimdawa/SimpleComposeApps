@@ -20,6 +20,6 @@ interface CryptoApi {
     @GET(DATA.INFO_CRYPTO)
     suspend fun getCryptoDetail(
         @Header("X-CMC_PRO_API_KEY") apiKey: String,
-        @Query("symbol") symbol: String
+        @Query("id") id: Int
     ): Response<DetailResponse>
 }

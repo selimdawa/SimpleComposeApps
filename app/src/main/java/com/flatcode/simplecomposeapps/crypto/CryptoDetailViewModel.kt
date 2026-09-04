@@ -29,10 +29,10 @@ class CryptoDetailViewModel @Inject constructor(
     private val _error = MutableSharedFlow<String?>()
     val error: SharedFlow<String?> = _error.asSharedFlow()
 
-    fun getCryptoDetail(apiKey: String, symbol: String) {
+    fun getCryptoDetail(apiKey: String, id: Int) {
         viewModelScope.launch {
             _isLoading.value = true
-            when (val result = repository.getCryptoDetail(apiKey, symbol)) {
+            when (val result = repository.getCryptoDetail(apiKey, id)) {
                 is NetworkResult.Success -> {
                     _cryptoDetail.value = result.data
                 }

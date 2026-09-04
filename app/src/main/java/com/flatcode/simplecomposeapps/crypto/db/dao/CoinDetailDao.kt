@@ -11,9 +11,9 @@ interface CoinDetailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCoinDetail(coinDetail: CoinDetailEntity)
 
-    @Query("SELECT * FROM coin_details WHERE symbol = :symbol")
-    suspend fun getCoinDetail(symbol: String): CoinDetailEntity?
+    @Query("SELECT * FROM coin_details WHERE id = :id")
+    suspend fun getCoinDetail(id: Int): CoinDetailEntity?
 
-    @Query("DELETE FROM coin_details WHERE symbol = :symbol")
-    suspend fun deleteCoinDetail(symbol: String)
+    @Query("DELETE FROM coin_details WHERE id = :id")
+    suspend fun deleteCoinDetail(id: Int)
 }

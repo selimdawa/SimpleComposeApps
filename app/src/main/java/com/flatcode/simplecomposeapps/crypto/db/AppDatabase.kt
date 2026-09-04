@@ -7,7 +7,7 @@ import com.flatcode.simplecomposeapps.crypto.db.dao.CoinDetailDao
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinDetailEntity
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinEntity
 
-@Database(entities = [CoinEntity::class, CoinDetailEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CoinEntity::class, CoinDetailEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun coinDao(): CoinDao
     abstract fun coinDetailDao(): CoinDetailDao
