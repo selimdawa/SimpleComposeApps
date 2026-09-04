@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.countries.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -44,7 +45,7 @@ fun CountryItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         colors = CardDefaults.cardColors(containerColor = MC_BG)
@@ -95,7 +96,8 @@ fun CountryItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = item.countryName ?: "",
@@ -104,9 +106,7 @@ fun CountryItem(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 10.dp)
-                        .padding(top = 10.dp)
-                        .weight(1f)
+                        .padding(top = 10.dp, start = 10.dp, end = 10.dp)
                 )
                 Text(
                     text = item.countryRegion ?: "",
@@ -115,9 +115,7 @@ fun CountryItem(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 10.dp)
-                        .padding(vertical = 10.dp)
-                        .weight(1f)
+                        .padding(bottom = 10.dp, start = 10.dp, end = 10.dp)
                 )
             }
         }

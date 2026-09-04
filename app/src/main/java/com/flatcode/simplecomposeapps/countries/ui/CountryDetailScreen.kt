@@ -1,19 +1,14 @@
 package com.flatcode.simplecomposeapps.countries.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -79,8 +74,7 @@ fun CountryDetailScreen(
                         model = ImageRequest.Builder(LocalContext.current).data(item.imageURL)
                             .transformations(SimpleBlurTransformation(50f)).build(),
                         contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
                     SubcomposeAsyncImage(
@@ -89,35 +83,33 @@ fun CountryDetailScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Fit,
                         loading = {
-                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Box(modifier = Modifier.fillMaxSize()) {
                                 CircularProgressIndicator(
-                                    modifier = Modifier.size(40.dp),
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .align(Alignment.Center),
                                     color = MC_TRACK,
                                     strokeWidth = 3.dp
                                 )
                             }
-                        },
-                        error = {
-                            Box(modifier = Modifier.fillMaxSize().background(image_profile))
-                        }
-                    )
+                        })
                 }
 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 10.dp),
+                        .padding(vertical = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DetailInfoRow(label = Strings.COUNTRY_NAME, value = item.countryName ?: "")
-                    DetailInfoRow(
+                    DetailInfoItem(label = Strings.COUNTRY_NAME, value = item.countryName ?: "")
+                    DetailInfoItem(
                         label = Strings.COUNTRY_CAPITAL, value = item.countryCapital ?: ""
                     )
-                    DetailInfoRow(label = Strings.COUNTRY_REGION, value = item.countryRegion ?: "")
-                    DetailInfoRow(
+                    DetailInfoItem(label = Strings.COUNTRY_REGION, value = item.countryRegion ?: "")
+                    DetailInfoItem(
                         label = Strings.COUNTRY_LANGUAGE, value = item.countryLanguage ?: ""
                     )
-                    DetailInfoRow(
+                    DetailInfoItem(
                         label = Strings.COUNTRY_CURRENCY, value = item.countryCurrency ?: ""
                     )
                 }
@@ -127,27 +119,25 @@ fun CountryDetailScreen(
 }
 
 @Composable
-fun DetailInfoRow(label: String, value: String) {
-    Row(
+fun DetailInfoItem(label: String, value: String) {
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 5.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = label,
-            color = Color.White,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            color = Color.Gray,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = value,
-            color = Color.White,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            color = MC_TRACK,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
     }
