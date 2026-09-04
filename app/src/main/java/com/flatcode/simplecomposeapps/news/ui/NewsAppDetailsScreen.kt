@@ -1,12 +1,19 @@
 package com.flatcode.simplecomposeapps.news.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -21,11 +28,9 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsAppDetailsScreen(
-    headline: NewsHeadlines,
-    onBack: () -> Unit
+    headline: NewsHeadlines, onBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -36,8 +41,7 @@ fun NewsAppDetailsScreen(
                 hasBack = true,
                 onBackClick = onBack,
             )
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier

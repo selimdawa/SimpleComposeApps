@@ -41,6 +41,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogsScreen(
