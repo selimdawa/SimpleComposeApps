@@ -1,9 +1,11 @@
-package com.flatcode.simplecomposeapps.meals
+package com.flatcode.simplecomposeapps.meals.activity
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,21 +18,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import android.content.Intent
 import com.flatcode.simplecomposeapps.meals.ui.CategoriesMealsScreen
-import com.flatcode.simplecomposeapps.meals.ui.CategoryMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.FavoritesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.HomeMealsScreen
-import com.flatcode.simplecomposeapps.meals.ui.MealDetailScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -44,16 +50,17 @@ class MealsActivity : AppCompatActivity() {
 
         setContent {
             val navController = rememberNavController()
-            Scaffold(
-                bottomBar = {
-                    MealsBottomNavigation(navController = navController)
-                }
-            ) { paddingValues ->
+            Scaffold(containerColor = COLOR_ON_BACKGROUND, topBar = {
+                ToolbarContent(
+                    title = DATA.MEALS, hasBack = false
+                )
+            }, bottomBar = {
+                MealsBottomNavigation(navController = navController)
+            }) { paddingValues ->
                 MealsNavHost(
                     navController = navController,
                     modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() }
-                )
+                    onBack = { finish() })
             }
         }
     }
@@ -68,15 +75,18 @@ fun MealsBottomNavigation(navController: NavHostController) {
     )
 
     NavigationBar(
-        containerColor = Color(0xFF212121),
-        contentColor = Color.White
+        containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
         items.forEach { (route, label, icon) ->
             NavigationBarItem(
-                icon = { Icon(icon, contentDescription = label, modifier = Modifier.size(24.dp)) },
+                icon = {
+                Icon(
+                    icon, contentDescription = label, modifier = Modifier.size(24.dp)
+                )
+            },
                 label = { Text(label) },
                 selected = currentDestination?.hierarchy?.any { it.route == route } == true,
                 onClick = {
@@ -87,10 +97,10 @@ fun MealsBottomNavigation(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF339999),
-                    unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color(0xFF339999),
-                    unselectedTextColor = Color.Gray,
+                    selectedIconColor = MC_TRACK,
+                    unselectedIconColor = Gray,
+                    selectedTextColor = MC_TRACK,
+                    unselectedTextColor = Gray,
                     indicatorColor = Color.Transparent
                 )
             )
@@ -100,72 +110,53 @@ fun MealsBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun MealsNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
 ) {
+    val context = LocalContext.current
     NavHost(
         navController = navController,
         startDestination = "home",
-        modifier = modifier
-    ) {
+        modifier = modifier,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }) {
         composable("home") {
-            HomeMealsScreen(
-                onBack = onBack,
-                onMealClick = { id, name, thumb ->
-                    navController.navigate("detail/$id/$name/${java.net.URLEncoder.encode(thumb, "UTF-8")}")
-                },
-                onCategoryClick = { categoryName ->
-                    navController.navigate("category/$categoryName")
+            HomeMealsScreen(onBack = onBack, onMealClick = { id, name, thumb ->
+                val intent = Intent(context, MealDetailsActivity::class.java).apply {
+                    putExtra(MealDetailsActivity.MEAL_ID, id)
+                    putExtra(MealDetailsActivity.MEAL_NAME, name)
+                    putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
                 }
-            )
+                context.startActivity(intent)
+            }, onCategoryClick = { categoryName ->
+                val intent = Intent(context, CategoryMealsActivity::class.java).apply {
+                    putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
+                }
+                context.startActivity(intent)
+            })
         }
         composable("favorites") {
             FavoritesMealsScreen(
                 onBack = { navController.navigate("home") },
                 onMealClick = { id, name, thumb ->
-                    navController.navigate("detail/$id/$name/${java.net.URLEncoder.encode(thumb, "UTF-8")}")
-                }
-            )
+                    val intent = Intent(context, MealDetailsActivity::class.java).apply {
+                        putExtra(MealDetailsActivity.MEAL_ID, id)
+                        putExtra(MealDetailsActivity.MEAL_NAME, name)
+                        putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
+                    }
+                    context.startActivity(intent)
+                })
         }
         composable("categories") {
             CategoriesMealsScreen(
                 onBack = { navController.navigate("home") },
                 onCategoryClick = { categoryName ->
-                    navController.navigate("category/$categoryName")
-                }
-            )
-        }
-        composable(
-            route = "detail/{id}/{name}/{thumb}",
-            arguments = listOf(
-                navArgument("id") { type = NavType.StringType },
-                navArgument("name") { type = NavType.StringType },
-                navArgument("thumb") { type = NavType.StringType }
-            )
-        ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id") ?: ""
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val thumb = backStackEntry.arguments?.getString("thumb") ?: ""
-            MealDetailScreen(
-                id = id,
-                name = name,
-                thumb = java.net.URLDecoder.decode(thumb, "UTF-8"),
-                onBack = { navController.popBackStack() }
-            )
-        }
-        composable(
-            route = "category/{categoryName}",
-            arguments = listOf(navArgument("categoryName") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val categoryName = backStackEntry.arguments?.getString("categoryName") ?: ""
-            CategoryMealsScreen(
-                categoryName = categoryName,
-                onBack = { navController.popBackStack() },
-                onMealClick = { id, name, thumb ->
-                    navController.navigate("detail/$id/$name/${java.net.URLEncoder.encode(thumb, "UTF-8")}")
-                }
-            )
+                    val intent = Intent(context, CategoryMealsActivity::class.java).apply {
+                        putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
+                    }
+                    context.startActivity(intent)
+                })
         }
     }
 }

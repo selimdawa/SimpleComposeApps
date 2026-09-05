@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.meals.pojo
+package com.flatcode.simplecomposeapps.meals.model
 
 data class MealsByCategory(
     val idMeal: String,

@@ -13,7 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.meals.pojo.Meal
+import com.flatcode.simplecomposeapps.meals.model.Meal
 
 @Composable
 fun PopularMealItem(
@@ -24,7 +24,7 @@ fun PopularMealItem(
         modifier = modifier
             .width(220.dp)
             .height(160.dp)
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+            .padding(start = 5.dp, end = 5.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {

@@ -1,10 +1,10 @@
-package com.flatcode.simplecomposeapps.meals
+package com.flatcode.simplecomposeapps.meals.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flatcode.simplecomposeapps.meals.pojo.MealsByCategory
-import com.flatcode.simplecomposeapps.meals.pojo.MealsByCategoryList
+import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
+import com.flatcode.simplecomposeapps.meals.model.MealsByCategoryList
 import com.flatcode.simplecomposeapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call

@@ -1,8 +1,8 @@
 package com.flatcode.simplecomposeapps.meals.retrofit
 
-import com.flatcode.simplecomposeapps.meals.pojo.CategoryList
-import com.flatcode.simplecomposeapps.meals.pojo.MealList
-import com.flatcode.simplecomposeapps.meals.pojo.MealsByCategoryList
+import com.flatcode.simplecomposeapps.meals.model.CategoryList
+import com.flatcode.simplecomposeapps.meals.model.MealList
+import com.flatcode.simplecomposeapps.meals.model.MealsByCategoryList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

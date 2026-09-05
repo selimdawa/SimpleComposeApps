@@ -1,12 +1,12 @@
-package com.flatcode.simplecomposeapps.meals
+package com.flatcode.simplecomposeapps.meals.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.meals.db.MealDao
-import com.flatcode.simplecomposeapps.meals.pojo.Meal
-import com.flatcode.simplecomposeapps.meals.pojo.MealList
+import com.flatcode.simplecomposeapps.meals.model.Meal
+import com.flatcode.simplecomposeapps.meals.model.MealList
 import com.flatcode.simplecomposeapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,9 +40,19 @@ class MealDetailViewModel @Inject constructor(
         return mealDetailsLiveData
     }
 
+    fun isMealFavorite(id: String): LiveData<Meal?> {
+        return mealDao.getMealById(id)
+    }
+
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
             mealDao.upsert(meal)
+        }
+    }
+
+    fun deleteMeal(meal: Meal) {
+        viewModelScope.launch {
+            mealDao.delete(meal)
         }
     }
 }

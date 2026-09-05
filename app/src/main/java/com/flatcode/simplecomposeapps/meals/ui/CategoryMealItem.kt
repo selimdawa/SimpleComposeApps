@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.flatcode.simplecomposeapps.meals.pojo.Category
+import com.flatcode.simplecomposeapps.meals.model.Category
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
@@ -28,36 +28,38 @@ import com.flatcode.simplecomposeapps.ui.theme.image_profile
 fun CategoryMealItem(
     item: Category, modifier: Modifier = Modifier
 ) {
-    Card(
+    Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
-        shape = RoundedCornerShape(6.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MC_TRACK),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(6.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+            colors = CardDefaults.cardColors(containerColor = MC_TRACK)
         ) {
-            AsyncImage(
-                model = item.strCategoryThumb,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .background(image_profile),
-                contentScale = ContentScale.Fit
-            )
-            Text(
-                text = item.strCategory,
-                modifier = Modifier.padding(horizontal = 5.dp, vertical = 5.dp),
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AsyncImage(
+                    model = item.strCategoryThumb,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .background(image_profile),
+                )
+                Text(
+                    text = item.strCategory,
+                    modifier = Modifier.padding(horizontal = 5.dp, vertical = 5.dp),
+                    color = Color.White,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

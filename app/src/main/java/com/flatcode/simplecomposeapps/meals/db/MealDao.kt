@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.flatcode.simplecomposeapps.meals.pojo.Meal
+import com.flatcode.simplecomposeapps.meals.model.Meal
 
 @Dao
 interface MealDao {
@@ -19,4 +19,7 @@ interface MealDao {
 
     @Query("SELECT * FROM mealInformation")
     fun getAllMeals(): LiveData<List<Meal>>
+
+    @Query("SELECT * FROM mealInformation WHERE idMeal = :id")
+    fun getMealById(id: String): LiveData<Meal?>
 }

@@ -9,7 +9,7 @@ import com.flatcode.simplecomposeapps.countries.CountriesActivity
 import com.flatcode.simplecomposeapps.crypto.CryptoActivity
 import com.flatcode.simplecomposeapps.dictionary.DictionaryActivity
 import com.flatcode.simplecomposeapps.dogs.DogsActivity
-import com.flatcode.simplecomposeapps.meals.MealsActivity
+import com.flatcode.simplecomposeapps.meals.activity.MealsActivity
 import com.flatcode.simplecomposeapps.pop.PopActivity
 import com.flatcode.simplecomposeapps.movies.MoviesActivity
 import com.flatcode.simplecomposeapps.news2.News2Activity
