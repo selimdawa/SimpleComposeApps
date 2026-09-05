@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.meals.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,7 +27,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import android.content.Intent
 import com.flatcode.simplecomposeapps.meals.ui.CategoriesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.FavoritesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.HomeMealsScreen

@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -33,7 +35,14 @@ class PokemonActivity : AppCompatActivity() {
 fun PokemonAppNavHost(onBack: () -> Unit) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "list") {
+    NavHost(
+        navController = navController,
+        startDestination = "list",
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }
+    ) {
         composable("list") {
             PokemonScreen(
                 onBack = onBack,

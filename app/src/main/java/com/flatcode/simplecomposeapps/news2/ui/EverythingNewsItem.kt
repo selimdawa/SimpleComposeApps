@@ -8,8 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,14 +20,11 @@ import com.flatcode.simplecomposeapps.news2.models.EverythingNewsItem
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @Composable
-fun EverythingNewsItem(
-    item: EverythingNewsItem,
-    modifier: Modifier = Modifier
-) {
+fun EverythingNewsItem(item: EverythingNewsItem, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Row(
@@ -42,7 +37,7 @@ fun EverythingNewsItem(
                 text = item.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 5.dp),
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
                 color = Color.White,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.Bold,
@@ -57,9 +52,7 @@ fun EverythingNewsItem(
 fun EverythingNewsItemPreview() {
     EverythingNewsItem(
         item = EverythingNewsItem(
-            id = "1",
-            title = "Everything News Title",
-            url = ""
+            id = "1", title = "Everything News Title", url = ""
         )
     )
 }
