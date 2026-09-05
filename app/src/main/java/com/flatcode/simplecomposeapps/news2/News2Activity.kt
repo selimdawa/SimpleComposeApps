@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -26,6 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.news2.ui.EverythingScreen
 import com.flatcode.simplecomposeapps.news2.ui.TopArticlesScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -42,13 +48,11 @@ class News2Activity : AppCompatActivity() {
             Scaffold(
                 bottomBar = {
                     NewsBottomNavigation(navController = navController)
-                }
-            ) { paddingValues ->
+                }) { paddingValues ->
                 NewsNavHost(
                     navController = navController,
                     modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() }
-                )
+                    onBack = { finish() })
             }
         }
     }
@@ -62,15 +66,20 @@ fun NewsBottomNavigation(navController: NavHostController) {
     )
 
     NavigationBar(
-        containerColor = Color(0xFF212121),
-        contentColor = Color.White
+        containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
         items.forEach { (route, label, icon) ->
             NavigationBarItem(
-                icon = { Icon(icon, contentDescription = label, modifier = Modifier.size(24.dp)) },
+                icon = {
+                    Icon(
+                        icon,
+                        contentDescription = label,
+                        modifier = Modifier.size(24.dp)
+                    )
+                },
                 label = { Text(label) },
                 selected = currentDestination?.hierarchy?.any { it.route == route } == true,
                 onClick = {
@@ -81,10 +90,10 @@ fun NewsBottomNavigation(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF339999),
-                    unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color(0xFF339999),
-                    unselectedTextColor = Color.Gray,
+                    selectedIconColor = MC_TRACK,
+                    unselectedIconColor = Gray,
+                    selectedTextColor = MC_TRACK,
+                    unselectedTextColor = Gray,
                     indicatorColor = Color.Transparent
                 )
             )
@@ -94,14 +103,16 @@ fun NewsBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun NewsNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = "everything",
-        modifier = modifier
+        modifier = modifier,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }
     ) {
         composable("everything") {
             EverythingScreen(onBack = onBack)

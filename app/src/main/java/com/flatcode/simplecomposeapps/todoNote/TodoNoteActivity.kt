@@ -30,6 +30,8 @@ import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.TasksScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -85,10 +87,10 @@ fun TodoBottomNavigation(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF339999),
-                    unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color(0xFF339999),
-                    unselectedTextColor = Color.Gray,
+                    selectedIconColor = MC_TRACK,
+                    unselectedIconColor = Gray,
+                    selectedTextColor = MC_TRACK,
+                    unselectedTextColor = Gray,
                     indicatorColor = Color.Transparent
                 )
             )

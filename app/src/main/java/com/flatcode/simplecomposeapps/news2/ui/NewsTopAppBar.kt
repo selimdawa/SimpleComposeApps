@@ -15,28 +15,23 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsTopAppBar(
-    title: String,
-    onBack: () -> Unit
+    title: String, onBack: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                color = Color.White
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = AppIcons.Back,
-                    contentDescription = "Back",
-                    tint = Color.White
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            color = Color.White
         )
+    }, navigationIcon = {
+        IconButton(onClick = onBack) {
+            Icon(
+                imageVector = AppIcons.Back, contentDescription = "Back", tint = Color.White
+            )
+        }
+    }, colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = Color.Transparent
+    )
     )
 }

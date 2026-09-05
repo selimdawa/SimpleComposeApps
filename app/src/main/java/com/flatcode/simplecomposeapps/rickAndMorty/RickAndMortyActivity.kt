@@ -29,6 +29,8 @@ import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickCharactersScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickEpisodesScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickLocationsScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -85,10 +87,10 @@ fun RickBottomNavigation(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF339999),
-                    unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color(0xFF339999),
-                    unselectedTextColor = Color.Gray,
+                    selectedIconColor = MC_TRACK,
+                    unselectedIconColor = Gray,
+                    selectedTextColor = MC_TRACK,
+                    unselectedTextColor = Gray,
                     indicatorColor = Color.Transparent
                 )
             )
