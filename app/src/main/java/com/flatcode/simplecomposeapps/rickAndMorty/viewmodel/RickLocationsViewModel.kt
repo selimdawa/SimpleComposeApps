@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.rickAndMorty
+package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location

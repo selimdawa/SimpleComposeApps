@@ -50,7 +50,7 @@ class News2Activity : AppCompatActivity() {
             Scaffold(
                 topBar = {
                     ToolbarContent(
-                        title = "News 2",
+                        title = DATA.NEWS_2,
                         hasBack = false
                     )
                 },

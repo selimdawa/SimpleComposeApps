@@ -9,8 +9,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,14 +20,11 @@ import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @Composable
-fun EpisodeItem(
-    item: Episode,
-    modifier: Modifier = Modifier
-) {
+fun EpisodeItem(item: Episode, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp)
     ) {
         Column(
@@ -54,12 +49,10 @@ fun EpisodeItem(
                     .padding(horizontal = 10.dp),
                 color = Color.White,
                 fontSize = 18.sp,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.Center
             )
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 10.dp),
-                thickness = 1.dp,
-                color = Color.White
+                modifier = Modifier.padding(vertical = 10.dp), thickness = 1.dp, color = Color.White
             )
             Text(
                 text = item.episode,
@@ -76,7 +69,7 @@ fun EpisodeItem(
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 color = Color.White,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.Center
             )
         }
     }

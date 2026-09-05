@@ -1,7 +1,7 @@
-package com.flatcode.simplecomposeapps.rickAndMorty
+package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.RickAndMortyResponse
 import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
@@ -14,17 +14,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RickCharactersViewModel @Inject constructor(
+class RickEpisodesViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    private val _characters = MutableStateFlow<Resource<RickAndMortyResponse<Character>>>(Resource.Loading())
-    val characters: StateFlow<Resource<RickAndMortyResponse<Character>>> = _characters.asStateFlow()
+    private val _episodes = MutableStateFlow<Resource<RickAndMortyResponse<Episode>>>(Resource.Loading())
+    val episodes: StateFlow<Resource<RickAndMortyResponse<Episode>>> = _episodes.asStateFlow()
 
-    fun getCharacters(page: Int? = null) {
+    fun getEpisodes(page: Int? = null) {
         viewModelScope.launch {
-            repository.getCharacters(page).collect {
-                _characters.value = it
+            repository.getEpisodes(page).collect {
+                _episodes.value = it
             }
         }
     }

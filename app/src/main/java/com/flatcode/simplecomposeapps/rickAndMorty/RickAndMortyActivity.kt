@@ -29,8 +29,12 @@ import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickCharactersScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickEpisodesScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickLocationsScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -45,15 +49,18 @@ class RickAndMortyActivity : AppCompatActivity() {
         setContent {
             val navController = rememberNavController()
             Scaffold(
-                bottomBar = {
+                topBar = {
+                    ToolbarContent(
+                        title = DATA.RICK_AND_MORTY, hasBack = false
+                    )
+                }, bottomBar = {
                     RickBottomNavigation(navController = navController)
-                }
+                }, containerColor = COLOR_ON_BACKGROUND
             ) { paddingValues ->
                 RickNavHost(
                     navController = navController,
                     modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() }
-                )
+                    onBack = { finish() })
             }
         }
     }
@@ -68,15 +75,20 @@ fun RickBottomNavigation(navController: NavHostController) {
     )
 
     NavigationBar(
-        containerColor = Color(0xFF212121),
-        contentColor = Color.White
+        containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
         items.forEach { (route, label, icon) ->
             NavigationBarItem(
-                icon = { Icon(icon, contentDescription = label, modifier = Modifier.size(24.dp)) },
+                icon = {
+                    Icon(
+                        icon,
+                        contentDescription = label,
+                        modifier = Modifier.size(24.dp)
+                    )
+                },
                 label = { Text(label) },
                 selected = currentDestination?.hierarchy?.any { it.route == route } == true,
                 onClick = {
@@ -100,9 +112,7 @@ fun RickBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun RickNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -111,8 +121,7 @@ fun RickNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable("characters") {
             RickCharactersScreen(onBack = onBack)
         }

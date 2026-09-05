@@ -1,21 +1,31 @@
 package com.flatcode.simplecomposeapps.rickAndMorty.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,9 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import androidx.compose.ui.platform.LocalContext
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
+import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
@@ -33,18 +43,19 @@ import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 
 @Composable
 fun CharacterItem(
-    item: Character,
-    modifier: Modifier = Modifier
+    item: Character, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
-        shape = RoundedCornerShape(6.dp)
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
+        shape = RoundedCornerShape(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Gray)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(IntrinsicSize.Max)
                 .background(MC_BG)
         ) {
             Box(
@@ -54,13 +65,10 @@ fun CharacterItem(
                     .background(image_profile)
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(item.image)
-                        .transformations(SimpleBlurTransformation(50f))
-                        .build(),
+                    model = ImageRequest.Builder(LocalContext.current).data(item.image)
+                        .transformations(SimpleBlurTransformation(50f)).build(),
                     contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
                 AsyncImage(
@@ -110,9 +118,7 @@ fun CharacterItem(
                         modifier = Modifier.padding(horizontal = 10.dp)
                     )
                     Text(
-                        text = item.species,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        text = item.species, color = Color.White, fontWeight = FontWeight.Bold
                     )
                 }
 
@@ -128,9 +134,7 @@ fun CharacterItem(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = item.location.name,
-                    color = Color.White,
-                    fontSize = 16.sp
+                    text = item.location.name, color = Color.White, fontSize = 16.sp
                 )
 
                 HorizontalDivider(
@@ -146,9 +150,7 @@ fun CharacterItem(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = item.gender,
-                    color = Color.White,
-                    fontSize = 16.sp
+                    text = item.gender, color = Color.White, fontSize = 16.sp
                 )
             }
         }

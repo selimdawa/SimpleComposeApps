@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,21 +13,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.rickAndMorty.RickEpisodesViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
-import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickEpisodesViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun RickEpisodesScreen(
-    onBack: () -> Unit,
-    viewModel: RickEpisodesViewModel = hiltViewModel()
+    onBack: () -> Unit, viewModel: RickEpisodesViewModel = hiltViewModel()
 ) {
     val state by viewModel.episodes.collectAsState()
 
@@ -36,42 +31,34 @@ fun RickEpisodesScreen(
         viewModel.getEpisodes()
     }
 
-    Scaffold(
-        topBar = {
-            ToolbarContent(title = "Episodes", hasBack = false, onBackClick = onBack)
-        },
-        containerColor = COLOR_ON_BACKGROUND
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when (state) {
-                is Resource.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MC_TRACK
-                    )
-                }
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        when (state) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                )
+            }
 
-                is Resource.Success -> {
-                    val episodes = state.data?.results ?: emptyList()
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(episodes) { episode ->
-                            EpisodeItem(item = episode)
-                        }
+            is Resource.Success -> {
+                val episodes = state.data?.results ?: emptyList()
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(episodes) { episode ->
+                        EpisodeItem(item = episode)
                     }
                 }
+            }
 
-                is Resource.Error -> {
-                    Text(
-                        text = state.message ?: "Error",
-                        modifier = Modifier.align(Alignment.Center).padding(16.dp),
-                        textAlign = TextAlign.Center,
-                        color = COLOR_ERROR
-                    )
-                }
+            is Resource.Error -> {
+                Text(
+                    text = state.message ?: "Error",
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    color = COLOR_ERROR
+                )
             }
         }
     }
