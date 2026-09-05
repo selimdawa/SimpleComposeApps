@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -31,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.pop.PopViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -38,8 +38,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun PopScreen(
-    onBack: () -> Unit,
-    viewModel: PopViewModel = hiltViewModel()
+    onBack: () -> Unit, viewModel: PopViewModel = hiltViewModel()
 ) {
     val pops by viewModel.pops.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -49,8 +48,7 @@ fun PopScreen(
     Scaffold(
         topBar = {
             ToolbarContent(title = DATA.POP, hasBack = false, onBackClick = onBack)
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -62,7 +60,7 @@ fun PopScreen(
                 onValueChange = { viewModel.onSearchQueryChanged(it) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 5.dp),
+                    .padding(start = 10.dp, end = 10.dp),
                 placeholder = { Text(text = Strings.SEARCH_ET, color = Color.Gray) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -95,8 +93,7 @@ fun PopScreen(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (isLoading && pops.isEmpty()) {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MC_TRACK
+                        modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                     )
                 } else if (error != null && pops.isEmpty()) {
                     Text(
@@ -105,7 +102,7 @@ fun PopScreen(
                             .align(Alignment.Center)
                             .padding(16.dp),
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.error
+                        color = COLOR_ERROR
                     )
                 } else if (pops.isEmpty()) {
                     Text(
@@ -115,13 +112,13 @@ fun PopScreen(
                             .padding(16.dp),
                         textAlign = TextAlign.Center,
                         fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.error
+                        color = COLOR_ERROR
                     )
                 } else {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(5.dp)
+                        contentPadding = PaddingValues(start = 5.dp, end = 5.dp, top = 10.dp)
                     ) {
                         items(pops, key = { it.id }) { pop ->
                             PopItem(item = pop)

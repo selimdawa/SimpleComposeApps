@@ -10,12 +10,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,15 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.pop.model.PopItem
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun PopItem(
-    item: PopItem,
-    modifier: Modifier = Modifier
+    item: PopItem, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -52,10 +48,8 @@ fun PopItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .background(Color.White),
+                    .background(image_profile),
                 contentScale = ContentScale.Fit,
-                error = rememberVectorPainter(image = AppIcons.Load),
-                placeholder = rememberVectorPainter(image = AppIcons.Load)
             )
 
             Column(
@@ -74,7 +68,7 @@ fun PopItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                
+
                 if (item.series != DATA.UNKNOWN) {
                     Text(
                         text = item.series,
