@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.news2.NewsEverythingViewModel
 import com.flatcode.simplecomposeapps.news2.common.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -69,7 +69,7 @@ fun EverythingScreen(
                     Text(
                         text = state.message ?: "Error",
                         modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.error,
+                        color = COLOR_ERROR,
                         textAlign = TextAlign.Center
                     )
                 }

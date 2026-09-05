@@ -31,6 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.main.MainViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import io.selimdawa.multicolors.MultiColorButton
@@ -90,7 +91,7 @@ fun MainScreen(
             } else if (items.isEmpty()) {
                 Text(
                     text = Strings.NONE_DISPLAY,
-                    color = MaterialTheme.colorScheme.error,
+                    color = COLOR_ERROR,
                     fontSize = 32.sp,
                     modifier = Modifier
                         .align(Alignment.Center)

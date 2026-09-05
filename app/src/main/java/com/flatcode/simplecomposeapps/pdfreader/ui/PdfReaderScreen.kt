@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -127,7 +128,7 @@ fun PdfReaderScreen(
                         Text(
                             text = uiState.errorMessage!!,
                             modifier = Modifier.align(Alignment.Center),
-                            color = MaterialTheme.colorScheme.error
+                            color = COLOR_ERROR
                         )
                     }
 

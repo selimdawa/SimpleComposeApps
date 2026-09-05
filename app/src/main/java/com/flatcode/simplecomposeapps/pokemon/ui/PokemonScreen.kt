@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.pokemon.PokeViewModel
 import com.flatcode.simplecomposeapps.pokemon.data.model.PokeResult
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -60,7 +60,7 @@ fun PokemonScreen(
                     modifier = Modifier.align(Alignment.Center).padding(16.dp),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.error
+                    color = COLOR_ERROR
                 )
             } else {
                 LazyVerticalStaggeredGrid(

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.RickEpisodesViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
@@ -65,7 +65,7 @@ fun RickEpisodesScreen(
                         text = state.message ?: "Error",
                         modifier = Modifier.align(Alignment.Center).padding(16.dp),
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.error
+                        color = COLOR_ERROR
                     )
                 }
             }

@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
@@ -47,7 +47,7 @@ fun TaskItem(
                 .padding(start = 8.dp)
                 .weight(1f),
             fontSize = 20.sp,
-            color = if (task.important) COLOR_ERROR else MaterialTheme.colorScheme.onBackground,
+            color = if (task.important) COLOR_ERROR else COLOR_ON_BACKGROUND,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
