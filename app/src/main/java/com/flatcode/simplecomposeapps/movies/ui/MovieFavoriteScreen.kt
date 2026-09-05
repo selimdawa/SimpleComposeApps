@@ -2,21 +2,19 @@ package com.flatcode.simplecomposeapps.movies.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.movies.MovieFavoriteViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
@@ -38,12 +37,9 @@ fun MovieFavoriteScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = Strings.FAVORITE_MOVIES,
-                hasBack = false,
-                onBackClick = onBack
+                title = Strings.FAVORITE_MOVIES, hasBack = true, onBackClick = onBack
             )
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -56,19 +52,17 @@ fun MovieFavoriteScreen(
                     modifier = Modifier.align(Alignment.Center),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.error
+                    color = COLOR_ERROR
                 )
             } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(8.dp)
+                    contentPadding = PaddingValues(horizontal = 5.dp)
                 ) {
                     items(favorites.asReversed()) { movie ->
                         MovieItem(
-                            movie = movie,
-                            modifier = Modifier.clickable { onMovieClick(movie) }
-                        )
+                            movie = movie, modifier = Modifier.clickable { onMovieClick(movie) })
                     }
                 }
             }

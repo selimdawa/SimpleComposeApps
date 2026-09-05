@@ -22,24 +22,21 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable
-fun MovieItem(
-    movie: MovieItemModel,
-    modifier: Modifier = Modifier
-) {
+fun MovieItem(movie: MovieItemModel, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MC_TRACK)
+                .background(image_profile)
         ) {
             AsyncImage(
                 model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
@@ -67,9 +64,7 @@ fun MovieItem(
                 )
 
                 HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color.White
+                    modifier = Modifier.fillMaxWidth(), thickness = 1.dp, color = Color.White
                 )
 
                 Text(
