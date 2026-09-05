@@ -26,7 +26,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun TopArticlesScreen(
-    onBack: () -> Unit,
     viewModel: NewsTopArticlesViewModel = hiltViewModel()
 ) {
     val state by viewModel.topArticles.collectAsState()
@@ -35,46 +34,33 @@ fun TopArticlesScreen(
         viewModel.getTopArticles("us")
     }
 
-    Scaffold(
-        topBar = {
-            ToolbarContent(
-                title = Strings.TOP_ARTICLES,
-                hasBack = false,
-                onBackClick = onBack,
-            )
-        },
-        containerColor = COLOR_ON_BACKGROUND
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when (state) {
-                is Resource.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MC_TRACK
-                    )
-                }
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        when (state) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MC_TRACK
+                )
+            }
 
-                is Resource.Success -> {
-                    val articles = state.data?.articles ?: emptyList()
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(articles) { article ->
-                            TopArticleItem(item = article)
-                        }
+            is Resource.Success -> {
+                val articles = state.data?.articles ?: emptyList()
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(articles) { article ->
+                        TopArticleItem(article)
                     }
                 }
+            }
 
-                is Resource.Error -> {
-                    Text(
-                        text = state.message ?: "Error",
-                        modifier = Modifier.align(Alignment.Center),
-                        color = COLOR_ERROR,
-                        textAlign = TextAlign.Center
-                    )
-                }
+            is Resource.Error -> {
+                Text(
+                    text = state.message ?: "Error",
+                    modifier = Modifier.align(Alignment.Center),
+                    color = COLOR_ERROR,
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

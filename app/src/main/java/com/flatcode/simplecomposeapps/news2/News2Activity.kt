@@ -28,10 +28,12 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.news2.ui.EverythingScreen
 import com.flatcode.simplecomposeapps.news2.ui.TopArticlesScreen
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -46,13 +48,20 @@ class News2Activity : AppCompatActivity() {
         setContent {
             val navController = rememberNavController()
             Scaffold(
+                topBar = {
+                    ToolbarContent(
+                        title = "News 2",
+                        hasBack = false
+                    )
+                },
                 bottomBar = {
                     NewsBottomNavigation(navController = navController)
-                }) { paddingValues ->
+                },
+                containerColor = COLOR_ON_BACKGROUND
+            ) { paddingValues ->
                 NewsNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() })
+                    modifier = Modifier.padding(paddingValues))
             }
         }
     }
@@ -103,7 +112,7 @@ fun NewsBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun NewsNavHost(
-    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
@@ -115,10 +124,10 @@ fun NewsNavHost(
         popExitTransition = { ExitTransition.None }
     ) {
         composable("everything") {
-            EverythingScreen(onBack = onBack)
+            EverythingScreen()
         }
         composable("topArticles") {
-            TopArticlesScreen(onBack = onBack)
+            TopArticlesScreen()
         }
     }
 }
