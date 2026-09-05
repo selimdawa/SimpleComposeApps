@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -81,7 +82,7 @@ fun BloggerScreen(
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MC_TRACK
                 )
             }
         }

@@ -153,7 +153,7 @@ fun DictionaryScreen(
                 enabled = uiState !is UiState.Loading
             ) {
                 if (uiState is UiState.Loading) {
-                    CircularProgressIndicator(color = COLOR_ON_BACKGROUND, modifier = Modifier.size(24.dp))
+                    CircularProgressIndicator(color = MC_TRACK, modifier = Modifier.size(24.dp))
                 } else {
                     Text(
                         text = Strings.BUTTON_FIND, fontSize = 18.sp, fontWeight = FontWeight.Bold

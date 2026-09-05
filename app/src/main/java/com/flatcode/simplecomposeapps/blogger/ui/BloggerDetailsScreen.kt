@@ -177,7 +177,7 @@ fun BloggerDetailsScreen(
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MC_TRACK
                 )
             }
         }

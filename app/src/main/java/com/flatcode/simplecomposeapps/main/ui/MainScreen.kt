@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +32,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import io.selimdawa.multicolors.MultiColorButton
 
@@ -86,7 +86,7 @@ fun MainScreen(
                     modifier = Modifier
                         .size(50.dp)
                         .align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MC_TRACK
                 )
             } else if (items.isEmpty()) {
                 Text(

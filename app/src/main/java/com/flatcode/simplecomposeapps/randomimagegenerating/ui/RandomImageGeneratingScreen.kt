@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -56,7 +57,7 @@ fun RandomImageGeneratingScreen(
                 )
 
                 if (isLoading && imageUrl.isEmpty()) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = MC_TRACK)
                 }
             }
         }

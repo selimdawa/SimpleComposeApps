@@ -23,6 +23,7 @@ import com.flatcode.simplecomposeapps.crypto.CryptoHomeViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
@@ -86,7 +87,7 @@ fun CryptoHomeScreen(
                                 .padding(16.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(color = COLOR_ERROR)
+                            CircularProgressIndicator(color = MC_TRACK)
                         }
                     }
                 }
@@ -94,7 +95,7 @@ fun CryptoHomeScreen(
 
             if (isLoading && cryptoList.isEmpty()) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center), color = COLOR_ERROR
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
             }
         }

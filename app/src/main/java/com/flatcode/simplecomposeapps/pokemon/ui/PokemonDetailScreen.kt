@@ -67,7 +67,10 @@ fun PokemonDetailScreen(
                 .padding(paddingValues)
         ) {
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MC_TRACK
+                )
             } else {
                 details?.let { item ->
                     Column(

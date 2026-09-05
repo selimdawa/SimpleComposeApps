@@ -38,6 +38,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -125,7 +126,7 @@ fun DogsScreen(
                 when (uiState) {
                     is DogUiState.Loading -> {
                         CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center), color = COLOR_ERROR
+                            modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                         )
                     }
 

@@ -23,6 +23,7 @@ import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun RickEpisodesScreen(
@@ -48,7 +49,10 @@ fun RickEpisodesScreen(
         ) {
             when (state) {
                 is Resource.Loading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = MC_TRACK
+                    )
                 }
 
                 is Resource.Success -> {
