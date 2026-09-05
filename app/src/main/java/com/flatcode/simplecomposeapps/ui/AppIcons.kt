@@ -1,5 +1,10 @@
 package com.flatcode.simplecomposeapps.ui
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.flatcode.simplecomposeapps.R
 
@@ -41,71 +46,71 @@ object AppIcons {
     val PurpleCandy = R.drawable.purplecandy
 
     // Vectors (ImageVector)
-    val StopWatch: ImageVector = AppVectors.StopWatch
-    val MultiDelete: ImageVector = AppVectors.MultiDelete
-    val LiveTv: ImageVector = AppVectors.LiveTv
-    val PdfReader: ImageVector = AppVectors.PdfReader
-    val VideoPlayer: ImageVector = AppVectors.VideoPlayer
-    val Dogs: ImageVector = AppVectors.HomeWork
-    val Countries: ImageVector = AppVectors.Flag
-    val Calculator: ImageVector = AppVectors.Calculate
-    val Crypto: ImageVector = AppVectors.Monetization
-    val Dictionary: ImageVector = AppVectors.Word
-    val Meals: ImageVector = AppVectors.Meal
-    val Pop: ImageVector = AppVectors.Game
-    val Movie: ImageVector = AppVectors.Movie
-    val News: ImageVector = AppVectors.Feed
-    val RickAndMorty: ImageVector = AppVectors.Child
-    val Weather: ImageVector = AppVectors.Night
-    val Poke: ImageVector = AppVectors.Gamepad
-    val TodoNote: ImageVector = AppVectors.Note
-    val StockMarket: ImageVector = AppVectors.Company
-    val Info: ImageVector = AppVectors.Info
-    val Load: ImageVector = AppVectors.Load
-    val ConnectionError: ImageVector = AppVectors.ConnectionError
+    val StopWatch: ImageVector = Icons.Default.Timer
+    val MultiDelete: ImageVector = Icons.Default.DeleteSweep
+    val LiveTv: ImageVector = Icons.Default.LiveTv
+    val PdfReader: ImageVector = Icons.Default.PictureAsPdf
+    val VideoPlayer: ImageVector = Icons.Default.VideoLibrary
+    val Dogs: ImageVector = Icons.Default.Pets
+    val Countries: ImageVector = Icons.Default.Flag
+    val Calculator: ImageVector = Icons.Default.Calculate
+    val Crypto: ImageVector = Icons.Default.MonetizationOn
+    val Dictionary: ImageVector = Icons.AutoMirrored.Filled.MenuBook
+    val Meals: ImageVector = Icons.Default.Restaurant
+    val Pop: ImageVector = Icons.Default.Gamepad
+    val Movie: ImageVector = Icons.Default.Movie
+    val News: ImageVector = Icons.Default.Newspaper
+    val RickAndMorty: ImageVector = Icons.Default.Face
+    val Weather: ImageVector = Icons.Default.WbSunny
+    val Poke: ImageVector = Icons.Default.CatchingPokemon
+    val TodoNote: ImageVector = Icons.AutoMirrored.Filled.Note
+    val StockMarket: ImageVector = Icons.AutoMirrored.Filled.TrendingUp
+    val Info: ImageVector = Icons.Default.Info
+    val Load: ImageVector = Icons.Default.CloudDownload
+    val ConnectionError: ImageVector = Icons.Default.WifiOff
 
-    val CircleGreen: ImageVector = AppVectors.CircleGreen
-    val CircleRed: ImageVector = AppVectors.CircleRed
+    val CircleGreen: ImageVector = Icons.Default.Circle
+    val CircleRed: ImageVector = Icons.Default.Circle
 
-    val Play: ImageVector = AppVectors.Play
-    val Pause: ImageVector = AppVectors.Pause
-    val Stop: ImageVector = AppVectors.Stop
-    val Back: ImageVector = AppVectors.Back
+    val Play: ImageVector = Icons.Default.PlayArrow
+    val Pause: ImageVector = Icons.Default.Pause
+    val Stop: ImageVector = Icons.Default.Stop
+    val Back: ImageVector = Icons.AutoMirrored.Filled.ArrowBack
 
-    val FolderOpen: ImageVector = AppVectors.FolderOpen
-    val Fullscreen: ImageVector = AppVectors.Fullscreen
-    val Infinity: ImageVector = AppVectors.Infinity
-    val Article: ImageVector = AppVectors.Article
-    val Add: ImageVector = AppVectors.Add
-    val Check: ImageVector = AppVectors.Check
-    val DateRange: ImageVector = AppVectors.DateRange
-    val Delete: ImageVector = AppVectors.Delete
-    val DeleteCal: ImageVector = AppVectors.DeleteCal
-    val Favorite: ImageVector = AppVectors.Favorite
-    val FavoriteBorder: ImageVector = AppVectors.FavoriteBorder
-    val PriorityHigh: ImageVector = AppVectors.PriorityHigh
-    val Search: ImageVector = AppVectors.Search
-    val Sort: ImageVector = AppVectors.Sort
-    val BrokenImage: ImageVector = AppVectors.BrokenImage
-    val Category: ImageVector = AppVectors.Category
-    val CheckCircle: ImageVector = AppVectors.CheckCircle
-    val ClearAll: ImageVector = AppVectors.ClearAll
-    val Close: ImageVector = AppVectors.Close
-    val EventNote: ImageVector = AppVectors.EventNote
-    val Folder: ImageVector = AppVectors.Folder
-    val Home: ImageVector = AppVectors.Home
-    val Location: ImageVector = AppVectors.Location
-    val Minus: ImageVector = AppVectors.Minus
-    val More: ImageVector = AppVectors.More
-    val Person: ImageVector = AppVectors.Person
-    val SelectAll: ImageVector = AppVectors.SelectAll
-    val Star: ImageVector = AppVectors.Star
-    val TodoCheck: ImageVector = AppVectors.TodoCheck
-    val Video: ImageVector = AppVectors.Video
-    val InfoOutline: ImageVector = AppVectors.InfoOutline
-    val Loading: ImageVector = AppVectors.Loading
-    val Lock: ImageVector = AppVectors.Lock
-    val MetaInfo: ImageVector = AppVectors.MetaInfo
-    val Print: ImageVector = AppVectors.Print
-    val Share: ImageVector = AppVectors.Share
+    val FolderOpen: ImageVector = Icons.Default.FolderOpen
+    val Fullscreen: ImageVector = Icons.Default.Fullscreen
+    val Infinity: ImageVector = Icons.Default.AllInclusive
+    val Article: ImageVector = Icons.AutoMirrored.Filled.Article
+    val Add: ImageVector = Icons.Default.Add
+    val Check: ImageVector = Icons.Default.Check
+    val DateRange: ImageVector = Icons.Default.DateRange
+    val Delete: ImageVector = Icons.Default.Delete
+    val DeleteCal: ImageVector = Icons.Default.DeleteOutline
+    val Favorite: ImageVector = Icons.Default.Favorite
+    val FavoriteBorder: ImageVector = Icons.Outlined.FavoriteBorder
+    val PriorityHigh: ImageVector = Icons.Default.PriorityHigh
+    val Search: ImageVector = Icons.Default.Search
+    val Sort: ImageVector = Icons.AutoMirrored.Filled.Sort
+    val BrokenImage: ImageVector = Icons.Default.BrokenImage
+    val Category: ImageVector = Icons.Default.Category
+    val CheckCircle: ImageVector = Icons.Default.CheckCircle
+    val ClearAll: ImageVector = Icons.Default.ClearAll
+    val Close: ImageVector = Icons.Default.Close
+    val EventNote: ImageVector = Icons.AutoMirrored.Filled.EventNote
+    val Folder: ImageVector = Icons.Default.Folder
+    val Home: ImageVector = Icons.Default.Home
+    val Location: ImageVector = Icons.Default.LocationOn
+    val Minus: ImageVector = Icons.Default.Remove
+    val More: ImageVector = Icons.Default.MoreVert
+    val Person: ImageVector = Icons.Default.Person
+    val SelectAll: ImageVector = Icons.Default.SelectAll
+    val Star: ImageVector = Icons.Default.Star
+    val TodoCheck: ImageVector = Icons.Default.TaskAlt
+    val Video: ImageVector = Icons.Default.VideoLibrary
+    val InfoOutline: ImageVector = Icons.Outlined.Info
+    val Loading: ImageVector = Icons.Default.Sync
+    val Lock: ImageVector = Icons.Default.Lock
+    val MetaInfo: ImageVector = Icons.Default.Info
+    val Print: ImageVector = Icons.Default.Print
+    val Share: ImageVector = Icons.Default.Share
 }

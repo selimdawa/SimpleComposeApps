@@ -17,7 +17,7 @@ class Application : Application(), ImageLoaderFactory {
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this).components {
-                add(VideoFrameDecoder.Factory())
-            }.crossfade(true).build()
+            add(VideoFrameDecoder.Factory())
+        }.crossfade(true).build()
     }
 }

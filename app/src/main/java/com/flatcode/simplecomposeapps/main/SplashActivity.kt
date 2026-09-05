@@ -51,7 +51,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        openActivity(MoviesActivity::class.java, true)
+        openActivity(MainActivity::class.java, true)
     }
 
     companion object {
