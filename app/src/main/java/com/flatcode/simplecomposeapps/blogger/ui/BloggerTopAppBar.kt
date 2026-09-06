@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +44,7 @@ fun BloggerTopAppBar(
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search...", color = Color.White.copy(alpha = 0.7f)) },
+                placeholder = { Text("Search...", color = White.copy(alpha = 0.7f)) },
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
@@ -51,9 +52,9 @@ fun BloggerTopAppBar(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    cursorColor = White,
+                    focusedTextColor = White,
+                    unfocusedTextColor = White
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -65,7 +66,7 @@ fun BloggerTopAppBar(
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Text(
                     text = title,
-                    color = Color.White,
+                    color = White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -79,17 +80,17 @@ fun BloggerTopAppBar(
                 onSearch("")
             }) {
                 Icon(
-                    imageVector = AppIcons.Close, contentDescription = null, tint = Color.White
+                    imageVector = AppIcons.Close, contentDescription = null, tint = White
                 )
             }
         } else if (onBack != null) {
             IconButton(onClick = onBack) {
-                Icon(imageVector = AppIcons.Back, contentDescription = null, tint = Color.White)
+                Icon(imageVector = AppIcons.Back, contentDescription = null, tint = White)
             }
         } else {
             IconButton(onClick = { isSearchMode = true }) {
                 Icon(
-                    imageVector = AppIcons.Search, contentDescription = null, tint = Color.White
+                    imageVector = AppIcons.Search, contentDescription = null, tint = White
                 )
             }
         }
@@ -97,7 +98,7 @@ fun BloggerTopAppBar(
         if (isSearchMode) {
             IconButton(onClick = { onSearch(searchQuery) }) {
                 Icon(
-                    imageVector = AppIcons.Search, contentDescription = null, tint = Color.White
+                    imageVector = AppIcons.Search, contentDescription = null, tint = White
                 )
             }
         } else {
@@ -105,7 +106,7 @@ fun BloggerTopAppBar(
                 Icon(
                     imageVector = AppIcons.Article,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = White
                 )
             }
         }

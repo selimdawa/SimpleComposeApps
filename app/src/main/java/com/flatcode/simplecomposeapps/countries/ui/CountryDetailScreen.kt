@@ -33,6 +33,7 @@ import coil.request.ImageRequest
 import com.flatcode.simplecomposeapps.countries.DetailViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
@@ -128,7 +129,7 @@ fun DetailInfoItem(label: String, value: String) {
     ) {
         Text(
             text = label,
-            color = Color.Gray,
+            color = Gray,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center

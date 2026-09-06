@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.countries
 
 import android.os.Bundle
+import com.flatcode.simplecomposeapps.utils.DATA
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -37,24 +38,24 @@ fun CountriesAppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = "dashboard",
+        startDestination = DATA.DASHBOARD,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
-        composable("dashboard") {
+        composable(DATA.DASHBOARD) {
             DashboardScreen(
                 onCountryClick = { uuid ->
-                    navController.navigate("detail/$uuid")
+                    navController.navigate("${DATA.DETAIL_BY_ID}$uuid")
                 }
             )
         }
         composable(
-            route = "detail/{countryUuid}",
-            arguments = listOf(navArgument("countryUuid") { type = NavType.IntType })
+            route = DATA.DETAIL_COUNTRY,
+            arguments = listOf(navArgument(DATA.COUNTRY_UUID) { type = NavType.IntType })
         ) { backStackEntry ->
-            val countryUuid = backStackEntry.arguments?.getInt("countryUuid") ?: 0
+            val countryUuid = backStackEntry.arguments?.getInt(DATA.COUNTRY_UUID) ?: 0
             CountryDetailScreen(
                 countryUuid = countryUuid,
                 onBack = { navController.popBackStack() }

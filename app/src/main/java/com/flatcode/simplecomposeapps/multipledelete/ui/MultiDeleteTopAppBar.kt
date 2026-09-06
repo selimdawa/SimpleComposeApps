@@ -51,7 +51,7 @@ fun MultiDeleteTopAppBar(
             ) {
                 Icon(
                     imageVector = AppIcons.Close,
-                    contentDescription = "Back",
+                    contentDescription = Strings.BACK,
                     tint = COLOR_ERROR,
                     modifier = Modifier.size(24.dp)
                 )

@@ -37,6 +37,7 @@ import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.ShimmerColor
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.valentinilk.shimmer.shimmer
@@ -106,7 +107,6 @@ fun PokemonItem(
 
 @Composable
 fun PokemonItemShimmer(modifier: Modifier = Modifier) {
-    val shimmerColor = Color(0xFFC8C8C9)
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -129,19 +129,19 @@ fun PokemonItemShimmer(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                        .background(shimmerColor)
+                        .background(ShimmerColor)
                 )
                 Box(
                     modifier = Modifier
                         .padding(8.dp)
                         .size(width = 32.dp, height = 16.dp)
-                        .background(shimmerColor)
+                        .background(ShimmerColor)
                 )
                 Box(
                     modifier = Modifier
                         .padding(start = 8.dp, bottom = 8.dp)
                         .size(width = 100.dp, height = 24.dp)
-                        .background(shimmerColor)
+                        .background(ShimmerColor)
                 )
             }
         }

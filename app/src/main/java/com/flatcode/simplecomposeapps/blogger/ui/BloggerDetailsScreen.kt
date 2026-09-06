@@ -39,6 +39,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -72,7 +73,7 @@ fun BloggerDetailsScreen(
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     Text(
                         text = if (isPage) Strings.PAGE_DETAILS else Strings.POST_DETAILS,
-                        color = Color.White,
+                        color = White,
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
@@ -81,7 +82,7 @@ fun BloggerDetailsScreen(
                     Icon(
                         imageVector = AppIcons.Back,
                         contentDescription = null,
-                        tint = Color.White
+                        tint = White
                     )
                 }
             }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
@@ -102,7 +103,7 @@ fun BloggerDetailsScreen(
                 ) {
                     Text(
                         text = details.title ?: DATA.EMPTY,
-                        color = Color.White,
+                        color = White,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -117,7 +118,7 @@ fun BloggerDetailsScreen(
 
                     Text(
                         text = Strings.publishInfo(details.authorName ?: DATA.EMPTY, formattedDate),
-                        color = Color.White.copy(alpha = 0.7f),
+                        color = White.copy(alpha = 0.7f),
                         fontSize = 14.sp,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
@@ -144,7 +145,7 @@ fun BloggerDetailsScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = Strings.LABELS,
-                            color = Color.White,
+                            color = White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -163,7 +164,7 @@ fun BloggerDetailsScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = Strings.COMMENTS,
-                            color = Color.White,
+                            color = White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )

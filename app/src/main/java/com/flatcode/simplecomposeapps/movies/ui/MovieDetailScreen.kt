@@ -40,6 +40,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -94,7 +95,7 @@ fun MovieDetailScreen(
                     text = movie.title,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = White,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -107,8 +108,8 @@ fun MovieDetailScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Release Date: ${movie.release_date}",
-                        color = Color.White,
+                        text = Strings.releaseDate(movie.release_date),
+                        color = White,
                         fontSize = 18.sp,
                         modifier = Modifier.weight(1f)
                     )
@@ -120,7 +121,7 @@ fun MovieDetailScreen(
                         Icon(
                             imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,
                             contentDescription = "Favorite",
-                            tint = Color.White,
+                            tint = White,
                             modifier = Modifier.size(32.dp)
                         )
                     }

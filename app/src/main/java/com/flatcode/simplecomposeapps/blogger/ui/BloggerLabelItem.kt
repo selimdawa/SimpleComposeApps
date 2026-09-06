@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.blogger.model.Label
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable
 fun BloggerLabelItem(label: Label) {
@@ -19,7 +20,7 @@ fun BloggerLabelItem(label: Label) {
     ) {
         Text(
             text = label.label ?: "",
-            color = Color.White,
+            color = White,
             fontSize = 12.sp,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
         )

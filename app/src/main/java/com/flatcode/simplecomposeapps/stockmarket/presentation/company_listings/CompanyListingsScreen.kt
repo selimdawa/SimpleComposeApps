@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 
@@ -28,7 +29,7 @@ fun CompanyListingsScreen(
                 value = state.searchQuery,
                 onValueChange = { viewModel.onEvent(CompanyListingsEvent.OnSearchQueryChange(it)) },
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                placeholder = { Text(text = "Search") },
+                placeholder = { Text(text = Strings.SEARCH) },
                 maxLines = 1,
                 singleLine = true,
                 leadingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = null) }

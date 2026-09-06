@@ -24,6 +24,7 @@ import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable
 fun BloggerScreen(
@@ -73,7 +74,7 @@ fun BloggerScreen(
                                 .padding(16.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                         ) {
-                            Text(text = Strings.LOAD_MORE, color = Color.White)
+                            Text(text = Strings.LOAD_MORE, color = White)
                         }
                     }
                 }

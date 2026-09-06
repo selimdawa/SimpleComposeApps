@@ -29,6 +29,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +50,7 @@ fun BloggerPagesScreen(
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                     Text(
                         text = Strings.BLOGGER_PAGES,
-                        color = Color.White,
+                        color = White,
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
@@ -58,7 +59,7 @@ fun BloggerPagesScreen(
                     Icon(
                         imageVector = AppIcons.Back,
                         contentDescription = null,
-                        tint = Color.White
+                        tint = White
                     )
                 }
             }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)

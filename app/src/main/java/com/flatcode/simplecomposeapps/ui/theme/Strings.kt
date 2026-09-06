@@ -49,6 +49,7 @@ object Strings {
     const val COUNTRY_REGION = "Country Region :"
     const val COUNTRY_LANGUAGE = "Country Language :"
     const val COUNTRY_CURRENCY = "Country Currency :"
+    const val ERROR_LOADING_COUNTRIES = "Error loading countries"
 
     // Meals
     const val HOME = "Home"
@@ -99,6 +100,7 @@ object Strings {
     const val SORT_BY_DATE = "Sort by date created"
     const val HIDE_COMPLETED = "Hide completed"
     const val DELETE_COMPLETED_TASKS = "Delete completed tasks"
+    fun dateCreated(date: String) = "Date created: $date"
 
     // TODO - Notes
     const val NOTES = "Notes"
@@ -123,6 +125,7 @@ object Strings {
     const val TEMPERAMENT = "Temperament"
     const val WIKIPEDIA = "Wikipedia"
     const val MORE_INFO = "More Info"
+    fun releaseDate(date: String) = "Release Date: $date"
 
     fun numberPlaceholder(n: Int) = n.toString()
     fun selectedPlaceholder(count: Int) = "$count Selected"
@@ -181,4 +184,8 @@ object Strings {
     // Other
     const val NO_DATA_FOUND = "No Data Found"
     const val UNKNOWN_ERROR = "An unknown error occurred"
+    const val CLOSE = "Close"
+    const val BACK = "Back"
+    const val FAVORITE = "Favorite"
+    const val YOUTUBE = "YouTube"
 }

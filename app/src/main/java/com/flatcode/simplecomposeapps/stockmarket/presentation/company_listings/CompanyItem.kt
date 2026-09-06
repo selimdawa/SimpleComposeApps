@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.stockmarket.domain.model.CompanyListing
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CompanyItem(
@@ -42,7 +43,7 @@ fun CompanyItem(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "(${company.symbol})",
+                text = DATA.symbolBrackets(company.symbol),
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.onBackground
             )

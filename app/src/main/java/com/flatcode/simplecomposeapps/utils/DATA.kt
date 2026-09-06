@@ -231,6 +231,15 @@ object DATA {
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
     const val BASE_URL_WEATHER = "https://api.weatherapi.com/v1/forecast.json?key="
 
+    // Routes
+    const val DASHBOARD = "dashboard"
+    const val DETAIL_COUNTRY = "detail/{countryUuid}"
+    const val COUNTRY_UUID = "countryUuid"
+    const val DETAIL_BY_ID = "detail/"
+
+    // Formats
+    fun symbolBrackets(s: String) = "($s)"
+
     // Theme Attributes
     const val COLOR_ERROR = "colorError"
     const val COLOR_ON_BACKGROUND = "colorOnBackground"

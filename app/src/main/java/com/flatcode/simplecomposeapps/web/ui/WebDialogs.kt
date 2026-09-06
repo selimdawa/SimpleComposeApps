@@ -34,6 +34,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable
 fun WebSupportDialog(
@@ -85,7 +86,7 @@ fun WebSupportDialog(
                 }
 
                 Text(
-                    text = "Close",
+                    text = Strings.CLOSE,
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MC_TRACK)
@@ -95,7 +96,7 @@ fun WebSupportDialog(
                         ) { onDismiss() }
                         .padding(12.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
@@ -130,7 +131,7 @@ fun WebAboutDialog(onDismiss: () -> Unit) {
                 )
 
                 Text(
-                    text = "Close",
+                    text = Strings.CLOSE,
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MC_TRACK)
@@ -140,7 +141,7 @@ fun WebAboutDialog(onDismiss: () -> Unit) {
                         ) { onDismiss() }
                         .padding(12.dp),
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )

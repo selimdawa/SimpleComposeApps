@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
@@ -70,13 +71,13 @@ fun BloggerItem(post: Post, onClick: () -> Unit) {
         ) {
             Text(
                 text = post.title ?: DATA.EMPTY,
-                color = Color.White,
+                color = White,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = Strings.publishInfo(post.authorName ?: DATA.EMPTY, formattedDate),
-                color = Color.White,
+                color = White,
                 fontSize = 14.sp
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -96,7 +97,7 @@ fun BloggerItem(post: Post, onClick: () -> Unit) {
                 }
                 Text(
                     text = description,
-                    color = Color.White,
+                    color = White,
                     fontSize = 14.sp,
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,

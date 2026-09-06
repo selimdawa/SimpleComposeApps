@@ -59,7 +59,7 @@ fun DashboardScreen(
                 )
             } else if (isError) {
                 Text(
-                    text = "Error loading countries",
+                    text = Strings.ERROR_LOADING_COUNTRIES,
                     modifier = Modifier.align(Alignment.Center),
                     color = COLOR_ERROR
                 )

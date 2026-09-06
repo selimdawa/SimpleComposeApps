@@ -49,8 +49,10 @@ import com.flatcode.simplecomposeapps.meals.viewmodel.MealDetailViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable
 fun MealDetailScreen(
@@ -102,7 +104,7 @@ fun MealDetailScreen(
                         .padding(top = 40.dp, start = 10.dp)
                         .size(35.dp)
                         .clip(CircleShape)
-                        .background(Color.Black.copy(alpha = 0.4f))
+                        .background(Dark.copy(alpha = 0.4f))
                         .align(Alignment.TopStart)
                 ) {
                     IconButton(
@@ -111,8 +113,8 @@ fun MealDetailScreen(
                     ) {
                         Icon(
                             imageVector = AppIcons.Back,
-                            contentDescription = "Back",
-                            tint = Color.White,
+                            contentDescription = Strings.BACK,
+                            tint = White,
                             modifier = Modifier.size(25.dp)
                         )
                     }
@@ -136,12 +138,12 @@ fun MealDetailScreen(
                             .offset(y = 28.dp),
                         shape = CircleShape,
                         containerColor = MC_TRACK,
-                        contentColor = Color.White
+                        contentColor = White
                     ) {
                         Icon(
                             imageVector = if (isFavorite != null) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = Color.White
+                            contentDescription = Strings.FAVORITE,
+                            tint = White
                         )
                     }
                 }
@@ -238,7 +240,7 @@ fun MealDetailScreen(
                         ) {
                             Icon(
                                 imageVector = AppIcons.Video,
-                                contentDescription = "YouTube",
+                                contentDescription = Strings.YOUTUBE,
                                 tint = MC_TRACK,
                                 modifier = Modifier.size(40.dp)
                             )
