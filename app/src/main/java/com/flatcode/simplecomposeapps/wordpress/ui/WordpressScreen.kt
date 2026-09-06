@@ -17,22 +17,20 @@ import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 
 
 @Composable
 fun WordpressScreen(
-    viewModel: WordpressViewModel,
-    onPostClick: (Int) -> Unit,
-    onFavoritesClick: () -> Unit
+    viewModel: WordpressViewModel, onPostClick: (Int) -> Unit, onFavoritesClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             ToolbarContentFav(
-                title = Strings.WORDPRESS_APP, onFavoriteClick = onFavoritesClick
+                title = DATA.WORDPRESS, onFavoriteClick = onFavoritesClick
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
@@ -51,8 +49,7 @@ fun WordpressScreen(
 
             if (uiState.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MC_TRACK
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
             }
         }

@@ -1,7 +1,6 @@
 package com.flatcode.simplecomposeapps.web
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.net.toUri
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
 import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
@@ -67,25 +67,25 @@ class WebAppActivity : ComponentActivity() {
     }
 
     private fun rateApp() {
-        val uri = Uri.parse("market://details?id=$packageName")
+        val uri = "market://details?id=$packageName".toUri()
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {
             startActivity(intent)
         } catch (_: Exception) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com")))
+            startActivity(Intent(Intent.ACTION_VIEW, "http://google.com".toUri()))
         }
     }
 
     private fun sendEmail() {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:${DATA.myEmail}")
+            data = "mailto:${DATA.myEmail}".toUri()
         }
         startActivity(intent)
     }
 
     private fun callPhone() {
         val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:${DATA.myMobileNumber}")
+            data = "tel:${DATA.myMobileNumber}".toUri()
         }
         startActivity(intent)
     }

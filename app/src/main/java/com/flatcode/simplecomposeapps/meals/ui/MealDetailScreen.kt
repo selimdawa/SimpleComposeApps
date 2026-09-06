@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.meals.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -41,6 +40,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -230,7 +230,7 @@ fun MealDetailScreen(
                     if (!m.strYoutube.isNullOrEmpty()) {
                         IconButton(
                             onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(m.strYoutube))
+                                val intent = Intent(Intent.ACTION_VIEW, m.strYoutube.toUri())
                                 context.startActivity(intent)
                             }, modifier = Modifier
                                 .align(Alignment.CenterHorizontally)

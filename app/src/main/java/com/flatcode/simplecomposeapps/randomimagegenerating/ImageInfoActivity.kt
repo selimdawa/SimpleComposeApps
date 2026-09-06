@@ -1,11 +1,11 @@
 package com.flatcode.simplecomposeapps.randomimagegenerating
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.randomimagegenerating.ui.ImageInfoScreen
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -39,7 +39,7 @@ class ImageInfoActivity : AppCompatActivity() {
                 onBack = { finish() },
                 onOpenUrl = { url ->
                     if (url.isNotEmpty()) {
-                        val browser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        val browser = Intent(Intent.ACTION_VIEW, url.toUri())
                         startActivity(browser)
                     }
                 }
