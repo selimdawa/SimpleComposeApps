@@ -23,7 +23,7 @@ import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
 import com.flatcode.simplecomposeapps.news.activity.NewsAppActivity
 import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
-import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratingActivity
+import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -58,7 +58,7 @@ class MainViewModel : ViewModel() {
             Main(
                 AppIcons.MultiDelete, DATA.MULTI_DELETE, counts[2], MultiDeleteActivity::class.java
             ),
-            Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], RandomImageGeneratingActivity::class.java),
+            Main(AppIcons.RandomImage, DATA.RANDOM_IMAGE, counts[3], RandomCatsImageActivity::class.java),
             Main(AppIcons.Blogger, DATA.BLOGGER, counts[4], BloggerAppActivity::class.java),
             Main(AppIcons.Joke, DATA.JOKE, counts[5], JokeAppActivity::class.java),
             Main(AppIcons.NewsMulti, DATA.NEWS, counts[6], NewsAppActivity::class.java),

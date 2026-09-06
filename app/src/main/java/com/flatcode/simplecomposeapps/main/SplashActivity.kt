@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
 import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -52,7 +53,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        openActivity(TodoNoteActivity::class.java, true)
+        openActivity(RandomCatsImageActivity::class.java, true)
     }
 
     companion object {

@@ -76,7 +76,7 @@ fun MultiDeleteTopAppBar(
                     Icon(
                         imageVector = AppIcons.Delete,
                         contentDescription = Strings.DELETE,
-                        tint = COLOR_ERROR,
+                        tint = COLOR_ON_BACKGROUND,
                         modifier = Modifier.size(24.dp)
                     )
                 }

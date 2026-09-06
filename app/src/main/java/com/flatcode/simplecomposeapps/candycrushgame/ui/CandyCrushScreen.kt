@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -104,7 +105,7 @@ fun ScoreCard(score: Int) {
             .padding(horizontal = 10.dp, vertical = 5.dp),
         shape = RoundedCornerShape(6.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0x9900ddff)
+            containerColor = MC_BG
         )
     ) {
         Row(

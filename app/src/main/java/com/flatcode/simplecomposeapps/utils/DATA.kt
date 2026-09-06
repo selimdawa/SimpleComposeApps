@@ -78,12 +78,11 @@ object DATA {
     const val DATA = "data"
     const val UNKNOWN = "Unknown"
 
-    //Shared
     //Main
     const val STOP_WATCH = "Stop Watch"
     const val CANDY_CRUSH = "Candy Crush Game"
     const val MULTI_DELETE = "Multiple Delete"
-    const val RANDOM_IMAGE = "Random Image Generating"
+    const val RANDOM_IMAGE = "Random Cats Image"
     const val BLOGGER = "Blogger"
     const val JOKE = "Joke"
     const val NEWS = "News"
@@ -140,6 +139,7 @@ object DATA {
 
     //API & Url
     var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search"
+    //var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search?has_breeds=1"
     var NEWS_API = "07f40de92d3644908496e8f9677ee838"
     var JOKE_URL = "https://v2.jokeapi.dev/joke/"
 

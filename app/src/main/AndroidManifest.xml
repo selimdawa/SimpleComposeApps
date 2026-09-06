@@ -172,11 +172,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".randomimagegenerating.RandomImageGeneratingActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".randomimagegenerating.ImageInfoActivity"
+            android:name=".randomcatsimage.RandomCatsImageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

@@ -71,7 +71,7 @@ fun TasksScreen(
                 is TasksViewModel.TasksEvent.NavigateToEditTaskScreen -> onEditTask(event.task)
                 is TasksViewModel.TasksEvent.ShowUndoDeleteTaskMessage -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = Strings.MSG_TASK_DELETED, actionLabel = Strings.ACTION_UNDO
+                        message = Strings.MSG_TASK_DELETED, actionLabel = Strings.UNDO
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         viewModel.onUndoDeleteClick(event.task)

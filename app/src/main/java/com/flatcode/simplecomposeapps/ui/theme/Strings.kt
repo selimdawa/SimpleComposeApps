@@ -119,6 +119,7 @@ object Strings {
     const val EMPTY = "Empty"
     const val _0 = "0"
     const val IMAGE_INFO = "Image Info"
+    const val DESCRIPTION = "Description"
     const val TEMPERAMENT = "Temperament"
     const val WIKIPEDIA = "Wikipedia"
     const val MORE_INFO = "More Info"
