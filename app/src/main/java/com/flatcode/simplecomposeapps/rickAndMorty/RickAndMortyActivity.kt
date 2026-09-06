@@ -26,7 +26,6 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickCharactersScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickEpisodesScreen
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.RickLocationsScreen
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
@@ -57,8 +56,8 @@ class RickAndMortyActivity : AppCompatActivity() {
             }, containerColor = COLOR_ON_BACKGROUND
             ) { paddingValues ->
                 RickNavHost(
-                    navController = navController,
-                    modifier = Modifier.padding(paddingValues))
+                    navController = navController, modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     }
@@ -66,30 +65,24 @@ class RickAndMortyActivity : AppCompatActivity() {
 
 @Composable
 fun RickBottomNavigation(navController: NavHostController) {
-    val items = listOf(
-        Triple(Strings.CHARACTER, Strings.CHARACTER, AppIcons.RickAndMorty),
-        Triple(Strings.LOCATION, Strings.LOCATION, AppIcons.Location),
-        Triple(Strings.EPISODE, Strings.EPISODE, AppIcons.EventNote)
-    )
-
     NavigationBar(
         containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        items.forEach { (route, label, icon) ->
+        DATA.RICK_NAV.forEach { item ->
             NavigationBarItem(
                 icon = {
                 Icon(
-                    icon, contentDescription = label, modifier = Modifier.size(24.dp)
+                    item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
                 )
             },
-                label = { Text(label) },
-                selected = currentDestination?.hierarchy?.any { it.route == route } == true,
+                label = { Text(item.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
-                    navController.navigate(route) {
-                        popUpTo(Strings.CHARACTER) { saveState = true }
+                    navController.navigate(item.route) {
+                        popUpTo(DATA.RICK_NAV[0].route) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -112,16 +105,17 @@ fun RickNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Strings.CHARACTER,
-        modifier = modifier) {
-        composable(Strings.CHARACTER) {
-            RickCharactersScreen()
-        }
-        composable(Strings.LOCATION) {
-            RickLocationsScreen()
-        }
-        composable(Strings.EPISODE) {
-            RickEpisodesScreen()
+        startDestination = DATA.RICK_NAV[0].route,
+        modifier = modifier
+    ) {
+        DATA.RICK_NAV.forEach { item ->
+            composable(item.route) {
+                when (item.route) {
+                    Strings.CHARACTER -> RickCharactersScreen()
+                    Strings.LOCATION -> RickLocationsScreen()
+                    Strings.EPISODE -> RickEpisodesScreen()
+                }
+            }
         }
     }
 }

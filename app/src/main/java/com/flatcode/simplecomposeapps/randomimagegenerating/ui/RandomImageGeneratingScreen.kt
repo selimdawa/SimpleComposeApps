@@ -17,7 +17,7 @@ import com.flatcode.simplecomposeapps.randomimagegenerating.RandomImageGeneratin
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun RandomImageGeneratingScreen(
@@ -38,7 +38,7 @@ fun RandomImageGeneratingScreen(
         Scaffold(
             modifier = Modifier.fillMaxSize(), topBar = {
                 ToolbarContent(
-                    title = Strings.RANDOM_IMAGE_GENERATING,
+                    title = DATA.RANDOM_IMAGE,
                     leftIcon = null,
                     includeStatusBarsPadding = true
                 )

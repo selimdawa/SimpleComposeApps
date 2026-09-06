@@ -26,7 +26,7 @@ import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun MovieHomeScreen(
@@ -39,7 +39,7 @@ fun MovieHomeScreen(
     Scaffold(
         topBar = {
             ToolbarContentFav(
-                title = Strings.MOVIES,
+                title = DATA.MOVIE,
                 onFavoriteClick = onFavoriteClick
             )
         },

@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.dictionary.data.repository.DictionaryRepository
 import com.flatcode.simplecomposeapps.dictionary.utils.UiState
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +31,7 @@ class DictionaryViewModel @Inject constructor(
                     _uiState.value = UiState.Error("No definition found")
                 }
             } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message ?: "An unknown error occurred")
+                _uiState.value = UiState.Error(e.message ?: Strings.UNKNOWN_ERROR)
             }
         }
     }

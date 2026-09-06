@@ -2,6 +2,7 @@ package com.flatcode.simplecomposeapps.crypto.base
 
 import com.flatcode.simplecomposeapps.crypto.model.errorResponse.ErrorResponse
 import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.google.gson.Gson
 import retrofit2.Response
 
@@ -18,11 +19,11 @@ abstract class BaseRepository {
 
             val errorBody = response.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-            val errorMessage = errorResponse?.status?.errorMessage ?: "An unknown error occurred"
+            val errorMessage = errorResponse?.status?.errorMessage ?: Strings.UNKNOWN_ERROR
 
             return NetworkResult.Error(errorMessage)
         } catch (e: Exception) {
-            return NetworkResult.Error(e.message ?: "An unknown error occurred")
+            return NetworkResult.Error(e.message ?: Strings.UNKNOWN_ERROR)
         }
     }
 }

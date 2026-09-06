@@ -17,6 +17,7 @@ import javax.inject.Singleton
 enum class SortOrder { BY_NAME, BY_DATE }
 
 data class FilterPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean)
+data class FilterPreferencesNotes(val sortOrder: SortOrder)
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
@@ -40,9 +41,30 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
             FilterPreferences(sortOrder, hideCompleted)
         }
 
+    val notesPreferencesFlow = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            val sortOrderNotes = SortOrder.valueOf(
+                preferences[PreferencesKeys.SORT_ORDER_NOTES] ?: SortOrder.BY_DATE.name
+            )
+            FilterPreferencesNotes(sortOrderNotes)
+        }
+
     suspend fun updateSortOrder(sortOrder: SortOrder) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
+        }
+    }
+
+    suspend fun updateSortOrderNotes(sortOrder: SortOrder) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SORT_ORDER_NOTES] = sortOrder.name
         }
     }
 
@@ -54,6 +76,7 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
 
     private object PreferencesKeys {
         val SORT_ORDER = stringPreferencesKey("sort_order")
+        val SORT_ORDER_NOTES = stringPreferencesKey("sort_order_notes")
         val HIDE_COMPLETED = androidx.datastore.preferences.core.booleanPreferencesKey("hide_completed")
     }
 }

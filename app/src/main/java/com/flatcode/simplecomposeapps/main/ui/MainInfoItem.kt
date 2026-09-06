@@ -25,6 +25,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun MainInfoItem(item: MainInfo) {
@@ -64,16 +65,16 @@ fun MainInfoItem(item: MainInfo) {
             }
 
             FeatureStatusRow(
-                label = Strings.DAGGER_HILT, status = item.hilt == 1, color = COLOR_ERROR
+                label = DATA.DAGGER_HILT, status = item.hilt == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.NAVIGATION, status = item.navigation == 1, color = COLOR_ERROR
+                label = DATA.NAVIGATION, status = item.navigation == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.ROOM, status = item.room == 1, color = COLOR_ERROR
+                label = DATA.ROOM, status = item.room == 1, color = COLOR_ERROR
             )
             FeatureStatusRow(
-                label = Strings.COROUTINES, status = item.coroutines == 1, color = COLOR_ERROR
+                label = DATA.COROUTINES, status = item.coroutines == 1, color = COLOR_ERROR
             )
         }
     }

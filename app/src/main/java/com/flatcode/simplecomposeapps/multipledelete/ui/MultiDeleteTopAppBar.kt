@@ -22,6 +22,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun MultiDeleteTopAppBar(
@@ -60,7 +61,7 @@ fun MultiDeleteTopAppBar(
 
             // Title
             Text(
-                text = if (isSelectionMode) Strings.selectedPlaceholder(selectedCount) else "Multi Delete",
+                text = if (isSelectionMode) Strings.selectedPlaceholder(selectedCount) else DATA.MULTI_DELETE,
                 color = COLOR_ERROR,
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Bold,
@@ -74,7 +75,7 @@ fun MultiDeleteTopAppBar(
                 ) {
                     Icon(
                         imageVector = AppIcons.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = Strings.DELETE,
                         tint = COLOR_ERROR,
                         modifier = Modifier.size(24.dp)
                     )
@@ -87,7 +88,7 @@ fun MultiDeleteTopAppBar(
                 ) {
                     Icon(
                         imageVector = AppIcons.SelectAll,
-                        contentDescription = "Select All",
+                        contentDescription = Strings.SELECT_ALL,
                         tint = COLOR_ERROR,
                         modifier = Modifier.size(24.dp)
                     )

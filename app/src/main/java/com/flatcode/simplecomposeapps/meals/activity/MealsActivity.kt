@@ -28,12 +28,12 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.meals.ui.CategoriesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.FavoritesMealsScreen
 import com.flatcode.simplecomposeapps.meals.ui.HomeMealsScreen
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
@@ -65,30 +65,24 @@ class MealsActivity : AppCompatActivity() {
 
 @Composable
 fun MealsBottomNavigation(navController: NavHostController) {
-    val items = listOf(
-        Triple("home", "Home", AppIcons.Home),
-        Triple("favorites", "Favorites", AppIcons.Favorite),
-        Triple("categories", "Categories", AppIcons.Category)
-    )
-
     NavigationBar(
         containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        items.forEach { (route, label, icon) ->
+        DATA.MEALS_NAV.forEach { item ->
             NavigationBarItem(
                 icon = {
-                Icon(
-                    icon, contentDescription = label, modifier = Modifier.size(24.dp)
-                )
-            },
-                label = { Text(label) },
-                selected = currentDestination?.hierarchy?.any { it.route == route } == true,
+                    Icon(
+                        item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
+                    )
+                },
+                label = { Text(item.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
-                    navController.navigate(route) {
-                        popUpTo("home") { saveState = true }
+                    navController.navigate(item.route) {
+                        popUpTo(DATA.MEALS_NAV[0].route) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -111,42 +105,44 @@ fun MealsNavHost(
 ) {
     val context = LocalContext.current
     NavHost(
-        navController = navController, startDestination = "home", modifier = modifier
+        navController = navController,
+        startDestination = DATA.MEALS_NAV[0].route,
+        modifier = modifier
     ) {
-        composable("home") {
-            HomeMealsScreen(onMealClick = { id, name, thumb ->
-                val intent = Intent(context, MealDetailsActivity::class.java).apply {
-                    putExtra(MealDetailsActivity.MEAL_ID, id)
-                    putExtra(MealDetailsActivity.MEAL_NAME, name)
-                    putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
+        DATA.MEALS_NAV.forEach { item ->
+            composable(item.route) {
+                when (item.route) {
+                    Strings.HOME -> HomeMealsScreen(onMealClick = { id, name, thumb ->
+                        val intent = Intent(context, MealDetailsActivity::class.java).apply {
+                            putExtra(MealDetailsActivity.MEAL_ID, id)
+                            putExtra(MealDetailsActivity.MEAL_NAME, name)
+                            putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
+                        }
+                        context.startActivity(intent)
+                    }, onCategoryClick = { categoryName ->
+                        val intent = Intent(context, CategoryMealsActivity::class.java).apply {
+                            putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
+                        }
+                        context.startActivity(intent)
+                    })
+                    Strings.FAVORITES -> FavoritesMealsScreen(
+                        onMealClick = { id, name, thumb ->
+                            val intent = Intent(context, MealDetailsActivity::class.java).apply {
+                                putExtra(MealDetailsActivity.MEAL_ID, id)
+                                putExtra(MealDetailsActivity.MEAL_NAME, name)
+                                putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
+                            }
+                            context.startActivity(intent)
+                        })
+                    Strings.CATEGORIES -> CategoriesMealsScreen(
+                        onCategoryClick = { categoryName ->
+                            val intent = Intent(context, CategoryMealsActivity::class.java).apply {
+                                putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
+                            }
+                            context.startActivity(intent)
+                        })
                 }
-                context.startActivity(intent)
-            }, onCategoryClick = { categoryName ->
-                val intent = Intent(context, CategoryMealsActivity::class.java).apply {
-                    putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
-                }
-                context.startActivity(intent)
-            })
-        }
-        composable("favorites") {
-            FavoritesMealsScreen(
-                onMealClick = { id, name, thumb ->
-                    val intent = Intent(context, MealDetailsActivity::class.java).apply {
-                        putExtra(MealDetailsActivity.MEAL_ID, id)
-                        putExtra(MealDetailsActivity.MEAL_NAME, name)
-                        putExtra(MealDetailsActivity.MEAL_THUMB, thumb)
-                    }
-                    context.startActivity(intent)
-                })
-        }
-        composable("categories") {
-            CategoriesMealsScreen(
-                onCategoryClick = { categoryName ->
-                    val intent = Intent(context, CategoryMealsActivity::class.java).apply {
-                        putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)
-                    }
-                    context.startActivity(intent)
-                })
+            }
         }
     }
 }

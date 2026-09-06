@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.dogs.ui.DogsScreen
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -25,7 +26,7 @@ class DogsActivity : AppCompatActivity() {
 
         setContent {
             LaunchedEffect(Unit) {
-                viewModel.setBreedsList(Strings.BREEDS_LIST)
+                viewModel.setBreedsList(DATA.BREEDS_LIST)
             }
 
             DogsScreen(

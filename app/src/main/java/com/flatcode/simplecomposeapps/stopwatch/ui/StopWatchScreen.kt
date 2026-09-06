@@ -25,6 +25,7 @@ import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun StopWatchScreen(
@@ -35,7 +36,7 @@ fun StopWatchScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
             ToolbarContent(
-                title = Strings.STOP_WATCH, hasBack = false
+                title = DATA.STOP_WATCH, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

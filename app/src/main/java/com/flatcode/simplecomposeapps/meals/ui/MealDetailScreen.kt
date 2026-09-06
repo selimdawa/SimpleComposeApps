@@ -50,6 +50,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun MealDetailScreen(
@@ -123,10 +124,10 @@ fun MealDetailScreen(
                         onClick = {
                             if (isFavorite == null) {
                                 viewModel.insertMeal(meal!!)
-                                Toast.makeText(context, "Meal saved", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, Strings.MEAL_SAVED, Toast.LENGTH_SHORT).show()
                             } else {
                                 viewModel.deleteMeal(meal!!)
-                                Toast.makeText(context, "Meal removed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, Strings.MEAL_REMOVED, Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier
@@ -178,7 +179,7 @@ fun MealDetailScreen(
                             )
                             Spacer(modifier = Modifier.width(5.dp))
                             Text(
-                                text = m.strCategory ?: "",
+                                text = Strings.categoryPlaceholder(m.strCategory ?: ""),
                                 color = MC_TRACK,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp
@@ -197,7 +198,7 @@ fun MealDetailScreen(
                             )
                             Spacer(modifier = Modifier.width(5.dp))
                             Text(
-                                text = m.strArea ?: "",
+                                text = Strings.areaPlaceholder(m.strArea ?: ""),
                                 color = MC_TRACK,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp
@@ -208,7 +209,7 @@ fun MealDetailScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
-                        text = "Instructions",
+                        text = Strings.INSTRUCTIONS,
                         color = COLOR_ERROR,
                         fontSize = 21.sp,
                         fontWeight = FontWeight.Bold

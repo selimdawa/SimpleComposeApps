@@ -9,6 +9,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.joke.model.Joke
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import org.json.JSONException
 
@@ -26,7 +27,7 @@ class JokeViewModel(application: Application) : AndroidViewModel(application) {
     private val _selectedCategory = mutableStateOf(value = "Any")
     val selectedCategory: State<String> = _selectedCategory
 
-    val categories = listOf("Any", "Programming", "Dark", "Spooky", "Misc", "Pun", "Christmas")
+    val categories = listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
 
     init {
         getJokes("Any")
@@ -36,7 +37,7 @@ class JokeViewModel(application: Application) : AndroidViewModel(application) {
         _selectedCategory.value = category
         // Mapping as per original code logic if needed, but JokeAPI supports all now.
         // The original code had: val endpoint = if (currentCategory == "Pun") "Programming" else currentCategory
-        val endpoint = if (category == "Pun") "Programming" else category
+        val endpoint = if (category == "Pun") Strings.PROGRAMMING else category
         getJokes(endpoint)
     }
 

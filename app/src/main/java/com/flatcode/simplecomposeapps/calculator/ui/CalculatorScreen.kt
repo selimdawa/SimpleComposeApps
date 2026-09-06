@@ -121,7 +121,7 @@ fun CalculatorScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 CalculatorKey(
-                    text = Strings.CLEAR,
+                    text = DATA.CLEAR,
                     color = COLOR_ERROR,
                     contentColor = COLOR_ON_BACKGROUND,
                     modifier = Modifier.weight(2f),
@@ -136,7 +136,7 @@ fun CalculatorScreen(
                     onClick = { viewModel.deleteLast() }
                 )
                 CalculatorKey(
-                    text = Strings.DIVIDE,
+                    text = DATA.DIVIDE,
                     color = COLOR_ERROR,
                     contentColor = COLOR_ON_BACKGROUND,
                     modifier = Modifier.weight(1f),
@@ -154,12 +154,12 @@ fun CalculatorScreen(
                 CalculatorKey(text = DATA.EIGHT, color = MC_TRACK, modifier = Modifier.weight(1f), fontSize = 26, onClick = { viewModel.appendValue(DATA.EIGHT) })
                 CalculatorKey(text = DATA.NINE, color = MC_TRACK, modifier = Modifier.weight(1f), fontSize = 26, onClick = { viewModel.appendValue(DATA.NINE) })
                 CalculatorKey(
-                    text = Strings.MULTIPLY,
+                    text = DATA.MULTIPLY,
                     color = COLOR_ERROR,
                     contentColor = COLOR_ON_BACKGROUND,
                     modifier = Modifier.weight(1f),
                     fontSize = 28,
-                    onClick = { viewModel.appendValue(DATA.MULTIPLY) }
+                    onClick = { viewModel.appendValue(DATA.MUL) }
                 )
             }
 
@@ -210,7 +210,7 @@ fun CalculatorScreen(
                     onClick = { viewModel.appendValue(DATA.ZERO) }
                 )
                 CalculatorKey(
-                    text = Strings.DOT,
+                    text = DATA.DOT,
                     color = COLOR_ERROR,
                     contentColor = COLOR_ON_BACKGROUND,
                     modifier = Modifier.weight(1f),
@@ -218,7 +218,7 @@ fun CalculatorScreen(
                     onClick = { viewModel.appendValue(DATA.DOT) }
                 )
                 CalculatorKey(
-                    text = Strings.EQUALS,
+                    text = DATA.EQUALS,
                     color = COLOR_ERROR,
                     contentColor = COLOR_ON_BACKGROUND,
                     modifier = Modifier.weight(1f),

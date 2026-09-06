@@ -6,15 +6,16 @@ import android.os.SystemClock
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.flatcode.simplecomposeapps.utils.DATA
 import java.util.Locale
 
 class StopWatchViewModel : ViewModel() {
 
     val timeDisplay: State<String>
-        field = mutableStateOf("00:00:00")
+        field = mutableStateOf(DATA.ZERO_TIME)
 
     val lastTime: State<String>
-        field = mutableStateOf("00:00:00")
+        field = mutableStateOf(DATA.ZERO_TIME)
 
     val isRunning: State<Boolean>
         field = mutableStateOf(false)
@@ -64,7 +65,7 @@ class StopWatchViewModel : ViewModel() {
             sec = 0
             min = 0
             milliSec = 0
-            timeDisplay.value = "00:00:00"
+            timeDisplay.value = DATA.ZERO_TIME
         }
     }
 

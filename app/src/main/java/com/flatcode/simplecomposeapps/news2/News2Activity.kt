@@ -25,12 +25,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.news2.ui.EverythingScreen
 import com.flatcode.simplecomposeapps.news2.ui.TopArticlesScreen
-import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
@@ -68,31 +68,26 @@ class News2Activity : AppCompatActivity() {
 
 @Composable
 fun NewsBottomNavigation(navController: NavHostController) {
-    val items = listOf(
-        Triple("everything", "Everything", AppIcons.MultiDelete),
-        Triple("topArticles", "Top Articles", AppIcons.News)
-    )
-
     NavigationBar(
         containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        items.forEach { (route, label, icon) ->
+        DATA.NEWS_NAV.forEach { item ->
             NavigationBarItem(
                 icon = {
                     Icon(
-                        icon,
-                        contentDescription = label,
+                        item.icon,
+                        contentDescription = item.label,
                         modifier = Modifier.size(24.dp)
                     )
                 },
-                label = { Text(label) },
-                selected = currentDestination?.hierarchy?.any { it.route == route } == true,
+                label = { Text(item.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
-                    navController.navigate(route) {
-                        popUpTo("everything") { saveState = true }
+                    navController.navigate(item.route) {
+                        popUpTo(DATA.NEWS_NAV[0].route) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -115,14 +110,16 @@ fun NewsNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "everything",
+        startDestination = DATA.NEWS_NAV[0].route,
         modifier = modifier
     ) {
-        composable("everything") {
-            EverythingScreen()
-        }
-        composable("topArticles") {
-            TopArticlesScreen()
+        DATA.NEWS_NAV.forEach { item ->
+            composable(item.route) {
+                when (item.route) {
+                    Strings.EVERYTHING -> EverythingScreen()
+                    Strings.TOP_ARTICLES -> TopArticlesScreen()
+                }
+            }
         }
     }
 }

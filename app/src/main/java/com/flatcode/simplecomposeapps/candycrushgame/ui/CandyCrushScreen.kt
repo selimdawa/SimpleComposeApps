@@ -32,6 +32,7 @@ import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CandyCrushScreen(
@@ -51,7 +52,7 @@ fun CandyCrushScreen(
         Scaffold(
             containerColor = Color.Transparent, topBar = {
                 ToolbarContent(
-                    title = Strings.CANDY_CRUSH_GAME, hasBack = false
+                    title = DATA.CANDY_CRUSH, hasBack = false
                 )
             }) { paddingValues ->
             Column(

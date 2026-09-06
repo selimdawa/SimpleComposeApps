@@ -1,16 +1,84 @@
 package com.flatcode.simplecomposeapps.utils
 
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+
 @Suppress("SpellCheckingInspection")
 object DATA {
+
+    data class NavItem(
+        val route: String,
+        val label: String,
+        val icon: ImageVector
+    )
+
+    val NEWS_NAV = listOf(
+        NavItem(Strings.EVERYTHING, Strings.EVERYTHING, AppIcons.MultiDelete),
+        NavItem(Strings.TOP_ARTICLES, Strings.TOP_ARTICLES, AppIcons.News)
+    )
+
+    val MEALS_NAV = listOf(
+        NavItem(Strings.HOME, Strings.HOME, AppIcons.Home),
+        NavItem(Strings.FAVORITES, Strings.FAVORITES, AppIcons.Favorite),
+        NavItem(Strings.CATEGORIES, Strings.CATEGORIES, AppIcons.Category)
+    )
+
+    val RICK_NAV = listOf(
+        NavItem(Strings.CHARACTER, Strings.CHARACTER, AppIcons.RickAndMorty),
+        NavItem(Strings.LOCATION, Strings.LOCATION, AppIcons.Location),
+        NavItem(Strings.EPISODE, Strings.EPISODE, AppIcons.EventNote)
+    )
+
+    val TODO_NAV = listOf(
+        NavItem(Strings.TASKS, Strings.TASKS, AppIcons.TodoCheck),
+        NavItem(Strings.NOTES, Strings.NOTES, AppIcons.TodoNote)
+    )
+
+    @Suppress("SpellCheckingInspection")
+    val BREEDS_LIST = listOf(
+        "Affenpinscher", "African", "Airedale", "Akita", "Appenzeller", "Australian Shepherd",
+        "Basenji", "Beagle", "Bluetick", "Borzoi", "Bouvier", "Boxer", "Brabancon", "Briard",
+        "Buhund Norwegian", "Bulldog Boston", "Bulldog English", "Bulldog French",
+        "Bullterrier Staffordshire", "Cattledog Australian", "Chihuahua", "Chow", "Clumber",
+        "Cockapoo", "Collie Border", "Coonhound", "Corgi Cardigan", "Cotondetulear", "Dachshund",
+        "Dalmatian", "Dane Great", "Deerhound Scottish", "Dhole", "Dingo", "Doberman",
+        "Elkhound Norwegian", "Entlebucher", "Eskimo", "Finnish Lapphund", "Frise Bichon",
+        "Germanshepherd", "Golden", "Greyhound Italian", "Groenendael", "Havanese", "Hound Afghan",
+        "Hound Basset", "Hound Blood", "Hound English", "Hound Ibizan", "Hound Plott",
+        "Hound Walker", "Husky", "Keeshond", "Kelpie", "Komondor", "Kuvasz", "Labradoodle",
+        "Labrador", "Leonberg", "Lhasa", "Malamute", "Malinois", "Maltese", "Mastiff Bull",
+        "Mastiff English", "Mastiff Tibetan", "Mexicanhairless", "Mix", "Mountain Bernese",
+        "Mountain Swiss", "Newfoundland", "Otterhound", "Ovcharka Caucasian", "Papillon",
+        "Pekinese", "Pembroke", "Pinscher Miniature", "Pitbull", "Pointer German",
+        "Pointer Germanlonghair", "Pomeranian", "Poodle Medium", "Poodle Miniature",
+        "Poodle Standard", "Poodle Toy", "Pug", "Puggle", "Pyrenees", "Redbone",
+        "Retriever Chesapeake", "Retriever Curly", "Retriever Flatcoated", "Retriever Golden",
+        "Ridgeback Rhodesian", "Rottweiler", "Saluki", "Samoyed", "Schipperke", "Schnauzer Giant",
+        "Schnauzer Miniature", "Segugio Italian", "Setter English", "Setter Gordon",
+        "Setter Irish", "Sharpei", "Sheepdog English", "Sheepdog Shetland", "Shiba", "Shihtzu",
+        "Spaniel Blenheim", "Spaniel Brittany", "Spaniel Cocker", "Spaniel Irish",
+        "Spaniel Japanese", "Spaniel Sussex", "Spaniel Welsh", "Springer English", "Stbernard",
+        "Terrier America", "Terrier Australia", "Terrier Bedlington", "Terrier Borde",
+        "Terrier Cairn", "Terrier Dandi", "Terrier Fox", "Terrier Irish", "Terrier Kerryblue",
+        "Terrier Lakeland", "Terrier Norfolk", "Terrier Norwich", "Terrier Patterdale",
+        "Terrier Russell", "Terrier Scottish", "Terrier Sealyham", "Terrier Silky",
+        "Terrier Tibetan", "Terrier Toy", "Terrier Welsh", "Terrier Westhighland",
+        "Terrier Wheaten", "Terrier Yorkshire", "Tervuren", "Vizsla", "Waterdog Spanis",
+        "Weimaraner", "Whippet", "Wolfhound Irish"
+    )
+
+    val MULTI_DELETE_VALUES = listOf(
+        "One", "Two", "Three", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"
+    )
+
     //Database
     const val EMPTY = ""
     const val DATA = "data"
     const val UNKNOWN = "Unknown"
-    var searchStatus = false
 
     //Shared
-    var FIRST_INSTALL = "firstInstall"
-
     //Main
     const val STOP_WATCH = "Stop Watch"
     const val CANDY_CRUSH = "Candy Crush Game"
@@ -38,11 +106,18 @@ object DATA {
     const val TODO_NOTE = "TODO-Note"
     const val STOCK_MARKET = "Stock Market"
 
+    const val ADD_RESULT_OK = 1
+    const val EDIT_RESULT_OK = 2
+
     //Class Name
     const val COUNTRY_DETAILS = "Country Details"
     const val CRYPTO_DETAILS = "Crypto Details"
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
-    const val DETAILS_POKE = "Pokémon Details"
+    const val DAGGER_HILT = "Dagger-Hilt :"
+    const val NAVIGATION = "Navigation :"
+    const val ROOM = "Room :"
+    const val COROUTINES = "Coroutines :"
+    const val ZERO_TIME = "00:00:00"
 
     //Blogger
     const val BLOGGER_API = "AIzaSyDAq5n9ShBngyuSoWrFBnuena94qPm2Gk0" // API your blogger
@@ -98,13 +173,14 @@ object DATA {
     const val NINE = "9"
     const val DOT = "."
     const val DIVIDE = "/"
-    const val MULTIPLY = "*"
+    const val MULTIPLY = "X"
+    const val MUL = "*"
     const val MINUS = "-"
     const val PLUS = "+"
+    const val CLEAR = "C"
+    const val EQUALS = "="
 
     //Dictionary
-    const val DICTIONARY_KEY = "WORD_DEFINITION"
-    const val SHORT_DEF = "shortdef"
     const val DICTIONARY_API_KEY = "a13b6fd3-80c2-44de-a1a4-d40b14184662"
     const val DICTIONARY_BASIC_URL =
         "https://www.dictionaryapi.com/api/v3/references/learners/json/"
@@ -120,7 +196,6 @@ object DATA {
     const val INFO_CRYPTO = "v2/cryptocurrency/info"
 
     //Rick & Morty
-    const val ALIVE = "Alive"
     const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
 
     //Country
@@ -139,7 +214,6 @@ object DATA {
     const val POPULAR_MOVIES =
         "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
     const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
-    const val IMAGE_MOVIE_BASIC = "https://image.tmdb.org/t/p/w185/"
 
     //News
     const val BASE_URL_NEWS = "https://newsapi.org/v2/"
@@ -152,7 +226,6 @@ object DATA {
 
     //Pop
     const val FILE_POP = "funko_pops.json"
-    const val IMAGE_POP = "https://www.vectorkhazana.com/assets/images/products/Funko_Pup.png"
 
     //Weather
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
