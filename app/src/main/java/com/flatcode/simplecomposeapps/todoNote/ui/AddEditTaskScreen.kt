@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -22,17 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.AddEditTaskViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun AddEditTaskScreen(
-    onBack: () -> Unit,
+    onBack: (Int?) -> Unit,
     viewModel: AddEditTaskViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
         viewModel.addEditTaskEvent.collect { event ->
             if (event is AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult) {
-                onBack()
+                onBack(event.result)
             }
         }
     }
@@ -40,8 +44,8 @@ fun AddEditTaskScreen(
     Scaffold(
         topBar = {
             TodoTopAppBar(
-                title = if (viewModel.task != null) "Edit Task" else "New Task",
-                onBack = onBack
+                title = if (viewModel.task != null) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
+                onBack = { onBack(null) }
             )
         },
         floatingActionButton = {
@@ -50,7 +54,7 @@ fun AddEditTaskScreen(
                 containerColor = Color(0xFF339999),
                 contentColor = Color.White
             ) {
-                Icon(imageVector = AppIcons.Check, contentDescription = "Save Task")
+                Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
             }
         },
         containerColor = COLOR_ON_BACKGROUND
@@ -65,8 +69,8 @@ fun AddEditTaskScreen(
                 value = viewModel.taskName,
                 onValueChange = { viewModel.taskName = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Task name", color = Color.Gray) },
-                label = { Text("Task name") }
+                placeholder = { Text(Strings.NAME.replace(" :", ""), color = Color.Gray) },
+                label = { Text(Strings.NAME.replace(" :", "")) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -74,9 +78,14 @@ fun AddEditTaskScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = viewModel.taskImportant,
-                    onCheckedChange = { viewModel.taskImportant = it }
+                    onCheckedChange = { viewModel.taskImportant = it },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = COLOR_ERROR,
+                        uncheckedColor = COLOR_ERROR,
+                        checkmarkColor = COLOR_ON_BACKGROUND
+                    )
                 )
-                Text(text = "Important Task", color = Color.White)
+                Text(text = Strings.IMPORTANT_TASK, color = Color.White)
             }
         }
     }

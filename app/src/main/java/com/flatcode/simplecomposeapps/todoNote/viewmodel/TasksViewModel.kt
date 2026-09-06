@@ -1,34 +1,38 @@
 package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.PreferencesManager
 import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
 import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TasksViewModel @Inject constructor(
     private val taskDao: TaskDao,
-    private val preferencesManager: PreferencesManager
+    private val preferencesManager: PreferencesManager,
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
-    val searchQuery = MutableLiveData("")
-
+    val searchQuery = state.getLiveData("searchQuery", "")
     val preferencesFlow = preferencesManager.preferencesFlow
 
-    private val _tasksEvent = MutableSharedFlow<TasksEvent>()
-    val tasksEvent = _tasksEvent.asSharedFlow()
+    private val taskEventChannel = Channel<TasksEvent>()
+    val tasksEvent = taskEventChannel.receiveAsFlow()
 
     private val tasksFlow = combine(
         searchQuery.asFlow(),
@@ -36,7 +40,7 @@ class TasksViewModel @Inject constructor(
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
-        taskDao.getTasks(query ?: "", filterPreferences.sortOrder, filterPreferences.hideCompleted)
+        taskDao.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
     }
 
     val tasks = tasksFlow.asLiveData()
@@ -50,7 +54,7 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onTaskSelected(task: Task) = viewModelScope.launch {
-        _tasksEvent.emit(TasksEvent.NavigateToEditTaskScreen(task))
+        taskEventChannel.send(TasksEvent.NavigateToEditTaskScreen(task))
     }
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
@@ -59,7 +63,7 @@ class TasksViewModel @Inject constructor(
 
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
         taskDao.delete(task)
-        _tasksEvent.emit(TasksEvent.ShowUndoDeleteTaskMessage(task))
+        taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(task))
     }
 
     fun onUndoDeleteClick(task: Task) = viewModelScope.launch {
@@ -67,21 +71,29 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onAddNewTaskClick() = viewModelScope.launch {
-        _tasksEvent.emit(TasksEvent.NavigateToAddTaskScreen)
+        taskEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
-    fun onConfirmClick() = viewModelScope.launch {
+    fun onDeleteAllCompletedClick() = viewModelScope.launch {
+        taskEventChannel.send(TasksEvent.NavigateToDeleteAllCompletedTasksScreen)
+    }
+
+    fun onConfirmDeleteAllCompletedClick() = viewModelScope.launch {
         taskDao.deleteCompletedTasks()
+    }
+
+    fun onAddEditResult(result: Int) = viewModelScope.launch {
+        when (result) {
+            DATA.ADD_RESULT_OK -> taskEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(Strings.MSG_TASK_ADDED))
+            DATA.EDIT_RESULT_OK -> taskEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(Strings.MSG_TASK_UPDATED))
+        }
     }
 
     sealed class TasksEvent {
         data object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
-    }
-
-    private fun <T> MutableLiveData<T>.asFlow() = MutableStateFlow(value).apply {
-        // Simple manual bridge for LiveData to Flow if needed, but in Compose we often use collectAsState on Flow directly.
-        // Keeping it similar to original for now.
+        data class ShowTaskSavedConfirmationMessage(val msg: String) : TasksEvent()
+        data object NavigateToDeleteAllCompletedTasksScreen : TasksEvent()
     }
 }

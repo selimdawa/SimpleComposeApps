@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -29,9 +30,12 @@ import com.flatcode.simplecomposeapps.todoNote.ui.AddEditNoteScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.TasksScreen
-import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -48,13 +52,15 @@ class TodoNoteActivity : AppCompatActivity() {
             Scaffold(
                 bottomBar = {
                     TodoBottomNavigation(navController = navController)
-                }
-            ) { paddingValues ->
+                }) { paddingValues ->
                 TodoNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() }
-                )
+                    modifier = Modifier.padding(
+                        bottom = paddingValues.calculateBottomPadding(),
+                        start = paddingValues.calculateStartPadding(LocalLayoutDirection.current),
+                        end = paddingValues.calculateEndPadding(LocalLayoutDirection.current)
+                    ),
+                    onBack = { finish() })
             }
         }
     }
@@ -62,26 +68,24 @@ class TodoNoteActivity : AppCompatActivity() {
 
 @Composable
 fun TodoBottomNavigation(navController: NavHostController) {
-    val items = listOf(
-        Triple("tasks", "Tasks", AppIcons.TodoCheck),
-        Triple("notes", "Notes", AppIcons.TodoNote)
-    )
-
     NavigationBar(
-        containerColor = Color(0xFF212121),
-        contentColor = Color.White
+        containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
-        items.forEach { (route, label, icon) ->
+        DATA.TODO_NAV.forEach { item ->
             NavigationBarItem(
-                icon = { Icon(icon, contentDescription = label, modifier = Modifier.size(24.dp)) },
-                label = { Text(label) },
-                selected = currentDestination?.hierarchy?.any { it.route == route } == true,
+                icon = {
+                Icon(
+                    item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
+                )
+            },
+                label = { Text(item.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
-                    navController.navigate(route) {
-                        popUpTo("tasks") { saveState = true }
+                    navController.navigate(item.route) {
+                        popUpTo(DATA.TODO_NAV[0].route) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -100,42 +104,61 @@ fun TodoBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun TodoNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
 ) {
     NavHost(
         navController = navController,
-        startDestination = "tasks",
-        modifier = modifier,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
+        startDestination = DATA.TODO_NAV[0].route,
+        modifier = modifier
     ) {
-        composable("tasks") {
-            TasksScreen(
-                onBack = onBack,
-                onAddTask = { navController.navigate("addEditTask") },
-                onEditTask = { task -> 
-                    // Need to handle task serialization
+        DATA.TODO_NAV.forEach { item ->
+            composable(item.route) {
+                when (item.route) {
+                    Strings.TASKS -> TasksScreen(
+                        navController = navController,
+                        onBack = onBack,
+                        onAddTask = {
+                            navController.currentBackStackEntry?.savedStateHandle?.set("task", null)
+                            navController.navigate(Strings.ADD_EDIT_TASK)
+                        },
+                        onEditTask = { task ->
+                            navController.currentBackStackEntry?.savedStateHandle?.set("task", task)
+                            navController.navigate(Strings.ADD_EDIT_TASK)
+                        })
+
+                    Strings.NOTES -> NotesScreen(
+                        navController = navController,
+                        onBack = onBack,
+                        onAddNote = {
+                            navController.currentBackStackEntry?.savedStateHandle?.set("note", null)
+                            navController.navigate(Strings.ADD_EDIT_NOTE)
+                        },
+                        onEditNote = { note ->
+                            navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
+                            navController.navigate(Strings.ADD_EDIT_NOTE)
+                        })
                 }
-            )
+            }
         }
-        composable("notes") {
-            NotesScreen(
-                onBack = onBack,
-                onAddNote = { navController.navigate("addEditNote") },
-                onEditNote = { note ->
-                    // Need to handle note serialization
+        composable(Strings.ADD_EDIT_TASK) {
+            AddEditTaskScreen(onBack = { result: Int? ->
+                if (result != null) {
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        "add_edit_result", result
+                    )
                 }
-            )
+                navController.popBackStack()
+            })
         }
-        composable("addEditTask") {
-            AddEditTaskScreen(onBack = { navController.popBackStack() })
-        }
-        composable("addEditNote") {
-            AddEditNoteScreen(onBack = { navController.popBackStack() })
+        composable(Strings.ADD_EDIT_NOTE) {
+            AddEditNoteScreen(onBack = { result: Int? ->
+                if (result != null) {
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        "add_edit_result", result
+                    )
+                }
+                navController.popBackStack()
+            })
         }
     }
 }

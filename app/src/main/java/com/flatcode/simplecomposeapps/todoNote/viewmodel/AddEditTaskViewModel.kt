@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.flatcode.simplecomposeapps.utils.DATA
+
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
     private val taskDao: TaskDao,
@@ -44,15 +46,15 @@ class AddEditTaskViewModel @Inject constructor(
 
     private fun createTask(task: Task) = viewModelScope.launch {
         taskDao.insert(task)
-        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult)
+        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
-        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult)
+        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
     sealed class AddEditTaskEvent {
-        data object NavigateBackWithResult : AddEditTaskEvent()
+        data class NavigateBackWithResult(val result: Int) : AddEditTaskEvent()
     }
 }

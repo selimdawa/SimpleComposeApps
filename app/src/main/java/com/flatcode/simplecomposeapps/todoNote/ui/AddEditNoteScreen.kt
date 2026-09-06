@@ -21,15 +21,17 @@ import com.flatcode.simplecomposeapps.todoNote.viewmodel.AddEditNoteViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+
 @Composable
 fun AddEditNoteScreen(
-    onBack: () -> Unit,
+    onBack: (Int?) -> Unit,
     viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
         viewModel.addEditNoteEvent.collect { event ->
             if (event is AddEditNoteViewModel.AddEditNoteEvent.NavigateBackWithResult) {
-                onBack()
+                onBack(event.result)
             }
         }
     }
@@ -37,8 +39,8 @@ fun AddEditNoteScreen(
     Scaffold(
         topBar = {
             TodoTopAppBar(
-                title = if (viewModel.note != null) "Edit Note" else "New Note",
-                onBack = onBack
+                title = if (viewModel.note != null) Strings.TITLE_EDIT_NOTE else Strings.TITLE_NEW_NOTE,
+                onBack = { onBack(null) }
             )
         },
         floatingActionButton = {
@@ -47,7 +49,7 @@ fun AddEditNoteScreen(
                 containerColor = Color(0xFF339999),
                 contentColor = Color.White
             ) {
-                Icon(imageVector = AppIcons.Check, contentDescription = "Save Note")
+                Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_NOTE)
             }
         },
         containerColor = COLOR_ON_BACKGROUND
@@ -62,8 +64,8 @@ fun AddEditNoteScreen(
                 value = viewModel.noteTitle,
                 onValueChange = { viewModel.noteTitle = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Title", color = Color.Gray) },
-                label = { Text("Title") }
+                placeholder = { Text(Strings.TITLE, color = Color.Gray) },
+                label = { Text(Strings.TITLE) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -74,8 +76,8 @@ fun AddEditNoteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                placeholder = { Text("Content", color = Color.Gray) },
-                label = { Text("Content") }
+                placeholder = { Text(Strings.CONTENT, color = Color.Gray) },
+                label = { Text(Strings.CONTENT) }
             )
         }
     }

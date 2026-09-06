@@ -19,8 +19,20 @@ interface NoteDao {
     @Delete
     suspend fun delete(note: Notes)
 
-    @Query("SELECT * FROM notes_table ORDER BY date DESC")
+    @Query("SELECT * FROM notes_table")
     fun getAllNotes(): Flow<List<Notes>>
+
+    fun getNotes(query: String, sortOrder: SortOrder): Flow<List<Notes>> =
+        when (sortOrder) {
+            SortOrder.BY_DATE -> getNotesSortedByCreatedDate(query)
+            SortOrder.BY_NAME -> getNotesSortedByName(query)
+        }
+
+    @Query("SELECT * FROM notes_table WHERE title LIKE '%' || :query || '%' ORDER BY title ASC")
+    fun getNotesSortedByName(query: String): Flow<List<Notes>>
+
+    @Query("SELECT * FROM notes_table WHERE title LIKE '%' || :query || '%' ORDER BY date DESC")
+    fun getNotesSortedByCreatedDate(query: String): Flow<List<Notes>>
 
     @Query("DELETE FROM notes_table")
     suspend fun deleteAllNotes()

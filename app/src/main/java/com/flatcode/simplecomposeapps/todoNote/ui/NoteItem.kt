@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
@@ -24,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -71,7 +71,7 @@ fun NoteItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.CalendarToday,
+                    imageVector = AppIcons.DateRange,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp),
                     tint = COLOR_ON_BACKGROUND
@@ -85,17 +85,6 @@ fun NoteItem(
                     fontSize = 12.sp,
                     color = COLOR_ON_BACKGROUND
                 )
-
-                IconButton(
-                    onClick = onDeleteClick,
-                    modifier = Modifier.size(24.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete note",
-                        tint = COLOR_ERROR
-                    )
-                }
             }
         }
     }
