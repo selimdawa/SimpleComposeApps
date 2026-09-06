@@ -18,13 +18,52 @@ class RickEpisodesViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    private val _episodes = MutableStateFlow<Resource<RickAndMortyResponse<Episode>>>(Resource.Loading())
-    val episodes: StateFlow<Resource<RickAndMortyResponse<Episode>>> = _episodes.asStateFlow()
+    private val _episodes = MutableStateFlow<Resource<List<Episode>>>(Resource.Loading())
+    val episodes: StateFlow<Resource<List<Episode>>> = _episodes.asStateFlow()
 
-    fun getEpisodes(page: Int? = null) {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error.asStateFlow()
+
+    private var currentPage = 1
+    private var isLastPage = false
+    private val allEpisodes = mutableListOf<Episode>()
+
+    fun getEpisodes() {
+        if (isLastPage || _isLoading.value) return
+        _isLoading.value = true
+        _error.value = null
+
         viewModelScope.launch {
-            repository.getEpisodes(page).collect {
-                _episodes.value = it
+            repository.getEpisodes(currentPage).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data?.let { response ->
+                            allEpisodes.addAll(response.results)
+                            isLastPage = response.info.next == null
+                            _episodes.value = Resource.Success(allEpisodes.toList())
+                            currentPage++
+                        }
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        if (allEpisodes.isEmpty()) {
+                            _episodes.value = Resource.Error(resource.message ?: "Error")
+                        } else {
+                            _error.value = resource.message ?: "Error"
+                        }
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Loading -> {
+                        if (allEpisodes.isEmpty()) {
+                            _episodes.value = Resource.Loading()
+                        }
+                    }
+                }
             }
         }
     }

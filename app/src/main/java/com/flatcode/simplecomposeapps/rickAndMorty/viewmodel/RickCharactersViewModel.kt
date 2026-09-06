@@ -18,13 +18,52 @@ class RickCharactersViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    private val _characters = MutableStateFlow<Resource<RickAndMortyResponse<Character>>>(Resource.Loading())
-    val characters: StateFlow<Resource<RickAndMortyResponse<Character>>> = _characters.asStateFlow()
+    private val _characters = MutableStateFlow<Resource<List<Character>>>(Resource.Loading())
+    val characters: StateFlow<Resource<List<Character>>> = _characters.asStateFlow()
 
-    fun getCharacters(page: Int? = null) {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error.asStateFlow()
+
+    private var currentPage = 1
+    private var isLastPage = false
+    private val allCharacters = mutableListOf<Character>()
+
+    fun getCharacters() {
+        if (isLastPage || _isLoading.value) return
+        _isLoading.value = true
+        _error.value = null
+
         viewModelScope.launch {
-            repository.getCharacters(page).collect {
-                _characters.value = it
+            repository.getCharacters(currentPage).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data?.let { response ->
+                            allCharacters.addAll(response.results)
+                            isLastPage = response.info.next == null
+                            _characters.value = Resource.Success(allCharacters.toList())
+                            currentPage++
+                        }
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Error -> {
+                        if (allCharacters.isEmpty()) {
+                            _characters.value = Resource.Error(resource.message ?: "Error")
+                        } else {
+                            _error.value = resource.message ?: "Error"
+                        }
+                        _isLoading.value = false
+                    }
+
+                    is Resource.Loading -> {
+                        if (allCharacters.isEmpty()) {
+                            _characters.value = Resource.Loading()
+                        }
+                    }
+                }
             }
         }
     }
