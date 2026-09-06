@@ -53,7 +53,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        openActivity(RandomCatsImageActivity::class.java, true)
+        openActivity(TodoNoteActivity::class.java, true)
     }
 
     companion object {

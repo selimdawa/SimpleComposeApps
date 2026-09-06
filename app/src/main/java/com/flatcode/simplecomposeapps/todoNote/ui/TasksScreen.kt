@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -36,6 +38,7 @@ import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.TasksViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
@@ -101,6 +104,7 @@ fun TasksScreen(
     }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
         TodoTopAppBar(
             title = Strings.TASKS,
@@ -118,8 +122,11 @@ fun TasksScreen(
     }, floatingActionButton = {
         FloatingActionButton(
             onClick = { viewModel.onAddNewTaskClick() },
-            containerColor = Color(0xFF339999),
-            contentColor = Color.White
+            containerColor = MC_TRACK,
+            contentColor = Color.White,
+            shape = CircleShape,
+            elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp),
+            modifier = Modifier.padding(end = 25.dp)
         ) {
             Icon(imageVector = AppIcons.Add, contentDescription = Strings.ADD_TASK)
         }

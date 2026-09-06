@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ScaleFactor
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -46,8 +45,7 @@ import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 
 @Composable
 fun RandomCatsImageContent(
-    viewModel: RandomCatsImageViewModel,
-    onDownload: (String) -> Unit
+    viewModel: RandomCatsImageViewModel, onDownload: (String) -> Unit
 ) {
     val imageUrl by viewModel.imageUrl
     var isFullScreen by remember { mutableStateOf(false) }
@@ -79,17 +77,13 @@ fun RandomCatsImageContent(
                     .onSizeChanged {
                         containerWidth = it.width.toFloat()
                         containerHeight = it.height.toFloat()
-                    }
-            ) {
+                    }) {
                 val context = LocalContext.current
                 val imageModel = imageUrl.ifEmpty { image_profile }
 
                 AsyncImage(
-                    model = ImageRequest.Builder(context)
-                        .data(imageModel)
-                        .crossfade(true)
-                        .transformations(SimpleBlurTransformation(50f))
-                        .build(),
+                    model = ImageRequest.Builder(context).data(imageModel).crossfade(true)
+                        .transformations(SimpleBlurTransformation(50f)).build(),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
@@ -110,30 +104,23 @@ fun RandomCatsImageContent(
                         .fillMaxSize()
                         .then(
                             if (isFullScreen) {
-                                Modifier
-                                    .wrapContentWidth(unbounded = true)
-                                    .graphicsLayer {
-                                        translationX = offsetX
-                                    }
-                                    .pointerInput(imageRatio, containerWidth, containerHeight) {
-                                        val scaledWidth = containerHeight * imageRatio
-                                        val maxOffset = if (scaledWidth > containerWidth) {
-                                            (scaledWidth - containerWidth) / 2
-                                        } else 0f
+                            Modifier.wrapContentWidth(unbounded = true).graphicsLayer {
+                                    translationX = offsetX
+                                }.pointerInput(imageRatio, containerWidth, containerHeight) {
+                                    val scaledWidth = containerHeight * imageRatio
+                                    val maxOffset = if (scaledWidth > containerWidth) {
+                                        (scaledWidth - containerWidth) / 2
+                                    } else 0f
 
-                                        detectDragGestures { change, dragAmount ->
-                                            change.consume()
-                                            offsetX =
-                                                (offsetX + dragAmount.x).coerceIn(
-                                                    -maxOffset,
-                                                    maxOffset
-                                                )
-                                        }
+                                    detectDragGestures { change, dragAmount ->
+                                        change.consume()
+                                        offsetX = (offsetX + dragAmount.x).coerceIn(
+                                            -maxOffset, maxOffset
+                                        )
                                     }
-                            } else Modifier
-                        ),
-                    contentScale = if (isFullScreen) ContentScale.FillHeight else ContentScale.Fit
-                )
+                                }
+                        } else Modifier),
+                    contentScale = if (isFullScreen) ContentScale.FillHeight else ContentScale.Fit)
             }
         }
 

@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -25,27 +22,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
 import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.asapCondensed
 
 @Composable
 fun NoteItem(
-    note: Notes,
-    onDeleteClick: () -> Unit = {},
-    modifier: Modifier = Modifier
+    note: Notes, onDeleteClick: () -> Unit = {}, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 5.dp),
+            .padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MC_TRACK)
+                .background(MC_BG)
                 .padding(10.dp)
         ) {
             Text(
@@ -53,7 +48,8 @@ fun NoteItem(
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = COLOR_ON_BACKGROUND
+                color = COLOR_ON_BACKGROUND,
+                fontFamily = asapCondensed
             )
 
             Text(
@@ -62,40 +58,41 @@ fun NoteItem(
                     .fillMaxWidth()
                     .padding(vertical = 5.dp),
                 fontSize = 14.sp,
+                minLines = 5,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
-                color = COLOR_ON_BACKGROUND
+                color = COLOR_ON_BACKGROUND,
+                fontFamily = asapCondensed
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = AppIcons.DateRange,
+                    imageVector = AppIcons.EventNote,
                     contentDescription = null,
-                    modifier = Modifier.size(18.dp),
+                    modifier = Modifier.size(24.dp),
                     tint = COLOR_ON_BACKGROUND
                 )
 
                 Text(
                     text = note.dateCreatedFormatted,
                     modifier = Modifier
-                        .padding(start = 5.dp)
+                        .padding(5.dp)
                         .weight(1f),
                     fontSize = 12.sp,
-                    color = COLOR_ON_BACKGROUND
+                    color = COLOR_ON_BACKGROUND,
+                    fontFamily = asapCondensed
                 )
 
                 IconButton(
-                    onClick = onDeleteClick,
-                    modifier = Modifier.size(32.dp)
+                    onClick = onDeleteClick, modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
+                        imageVector = AppIcons.DeleteCal,
                         contentDescription = "Delete",
                         tint = COLOR_ON_BACKGROUND,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }

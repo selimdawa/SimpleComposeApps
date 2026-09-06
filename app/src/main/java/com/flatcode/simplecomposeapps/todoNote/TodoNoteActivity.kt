@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -52,14 +51,15 @@ class TodoNoteActivity : AppCompatActivity() {
             Scaffold(
                 bottomBar = {
                     TodoBottomNavigation(navController = navController)
-                }) { paddingValues ->
+                },
+                contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                containerColor = COLOR_ON_BACKGROUND
+            ) { paddingValues ->
                 TodoNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(
-                        bottom = paddingValues.calculateBottomPadding(),
-                        start = paddingValues.calculateStartPadding(LocalLayoutDirection.current),
-                        end = paddingValues.calculateEndPadding(LocalLayoutDirection.current)
-                    ),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
                     onBack = { finish() })
             }
         }
@@ -104,7 +104,9 @@ fun TodoBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun TodoNavHost(
-    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -141,24 +143,26 @@ fun TodoNavHost(
             }
         }
         composable(Strings.ADD_EDIT_TASK) {
-            AddEditTaskScreen(onBack = { result: Int? ->
-                if (result != null) {
-                    navController.previousBackStackEntry?.savedStateHandle?.set(
-                        "add_edit_result", result
-                    )
-                }
-                navController.popBackStack()
-            })
+            AddEditTaskScreen(
+                onBack = { result: Int? ->
+                    if (result != null) {
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "add_edit_result", result
+                        )
+                    }
+                    navController.popBackStack()
+                })
         }
         composable(Strings.ADD_EDIT_NOTE) {
-            AddEditNoteScreen(onBack = { result: Int? ->
-                if (result != null) {
-                    navController.previousBackStackEntry?.savedStateHandle?.set(
-                        "add_edit_result", result
-                    )
-                }
-                navController.popBackStack()
-            })
+            AddEditNoteScreen(
+                onBack = { result: Int? ->
+                    if (result != null) {
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "add_edit_result", result
+                        )
+                    }
+                    navController.popBackStack()
+                })
         }
     }
 }

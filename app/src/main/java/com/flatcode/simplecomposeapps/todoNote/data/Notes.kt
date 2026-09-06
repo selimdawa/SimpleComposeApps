@@ -4,7 +4,8 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Entity(tableName = "notes_table")
 @Parcelize
@@ -15,5 +16,5 @@ data class Notes(
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) : Parcelable {
     val dateCreatedFormatted: String
-        get() = DateFormat.getDateTimeInstance().format(date)
+        get() = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(date)
 }

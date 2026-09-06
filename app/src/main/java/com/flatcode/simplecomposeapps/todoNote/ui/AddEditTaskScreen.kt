@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.todoNote.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +11,7 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,12 +19,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.AddEditTaskViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Gray
 
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
@@ -42,8 +45,9 @@ fun AddEditTaskScreen(
     }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
-            TodoTopAppBar(
+            AddEditTopAppBar(
                 title = if (viewModel.task != null) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
                 onBack = { onBack(null) }
             )
@@ -51,8 +55,9 @@ fun AddEditTaskScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onSaveClick() },
-                containerColor = Color(0xFF339999),
-                contentColor = Color.White
+                containerColor = COLOR_ON_BACKGROUND,
+                contentColor = COLOR_ERROR,
+                modifier = Modifier.padding(25.dp)
             ) {
                 Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
             }
@@ -63,19 +68,31 @@ fun AddEditTaskScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(15.dp)
         ) {
             OutlinedTextField(
                 value = viewModel.taskName,
                 onValueChange = { viewModel.taskName = it },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(Strings.NAME.replace(" :", ""), color = Color.Gray) },
-                label = { Text(Strings.NAME.replace(" :", "")) }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+                label = { Text("Task", color = COLOR_ERROR) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = COLOR_ERROR,
+                    unfocusedTextColor = COLOR_ERROR,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedLabelColor = COLOR_ERROR,
+                    unfocusedLabelColor = COLOR_ERROR,
+                    focusedBorderColor = COLOR_ERROR,
+                    unfocusedBorderColor = Gray,
+                )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Checkbox(
                     checked = viewModel.taskImportant,
                     onCheckedChange = { viewModel.taskImportant = it },
@@ -85,7 +102,21 @@ fun AddEditTaskScreen(
                         checkmarkColor = COLOR_ON_BACKGROUND
                     )
                 )
-                Text(text = Strings.IMPORTANT_TASK, color = Color.White)
+                Text(
+                    text = "Important Task",
+                    color = COLOR_ERROR,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            viewModel.task?.let { task ->
+                Text(
+                    text = "Date created: ${task.createdDateFormatted}",
+                    color = COLOR_ERROR,
+                    fontSize = 15.sp,
+                    modifier = Modifier.padding(15.dp)
+                )
             }
         }
     }
