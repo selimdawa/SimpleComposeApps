@@ -16,7 +16,6 @@ import com.flatcode.simplecomposeapps.R
 object AppIcons {
     // Bitmaps (PNG/JPG)
     val Logo = R.drawable.logo
-    val LogoIcon = R.drawable.logo_icon
     val Background = R.drawable.background
     val CandyCrush = R.drawable.ic_candy_crush
     val RandomImage = R.drawable.ic_random
@@ -91,7 +90,6 @@ object AppIcons {
     // Vectors (ImageVector)
     val StopWatch: ImageVector = Icons.Default.Timer
     val MultiDelete: ImageVector = Icons.Default.DeleteSweep
-    val LiveTv: ImageVector = Icons.Default.LiveTv
     val PdfReader: ImageVector = Icons.Default.PictureAsPdf
     val VideoPlayer: ImageVector = Icons.Default.VideoLibrary
     val Dogs: ImageVector = Icons.Default.Pets
