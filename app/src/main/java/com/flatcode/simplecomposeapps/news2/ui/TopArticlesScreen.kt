@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.news2.viewmodel.NewsTopArticlesViewModel
 import com.flatcode.simplecomposeapps.news2.common.Resource
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR

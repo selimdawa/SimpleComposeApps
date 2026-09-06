@@ -28,7 +28,7 @@ import com.flatcode.simplecomposeapps.ui.theme.asapCondensed
 
 @Composable
 fun NoteItem(
-    note: Notes, onDeleteClick: () -> Unit = {}, modifier: Modifier = Modifier
+    note: Notes, modifier: Modifier = Modifier, onDeleteClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier

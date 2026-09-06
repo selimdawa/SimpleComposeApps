@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BreedItem(
-    breedName: String, onClick: () -> Unit = {}, modifier: Modifier = Modifier
+    breedName: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}
 ) {
     Text(
         text = breedName,

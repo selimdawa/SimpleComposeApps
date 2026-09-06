@@ -29,13 +29,13 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 @Composable
 fun ToolbarContent(
     title: String,
+    modifier: Modifier = Modifier,
     leftIcon: ImageVector? = null,
     onLeftClick: (() -> Unit)? = null,
     rightIcon: ImageVector? = null,
     onRightClick: (() -> Unit)? = null,
     hasBack: Boolean = false,
     onBackClick: (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable (() -> Unit)? = null,
     includeStatusBarsPadding: Boolean = true

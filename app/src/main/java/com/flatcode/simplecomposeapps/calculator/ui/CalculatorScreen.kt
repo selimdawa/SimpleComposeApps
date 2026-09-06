@@ -233,11 +233,11 @@ fun CalculatorScreen(
 @Composable
 fun CalculatorKey(
     text: String,
-    modifier: Modifier = Modifier,
     color: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     contentColor: Color = Color.White,
-    fontSize: Int = 26,
-    onClick: () -> Unit
+    fontSize: Int = 26
 ) {
     Box(
         modifier = modifier
@@ -259,10 +259,10 @@ fun CalculatorKey(
 @Composable
 fun CalculatorIconButton(
     icon: ImageVector,
-    modifier: Modifier = Modifier,
     color: Color,
-    contentColor: Color = Color.White,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentColor: Color = Color.White
 ) {
     Box(
         modifier = modifier

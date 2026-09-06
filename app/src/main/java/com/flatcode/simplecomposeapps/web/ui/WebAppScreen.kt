@@ -205,18 +205,18 @@ fun WebAppScreen(
 
 @Composable
 fun CardItem(
-    modifier: Modifier = Modifier,
-    cardModifier: Modifier = Modifier,
     cornerRadius: Dp,
     imageResId: Int,
     imageTint: Color,
-    imageSize: Dp? = null,
-    imageWidth: Dp? = null,
-    imageHeight: Dp? = null,
     text: String,
     textColor: Color,
     textSize: TextUnit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    cardModifier: Modifier = Modifier,
+    imageSize: Dp? = null,
+    imageWidth: Dp? = null,
+    imageHeight: Dp? = null
 ) {
     Column(
         modifier = modifier.fillMaxHeight(),
@@ -265,7 +265,7 @@ fun CardItem(
 
 @Composable
 fun SocialIcon(
-    modifier: Modifier = Modifier, imageResId: Int, onClick: () -> Unit
+    imageResId: Int, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
