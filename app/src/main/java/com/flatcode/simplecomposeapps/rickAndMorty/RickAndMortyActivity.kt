@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -34,6 +32,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
@@ -50,12 +49,12 @@ class RickAndMortyActivity : AppCompatActivity() {
             val navController = rememberNavController()
             Scaffold(
                 topBar = {
-                    ToolbarContent(
-                        title = DATA.RICK_AND_MORTY, hasBack = false
-                    )
-                }, bottomBar = {
-                    RickBottomNavigation(navController = navController)
-                }, containerColor = COLOR_ON_BACKGROUND
+                ToolbarContent(
+                    title = DATA.RICK_AND_MORTY, hasBack = false
+                )
+            }, bottomBar = {
+                RickBottomNavigation(navController = navController)
+            }, containerColor = COLOR_ON_BACKGROUND
             ) { paddingValues ->
                 RickNavHost(
                     navController = navController,
@@ -69,9 +68,9 @@ class RickAndMortyActivity : AppCompatActivity() {
 @Composable
 fun RickBottomNavigation(navController: NavHostController) {
     val items = listOf(
-        Triple("characters", "Characters", AppIcons.RickAndMorty),
-        Triple("locations", "Locations", AppIcons.Location),
-        Triple("episodes", "Episodes", AppIcons.EventNote)
+        Triple(Strings.CHARACTER, Strings.CHARACTER, AppIcons.RickAndMorty),
+        Triple(Strings.LOCATION, Strings.LOCATION, AppIcons.Location),
+        Triple(Strings.EPISODE, Strings.EPISODE, AppIcons.EventNote)
     )
 
     NavigationBar(
@@ -83,17 +82,15 @@ fun RickBottomNavigation(navController: NavHostController) {
         items.forEach { (route, label, icon) ->
             NavigationBarItem(
                 icon = {
-                    Icon(
-                        icon,
-                        contentDescription = label,
-                        modifier = Modifier.size(24.dp)
-                    )
-                },
+                Icon(
+                    icon, contentDescription = label, modifier = Modifier.size(24.dp)
+                )
+            },
                 label = { Text(label) },
                 selected = currentDestination?.hierarchy?.any { it.route == route } == true,
                 onClick = {
                     navController.navigate(route) {
-                        popUpTo("characters") { saveState = true }
+                        popUpTo(Strings.CHARACTER) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
@@ -116,20 +113,16 @@ fun RickNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "characters",
-        modifier = modifier,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }) {
-        composable("characters") {
+        startDestination = Strings.CHARACTER,
+        modifier = modifier) {
+        composable(Strings.CHARACTER) {
             RickCharactersScreen(onBack = onBack)
         }
-        composable("locations") {
-            RickLocationsScreen(onBack = { navController.navigate("characters") })
+        composable(Strings.LOCATION) {
+            RickLocationsScreen(onBack = { navController.navigate(Strings.CHARACTER) })
         }
-        composable("episodes") {
-            RickEpisodesScreen(onBack = { navController.navigate("characters") })
+        composable(Strings.EPISODE) {
+            RickEpisodesScreen(onBack = { navController.navigate(Strings.CHARACTER) })
         }
     }
 }

@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -61,7 +59,8 @@ class News2Activity : AppCompatActivity() {
             ) { paddingValues ->
                 NewsNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(paddingValues))
+                    modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     }
@@ -117,11 +116,7 @@ fun NewsNavHost(
     NavHost(
         navController = navController,
         startDestination = "everything",
-        modifier = modifier,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
+        modifier = modifier
     ) {
         composable("everything") {
             EverythingScreen()

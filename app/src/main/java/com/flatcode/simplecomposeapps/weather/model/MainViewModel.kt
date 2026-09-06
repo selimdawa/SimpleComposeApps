@@ -21,6 +21,9 @@ class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel
     private val _liveDataCurrent = MutableStateFlow<WeatherModel?>(null)
     val liveDataCurrent: StateFlow<WeatherModel?> = _liveDataCurrent.asStateFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     var lastCity: String? = null
 
     val savedWeather: StateFlow<WeatherModel?> =
@@ -32,6 +35,10 @@ class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel
 
     fun updateList(list: List<WeatherModel>) {
         _liveDataList.value = list
+    }
+
+    fun setLoading(loading: Boolean) {
+        _isLoading.value = loading
     }
 
     fun saveWeather(weather: WeatherModel) = viewModelScope.launch {

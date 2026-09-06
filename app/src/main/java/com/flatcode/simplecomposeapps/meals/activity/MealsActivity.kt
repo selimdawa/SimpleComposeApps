@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -114,13 +112,8 @@ fun MealsNavHost(
 ) {
     val context = LocalContext.current
     NavHost(
-        navController = navController,
-        startDestination = "home",
-        modifier = modifier,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }) {
+        navController = navController, startDestination = "home", modifier = modifier
+    ) {
         composable("home") {
             HomeMealsScreen(onBack = onBack, onMealClick = { id, name, thumb ->
                 val intent = Intent(context, MealDetailsActivity::class.java).apply {
