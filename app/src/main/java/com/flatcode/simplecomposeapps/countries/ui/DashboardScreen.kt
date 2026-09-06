@@ -30,7 +30,6 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun DashboardScreen(
-    onBack: () -> Unit,
     onCountryClick: (Int) -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
@@ -45,7 +44,7 @@ fun DashboardScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.COUNTRIES, hasBack = false, onBackClick = onBack
+                title = DATA.COUNTRIES, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

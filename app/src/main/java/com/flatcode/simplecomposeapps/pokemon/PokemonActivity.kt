@@ -26,13 +26,13 @@ class PokemonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            PokemonAppNavHost(onBack = { finish() })
+            PokemonAppNavHost()
         }
     }
 }
 
 @Composable
-fun PokemonAppNavHost(onBack: () -> Unit) {
+fun PokemonAppNavHost() {
     val navController = rememberNavController()
 
     NavHost(
@@ -45,7 +45,6 @@ fun PokemonAppNavHost(onBack: () -> Unit) {
     ) {
         composable("list") {
             PokemonScreen(
-                onBack = onBack,
                 onPokemonClick = { id ->
                     navController.navigate("detail/$id")
                 }

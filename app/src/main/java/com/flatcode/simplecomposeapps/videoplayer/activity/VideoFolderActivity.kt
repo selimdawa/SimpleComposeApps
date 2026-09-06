@@ -24,7 +24,6 @@ class VideoFolderActivity : ComponentActivity() {
             VideoFolderScreen(
                 viewModel = viewModel,
                 folderPath = folderName,
-                onBack = { finish() },
                 onVideoClick = { position, filteredVideos ->
                     VideoData.folderVideoFile = ArrayList(filteredVideos)
                     launchActivity<PlayerActivity> {

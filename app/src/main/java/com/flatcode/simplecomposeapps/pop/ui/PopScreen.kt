@@ -38,7 +38,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun PopScreen(
-    onBack: () -> Unit, viewModel: PopViewModel = hiltViewModel()
+    viewModel: PopViewModel = hiltViewModel()
 ) {
     val pops by viewModel.pops.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -47,7 +47,7 @@ fun PopScreen(
 
     Scaffold(
         topBar = {
-            ToolbarContent(title = DATA.POP, hasBack = false, onBackClick = onBack)
+            ToolbarContent(title = DATA.POP, hasBack = false)
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(

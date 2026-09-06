@@ -19,17 +19,16 @@ class DictionaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            DictionaryAppNavHost(onBack = { finish() })
+            DictionaryAppNavHost()
         }
     }
 }
 
 @Composable
-fun DictionaryAppNavHost(onBack: () -> Unit) {
+fun DictionaryAppNavHost() {
     val viewModel: DictionaryViewModel = hiltViewModel()
 
     DictionaryScreen(
-        viewModel = viewModel,
-        onBack = onBack
+        viewModel = viewModel
     )
 }

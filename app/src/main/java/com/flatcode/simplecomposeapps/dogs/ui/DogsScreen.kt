@@ -46,7 +46,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogsScreen(
-    viewModel: DogViewModel, onBack: () -> Unit
+    viewModel: DogViewModel
 ) {
     val breeds by viewModel.breedsList.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
@@ -57,7 +57,7 @@ fun DogsScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.DOGS, hasBack = false, onBackClick = onBack
+                title = DATA.DOGS, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

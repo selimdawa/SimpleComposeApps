@@ -23,7 +23,6 @@ import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
 fun VideoFolderScreen(
     viewModel: VideoViewModel,
     folderPath: String,
-    onBack: () -> Unit,
     onVideoClick: (Int, List<VideoFiles>) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()

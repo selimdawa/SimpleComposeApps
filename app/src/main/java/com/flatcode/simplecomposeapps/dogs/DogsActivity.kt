@@ -29,8 +29,7 @@ class DogsActivity : AppCompatActivity() {
             }
 
             DogsScreen(
-                viewModel = viewModel,
-                onBack = { finish() }
+                viewModel = viewModel
             )
         }
     }

@@ -28,8 +28,7 @@ class PlayerActivity : ComponentActivity() {
         setContent {
             PlayerScreen(
                 videos = myFiles,
-                initialPosition = position,
-                onBack = { finish() }
+                initialPosition = position
             )
         }
     }

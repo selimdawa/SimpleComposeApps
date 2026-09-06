@@ -20,7 +20,6 @@ class WordpressActivity : ComponentActivity() {
         setContent {
             WordpressScreen(
                 viewModel = viewModel,
-                onBack = { finish() },
                 onPostClick = { index ->
                     val post = viewModel.uiState.value.posts[index]
                     val intent = WordpressDetailsActivity.createIntent(

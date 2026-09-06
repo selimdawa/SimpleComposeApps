@@ -45,7 +45,7 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 
 @Composable
 fun NewsScreen(
-    viewModel: NewsViewModel, onBack: () -> Unit, onNewsClick: (NewsHeadlines) -> Unit
+    viewModel: NewsViewModel, onNewsClick: (NewsHeadlines) -> Unit
 ) {
     val headlines = viewModel.headlines
     val selectedCategory = viewModel.selectedCategory.value
@@ -60,7 +60,6 @@ fun NewsScreen(
             ToolbarContent(
                 title = "News App",
                 hasBack = false,
-                onBackClick = onBack,
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

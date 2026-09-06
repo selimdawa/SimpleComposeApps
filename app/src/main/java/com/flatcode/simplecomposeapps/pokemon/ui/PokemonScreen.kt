@@ -29,7 +29,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun PokemonScreen(
-    onBack: () -> Unit, onPokemonClick: (Int) -> Unit, viewModel: PokeViewModel = hiltViewModel()
+    onPokemonClick: (Int) -> Unit, viewModel: PokeViewModel = hiltViewModel()
 ) {
     val pokemonList by viewModel.pokemon.observeAsState(emptyList())
     val status by viewModel.status.observeAsState(ApiStatus.LOADING)
@@ -37,7 +37,7 @@ fun PokemonScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.POKE, hasBack = false, onBackClick = onBack
+                title = DATA.POKE, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

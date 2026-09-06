@@ -58,7 +58,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DictionaryScreen(
-    viewModel: DictionaryViewModel, onBack: () -> Unit
+    viewModel: DictionaryViewModel
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
@@ -68,7 +68,7 @@ fun DictionaryScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.DICTIONARY, hasBack = false, onBackClick = onBack
+                title = DATA.DICTIONARY, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

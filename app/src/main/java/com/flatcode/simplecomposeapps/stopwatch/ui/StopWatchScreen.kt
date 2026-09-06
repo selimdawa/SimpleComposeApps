@@ -28,14 +28,14 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun StopWatchScreen(
-    viewModel: StopWatchViewModel, onBack: () -> Unit
+    viewModel: StopWatchViewModel
 ) {
     val lastTimeValue by viewModel.lastTime
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
             ToolbarContent(
-                title = Strings.STOP_WATCH, hasBack = false, onBackClick = onBack
+                title = Strings.STOP_WATCH, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

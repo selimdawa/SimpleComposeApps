@@ -21,8 +21,7 @@ class CandyCrushGameActivity : AppCompatActivity() {
 
         setContent {
             CandyCrushScreen(
-                viewModel = viewModel,
-                onBack = { finish() }
+                viewModel = viewModel
             )
         }
     }

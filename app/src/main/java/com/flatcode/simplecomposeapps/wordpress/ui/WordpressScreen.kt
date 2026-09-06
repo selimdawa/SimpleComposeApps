@@ -24,7 +24,6 @@ import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 @Composable
 fun WordpressScreen(
     viewModel: WordpressViewModel,
-    onBack: () -> Unit,
     onPostClick: (Int) -> Unit,
     onFavoritesClick: () -> Unit
 ) {

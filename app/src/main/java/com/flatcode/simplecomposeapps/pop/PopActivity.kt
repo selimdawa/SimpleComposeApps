@@ -17,7 +17,7 @@ class PopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            PopScreen(onBack = { finish() })
+            PopScreen()
         }
     }
 }

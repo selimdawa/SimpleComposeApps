@@ -22,8 +22,7 @@ class MultiDeleteActivity : AppCompatActivity() {
 
         setContent {
             MultiDeleteScreen(
-                viewModel = viewModel,
-                onBack = { finish() }
+                viewModel = viewModel
             )
         }
     }

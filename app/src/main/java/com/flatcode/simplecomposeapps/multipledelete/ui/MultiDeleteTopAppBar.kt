@@ -27,7 +27,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 fun MultiDeleteTopAppBar(
     isSelectionMode: Boolean,
     selectedCount: Int,
-    onBack: () -> Unit,
     onDelete: () -> Unit,
     onSelectAll: () -> Unit,
     onClearSelection: () -> Unit
@@ -46,11 +45,11 @@ fun MultiDeleteTopAppBar(
         ) {
             // Navigation Icon
             IconButton(
-                onClick = if (isSelectionMode) onClearSelection else onBack,
+                onClick = onClearSelection,
                 modifier = Modifier.size(32.dp)
             ) {
                 Icon(
-                    imageVector = if (isSelectionMode) AppIcons.Close else AppIcons.Back,
+                    imageVector = AppIcons.Close,
                     contentDescription = "Back",
                     tint = COLOR_ERROR,
                     modifier = Modifier.size(24.dp)

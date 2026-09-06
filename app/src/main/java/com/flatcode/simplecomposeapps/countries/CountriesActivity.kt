@@ -26,13 +26,13 @@ class CountriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CountriesAppNavHost(onBack = { finish() })
+            CountriesAppNavHost()
         }
     }
 }
 
 @Composable
-fun CountriesAppNavHost(onBack: () -> Unit) {
+fun CountriesAppNavHost() {
     val navController = rememberNavController()
 
     NavHost(
@@ -45,7 +45,6 @@ fun CountriesAppNavHost(onBack: () -> Unit) {
     ) {
         composable("dashboard") {
             DashboardScreen(
-                onBack = onBack,
                 onCountryClick = { uuid ->
                     navController.navigate("detail/$uuid")
                 }

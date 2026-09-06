@@ -26,13 +26,13 @@ class CryptoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CryptoAppNavHost(onBack = { finish() })
+            CryptoAppNavHost()
         }
     }
 }
 
 @Composable
-fun CryptoAppNavHost(onBack: () -> Unit) {
+fun CryptoAppNavHost() {
     val navController = rememberNavController()
 
     NavHost(
@@ -45,7 +45,6 @@ fun CryptoAppNavHost(onBack: () -> Unit) {
     ) {
         composable("home") {
             CryptoHomeScreen(
-                onBack = onBack,
                 onCoinClick = { symbol, id ->
                     navController.navigate("detail/$symbol/$id")
                 }

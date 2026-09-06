@@ -28,7 +28,6 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CryptoHomeScreen(
-    onBack: () -> Unit,
     onCoinClick: (String, Int) -> Unit,
     viewModel: CryptoHomeViewModel = hiltViewModel()
 ) {
@@ -58,7 +57,7 @@ fun CryptoHomeScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.CRYPTO, hasBack = false, onBackClick = onBack
+                title = DATA.CRYPTO, hasBack = false
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->

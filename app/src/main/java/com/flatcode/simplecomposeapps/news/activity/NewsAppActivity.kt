@@ -20,7 +20,6 @@ class NewsAppActivity : ComponentActivity() {
         setContent {
             NewsScreen(
                 viewModel = viewModel,
-                onBack = { finish() },
                 onNewsClick = { headline ->
                     val intent = Intent(this, NewsAppDetailsActivity::class.java).apply {
                         putExtra(DATA.DATA, headline)

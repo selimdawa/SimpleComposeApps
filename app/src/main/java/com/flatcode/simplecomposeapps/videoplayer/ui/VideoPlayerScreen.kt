@@ -33,7 +33,6 @@ import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
 @Composable
 fun VideoPlayerScreen(
     viewModel: VideoViewModel,
-    onBack: () -> Unit,
     onVideoClick: (Int) -> Unit,
     onFolderClick: (String) -> Unit
 ) {

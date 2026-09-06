@@ -21,8 +21,7 @@ class StopWatchActivity : AppCompatActivity() {
 
         setContent {
             StopWatchScreen(
-                viewModel = viewModel,
-                onBack = { finish() }
+                viewModel = viewModel
             )
         }
     }

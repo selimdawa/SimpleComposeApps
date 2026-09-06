@@ -9,11 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,7 +23,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
-fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
+fun MultiDeleteScreen(viewModel: MultiDeleteViewModel) {
     val items = viewModel.items
     val selectedItems = viewModel.selectedItems
     val isSelectionMode by viewModel.isSelectionMode
@@ -37,7 +35,6 @@ fun MultiDeleteScreen(viewModel: MultiDeleteViewModel, onBack: () -> Unit) {
                 MultiDeleteTopAppBar(
                     isSelectionMode = isSelectionMode,
                     selectedCount = selectedItems.size,
-                    onBack = onBack,
                     onDelete = { viewModel.deleteSelected() },
                     onSelectAll = { viewModel.selectAll() },
                     onClearSelection = { viewModel.exitSelectionMode() })

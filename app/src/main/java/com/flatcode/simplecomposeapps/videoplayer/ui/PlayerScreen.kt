@@ -27,8 +27,7 @@ import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 @Composable
 fun PlayerScreen(
     videos: List<VideoFiles?>,
-    initialPosition: Int,
-    onBack: () -> Unit
+    initialPosition: Int
 ) {
     val context = LocalContext.current
     
