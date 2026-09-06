@@ -133,6 +133,7 @@ object AppIcons {
     val FavoriteBorder: ImageVector = Icons.Outlined.FavoriteBorder
     val PriorityHigh: ImageVector = Icons.Default.PriorityHigh
     val Search: ImageVector = Icons.Default.Search
+    val Sync: ImageVector = Icons.Default.Sync
     val Sort: ImageVector = Icons.AutoMirrored.Filled.Sort
     val BrokenImage: ImageVector = Icons.Default.BrokenImage
     val Category: ImageVector = Icons.Default.Category

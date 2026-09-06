@@ -1,9 +1,9 @@
-package com.flatcode.simplecomposeapps.weather.db
+package com.flatcode.simplecomposeapps.weather.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "weather_table")
+@Entity(tableName = "weather")
 data class WeatherModel(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val city: String,

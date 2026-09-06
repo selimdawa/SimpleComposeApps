@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.simplecomposeapps.weather.ui.WeatherScreen
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.flatcode.simplecomposeapps.weather.ui.WeatherMainScreen
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -12,12 +16,28 @@ import io.selimdawa.multicolors.MultiColorManager
 class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply theme from the MultiColors library
         MultiColorManager.applyTheme(this)
+        
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
+        
         setContent {
-            WeatherScreen(onBack = { finish() })
+            MultiColorManager.applyTheme(this)
+            WeatherNav()
+        }
+    }
+}
+
+@Composable
+fun WeatherNav() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "main"
+    ) {
+        composable("main") {
+            WeatherMainScreen()
         }
     }
 }
