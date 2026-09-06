@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.stockmarket.presentation.main.MainActivity
 import com.flatcode.simplecomposeapps.stockmarket.presentation.ui.theme.StockMarketAppTheme
@@ -63,7 +63,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = AppIcons.Background),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -74,7 +74,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo),
+                painter = painterResource(id = AppIcons.Logo),
                 contentDescription = "App Logo",
                 modifier = Modifier.size(200.dp)
             )

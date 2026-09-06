@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.todoNote
+package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

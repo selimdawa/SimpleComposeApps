@@ -30,7 +30,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun MovieHomeScreen(
-    onBack: () -> Unit,
     onMovieClick: (MovieItemModel) -> Unit,
     onFavoriteClick: () -> Unit,
     viewModel: MovieHomeViewModel = hiltViewModel()

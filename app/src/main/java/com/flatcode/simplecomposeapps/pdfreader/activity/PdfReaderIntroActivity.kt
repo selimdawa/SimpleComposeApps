@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
-import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
@@ -22,7 +22,7 @@ class PdfReaderIntroActivity : AppIntro() {
         val sliderPage = SliderPage().apply {
             title = Strings.TITLE_PERMISSION
             description = Strings.DESCRIPTION_PERMISSION
-            imageDrawable = R.drawable.patterns_permissions
+            imageDrawable = AppIcons.PermissionsPattern
             bgColor = backgroundColor
         }
 

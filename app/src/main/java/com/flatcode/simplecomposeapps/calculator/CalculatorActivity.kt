@@ -23,7 +23,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         setContent {
             CalculatorScreen(
-                viewModel = viewModel, onBack = { finish() })
+                viewModel = viewModel)
         }
     }
 }

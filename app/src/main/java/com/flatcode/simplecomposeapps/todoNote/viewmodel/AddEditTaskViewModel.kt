@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.todoNote
+package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

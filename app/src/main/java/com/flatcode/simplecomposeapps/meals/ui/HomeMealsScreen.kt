@@ -42,7 +42,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun HomeMealsScreen(
-    onBack: () -> Unit,
     onMealClick: (String, String, String) -> Unit,
     onCategoryClick: (String) -> Unit,
     viewModel: MealsHomeViewModel = hiltViewModel()

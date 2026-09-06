@@ -39,8 +39,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CalculatorScreen(
-    viewModel: CalculatorViewModel,
-    onBack: () -> Unit
+    viewModel: CalculatorViewModel
 ) {
     val expression by viewModel.expression.observeAsState("")
     val result by viewModel.result.observeAsState("")

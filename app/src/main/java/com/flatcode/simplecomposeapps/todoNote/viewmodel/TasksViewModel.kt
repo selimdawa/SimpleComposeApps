@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.todoNote
+package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,7 @@ import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -79,7 +80,7 @@ class TasksViewModel @Inject constructor(
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
     }
 
-    private fun <T> MutableLiveData<T>.asFlow() = kotlinx.coroutines.flow.MutableStateFlow(value).apply {
+    private fun <T> MutableLiveData<T>.asFlow() = MutableStateFlow(value).apply {
         // Simple manual bridge for LiveData to Flow if needed, but in Compose we often use collectAsState on Flow directly.
         // Keeping it similar to original for now.
     }

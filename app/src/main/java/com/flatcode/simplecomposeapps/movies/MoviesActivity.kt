@@ -29,13 +29,13 @@ class MoviesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MoviesAppNavHost(onBack = { finish() })
+            MoviesAppNavHost()
         }
     }
 }
 
 @Composable
-fun MoviesAppNavHost(onBack: () -> Unit) {
+fun MoviesAppNavHost() {
     val navController = rememberNavController()
     val gson = Gson()
 
@@ -49,7 +49,6 @@ fun MoviesAppNavHost(onBack: () -> Unit) {
     ) {
         composable("home") {
             MovieHomeScreen(
-                onBack = onBack,
                 onMovieClick = { movie ->
                     val movieJson = java.net.URLEncoder.encode(gson.toJson(movie), "UTF-8")
                     navController.navigate("detail/$movieJson")

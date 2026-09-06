@@ -27,7 +27,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun FavoritesMealsScreen(
-    onBack: () -> Unit,
     onMealClick: (String, String, String) -> Unit,
     viewModel: MealsHomeViewModel = hiltViewModel()
 ) {

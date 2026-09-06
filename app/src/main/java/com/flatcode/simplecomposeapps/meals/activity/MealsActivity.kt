@@ -57,8 +57,7 @@ class MealsActivity : AppCompatActivity() {
             }) { paddingValues ->
                 MealsNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() })
+                    modifier = Modifier.padding(paddingValues))
             }
         }
     }
@@ -108,14 +107,14 @@ fun MealsBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun MealsNavHost(
-    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     NavHost(
         navController = navController, startDestination = "home", modifier = modifier
     ) {
         composable("home") {
-            HomeMealsScreen(onBack = onBack, onMealClick = { id, name, thumb ->
+            HomeMealsScreen(onMealClick = { id, name, thumb ->
                 val intent = Intent(context, MealDetailsActivity::class.java).apply {
                     putExtra(MealDetailsActivity.MEAL_ID, id)
                     putExtra(MealDetailsActivity.MEAL_NAME, name)
@@ -131,7 +130,6 @@ fun MealsNavHost(
         }
         composable("favorites") {
             FavoritesMealsScreen(
-                onBack = { navController.navigate("home") },
                 onMealClick = { id, name, thumb ->
                     val intent = Intent(context, MealDetailsActivity::class.java).apply {
                         putExtra(MealDetailsActivity.MEAL_ID, id)
@@ -143,7 +141,6 @@ fun MealsNavHost(
         }
         composable("categories") {
             CategoriesMealsScreen(
-                onBack = { navController.navigate("home") },
                 onCategoryClick = { categoryName ->
                     val intent = Intent(context, CategoryMealsActivity::class.java).apply {
                         putExtra(CategoryMealsActivity.CATEGORY_NAME, categoryName)

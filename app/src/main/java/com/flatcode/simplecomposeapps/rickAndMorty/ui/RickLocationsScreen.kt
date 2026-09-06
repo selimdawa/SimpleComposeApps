@@ -30,7 +30,7 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun RickLocationsScreen(
-    onBack: () -> Unit, viewModel: RickLocationsViewModel = hiltViewModel()
+    viewModel: RickLocationsViewModel = hiltViewModel()
 ) {
     val state by viewModel.locations.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

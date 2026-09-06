@@ -58,8 +58,7 @@ class RickAndMortyActivity : AppCompatActivity() {
             ) { paddingValues ->
                 RickNavHost(
                     navController = navController,
-                    modifier = Modifier.padding(paddingValues),
-                    onBack = { finish() })
+                    modifier = Modifier.padding(paddingValues))
             }
         }
     }
@@ -109,20 +108,20 @@ fun RickBottomNavigation(navController: NavHostController) {
 
 @Composable
 fun RickNavHost(
-    navController: NavHostController, modifier: Modifier = Modifier, onBack: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
         startDestination = Strings.CHARACTER,
         modifier = modifier) {
         composable(Strings.CHARACTER) {
-            RickCharactersScreen(onBack = onBack)
+            RickCharactersScreen()
         }
         composable(Strings.LOCATION) {
-            RickLocationsScreen(onBack = { navController.navigate(Strings.CHARACTER) })
+            RickLocationsScreen()
         }
         composable(Strings.EPISODE) {
-            RickEpisodesScreen(onBack = { navController.navigate(Strings.CHARACTER) })
+            RickEpisodesScreen()
         }
     }
 }

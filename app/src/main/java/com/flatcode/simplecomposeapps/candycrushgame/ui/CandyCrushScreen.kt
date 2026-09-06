@@ -50,7 +50,7 @@ fun CandyCrushScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.ccs_82_background),
+            painter = painterResource(AppIcons.CandyBackground),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
