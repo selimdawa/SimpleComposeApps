@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.news2.News2Activity
+import com.flatcode.simplecomposeapps.pokemon.PokemonActivity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -51,7 +51,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        openActivity(News2Activity::class.java, true)
+        openActivity(PokemonActivity::class.java, true)
     }
 
     companion object {

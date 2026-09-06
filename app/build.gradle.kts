@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.constraintlayout)
     implementation(libs.androidx.lifecycle.runtime.compose) // Added for convenience
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     //Core & UI
@@ -70,6 +71,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
     implementation(libs.shimmer)
+    implementation(libs.compose.shimmer)
     //Networking
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)

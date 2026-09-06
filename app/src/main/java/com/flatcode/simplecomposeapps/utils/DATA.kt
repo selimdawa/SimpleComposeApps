@@ -5,8 +5,6 @@ object DATA {
     //Database
     const val EMPTY = ""
     const val DATA = "data"
-    const val DATA_BASE = "data"
-    const val SPACE = " "
     const val UNKNOWN = "Unknown"
     var searchStatus = false
 
@@ -44,7 +42,6 @@ object DATA {
     const val COUNTRY_DETAILS = "Country Details"
     const val CRYPTO_DETAILS = "Crypto Details"
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
-    const val CATEGORY_MEALS = "Category Meals"
     const val DETAILS_POKE = "Pokémon Details"
 
     //Blogger
@@ -68,7 +65,6 @@ object DATA {
 
     //API & Url
     var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search"
-    var IP_LIVE_TV = "192.168.1.2" // IP My Computer
     var NEWS_API = "07f40de92d3644908496e8f9677ee838"
     var JOKE_URL = "https://v2.jokeapi.dev/joke/"
 
