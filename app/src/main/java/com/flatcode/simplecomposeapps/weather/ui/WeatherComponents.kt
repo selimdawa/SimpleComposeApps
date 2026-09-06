@@ -32,6 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.draw.rotate
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
@@ -91,9 +97,19 @@ fun WeatherListItem(item: WeatherModel, onClick: (WeatherModel) -> Unit) {
 
 @Composable
 fun WeatherCard(
-    weather: WeatherModel, onSearchClick: () -> Unit, onSyncClick: () -> Unit
+    weather: WeatherModel, isLoading: Boolean, onSearchClick: () -> Unit, onSyncClick: () -> Unit
 ) {
     val maxMin = "${weather.maxTemp}°C / ${weather.minTemp}°C"
+    val infiniteTransition = rememberInfiniteTransition(label = "rotation")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing)
+        ),
+        label = "rotation"
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -169,7 +185,9 @@ fun WeatherCard(
                         imageVector = AppIcons.Sync,
                         contentDescription = Strings.SYNC,
                         tint = Color.White,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier
+                            .size(24.dp)
+                            .rotate(if (isLoading) rotation else 0f)
                     )
                 }
             }

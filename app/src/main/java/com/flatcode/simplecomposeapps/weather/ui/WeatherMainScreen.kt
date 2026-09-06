@@ -11,15 +11,18 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,6 +70,7 @@ fun WeatherMainScreen(
     val weatherCurrent by viewModel.liveDataCurrent.collectAsState()
     val weatherList by viewModel.liveDataList.collectAsState()
     val savedWeather by viewModel.savedWeather.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf(Strings.HOURS, Strings.DAYS)
@@ -110,6 +114,7 @@ fun WeatherMainScreen(
             weatherCurrent?.let { weather ->
                 WeatherCard(
                     weather = weather,
+                    isLoading = isLoading,
                     onSearchClick = { showSearchDialog = true },
                     onSyncClick = {
                         viewModel.lastCity?.let {
@@ -122,11 +127,17 @@ fun WeatherMainScreen(
                     containerColor = Color.Transparent,
                     contentColor = Color.White,
                     indicator = { tabPositions ->
-                        TabRowDefaults.SecondaryIndicator(
-                            Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                            height = 3.dp,
-                            color = Color.White
-                        )
+                        if (selectedTabIndex < tabPositions.size) {
+                            Box(
+                                modifier = Modifier
+                                    .tabIndicatorOffset(tabPositions[selectedTabIndex])
+                                    .height(3.dp)
+                                    .padding(horizontal = 48.dp)
+                                    .background(
+                                        color = Color.White, shape = RoundedCornerShape(3.dp)
+                                    )
+                            )
+                        }
                     },
                     divider = {}) {
                     tabs.forEachIndexed { index, title ->
@@ -205,10 +216,12 @@ private fun getWeatherRequest(
     city: String, context: Context, viewModel: MainViewModel, scope: CoroutineScope
 ) {
     viewModel.lastCity = city
+    viewModel.setLoading(true)
     val url = "${DATA.BASE_URL_WEATHER}${DATA.API_KEY_WEATHER}&q=$city&days=3&aqi=no&alerts=no"
     val request = StringRequest(Request.Method.GET, url, { result ->
         parseWeatherData(result, context, viewModel, scope)
     }, { error ->
+        viewModel.setLoading(false)
         Timber.d(error)
     })
     Volley.newRequestQueue(context).add(request)
@@ -222,6 +235,7 @@ private fun parseWeatherData(
         val cityName = getCityName(mainObject, context)
         val list = parseDays(mainObject, cityName, viewModel)
         parseCurrentDate(mainObject, list, cityName, viewModel)
+        viewModel.setLoading(false)
     }
 }
 
