@@ -62,7 +62,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
                         }
                     setResultValue(finalResult)
                     saveToHistory(currentExpression, finalResult)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     _result.value = "Error"
                 }
             }

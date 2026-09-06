@@ -37,7 +37,7 @@ class StockRepositoryImpl @Inject constructor(
             dao.clearCompanyListings()
             dao.insertCompanyListings(remote.map { it.toCompanyListingEntity() })
             emit(Resource.Success(data = dao.searchCompanyListing("").map { it.toCompanyListing() }))
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             emit(Resource.Error("Error loading data"))
         } finally {
             emit(Resource.Loading(false))

@@ -64,7 +64,7 @@ fun WordpressDetailsScreen(
             try {
                 val media = WordPressClient.apiService.getPostThumbnail(featuredMediaId)
                 mediaUrl = media.guid?.rendered
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
     }

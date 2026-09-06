@@ -32,7 +32,7 @@ class RandomCatsImageViewModel(application: Application) : AndroidViewModel(appl
                 val kittyData = response.getJSONObject(0)
                 val catUrl = kittyData.getString(DATA.JSON_URL)
                 _imageUrl.value = catUrl
-            } catch (e: JSONException) {
+            } catch (_: JSONException) {
             } finally {
                 _isLoading.value = false
             }

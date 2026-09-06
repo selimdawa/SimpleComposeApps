@@ -33,7 +33,7 @@ class PokeViewModel @Inject constructor(
             try {
                 repository.getPokemonFromApi()
                 _status.value = ApiStatus.DONE
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _status.value = ApiStatus.ERROR
             }
         }

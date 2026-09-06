@@ -73,7 +73,7 @@ class JokeViewModel(application: Application) : AndroidViewModel(application) {
                             _jokes.add(jokeObject)
                         }
                     }
-                } catch (e: JSONException) {
+                } catch (_: JSONException) {
                     _errorMessage.value = "Failed to parse jokes"
                 } finally {
                     _isLoading.value = false
