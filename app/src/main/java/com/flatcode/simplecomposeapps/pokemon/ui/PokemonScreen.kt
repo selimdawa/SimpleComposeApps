@@ -32,7 +32,7 @@ fun PokemonScreen(
     onBack: () -> Unit, onPokemonClick: (Int) -> Unit, viewModel: PokeViewModel = hiltViewModel()
 ) {
     val pokemonList by viewModel.pokemon.observeAsState(emptyList())
-    val status by viewModel.status.observeAsState(ApiStatus.DONE)
+    val status by viewModel.status.observeAsState(ApiStatus.LOADING)
 
     Scaffold(
         topBar = {

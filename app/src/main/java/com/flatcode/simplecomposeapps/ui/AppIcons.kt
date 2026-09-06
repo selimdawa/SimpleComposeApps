@@ -5,7 +5,12 @@ import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.R
 
 object AppIcons {
@@ -44,6 +49,44 @@ object AppIcons {
     val OrangeCandy = R.drawable.orangecandy
     val YellowCandy = R.drawable.yellowcandy
     val PurpleCandy = R.drawable.purplecandy
+
+    private val LoadingImg: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "LoadingImg",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 20f,
+            viewportHeight = 20f
+        ).apply {
+            val offset = 26f
+            val pathData = listOf(
+                Triple("M36.06,28.92L36.06,32.18", 0xFFE7E7E7, 0xFFCCCCCf),
+                Triple("M39.45,29.88L37.82,32.71", 0xFFCACACA, 0xFFC8C8CC),
+                Triple("M42.12,32.32L39.3,33.95", 0xFFCDCDCD, 0xFFBBBBBE),
+                Triple("M39.8,35.98L43.06,35.98", 0xFFCBCBCB, 0xFFB2B2B7),
+                Triple("M32.77,29.99L34.4,32.81", 0xFFEDEDED, 0xFFD0D0D4),
+                Triple("M30.1,32.42L32.92,34.05", 0xFF525252, 0xFF949497),
+                Triple("M32.42,35.98L29.16,35.98", 0xFF6E6E6E, 0xFF97979B),
+                Triple("M36.06,43.08L36.06,39.82", 0xFFA0A0A0, 0xFFA8A8AC),
+                Triple("M39.7,41.99L38.07,39.16", 0xFFCACACA, 0xFFCACACA),
+                Triple("M42.19,39.4L39.37,37.77", 0xFFCCCCCC, 0xFFB6B6BA),
+                Triple("M32.46,41.98L34.09,39.16", 0xFF909090, 0xFFA1A1A5),
+                Triple("M29.85,39.4L32.67,37.77", 0xFF7A7A7A, 0xFF9D9DA0)
+            )
+            pathData.forEach { (data, stroke, fill) ->
+                path(
+                    fill = SolidColor(Color(fill)),
+                    stroke = SolidColor(Color(stroke)),
+                    strokeLineWidth = 1f,
+                    strokeLineCap = StrokeCap.Round
+                ) {
+                    val parts = data.substring(1).split("L", ",")
+                    moveTo(parts[0].toFloat() - offset, parts[1].toFloat() - offset)
+                    lineTo(parts[2].toFloat() - offset, parts[3].toFloat() - offset)
+                }
+            }
+        }.build()
+    }
 
     // Vectors (ImageVector)
     val StopWatch: ImageVector = Icons.Default.Timer
@@ -108,7 +151,7 @@ object AppIcons {
     val TodoCheck: ImageVector = Icons.Default.TaskAlt
     val Video: ImageVector = Icons.Default.VideoLibrary
     val InfoOutline: ImageVector = Icons.Outlined.Info
-    val Loading: ImageVector = Icons.Default.Sync
+    val Loading: ImageVector by lazy { LoadingImg }
     val Lock: ImageVector = Icons.Default.Lock
     val MetaInfo: ImageVector = Icons.Default.Info
     val Print: ImageVector = Icons.Default.Print

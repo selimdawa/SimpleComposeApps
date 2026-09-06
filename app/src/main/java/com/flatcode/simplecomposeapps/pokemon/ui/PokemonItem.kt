@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
+import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.White
@@ -68,13 +69,11 @@ fun PokemonItem(
                     contentScale = ContentScale.Fit,
                     loading = {
                         Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
+                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                         ) {
-                            LoadingAnimation()
+                            LoadingAnimation(modifier = Modifier.size(80.dp))
                         }
-                    }
-                )
+                    })
 
                 Column(
                     modifier = Modifier
@@ -104,61 +103,45 @@ fun PokemonItem(
     }
 }
 
-@Composable
-fun LoadingAnimation() {
-    val infiniteTransition = rememberInfiniteTransition(label = "loading")
-    val angle by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing)
-        ), label = "angle"
-    )
-
-    Image(
-        painter = painterResource(id = R.drawable.loading_img),
-        contentDescription = "Loading",
-        modifier = Modifier
-            .size(180.dp)
-            .rotate(angle)
-    )
-}
 
 @Composable
 fun PokemonItemShimmer(modifier: Modifier = Modifier) {
+    val shimmerColor = Color(0xFFC8C8C9)
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 5.dp)
             .padding(bottom = 10.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Dark)
+        colors = CardDefaults.cardColors(containerColor = Color.Black)
     ) {
-        Column(modifier = Modifier.fillMaxWidth().shimmer()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.LightGray)
-            )
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(6.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MC_BG)
-                    .padding(10.dp)
+                    .shimmer()
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.3f)
-                        .height(20.dp)
-                        .background(Color.LightGray)
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(shimmerColor)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .height(25.dp)
-                        .background(Color.LightGray)
+                        .padding(8.dp)
+                        .size(width = 32.dp, height = 16.dp)
+                        .background(shimmerColor)
+                )
+                Box(
+                    modifier = Modifier
+                        .padding(start = 8.dp, bottom = 8.dp)
+                        .size(width = 100.dp, height = 24.dp)
+                        .background(shimmerColor)
                 )
             }
         }
@@ -170,9 +153,7 @@ fun PokemonItemShimmer(modifier: Modifier = Modifier) {
 fun PokemonItemPreview() {
     PokemonItem(
         pokemon = PokeItem(
-            id = 1,
-            name = "bulbasaur",
-            url = "https://pokeapi.co/api/v2/pokemon/1/"
+            id = 1, name = "bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"
         )
     )
 }
