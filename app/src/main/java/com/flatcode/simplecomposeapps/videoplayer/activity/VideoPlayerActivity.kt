@@ -40,7 +40,6 @@ class VideoPlayerActivity : ComponentActivity() {
         setContent {
             VideoPlayerScreen(
                 viewModel = viewModel,
-                onBack = { finish() },
                 onVideoClick = { position ->
                     VideoData.videoFile = ArrayList(viewModel.uiState.value.videoFiles)
                     // Navigate to PlayerActivity
