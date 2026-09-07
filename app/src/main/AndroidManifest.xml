@@ -63,15 +63,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".news.activity.NewsAppDetailsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".pdfreader.activity.PdfReaderActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pdfreader.activity.PdfReaderIntroActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -91,19 +83,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".web.WebViewActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".wordpress.activity.WordpressActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".wordpress.activity.WordpressDetailsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".wordpress.activity.WordpressFavoritesActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -177,18 +157,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".blogger.activity.BloggerAppActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".blogger.activity.PageDetailsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".blogger.activity.PagesActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".blogger.activity.PostDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
