@@ -16,6 +16,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -29,27 +33,25 @@ class PdfReaderActivity : ComponentActivity() {
     private val viewModel: PdfViewModel by viewModels()
 
     private val documentPickerLauncher = registerForActivityResult(OpenDocument()) { selectedUri ->
-        selectedUri?.let { viewModel.setUri(it, this) }
+        selectedUri?.let { viewModel.setUri(it) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        intent.data?.let { viewModel.setUri(it, this) }
+        intent.data?.let { viewModel.setUri(it) }
 
         if (viewModel.uiState.value.uri == null) {
             documentPickerLauncher.launch(arrayOf("application/pdf"))
         }
 
         setContent {
-            PdfReaderScreen(
+            PdfReaderNavHost(
                 viewModel = viewModel,
                 onPickFile = { documentPickerLauncher.launch(arrayOf("application/pdf")) },
-                onMeta = { /* Reverted */ },
                 onShare = { shareFile() },
-                onPrint = { printDocument() },
-                onFullscreen = { viewModel.toggleBottomBar() }
+                onPrint = { printDocument() }
             )
         }
     }
@@ -114,3 +116,27 @@ class PdfReaderActivity : ComponentActivity() {
         }
     }
 }
+
+
+@Composable
+fun PdfReaderNavHost(
+    viewModel: PdfViewModel,
+    onPickFile: () -> Unit,
+    onShare: () -> Unit,
+    onPrint: () -> Unit
+) {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "reader") {
+        composable("reader") {
+            PdfReaderScreen(
+                viewModel = viewModel,
+                onPickFile = onPickFile,
+                onMeta = { /* Reverted */ },
+                onShare = onShare,
+                onPrint = onPrint,
+                onFullscreen = { viewModel.toggleBottomBar() }
+            )
+        }
+    }
+}
+
