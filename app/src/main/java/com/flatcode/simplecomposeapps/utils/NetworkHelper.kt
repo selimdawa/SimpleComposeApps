@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.dogs.utils
+package com.flatcode.simplecomposeapps.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

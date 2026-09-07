@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageDao
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageEntity
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RandomCatsImageViewModel @Inject constructor(
     application: Application,
-    private val catImageDao: CatImageDao
+    private val catImageDao: CatImageDao,
+    private val networkHelper: NetworkHelper
 ) : AndroidViewModel(application) {
 
     val imageUrl: State<String>
@@ -42,6 +44,9 @@ class RandomCatsImageViewModel @Inject constructor(
             catImageDao.getAllImages().collectLatest { entities ->
                 savedImages.clear()
                 savedImages.addAll(entities.map { it.url })
+                if (imageUrl.value.isEmpty() && savedImages.isNotEmpty() && !networkHelper.isNetworkConnected()) {
+                    imageUrl.value = savedImages.random()
+                }
             }
         }
     }
@@ -62,6 +67,9 @@ class RandomCatsImageViewModel @Inject constructor(
                 isLoading.value = false
             }
         }, {
+            if (imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
+                imageUrl.value = savedImages.random()
+            }
             isLoading.value = false
         })
         queue.add(arrayRequest)
