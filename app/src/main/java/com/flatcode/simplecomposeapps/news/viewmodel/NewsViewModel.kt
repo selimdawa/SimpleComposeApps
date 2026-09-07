@@ -24,6 +24,9 @@ class NewsViewModel @Inject constructor(application: Application) : AndroidViewM
     val selectedCategory: State<String>
         field = mutableStateOf("general")
 
+    val selectedHeadline: State<NewsHeadlines?>
+        field = mutableStateOf<NewsHeadlines?>(null)
+
     private val requestManager = RequestManager(application)
 
     private val listener = object : OnFetchDataListener<NewsApiResponse> {
