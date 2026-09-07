@@ -9,8 +9,11 @@ import com.flatcode.simplecomposeapps.news.OnFetchDataListener
 import com.flatcode.simplecomposeapps.news.RequestManager
 import com.flatcode.simplecomposeapps.news.model.NewsApiResponse
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class NewsViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class NewsViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     val headlines: List<NewsHeadlines>
         field = mutableStateListOf<NewsHeadlines>()

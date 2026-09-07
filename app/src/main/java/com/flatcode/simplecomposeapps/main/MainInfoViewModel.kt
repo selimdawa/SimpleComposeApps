@@ -3,9 +3,12 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import com.flatcode.simplecomposeapps.utils.DATA
 
-class MainInfoViewModel : ViewModel() {
+@HiltViewModel
+class MainInfoViewModel @Inject constructor() : ViewModel() {
 
     val dataMainInfo: LiveData<List<MainInfo>>
         field = MutableLiveData<List<MainInfo>>()

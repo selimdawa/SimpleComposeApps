@@ -14,7 +14,9 @@ import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
 import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
 import com.flatcode.simplecomposeapps.web.ui.WebSupportDialog
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WebAppActivity : ComponentActivity() {
 
     private val viewModel: WebAppViewModel by viewModels()

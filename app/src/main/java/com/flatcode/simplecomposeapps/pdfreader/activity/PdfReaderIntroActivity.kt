@@ -10,7 +10,9 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
 import com.github.paolorotolo.appintro.model.SliderPage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PdfReaderIntroActivity : AppIntro() {
 
     private val backgroundColor = Color.parseColor("#000000")

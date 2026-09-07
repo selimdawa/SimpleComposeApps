@@ -5,12 +5,15 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.ui.AppIcons
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 
-class CandyCrushViewModel : ViewModel() {
+@HiltViewModel
+class CandyCrushViewModel @Inject constructor() : ViewModel() {
 
     val noOfBlocks = 8
     val candies = intArrayOf(

@@ -15,16 +15,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileOutputStream
 import java.io.IOException
 
+@AndroidEntryPoint
 class PdfReaderActivity : ComponentActivity() {
 
-    private lateinit var viewModel: PdfViewModel
+    private val viewModel: PdfViewModel by viewModels()
 
     private val documentPickerLauncher = registerForActivityResult(OpenDocument()) { selectedUri ->
         selectedUri?.let { viewModel.setUri(it, this) }
@@ -33,7 +35,6 @@ class PdfReaderActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[PdfViewModel::class.java]
 
         intent.data?.let { viewModel.setUri(it, this) }
 

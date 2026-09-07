@@ -13,9 +13,12 @@ import com.flatcode.simplecomposeapps.blogger.model.Label
 import com.flatcode.simplecomposeapps.blogger.model.Page
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.utils.DATA
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.json.JSONObject
+import javax.inject.Inject
 
-class BloggerViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class BloggerViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     val posts: List<Post>
         field = mutableStateListOf<Post>()

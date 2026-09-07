@@ -8,9 +8,12 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.utils.DATA
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.json.JSONException
+import javax.inject.Inject
 
-class RandomCatsImageViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class RandomCatsImageViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val _imageUrl = mutableStateOf("")
     val imageUrl: State<String> = _imageUrl

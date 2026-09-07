@@ -9,7 +9,9 @@ import com.flatcode.simplecomposeapps.utils.launchActivity
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
 import com.flatcode.simplecomposeapps.videoplayer.ui.VideoFolderScreen
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VideoFolderActivity : ComponentActivity() {
 
     private val viewModel: VideoViewModel by viewModels()

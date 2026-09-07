@@ -11,7 +11,9 @@ import com.flatcode.simplecomposeapps.wordpress.model.Post
 import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressDetailsScreen
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WordpressDetailsActivity : ComponentActivity() {
 
     private val viewModel: WordpressViewModel by viewModels()

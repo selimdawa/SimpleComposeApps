@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.wordpress.model.Post
 import com.flatcode.simplecomposeapps.wordpress.sqlite.PostDB
 import com.flatcode.simplecomposeapps.wordpress.utils.WordPressClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class WordpressUiState(
     val posts: List<Post> = emptyList(),
@@ -20,7 +22,8 @@ data class WordpressUiState(
     val errorMessage: String? = null
 )
 
-class WordpressViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class WordpressViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(WordpressUiState())
     val uiState: StateFlow<WordpressUiState> = _uiState.asStateFlow()

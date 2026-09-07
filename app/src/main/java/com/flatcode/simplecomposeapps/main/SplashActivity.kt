@@ -35,9 +35,10 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.openActivity
-import com.flatcode.simplecomposeapps.weather.WeatherActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
+@AndroidEntryPoint
 class SplashActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        openActivity(TodoNoteActivity::class.java, true)
+        openActivity(MainActivity::class.java, true)
     }
 
     companion object {

@@ -7,9 +7,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.flatcode.simplecomposeapps.utils.DATA
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
+import javax.inject.Inject
 
-class StopWatchViewModel : ViewModel() {
+@HiltViewModel
+class StopWatchViewModel @Inject constructor() : ViewModel() {
 
     val timeDisplay: State<String>
         field = mutableStateOf(DATA.ZERO_TIME)

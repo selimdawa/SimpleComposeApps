@@ -8,7 +8,9 @@ import androidx.core.os.BundleCompat
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.ui.NewsAppDetailsScreen
 import com.flatcode.simplecomposeapps.utils.DATA
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsAppDetailsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

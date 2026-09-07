@@ -11,9 +11,12 @@ import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.joke.model.Joke
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.json.JSONException
+import javax.inject.Inject
 
-class JokeViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class JokeViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val _jokes = mutableStateListOf<Joke>()
     val jokes: List<Joke> get() = _jokes

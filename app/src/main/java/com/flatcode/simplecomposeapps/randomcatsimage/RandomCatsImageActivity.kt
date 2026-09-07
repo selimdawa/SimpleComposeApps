@@ -4,22 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simplecomposeapps.randomcatsimage.ui.RandomCatsImageScreen
+import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
+@AndroidEntryPoint
 class RandomCatsImageActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: RandomCatsImageViewModel
+    private val viewModel: RandomCatsImageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this)[RandomCatsImageViewModel::class.java]
 
         setContent {
             RandomCatsImageScreen(

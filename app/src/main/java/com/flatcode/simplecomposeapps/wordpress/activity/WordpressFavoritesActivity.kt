@@ -9,7 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressFavoritesScreen
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WordpressFavoritesActivity : ComponentActivity() {
 
     private val viewModel: WordpressViewModel by viewModels()

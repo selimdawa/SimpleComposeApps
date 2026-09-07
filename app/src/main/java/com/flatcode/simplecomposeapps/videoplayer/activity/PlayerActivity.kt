@@ -8,7 +8,9 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import com.flatcode.simplecomposeapps.videoplayer.ui.PlayerScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PlayerActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,8 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MultiDeleteViewModel : ViewModel() {
+@HiltViewModel
+class MultiDeleteViewModel @Inject constructor() : ViewModel() {
 
     val items = mutableStateListOf<String>()
 

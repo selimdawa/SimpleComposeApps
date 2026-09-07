@@ -3,6 +3,8 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
 import com.flatcode.simplecomposeapps.calculator.CalculatorActivity
 import com.flatcode.simplecomposeapps.countries.CountriesActivity
@@ -31,7 +33,8 @@ import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.web.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
     val dataMain: LiveData<List<Main>>
         field = MutableLiveData<List<Main>>()

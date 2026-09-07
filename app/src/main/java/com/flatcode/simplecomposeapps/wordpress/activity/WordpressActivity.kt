@@ -8,7 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressScreen
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WordpressActivity : ComponentActivity() {
 
     private val viewModel: WordpressViewModel by viewModels()

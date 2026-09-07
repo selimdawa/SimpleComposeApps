@@ -5,17 +5,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerScreen
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.utils.openActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BloggerAppActivity : ComponentActivity() {
+
+    private val viewModel: BloggerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProvider(this)[BloggerViewModel::class.java]
 
         setContent {
             BloggerScreen(

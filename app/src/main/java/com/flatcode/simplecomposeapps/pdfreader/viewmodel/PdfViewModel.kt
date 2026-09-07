@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.inject.Inject
 import javax.net.ssl.SSLException
 
 data class PdfUiState(
@@ -26,7 +28,8 @@ data class PdfUiState(
     val isBottomBarVisible: Boolean = true
 )
 
-class PdfViewModel : ViewModel() {
+@HiltViewModel
+class PdfViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(PdfUiState())
     val uiState: StateFlow<PdfUiState> = _uiState.asStateFlow()
