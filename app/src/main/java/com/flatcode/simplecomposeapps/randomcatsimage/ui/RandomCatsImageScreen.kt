@@ -5,14 +5,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
@@ -39,8 +45,18 @@ fun RandomCatsImageScreen(
                 viewModel = viewModel, onDownload = onDownload
             )
 
-            if (isLoading && imageUrl.isEmpty()) {
+            if (isLoading) {
                 CircularProgressIndicator(color = MC_TRACK)
+            } else if (imageUrl.isEmpty()) {
+                Text(
+                    text = Strings.NONE_DISPLAY,
+                    color = COLOR_ERROR,
+                    fontSize = 32.sp,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 20.dp),
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }
