@@ -1,56 +1,33 @@
 package com.flatcode.simplecomposeapps.web.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
 val CardTextSize = 18.sp
 val CardCornerRadius = 15.dp
 val SocialSize = 70.dp
-val SocialMarginHorizontal = 5.dp
-val SocialPadding = 5.dp
 
 @Composable
 fun WebAppScreen(
@@ -84,7 +61,7 @@ fun WebAppScreen(
                     .weight(1f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CardItem(
+                WebItem(
                     modifier = Modifier.weight(1f),
                     cardModifier = Modifier
                         .fillMaxSize()
@@ -99,7 +76,7 @@ fun WebAppScreen(
                     onClick = onSupport
                 )
 
-                CardItem(
+                WebItem(
                     modifier = Modifier.weight(1f),
                     cardModifier = Modifier
                         .fillMaxSize()
@@ -122,7 +99,7 @@ fun WebAppScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CardItem(
+                WebItem(
                     modifier = Modifier.weight(1f),
                     cardModifier = Modifier
                         .fillMaxSize()
@@ -144,7 +121,7 @@ fun WebAppScreen(
                     .weight(1f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CardItem(
+                WebItem(
                     modifier = Modifier.weight(1f),
                     cardModifier = Modifier
                         .fillMaxSize()
@@ -159,7 +136,7 @@ fun WebAppScreen(
                     onClick = onShareApp
                 )
 
-                CardItem(
+                WebItem(
                     modifier = Modifier.weight(1f),
                     cardModifier = Modifier
                         .fillMaxSize()
@@ -182,19 +159,19 @@ fun WebAppScreen(
                     .height(SocialSize),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                SocialIcon(
+                SocialItem(
                     modifier = Modifier.weight(1f),
                     imageResId = AppIcons.Facebook,
                     onClick = onFacebook
                 )
 
-                SocialIcon(
+                SocialItem(
                     modifier = Modifier.weight(1f),
                     imageResId = AppIcons.Instagram,
                     onClick = onInstagram
                 )
 
-                SocialIcon(
+                SocialItem(
                     modifier = Modifier
                         .weight(1f)
                         .scale(1.2f),
@@ -207,87 +184,6 @@ fun WebAppScreen(
     }
 }
 
-@Composable
-fun CardItem(
-    cornerRadius: Dp,
-    imageResId: Int,
-    imageTint: Color,
-    text: String,
-    textColor: Color,
-    textSize: TextUnit,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    cardModifier: Modifier = Modifier,
-    imageSize: Dp? = null,
-    imageWidth: Dp? = null,
-    imageHeight: Dp? = null
-) {
-    Column(
-        modifier = modifier.fillMaxHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Card(
-            modifier = cardModifier.clickable(
-                interactionSource = remember { MutableInteractionSource() }, indication = null
-            ) { onClick() },
-            shape = RoundedCornerShape(cornerRadius),
-            colors = CardDefaults.cardColors(containerColor = MC_BG)
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(id = imageResId),
-                    contentDescription = null,
-                    modifier = when {
-                        imageSize != null -> Modifier.size(imageSize)
-                        (imageWidth != null && imageHeight != null) -> Modifier
-                            .width(imageWidth)
-                            .height(imageHeight)
-
-                        else -> Modifier.size(80.dp)
-                    },
-                    colorFilter = ColorFilter.tint(imageTint)
-                )
-
-                Text(
-                    text = text,
-                    modifier = Modifier.width(IntrinsicSize.Max),
-                    textAlign = TextAlign.Center,
-                    color = textColor,
-                    fontSize = textSize,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun SocialIcon(
-    imageResId: Int, onClick: () -> Unit, modifier: Modifier = Modifier, padding: Dp = SocialPadding
-) {
-    Row(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(horizontal = SocialMarginHorizontal)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() }, indication = null
-            ) { onClick() }) {
-        Image(
-            painter = painterResource(id = imageResId),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            colorFilter = ColorFilter.tint(MC_TRACK)
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

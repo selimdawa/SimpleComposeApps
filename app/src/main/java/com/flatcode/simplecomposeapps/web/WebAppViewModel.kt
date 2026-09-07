@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.web.viewmodel
+package com.flatcode.simplecomposeapps.web
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class WebAppUiState(
-    val showAboutDialog: Boolean = false,
-    val showSupportDialog: Boolean = false
+    val showAboutDialog: Boolean = false, val showSupportDialog: Boolean = false
 )
 
 @HiltViewModel

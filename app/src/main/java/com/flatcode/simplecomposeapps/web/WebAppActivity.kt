@@ -20,7 +20,6 @@ import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
 import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
 import com.flatcode.simplecomposeapps.web.ui.WebSupportDialog
 import com.flatcode.simplecomposeapps.web.ui.WebViewScreen
-import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,15 +37,17 @@ class WebAppActivity : ComponentActivity() {
                 onShareApp = { shareApp() },
                 onRateApp = { rateApp() },
                 onEmail = { sendEmail() },
-                onPhone = { callPhone() }
-            )
+                onPhone = { callPhone() })
         }
     }
 
     private fun shareApp() {
         val share = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Share App with\nhttps://play.google.com/store/apps/details?id=$packageName")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Share App with\nhttps://play.google.com/store/apps/details?id=$packageName"
+            )
         }
         startActivity(Intent.createChooser(share, "Share link!"))
     }
@@ -91,8 +92,7 @@ fun WebNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable("main") {
             val uiState by viewModel.uiState.collectAsState()
             WebAppScreen(
@@ -131,4 +131,3 @@ fun WebNavHost(
         }
     }
 }
-
