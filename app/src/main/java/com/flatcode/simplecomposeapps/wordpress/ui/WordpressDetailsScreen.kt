@@ -48,8 +48,8 @@ import com.flatcode.simplecomposeapps.wordpress.utils.loadWordPressContent
 
 @Composable
 fun WordpressDetailsScreen(
-    id: Int,
     featuredMediaId: Int,
+    featuredMediaUrl: String?,
     title: String,
     content: String,
     isFavorite: Boolean,
@@ -57,10 +57,10 @@ fun WordpressDetailsScreen(
     onToggleFavorite: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-    var mediaUrl by remember { mutableStateOf<String?>(null) }
+    var mediaUrl by remember { mutableStateOf(featuredMediaUrl) }
 
     LaunchedEffect(featuredMediaId) {
-        if (featuredMediaId != -1) {
+        if (featuredMediaId != -1 && mediaUrl == null) {
             try {
                 val media = WordPressClient.apiService.getPostThumbnail(featuredMediaId)
                 mediaUrl = media.guid?.rendered

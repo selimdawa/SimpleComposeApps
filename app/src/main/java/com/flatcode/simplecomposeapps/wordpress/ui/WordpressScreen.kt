@@ -21,6 +21,12 @@ import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 
 
+import androidx.compose.material3.Text
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+
 @Composable
 fun WordpressScreen(
     viewModel: WordpressViewModel, onPostClick: (Int) -> Unit, onFavoritesClick: () -> Unit
@@ -39,18 +45,28 @@ fun WordpressScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 10.dp)
-            ) {
-                itemsIndexed(uiState.posts) { index, post ->
-                    WordpressItem(post = post, onClick = { onPostClick(index) })
-                }
-            }
-
             if (uiState.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
+            } else if (uiState.posts.isEmpty()) {
+                Text(
+                    text = Strings.NONE_DISPLAY,
+                    color = COLOR_ERROR,
+                    fontSize = 32.sp,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 20.dp),
+                    textAlign = TextAlign.Center
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 10.dp)
+                ) {
+                    itemsIndexed(uiState.posts) { index, post ->
+                        WordpressItem(post = post, onClick = { onPostClick(index) })
+                    }
+                }
             }
         }
     }

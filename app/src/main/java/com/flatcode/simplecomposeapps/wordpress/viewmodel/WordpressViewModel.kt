@@ -3,109 +3,148 @@ package com.flatcode.simplecomposeapps.wordpress.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.wordpress.data.PostDao
+import com.flatcode.simplecomposeapps.wordpress.data.PostEntity
+import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.model.Post
-import com.flatcode.simplecomposeapps.wordpress.sqlite.PostDB
 import com.flatcode.simplecomposeapps.wordpress.utils.WordPressClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import javax.inject.Inject
 
 data class WordpressUiState(
     val posts: List<Post> = emptyList(),
     val favoritePosts: List<Post> = emptyList(),
     val selectedPost: Post? = null,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val isRefreshing: Boolean = false,
     val errorMessage: String? = null
 )
 
 @HiltViewModel
-class WordpressViewModel @Inject constructor(application: Application) :
-    AndroidViewModel(application) {
+class WordpressViewModel @Inject constructor(
+    application: Application,
+    private val postDao: PostDao
+) : AndroidViewModel(application) {
 
-    val uiState: StateFlow<WordpressUiState>
-        field = MutableStateFlow(WordpressUiState())
-
-    private val postDB = PostDB.getInstance(application)
+    private val _uiState = MutableStateFlow(WordpressUiState())
+    val uiState: StateFlow<WordpressUiState> = _uiState
 
     init {
-        loadPosts()
-        loadFavorites()
+        observePosts()
+        viewModelScope.launch {
+            // Wait for first Room emission to avoid "No data" flicker
+            postDao.getAllPosts().first()
+            loadPosts()
+        }
+    }
+
+    private fun observePosts() {
+        viewModelScope.launch {
+            postDao.getAllPosts().collectLatest { entities ->
+                val posts = entities.map { mapFromEntity(it) }
+                _uiState.update { it.copy(
+                    posts = posts,
+                    favoritePosts = posts.filter { p -> p.isFavorite },
+                    isLoading = if (posts.isNotEmpty()) false else it.isLoading
+                ) }
+            }
+        }
+    }
+
+
+    private fun mapFromEntity(entity: PostEntity): Post {
+        return Post(
+            id = entity.wpPostId,
+            title = Rendered(rendered = entity.wpTitle),
+            excerpt = Rendered(rendered = entity.wpExcerpt),
+            content = Rendered(rendered = entity.wpContent),
+            featuredMedia = entity.featuredMedia,
+            featuredMediaUrl = entity.featuredMediaUrl,
+            isFavorite = entity.isFavorite
+        )
+    }
+
+    private fun mapToEntity(post: Post, isFavorite: Boolean): PostEntity {
+        return PostEntity(
+            wpPostId = post.id,
+            wpTitle = post.title?.rendered,
+            wpExcerpt = post.excerpt?.rendered,
+            wpContent = post.content?.rendered,
+            featuredMedia = post.featuredMedia,
+            featuredMediaUrl = post.featuredMediaUrl,
+            isFavorite = isFavorite
+        )
     }
 
     fun loadPosts(withProgress: Boolean = true) {
         viewModelScope.launch {
-            if (withProgress) uiState.update { it.copy(isLoading = true) }
-            else uiState.update { it.copy(isRefreshing = true) }
+            val hasData = _uiState.value.posts.isNotEmpty()
+            if (withProgress && !hasData) _uiState.update { it.copy(isLoading = true) }
+            else _uiState.update { it.copy(isRefreshing = true) }
 
             try {
                 val api = WordPressClient.apiService
-                val response = api.getPosts()
+                val posts = api.getPosts()
 
-                // Check each post if it is favorite
-                val updatedPosts = response.map { post ->
-                    post.copy(isFavorite = postDB?.getDbPostIsFav(post.id) == true)
+                val favoriteIds = postDao.getFavoriteIds().toSet()
+
+                // Fetch media URLs for each post in parallel
+                val postsWithMedia = posts.map { post ->
+                    async {
+                        if (post.featuredMedia > 0) {
+                            try {
+                                val media = api.getPostThumbnail(post.featuredMedia)
+                                post.copy(featuredMediaUrl = media.guid?.rendered)
+                            } catch (_: Exception) {
+                                post
+                            }
+                        } else {
+                            post
+                        }
+                    }
+                }.awaitAll()
+
+                val entities = postsWithMedia.map { post ->
+                    mapToEntity(post, favoriteIds.contains(post.id))
                 }
 
-                uiState.update {
+                postDao.insertPosts(entities)
+                
+                _uiState.update {
                     it.copy(
-                        posts = updatedPosts,
                         isLoading = false,
                         isRefreshing = false,
                         errorMessage = null
                     )
                 }
-            } catch (e: Exception) {
-                uiState.update {
+            } catch (_: Exception) {
+                _uiState.update {
                     it.copy(
                         isLoading = false,
                         isRefreshing = false,
-                        errorMessage = e.message
+                        errorMessage = if (_uiState.value.posts.isEmpty()) "No data available offline" else null
                     )
                 }
             }
-        }
-    }
-
-    fun loadFavorites() {
-        viewModelScope.launch {
-            val favorites = postDB?.allDbPosts ?: emptyList()
-            uiState.update { it.copy(favoritePosts = favorites) }
         }
     }
 
     fun selectPost(post: Post?) {
-        uiState.update { it.copy(selectedPost = post) }
+        _uiState.update { it.copy(selectedPost = post) }
     }
 
     fun toggleFavorite(post: Post) {
         viewModelScope.launch {
-            postDB?.let { db ->
-                if (db.getDbPostIsFav(post.id)) {
-                    db.delete(post.id)
-                } else {
-                    db.insert(
-                        wpPostID = post.id,
-                        wpTitle = post.title?.rendered,
-                        wpExcerpt = post.excerpt?.rendered,
-                        wpContent = post.content?.rendered,
-                        featuredMedia = post.featuredMedia,
-                        isFavorite = true
-                    )
-                }
-                loadFavorites()
-                // Update post list if it contains this post
-                uiState.update { state ->
-                    state.copy(
-                        posts = state.posts.map {
-                            if (it.id == post.id) it.copy(isFavorite = db.getDbPostIsFav(post.id)) else it
-                        }
-                    )
-                }
-            }
+            val isFav = postDao.isFavorite(post.id).first()
+            postDao.updateFavorite(post.id, !isFav)
         }
     }
 }

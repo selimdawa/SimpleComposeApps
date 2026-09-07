@@ -23,5 +23,6 @@ data class Post(
     val wpTitle: String? = null,
     val wpExcerpt: String? = null,
     val wpContent: String? = null,
+    val featuredMediaUrl: String? = null,
     val isFavorite: Boolean = false
 )
