@@ -6,7 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.runtime.Composable
 import androidx.core.net.toUri
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.randomcatsimage.ui.RandomCatsImageScreen
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
@@ -22,12 +28,32 @@ class RandomCatsImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            RandomCatsImageScreen(
+            RandomCatsImageNav(
                 viewModel = viewModel,
                 onDownload = { url ->
                     val browser = Intent(Intent.ACTION_VIEW, url.toUri())
                     startActivity(browser)
-                },
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun RandomCatsImageNav(viewModel: RandomCatsImageViewModel, onDownload: (String) -> Unit) {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "main",
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }
+    ) {
+        composable("main") {
+            RandomCatsImageScreen(
+                viewModel = viewModel,
+                onDownload = onDownload
             )
         }
     }
