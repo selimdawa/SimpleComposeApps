@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -194,9 +195,12 @@ fun WebAppScreen(
                 )
 
                 SocialIcon(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .scale(1.2f),
                     imageResId = AppIcons.Twitter,
-                    onClick = onTwitter
+                    onClick = onTwitter,
+                    padding = 0.dp
                 )
             }
         }
@@ -265,7 +269,7 @@ fun CardItem(
 
 @Composable
 fun SocialIcon(
-    imageResId: Int, onClick: () -> Unit, modifier: Modifier = Modifier
+    imageResId: Int, onClick: () -> Unit, modifier: Modifier = Modifier, padding: Dp = SocialPadding
 ) {
     Row(
         modifier = modifier
@@ -279,7 +283,7 @@ fun SocialIcon(
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(SocialPadding),
+                .padding(padding),
             colorFilter = ColorFilter.tint(MC_TRACK)
         )
     }

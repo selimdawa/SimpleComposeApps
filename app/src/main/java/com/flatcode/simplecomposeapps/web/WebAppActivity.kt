@@ -6,13 +6,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.net.toUri
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
 import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
 import com.flatcode.simplecomposeapps.web.ui.WebSupportDialog
+import com.flatcode.simplecomposeapps.web.ui.WebViewScreen
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,38 +33,14 @@ class WebAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val uiState by viewModel.uiState.collectAsState()
-
-            WebAppScreen(
-                onWebSite = { openWebView(DATA.WEBSITE) },
-                onInstagram = { openWebView(DATA.INSTAGRAM) },
-                onTwitter = { openWebView(DATA.TWITTER) },
-                onFacebook = { openWebView(DATA.FACEBOOK) },
-                onAboutUs = { viewModel.showAboutDialog(true) },
-                onSupport = { viewModel.showSupportDialog(true) },
+            WebNavHost(
+                viewModel = viewModel,
                 onShareApp = { shareApp() },
-                onRateApp = { rateApp() }
+                onRateApp = { rateApp() },
+                onEmail = { sendEmail() },
+                onPhone = { callPhone() }
             )
-
-            if (uiState.showAboutDialog) {
-                WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
-            }
-
-            if (uiState.showSupportDialog) {
-                WebSupportDialog(
-                    onDismiss = { viewModel.showSupportDialog(false) },
-                    onEmail = { sendEmail() },
-                    onPhone = { callPhone() }
-                )
-            }
         }
-    }
-
-    private fun openWebView(name: String) {
-        val intent = Intent(this, WebViewActivity::class.java).apply {
-            putExtra(DATA.WEB_NAME, name)
-        }
-        startActivity(intent)
     }
 
     private fun shareApp() {
@@ -92,3 +75,60 @@ class WebAppActivity : ComponentActivity() {
         startActivity(intent)
     }
 }
+
+@Composable
+fun WebNavHost(
+    viewModel: WebAppViewModel,
+    onShareApp: () -> Unit,
+    onRateApp: () -> Unit,
+    onEmail: () -> Unit,
+    onPhone: () -> Unit
+) {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "main",
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }
+    ) {
+        composable("main") {
+            val uiState by viewModel.uiState.collectAsState()
+            WebAppScreen(
+                onWebSite = { navController.navigate("webView/${DATA.WEBSITE}") },
+                onInstagram = { navController.navigate("webView/${DATA.INSTAGRAM}") },
+                onTwitter = { navController.navigate("webView/${DATA.TWITTER}") },
+                onFacebook = { navController.navigate("webView/${DATA.FACEBOOK}") },
+                onAboutUs = { viewModel.showAboutDialog(true) },
+                onSupport = { viewModel.showSupportDialog(true) },
+                onShareApp = onShareApp,
+                onRateApp = onRateApp
+            )
+
+            if (uiState.showAboutDialog) {
+                WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
+            }
+
+            if (uiState.showSupportDialog) {
+                WebSupportDialog(
+                    onDismiss = { viewModel.showSupportDialog(false) },
+                    onEmail = onEmail,
+                    onPhone = onPhone
+                )
+            }
+        }
+        composable("webView/{name}") { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val url = when (name) {
+                DATA.WEBSITE -> DATA.mySite
+                DATA.INSTAGRAM -> DATA.myInstagram
+                DATA.FACEBOOK -> DATA.myFacebook
+                DATA.TWITTER -> DATA.myTwitter
+                else -> DATA.mySite
+            }
+            WebViewScreen(url = url)
+        }
+    }
+}
+
