@@ -17,8 +17,8 @@ android {
         applicationId = "com.flatcode.simplecomposeapps"
         minSdk = 24
         targetSdk = 37
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appName"] = "Simple Compose Apps"
@@ -37,7 +37,6 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding = true
     }
 }
 
@@ -58,9 +57,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.preference.ktx)
-    implementation(libs.material)
     implementation(libs.multicolors)
     //Lifecycle
     implementation(libs.lifecycle.viewmodel.ktx)
@@ -70,7 +66,6 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
-    implementation(libs.shimmer)
     implementation(libs.compose.shimmer)
     //Networking
     implementation(libs.retrofit.core)
@@ -85,28 +80,20 @@ dependencies {
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    //Navigation
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
     // Room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.hilt.navigation.fragment)
     implementation(libs.androidx.hilt.navigation.compose)
     //Media & PDF
     implementation(libs.android.pdf.viewer)
     implementation(libs.appintro)
-    implementation(libs.exoplayer)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
     //Other's
-    implementation(libs.intuit.ssp)
-    implementation(libs.intuit.sdp)
     implementation(libs.exp4j)
-    implementation(libs.swiperefreshlayout)
     implementation(libs.play.services.location)
     implementation(libs.datastore.preferences)
     implementation(libs.timber)
