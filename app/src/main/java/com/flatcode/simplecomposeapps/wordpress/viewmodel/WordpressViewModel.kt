@@ -16,6 +16,7 @@ import javax.inject.Inject
 data class WordpressUiState(
     val posts: List<Post> = emptyList(),
     val favoritePosts: List<Post> = emptyList(),
+    val selectedPost: Post? = null,
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val errorMessage: String? = null
@@ -74,6 +75,10 @@ class WordpressViewModel @Inject constructor(application: Application) :
             val favorites = postDB?.allDbPosts ?: emptyList()
             uiState.update { it.copy(favoritePosts = favorites) }
         }
+    }
+
+    fun selectPost(post: Post?) {
+        uiState.update { it.copy(selectedPost = post) }
     }
 
     fun toggleFavorite(post: Post) {
