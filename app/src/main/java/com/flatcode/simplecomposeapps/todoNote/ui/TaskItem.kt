@@ -26,7 +26,7 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
 @Composable
 fun TaskItem(
-    task: Task, onCheckedChange: (Boolean) -> Unit = {}, modifier: Modifier = Modifier
+    task: Task, modifier: Modifier = Modifier, onCheckedChange: (Boolean) -> Unit = {}
 ) {
     ConstraintLayout(
         modifier = modifier

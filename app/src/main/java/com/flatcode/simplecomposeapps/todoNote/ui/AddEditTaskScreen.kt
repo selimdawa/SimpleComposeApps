@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
@@ -22,19 +21,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.AddEditTaskViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
-
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun AddEditTaskScreen(
-    onBack: (Int?) -> Unit,
-    viewModel: AddEditTaskViewModel = hiltViewModel()
+    onBack: (Int?) -> Unit, viewModel: AddEditTaskViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
         viewModel.addEditTaskEvent.collect { event ->
@@ -45,24 +42,20 @@ fun AddEditTaskScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            AddEditTopAppBar(
-                title = if (viewModel.task != null) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
-                onBack = { onBack(null) }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { viewModel.onSaveClick() },
-                containerColor = COLOR_ON_BACKGROUND,
-                contentColor = COLOR_ERROR,
-                modifier = Modifier.padding(25.dp)
-            ) {
-                Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
-            }
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        modifier = Modifier.fillMaxSize(), topBar = {
+        AddEditTopAppBar(
+            title = if (viewModel.task != null) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
+            onBack = { onBack(null) })
+    }, floatingActionButton = {
+        FloatingActionButton(
+            onClick = { viewModel.onSaveClick() },
+            containerColor = COLOR_ON_BACKGROUND,
+            contentColor = COLOR_ERROR,
+            modifier = Modifier.padding(25.dp)
+        ) {
+            Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
+        }
+    }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -76,7 +69,7 @@ fun AddEditTaskScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 5.dp),
-                label = { Text("Task", color = COLOR_ERROR) },
+                label = { Text(Strings.TASK, color = COLOR_ERROR) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedTextColor = COLOR_ERROR,
                     unfocusedTextColor = COLOR_ERROR,
@@ -90,8 +83,7 @@ fun AddEditTaskScreen(
             )
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
             ) {
                 Checkbox(
                     checked = viewModel.taskImportant,
@@ -103,7 +95,7 @@ fun AddEditTaskScreen(
                     )
                 )
                 Text(
-                    text = "Important Task",
+                    text = Strings.IMPORTANT_TASK,
                     color = COLOR_ERROR,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
@@ -112,7 +104,7 @@ fun AddEditTaskScreen(
 
             viewModel.task?.let { task ->
                 Text(
-                    text = "Date created: ${task.createdDateFormatted}",
+                    text = Strings.dateCreated(task.createdDateFormatted),
                     color = COLOR_ERROR,
                     fontSize = 15.sp,
                     modifier = Modifier.padding(15.dp)

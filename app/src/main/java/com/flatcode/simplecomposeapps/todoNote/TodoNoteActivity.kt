@@ -105,8 +105,8 @@ fun TodoBottomNavigation(navController: NavHostController) {
 @Composable
 fun TodoNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
