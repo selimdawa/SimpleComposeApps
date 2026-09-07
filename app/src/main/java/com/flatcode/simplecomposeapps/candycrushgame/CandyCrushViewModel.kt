@@ -4,16 +4,21 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.candycrushgame.data.CandyCrushDao
+import com.flatcode.simplecomposeapps.candycrushgame.data.CandyCrushEntity
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
-class CandyCrushViewModel @Inject constructor() : ViewModel() {
+class CandyCrushViewModel @Inject constructor(
+    private val candyCrushDao: CandyCrushDao
+) : ViewModel() {
 
     val noOfBlocks = 8
     val candies = intArrayOf(
@@ -24,13 +29,25 @@ class CandyCrushViewModel @Inject constructor() : ViewModel() {
 
     val board = mutableStateListOf<Int>()
     val score = mutableIntStateOf(0)
+    val highScore = mutableIntStateOf(0)
 
     init {
-        createBoard()
-        startGameLoop()
+        viewModelScope.launch {
+            val data = candyCrushDao.getCandyCrushData().first()
+            if (data != null && data.boardState.isNotEmpty()) {
+                highScore.intValue = data.highScore
+                score.intValue = data.score
+                board.clear()
+                board.addAll(data.boardState.split(",").map { it.toInt() })
+            } else {
+                createBoard()
+            }
+            startGameLoop()
+        }
     }
 
     private fun createBoard() {
+        board.clear()
         repeat(noOfBlocks * noOfBlocks) { index ->
             var randomCandy: Int
             do {
@@ -58,9 +75,28 @@ class CandyCrushViewModel @Inject constructor() : ViewModel() {
                 checkRowForThree()
                 checkColumnForThree()
                 moveDownCandies()
+                updateHighScore()
+                saveGameData()
                 delay(100.milliseconds)
             }
         }
+    }
+
+    private fun updateHighScore() {
+        if (score.intValue > highScore.intValue) {
+            highScore.intValue = score.intValue
+        }
+    }
+
+    private suspend fun saveGameData() {
+        val boardState = board.joinToString(",")
+        candyCrushDao.saveCandyCrushData(
+            CandyCrushEntity(
+                highScore = highScore.intValue,
+                score = score.intValue,
+                boardState = boardState
+            )
+        )
     }
 
     fun swapCandies(draggedIndex: Int, replacedIndex: Int) {
