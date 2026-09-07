@@ -8,11 +8,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.stopwatch.data.StopWatchDao
+import com.flatcode.simplecomposeapps.stopwatch.data.StopWatchEntity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class StopWatchViewModel @Inject constructor() : ViewModel() {
+class StopWatchViewModel @Inject constructor(
+    private val stopWatchDao: StopWatchDao
+) : ViewModel() {
 
     val timeDisplay: State<String>
         field = mutableStateOf(DATA.ZERO_TIME)
@@ -22,6 +29,18 @@ class StopWatchViewModel @Inject constructor() : ViewModel() {
 
     val isRunning: State<Boolean>
         field = mutableStateOf(false)
+
+    init {
+        observeLastTime()
+    }
+
+    private fun observeLastTime() {
+        viewModelScope.launch {
+            stopWatchDao.getLastTime().collectLatest {
+                lastTime.value = it ?: DATA.ZERO_TIME
+            }
+        }
+    }
 
     private var handler = Handler(Looper.getMainLooper())
     private var tMilliSec = 0L
@@ -60,7 +79,11 @@ class StopWatchViewModel @Inject constructor() : ViewModel() {
 
     fun stop() {
         if (!isRunning.value) {
-            lastTime.value = timeDisplay.value
+            val finalTime = timeDisplay.value
+            lastTime.value = finalTime
+            viewModelScope.launch {
+                stopWatchDao.saveLastTime(StopWatchEntity(lastTime = finalTime))
+            }
             tMilliSec = 0L
             tStart = 0L
             tBuff = 0L
