@@ -2,18 +2,57 @@ package com.flatcode.simplecomposeapps.videoplayer.data
 
 import android.content.ContentUris
 import android.content.Context
-import android.media.MediaScannerConnection
-import android.os.Environment
 import android.provider.MediaStore
+import com.flatcode.simplecomposeapps.utils.formatDuration
+import com.flatcode.simplecomposeapps.utils.formatSize
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
 
-class VideoRepository(private val context: Context) {
+class VideoRepository(
+    private val context: Context,
+    private val videoDao: VideoDao
+) {
 
-    suspend fun getAllVideos(): List<VideoFiles> = withContext(Dispatchers.IO) {
+    suspend fun syncWithRoom() = withContext(Dispatchers.IO) {
+        val mediaStoreVideos = getVideosFromMediaStore()
+        val existingVideos = videoDao.getAllVideos().first()
+        val positionMap = existingVideos.associate { it.videoId to it.lastPosition }
+        
+        val videoEntities = mediaStoreVideos.map {
+            VideoEntity(
+                videoId = it.id ?: "",
+                title = it.title ?: "",
+                path = it.path ?: "",
+                uriString = it.uriString ?: "",
+                fileName = it.fileName ?: "",
+                dateAdded = it.dateAdded ?: "",
+                bucketName = it.bucketName ?: "Internal Storage",
+                size = it.size?.toLongOrNull() ?: 0L,
+                sizeReadable = it.size?.toLongOrNull()?.formatSize() ?: "0 B",
+                duration = it.duration?.toLongOrNull() ?: 0L,
+                durationReadable = it.duration?.toLongOrNull()?.formatDuration() ?: "0:00",
+                lastPosition = positionMap[it.id] ?: 0L
+            )
+        }
+
+        val folders = mediaStoreVideos.groupBy { it.bucketName ?: "Internal Storage" }
+            .map { (name, videos) ->
+                FolderEntity(
+                    name = name,
+                    path = videos.firstOrNull()?.path?.substringBeforeLast('/', "") ?: "",
+                    videoCount = videos.size
+                )
+            }
+
+        videoDao.clearAllVideos()
+        videoDao.insertVideos(videoEntities)
+        videoDao.clearAllFolders()
+        videoDao.insertFolders(folders)
+    }
+
+    private suspend fun getVideosFromMediaStore(): List<VideoFiles> = withContext(Dispatchers.IO) {
         val tempVideoFiles = mutableListOf<VideoFiles>()
         val uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
@@ -69,14 +108,5 @@ class VideoRepository(private val context: Context) {
             }
         }
         tempVideoFiles
-    }
-
-    suspend fun refreshMediaStore() = withContext(Dispatchers.IO) {
-        suspendCancellableCoroutine { continuation ->
-            val root = Environment.getExternalStorageDirectory().absolutePath
-            MediaScannerConnection.scanFile(context, arrayOf(root), null) { _, _ ->
-                continuation.resume(Unit)
-            }
-        }
     }
 }

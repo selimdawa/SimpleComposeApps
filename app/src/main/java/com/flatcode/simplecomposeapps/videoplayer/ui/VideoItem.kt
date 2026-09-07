@@ -25,11 +25,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
-import com.flatcode.simplecomposeapps.utils.formatDuration
-import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
+import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 
 @Composable
-fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
+fun VideoItem(video: VideoEntity, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,16 +56,15 @@ fun VideoItem(video: VideoFiles, onClick: () -> Unit) {
                         .background(Color(0x99000000), RoundedCornerShape(5.dp))
                         .padding(horizontal = 5.dp)
                 ) {
-                    val durationMs = video.duration?.toLongOrNull() ?: 0L
                     Text(
-                        text = durationMs.formatDuration(), color = Color.White, fontSize = 12.sp
+                        text = video.durationReadable, color = Color.White, fontSize = 12.sp
                     )
                 }
             }
         }
 
         Text(
-            text = video.title ?: "Unknown",
+            text = video.title,
             color = COLOR_ERROR,
             fontSize = 14.sp,
             maxLines = 2,

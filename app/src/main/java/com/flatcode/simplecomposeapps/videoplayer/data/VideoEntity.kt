@@ -8,7 +8,13 @@ data class VideoEntity(
     @PrimaryKey val videoId: String,
     val title: String,
     val path: String,
-    val duration: Long,
+    val uriString: String,
+    val fileName: String,
+    val dateAdded: String,
+    val bucketName: String,
     val size: Long,
+    val sizeReadable: String,
+    val duration: Long,
+    val durationReadable: String,
     val lastPosition: Long
 )

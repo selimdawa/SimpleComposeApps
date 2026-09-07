@@ -21,12 +21,12 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.mediacodec.MediaCodecSelector
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.ui.PlayerView
-import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
+import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 
 @OptIn(UnstableApi::class)
 @Composable
 fun PlayerScreen(
-    videos: List<VideoFiles?>,
+    videos: List<VideoEntity>,
     initialPosition: Int
 ) {
     val context = LocalContext.current
@@ -55,7 +55,7 @@ fun PlayerScreen(
 
     LaunchedEffect(videos, initialPosition) {
         val video = videos.getOrNull(initialPosition) ?: return@LaunchedEffect
-        val uri = (video.uriString ?: video.path)?.toUri() ?: return@LaunchedEffect
+        val uri = video.uriString.toUri()
         
         val dataSourceFactory = DefaultDataSource.Factory(context)
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoDao
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoDatabase
+import com.flatcode.simplecomposeapps.videoplayer.data.VideoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,11 +23,18 @@ object VideoModule {
             context,
             VideoDatabase::class.java,
             "video_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     fun provideVideoDao(database: VideoDatabase): VideoDao {
         return database.videoDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(@ApplicationContext context: Context, videoDao: VideoDao): VideoRepository {
+        return VideoRepository(context, videoDao)
     }
 }

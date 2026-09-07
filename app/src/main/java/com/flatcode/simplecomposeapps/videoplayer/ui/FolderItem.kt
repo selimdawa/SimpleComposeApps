@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.videoplayer.model.Folder
+import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
 
 @Composable
-fun FolderItem(folder: Folder, onClick: () -> Unit) {
+fun FolderItem(folder: FolderEntity, onClick: () -> Unit) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .clickable { onClick() }

@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
-import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import com.flatcode.simplecomposeapps.videoplayer.ui.PlayerScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +16,7 @@ class PlayerActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val position = intent.getIntExtra("position", -1)
         val sender = intent.getStringExtra("sender")
-        val myFiles: ArrayList<VideoFiles?>? = if (sender == "FolderIsSending") 
+        val myFiles: ArrayList<VideoEntity>? = if (sender == "FolderIsSending") 
             VideoData.folderVideoFile 
         else 
             VideoData.videoFile

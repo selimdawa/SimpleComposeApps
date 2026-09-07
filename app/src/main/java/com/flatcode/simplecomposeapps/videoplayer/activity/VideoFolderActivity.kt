@@ -22,7 +22,7 @@ class VideoFolderActivity : ComponentActivity() {
         setContent {
             VideoFolderScreen(
                 viewModel = viewModel,
-                folderPath = folderName,
+                folderName = folderName,
                 onVideoClick = { position, filteredVideos ->
                     VideoData.folderVideoFile = ArrayList(filteredVideos)
                     launchActivity<PlayerActivity> {

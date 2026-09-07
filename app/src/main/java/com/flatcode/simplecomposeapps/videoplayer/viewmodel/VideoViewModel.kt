@@ -10,22 +10,21 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoDao
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
+import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoSettingsEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoRepository
-import com.flatcode.simplecomposeapps.videoplayer.model.Folder
-import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class VideoUiState(
-    val videoFiles: List<VideoFiles> = emptyList(),
-    val folderList: List<Folder> = emptyList(),
+    val videoFiles: List<VideoEntity> = emptyList(),
+    val folderList: List<FolderEntity> = emptyList(),
     val isLoading: Boolean = true,
     val isRefreshing: Boolean = false,
     val lastVideoId: String? = null,
@@ -35,13 +34,12 @@ data class VideoUiState(
 @HiltViewModel
 class VideoViewModel @Inject constructor(
     application: Application,
-    private val videoDao: VideoDao
+    private val videoDao: VideoDao,
+    private val repository: VideoRepository
 ) : AndroidViewModel(application) {
 
-    private val repository = VideoRepository(application)
-
-    val uiState: StateFlow<VideoUiState>
-        field = MutableStateFlow(VideoUiState())
+    private val _uiState = MutableStateFlow(VideoUiState())
+    val uiState: StateFlow<VideoUiState> = _uiState
 
     private val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean, uri: Uri?) {
@@ -53,19 +51,27 @@ class VideoViewModel @Inject constructor(
         application.contentResolver.registerContentObserver(
             MediaStore.Video.Media.EXTERNAL_CONTENT_URI, true, contentObserver
         )
+        observeData()
         loadVideos()
-        observePlayback()
     }
 
-    private fun observePlayback() {
+    private fun observeData() {
         viewModelScope.launch {
-            videoDao.getSettings().collectLatest { settings ->
-                uiState.update { 
-                    it.copy(
-                        lastVideoId = settings?.lastVideoId,
-                        lastPosition = settings?.lastPosition ?: 0L
-                    )
-                }
+            combine(
+                videoDao.getAllVideos(),
+                videoDao.getAllFolders(),
+                videoDao.getSettings()
+            ) { videos, folders, settings ->
+                VideoUiState(
+                    videoFiles = videos,
+                    folderList = folders,
+                    isLoading = false,
+                    isRefreshing = false,
+                    lastVideoId = settings?.lastVideoId,
+                    lastPosition = settings?.lastPosition ?: 0L
+                )
+            }.collect { newState ->
+                _uiState.value = newState
             }
         }
     }
@@ -80,30 +86,9 @@ class VideoViewModel @Inject constructor(
     fun loadVideos(isInternalUpdate: Boolean = false) {
         viewModelScope.launch {
             if (!isInternalUpdate) {
-                uiState.update { it.copy(isRefreshing = true, isLoading = true) }
-                repository.refreshMediaStore()
+                _uiState.update { it.copy(isRefreshing = true) }
             }
-            val allVideos = repository.getAllVideos()
-
-            // Extract folders using bucketName and count videos
-            val folders = allVideos.groupBy { video ->
-                video.bucketName ?: "Internal Storage"
-            }.map { (name, videos) ->
-                Folder(
-                    name = name,
-                    path = videos.firstOrNull()?.path?.substringBeforeLast('/', "") ?: "",
-                    videoCount = videos.size
-                )
-            }
-
-            uiState.update { 
-                it.copy(
-                    videoFiles = allVideos,
-                    folderList = folders,
-                    isRefreshing = false,
-                    isLoading = false
-                )
-            }
+            repository.syncWithRoom()
         }
     }
 

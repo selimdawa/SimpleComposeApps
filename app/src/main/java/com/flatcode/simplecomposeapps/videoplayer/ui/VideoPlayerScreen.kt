@@ -124,7 +124,7 @@ fun VideoPlayerScreen(
                         items(uiState.folderList) { folder ->
                             FolderItem(
                                 folder = folder,
-                                onClick = { folder.path?.let { onFolderClick(it) } })
+                                onClick = { onFolderClick(folder.name) })
                         }
                     } else {
                         items(uiState.videoFiles.indices.toList()) { index ->
