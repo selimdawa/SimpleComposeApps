@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.White
@@ -44,7 +44,7 @@ fun WebSupportDialog(
                 .wrapContentHeight()
                 .padding(16.dp),
             shape = RoundedCornerShape(15.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            colors = CardDefaults.cardColors(containerColor = COLOR_ON_BACKGROUND)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -107,7 +107,7 @@ fun WebAboutDialog(onDismiss: () -> Unit) {
                 .wrapContentHeight()
                 .padding(16.dp),
             shape = RoundedCornerShape(15.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            colors = CardDefaults.cardColors(containerColor = COLOR_ON_BACKGROUND)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth()
