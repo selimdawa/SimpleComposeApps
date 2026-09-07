@@ -5,21 +5,59 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.lifecycle.viewModelScope
+import android.content.SharedPreferences
+import androidx.core.content.edit
+import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteDao
+import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteEntity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MultiDeleteViewModel @Inject constructor() : ViewModel() {
+class MultiDeleteViewModel @Inject constructor(
+    private val multiDeleteDao: MultiDeleteDao,
+    private val sharedPreferences: SharedPreferences
+) : ViewModel() {
 
     val items = mutableStateListOf<String>()
 
     val selectedItems = mutableStateListOf<String>()
 
-    val isSelectionMode: State<Boolean>
-        field = mutableStateOf(false)
+    private val _isSelectionMode = mutableStateOf(false)
+    val isSelectionMode: State<Boolean> = _isSelectionMode
+
+    private val _isLoading = mutableStateOf(true)
+    val isLoading: State<Boolean> = _isLoading
+
+    init {
+        observeItems()
+    }
+
+    private fun observeItems() {
+        viewModelScope.launch {
+            multiDeleteDao.getAllItems().collectLatest { entities ->
+                items.clear()
+                items.addAll(entities.map { it.text })
+                _isLoading.value = false
+            }
+        }
+    }
 
     fun setItems(initialItems: List<String>) {
-        if (items.isEmpty()) {
-            items.addAll(initialItems)
+        viewModelScope.launch {
+            val isFirstTime = sharedPreferences.getBoolean("is_first_time", true)
+            if (isFirstTime) {
+                multiDeleteDao.insertAll(initialItems.map { MultiDeleteEntity(it) })
+                sharedPreferences.edit { putBoolean("is_first_time", false) }
+            }
+        }
+    }
+
+    fun restoreItems(initialItems: List<String>) {
+        viewModelScope.launch {
+            multiDeleteDao.deleteAll()
+            multiDeleteDao.insertAll(initialItems.map { MultiDeleteEntity(it) })
         }
     }
 
@@ -27,39 +65,41 @@ class MultiDeleteViewModel @Inject constructor() : ViewModel() {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item)
             if (selectedItems.isEmpty()) {
-                isSelectionMode.value = false
+                _isSelectionMode.value = false
             }
         } else {
             selectedItems.add(item)
-            isSelectionMode.value = true
+            _isSelectionMode.value = true
         }
     }
 
     fun enterSelectionMode(item: String) {
-        isSelectionMode.value = true
+        _isSelectionMode.value = true
         if (!selectedItems.contains(item)) {
             selectedItems.add(item)
         }
     }
 
     fun exitSelectionMode() {
-        isSelectionMode.value = false
+        _isSelectionMode.value = false
         selectedItems.clear()
     }
 
     fun selectAll() {
         if (selectedItems.size == items.size) {
             selectedItems.clear()
-            isSelectionMode.value = false
+            _isSelectionMode.value = false
         } else {
             selectedItems.clear()
             selectedItems.addAll(items)
-            isSelectionMode.value = true
+            _isSelectionMode.value = true
         }
     }
 
     fun deleteSelected() {
-        items.removeAll(selectedItems)
-        exitSelectionMode()
+        viewModelScope.launch {
+            multiDeleteDao.deleteByTexts(selectedItems.toList())
+            exitSelectionMode()
+        }
     }
 }

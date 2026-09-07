@@ -140,6 +140,7 @@ object Strings {
     // Multi Delete
     const val DELETE = "Delete"
     const val SELECT_ALL = "Select All"
+    const val RESTORE_ITEMS = "Restore Items"
 
     // Blogger
     const val POST_DETAILS = "Post Details"
