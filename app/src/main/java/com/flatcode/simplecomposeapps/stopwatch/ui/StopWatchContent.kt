@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable
 fun StopWatchContent(
@@ -58,7 +59,7 @@ fun StopWatchContent(
                     Icon(
                         imageVector = if (isRunning) AppIcons.Pause else AppIcons.Play,
                         contentDescription = if (isRunning) "Pause" else "Start",
-                        tint = Color.Unspecified,
+                        tint = White,
                         modifier = Modifier.size(48.dp)
                     )
                 }
@@ -68,7 +69,7 @@ fun StopWatchContent(
                         Icon(
                             imageVector = AppIcons.Stop,
                             contentDescription = "Stop",
-                            tint = Color.Unspecified,
+                            tint = White,
                             modifier = Modifier.size(48.dp)
                         )
                     }

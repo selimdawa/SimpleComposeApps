@@ -5,6 +5,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.stopwatch.ui.StopWatchScreen
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
@@ -20,9 +24,17 @@ class StopWatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            StopWatchScreen(
-                viewModel = viewModel
-            )
+            StopWatchNav(viewModel = viewModel)
+        }
+    }
+}
+
+@Composable
+fun StopWatchNav(viewModel: StopWatchViewModel) {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "main") {
+        composable("main") {
+            StopWatchScreen(viewModel = viewModel)
         }
     }
 }
