@@ -8,7 +8,6 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,21 +16,21 @@ class DictionaryViewModel @Inject constructor(
     private val repository: DictionaryRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Idle)
-    val uiState: StateFlow<UiState<String>> = _uiState.asStateFlow()
+    val uiState: StateFlow<UiState<String>>
+        field = MutableStateFlow<UiState<String>>(UiState.Idle)
 
     fun searchWord(word: String) {
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            uiState.value = UiState.Loading
             try {
                 val definition = repository.getWordDefinition(word)
                 if (definition != "No definition found") {
-                    _uiState.value = UiState.Success(definition)
+                    uiState.value = UiState.Success(definition)
                 } else {
-                    _uiState.value = UiState.Error("No definition found")
+                    uiState.value = UiState.Error("No definition found")
                 }
             } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message ?: Strings.UNKNOWN_ERROR)
+                uiState.value = UiState.Error(e.message ?: Strings.UNKNOWN_ERROR)
             }
         }
     }

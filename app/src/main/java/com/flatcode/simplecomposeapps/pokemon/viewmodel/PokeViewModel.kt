@@ -20,8 +20,8 @@ class PokeViewModel @Inject constructor(
 
     val pokemon: LiveData<List<PokeItem>> = repository.allPokemon.asLiveData()
 
-    private val _status = MutableLiveData<ApiStatus>(ApiStatus.LOADING)
-    val status: LiveData<ApiStatus> = _status
+    val status: LiveData<ApiStatus>
+        field = MutableLiveData<ApiStatus>(ApiStatus.LOADING)
 
     init {
         getPokemon()
@@ -29,12 +29,12 @@ class PokeViewModel @Inject constructor(
 
     private fun getPokemon() {
         viewModelScope.launch {
-            _status.value = ApiStatus.LOADING
+            status.value = ApiStatus.LOADING
             try {
                 repository.getPokemonFromApi()
-                _status.value = ApiStatus.DONE
+                status.value = ApiStatus.DONE
             } catch (_: Exception) {
-                _status.value = ApiStatus.ERROR
+                status.value = ApiStatus.ERROR
             }
         }
     }

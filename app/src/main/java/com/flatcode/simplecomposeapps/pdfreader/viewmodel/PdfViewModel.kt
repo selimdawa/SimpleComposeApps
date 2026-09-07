@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.pdfreader.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,31 +24,62 @@ data class PdfUiState(
     val pageCount: Int = 0,
     val currentPage: Int = 0,
     val isBottomBarVisible: Boolean = true
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PdfUiState
+
+        if (uri != other.uri) return false
+        if (pdfData != null) {
+            if (other.pdfData == null) return false
+            if (!pdfData.contentEquals(other.pdfData)) return false
+        } else if (other.pdfData != null) return false
+        if (isLoading != other.isLoading) return false
+        if (errorMessage != other.errorMessage) return false
+        if (pageCount != other.pageCount) return false
+        if (currentPage != other.currentPage) return false
+        if (isBottomBarVisible != other.isBottomBarVisible) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = uri?.hashCode() ?: 0
+        result = 31 * result + (pdfData?.contentHashCode() ?: 0)
+        result = 31 * result + isLoading.hashCode()
+        result = 31 * result + (errorMessage?.hashCode() ?: 0)
+        result = 31 * result + pageCount
+        result = 31 * result + currentPage
+        result = 31 * result + isBottomBarVisible.hashCode()
+        return result
+    }
+}
 
 @HiltViewModel
 class PdfViewModel @Inject constructor() : ViewModel() {
 
-    private val _uiState = MutableStateFlow(PdfUiState())
-    val uiState: StateFlow<PdfUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<PdfUiState>
+        field = MutableStateFlow(PdfUiState())
 
-    fun setUri(uri: Uri?, context: Context) {
+    fun setUri(uri: Uri?) {
         if (uri == null) return
-        _uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
-        
+        uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
+
         if (uri.scheme?.startsWith("http") == true) {
             downloadPdf(uri.toString())
         } else {
             // For local URIs, we might not need to read bytes if PDFView can handle it directly,
             // but for consistency we keep it simple.
-            _uiState.update { it.copy(isLoading = false) }
+            uiState.update { it.copy(isLoading = false) }
         }
     }
 
     private fun downloadPdf(url: String) {
         viewModelScope.launch {
             val result = doDownload(url)
-            _uiState.update { state ->
+            uiState.update { state ->
                 when (result) {
                     is ByteArray -> state.copy(pdfData = result, isLoading = false)
                     is String -> state.copy(errorMessage = result, isLoading = false)
@@ -81,14 +110,18 @@ class PdfViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onPageChange(page: Int, pageCount: Int) {
-        _uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
+        uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
     }
 
     fun toggleBottomBar() {
-        _uiState.update { it.copy(isBottomBarVisible = !it.isBottomBarVisible) }
+        uiState.update { it.copy(isBottomBarVisible = !it.isBottomBarVisible) }
     }
 
     fun onError(t: Throwable) {
-        _uiState.update { it.copy(errorMessage = t.message ?: "Failed to load PDF", isLoading = false) }
+        uiState.update {
+            it.copy(
+                errorMessage = t.message ?: "Failed to load PDF", isLoading = false
+            )
+        }
     }
 }

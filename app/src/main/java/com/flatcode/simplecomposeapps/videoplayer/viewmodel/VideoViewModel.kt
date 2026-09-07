@@ -14,7 +14,6 @@ import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,8 +29,8 @@ class VideoViewModel @Inject constructor(application: Application) : AndroidView
 
     private val repository = VideoRepository(application)
 
-    private val _uiState = MutableStateFlow(VideoUiState())
-    val uiState: StateFlow<VideoUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<VideoUiState>
+        field = MutableStateFlow(VideoUiState())
 
     private val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean, uri: Uri?) {
@@ -49,7 +48,7 @@ class VideoViewModel @Inject constructor(application: Application) : AndroidView
     fun loadVideos(isInternalUpdate: Boolean = false) {
         viewModelScope.launch {
             if (!isInternalUpdate) {
-                _uiState.update { it.copy(isRefreshing = true) }
+                uiState.update { it.copy(isRefreshing = true) }
                 repository.refreshMediaStore()
             }
             val allVideos = repository.getAllVideos()
@@ -65,7 +64,7 @@ class VideoViewModel @Inject constructor(application: Application) : AndroidView
                 )
             }
 
-            _uiState.update { 
+            uiState.update { 
                 it.copy(
                     videoFiles = allVideos,
                     folderList = folders,

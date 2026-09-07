@@ -15,11 +15,11 @@ import javax.inject.Inject
 @HiltViewModel
 class RandomCatsImageViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
-    private val _imageUrl = mutableStateOf("")
-    val imageUrl: State<String> = _imageUrl
+    val imageUrl: State<String>
+        field = mutableStateOf("")
 
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    val isLoading: State<Boolean>
+        field = mutableStateOf(false)
 
     init {
         getImage()
@@ -27,20 +27,20 @@ class RandomCatsImageViewModel @Inject constructor(application: Application) : A
 
     fun getImage() {
         val url = DATA.API_RANDOM_IMAGE
-        _isLoading.value = true
+        isLoading.value = true
 
         val queue = Volley.newRequestQueue(getApplication())
         val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
                 val kittyData = response.getJSONObject(0)
                 val catUrl = kittyData.getString(DATA.JSON_URL)
-                _imageUrl.value = catUrl
+                imageUrl.value = catUrl
             } catch (_: JSONException) {
             } finally {
-                _isLoading.value = false
+                isLoading.value = false
             }
         }, {
-            _isLoading.value = false
+            isLoading.value = false
         })
         queue.add(arrayRequest)
     }

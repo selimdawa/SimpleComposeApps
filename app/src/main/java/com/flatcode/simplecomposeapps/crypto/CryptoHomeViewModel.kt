@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,26 +20,26 @@ class CryptoHomeViewModel @Inject constructor(
     private val repository: HomeRepository
 ) : ViewModel() {
 
-    private val _cryptoList = MutableStateFlow<List<Data>>(emptyList())
-    val cryptoList: StateFlow<List<Data>> = _cryptoList.asStateFlow()
+    val cryptoList: StateFlow<List<Data>>
+        field = MutableStateFlow<List<Data>>(emptyList())
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _error = MutableSharedFlow<String?>()
-    val error: SharedFlow<String?> = _error.asSharedFlow()
+    val error: SharedFlow<String?>
+        field = MutableSharedFlow<String?>()
 
     private var currentPage = 1
 
     fun getData(apiKey: String, limit: String) {
         viewModelScope.launch {
-            _isLoading.value = true
-            
+            isLoading.value = true
+
             // Try cache first if it's the first page
-            if (currentPage == 1 && _cryptoList.value.isEmpty()) {
+            if (currentPage == 1 && cryptoList.value.isEmpty()) {
                 val cached = repository.getCachedCoins()
                 if (cached.isNotEmpty()) {
-                    _cryptoList.value = cached.map { entity ->
+                    cryptoList.value = cached.map { entity ->
                         Data(
                             id = entity.id,
                             name = entity.name,
@@ -54,7 +52,7 @@ class CryptoHomeViewModel @Inject constructor(
 
             val result = repository.getLatestCrypto(apiKey, limit, currentPage.toString())
             handleResult(result)
-            _isLoading.value = false
+            isLoading.value = false
         }
     }
 
@@ -63,18 +61,18 @@ class CryptoHomeViewModel @Inject constructor(
         getData(apiKey, "10")
     }
 
-    fun isFirstPage() = currentPage == 1
-
     private fun handleResult(result: NetworkResult<com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse>) {
         when (result) {
             is NetworkResult.Success -> {
-                val newList = _cryptoList.value.toMutableList()
+                val newList = cryptoList.value.toMutableList()
                 result.data?.data?.let { newList.addAll(it) }
-                _cryptoList.value = newList
+                cryptoList.value = newList
             }
+
             is NetworkResult.Error -> {
-                viewModelScope.launch { _error.emit(result.message) }
+                viewModelScope.launch { error.emit(result.message) }
             }
+
             is NetworkResult.Loading -> {
                 // Handle loading if needed
             }

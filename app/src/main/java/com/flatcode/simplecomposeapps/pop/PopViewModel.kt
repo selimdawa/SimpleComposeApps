@@ -7,7 +7,6 @@ import com.flatcode.simplecomposeapps.pop.repository.FunkoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -18,25 +17,25 @@ class PopViewModel @Inject constructor(
     private val repository: FunkoRepository
 ) : ViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error.asStateFlow()
+    val error: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
 
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-    
+    val searchQuery: StateFlow<String>
+        field = MutableStateFlow("")
+
     val pops: StateFlow<List<PopItem>> = combine(
         repository.getAllPops(),
-        _searchQuery
+        searchQuery
     ) { pops, query ->
         if (query.isEmpty()) {
             pops
         } else {
-            pops.filter { 
-                it.name.contains(query, ignoreCase = true) || 
-                it.series.contains(query, ignoreCase = true)
+            pops.filter {
+                it.name.contains(query, ignoreCase = true) ||
+                        it.series.contains(query, ignoreCase = true)
             }
         }
     }.stateIn(
@@ -51,18 +50,18 @@ class PopViewModel @Inject constructor(
 
     fun loadPops() {
         viewModelScope.launch {
-            _isLoading.value = true
+            isLoading.value = true
             try {
                 repository.loadPops()
-                _error.value = null
+                error.value = null
             } catch (e: Exception) {
-                _error.value = e.message
+                error.value = e.message
             }
-            _isLoading.value = false
+            isLoading.value = false
         }
     }
 
     fun onSearchQueryChanged(query: String) {
-        _searchQuery.value = query
+        searchQuery.value = query
     }
 }

@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,30 +18,32 @@ class CryptoDetailViewModel @Inject constructor(
     private val repository: DetailRepository
 ) : ViewModel() {
 
-    private val _cryptoDetail = MutableStateFlow<CoinDetail?>(null)
-    val cryptoDetail: StateFlow<CoinDetail?> = _cryptoDetail.asStateFlow()
+    val cryptoDetail: StateFlow<CoinDetail?>
+        field = MutableStateFlow<CoinDetail?>(null)
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _error = MutableSharedFlow<String?>()
-    val error: SharedFlow<String?> = _error.asSharedFlow()
+    val error: SharedFlow<String?>
+        field = MutableSharedFlow<String?>()
 
     fun getCryptoDetail(apiKey: String, id: Int) {
         viewModelScope.launch {
-            _isLoading.value = true
+            isLoading.value = true
             when (val result = repository.getCryptoDetail(apiKey, id)) {
                 is NetworkResult.Success -> {
-                    _cryptoDetail.value = result.data
+                    cryptoDetail.value = result.data
                 }
+
                 is NetworkResult.Error -> {
-                    _error.emit(result.message)
+                    error.emit(result.message)
                 }
+
                 is NetworkResult.Loading -> {
                     // Handle loading
                 }
             }
-            _isLoading.value = false
+            isLoading.value = false
         }
     }
 }

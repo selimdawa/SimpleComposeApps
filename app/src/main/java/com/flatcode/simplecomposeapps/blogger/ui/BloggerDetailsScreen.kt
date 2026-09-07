@@ -28,7 +28,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -124,12 +123,12 @@ fun BloggerDetailsScreen(
 
                     AndroidView(
                         factory = { context ->
-                        WebView(context).apply {
-                            webViewClient = WebViewClient()
-                            settings.javaScriptEnabled = true
-                            setBackgroundColor(0) // Transparent
-                        }
-                    },
+                            WebView(context).apply {
+                                webViewClient = WebViewClient()
+                                settings.javaScriptEnabled = false
+                                setBackgroundColor(0) // Transparent
+                            }
+                        },
                         update = { webView ->
                             webView.loadDataWithBaseURL(
                                 null, details.content ?: "", "text/html", "UTF-8", null

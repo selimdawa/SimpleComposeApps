@@ -10,7 +10,7 @@ import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
     private val taskDao: TaskDao,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val task = state.get<Task>("task")
@@ -27,8 +27,8 @@ class AddEditTaskViewModel @Inject constructor(
     var taskName by mutableStateOf(state.get<String>("taskName") ?: task?.name ?: "")
     var taskImportant by mutableStateOf(state.get<Boolean>("taskImportant") ?: task?.important ?: false)
 
-    private val _addEditTaskEvent = MutableSharedFlow<AddEditTaskEvent>()
-    val addEditTaskEvent = _addEditTaskEvent.asSharedFlow()
+    val addEditTaskEvent: SharedFlow<AddEditTaskEvent>
+        field = MutableSharedFlow<AddEditTaskEvent>()
 
     fun onSaveClick() {
         if (taskName.isBlank()) {
@@ -46,12 +46,12 @@ class AddEditTaskViewModel @Inject constructor(
 
     private fun createTask(task: Task) = viewModelScope.launch {
         taskDao.insert(task)
-        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
+        addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
-        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
+        addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
     sealed class AddEditTaskEvent {

@@ -18,17 +18,17 @@ import javax.inject.Inject
 @HiltViewModel
 class JokeViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
-    private val _jokes = mutableStateListOf<Joke>()
-    val jokes: List<Joke> get() = _jokes
+    val jokes: List<Joke>
+        field = mutableStateListOf<Joke>()
 
-    private val _isLoading = mutableStateOf(value = false)
-    val isLoading: State<Boolean> = _isLoading
+    val isLoading: State<Boolean>
+        field = mutableStateOf(value = false)
 
-    private val _errorMessage = mutableStateOf<String?>(null)
-    val errorMessage: State<String?> = _errorMessage
+    val errorMessage: State<String?>
+        field = mutableStateOf<String?>(null)
 
-    private val _selectedCategory = mutableStateOf(value = "Any")
-    val selectedCategory: State<String> = _selectedCategory
+    val selectedCategory: State<String>
+        field = mutableStateOf(value = "Any")
 
     val categories = listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
 
@@ -37,7 +37,7 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
     }
 
     fun onCategorySelected(category: String) {
-        _selectedCategory.value = category
+        selectedCategory.value = category
         // Mapping as per original code logic if needed, but JokeAPI supports all now.
         // The original code had: val endpoint = if (currentCategory == "Pun") "Programming" else currentCategory
         val endpoint = if (category == "Pun") Strings.PROGRAMMING else category
@@ -46,9 +46,9 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
 
     private fun getJokes(category: String) {
         val url = "${DATA.JOKE_URL}$category?amount=10"
-        _isLoading.value = true
-        _errorMessage.value = null
-        _jokes.clear()
+        isLoading.value = true
+        errorMessage.value = null
+        jokes.clear()
 
         val queue = Volley.newRequestQueue(getApplication())
         val objectRequest = JsonObjectRequest(
@@ -56,7 +56,7 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
             { response ->
                 try {
                     if (response.optBoolean("error")) {
-                        _errorMessage.value = response.optString("message", "Failed to fetch jokes")
+                        errorMessage.value = response.optString("message", "Failed to fetch jokes")
                     } else {
                         val jokesArray = response.getJSONArray("jokes")
                         for (i in 0 until jokesArray.length()) {
@@ -73,18 +73,18 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
                                 }
                                 this.category = jokeData.optString("category")
                             }
-                            _jokes.add(jokeObject)
+                            jokes.add(jokeObject)
                         }
                     }
                 } catch (_: JSONException) {
-                    _errorMessage.value = "Failed to parse jokes"
+                    errorMessage.value = "Failed to parse jokes"
                 } finally {
-                    _isLoading.value = false
+                    isLoading.value = false
                 }
             },
             { error ->
-                _errorMessage.value = error.message ?: "Unknown error"
-                _isLoading.value = false
+                errorMessage.value = error.message ?: "Unknown error"
+                isLoading.value = false
             }
         )
         queue.add(objectRequest)

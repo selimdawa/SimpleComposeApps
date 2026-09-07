@@ -9,61 +9,62 @@ import com.flatcode.simplecomposeapps.calculator.data.CalculatorDao
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import net.objecthunter.exp4j.ExpressionBuilder
 import javax.inject.Inject
 
 @HiltViewModel
 class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
     ViewModel() {
 
-    private val _expression = MutableLiveData("")
-    val expression: LiveData<String> get() = _expression
+    val expression: LiveData<String>
+        field = MutableLiveData("")
 
-    private val _result = MutableLiveData("")
-    val result: LiveData<String> get() = _result
+    val result: LiveData<String>
+        field = MutableLiveData("")
 
     val historyList: LiveData<List<CalculatorEntity>> = calculatorDao.getAllHistory().asLiveData()
 
     fun appendValue(value: String) {
-        _expression.value = (_expression.value ?: "") + value
+        expression.value = (expression.value ?: "") + value
     }
 
     fun clearAll() {
-        _expression.value = ""
-        _result.value = ""
+        expression.value = ""
+        result.value = ""
     }
 
     fun deleteLast() {
-        val currentExp = _expression.value ?: ""
+        val currentExp = expression.value ?: ""
         if (currentExp.isNotEmpty()) {
-            _expression.value = currentExp.dropLast(1)
+            expression.value = currentExp.dropLast(1)
         }
     }
 
     fun setResultValue(evaluatedResult: String) {
-        _result.value = evaluatedResult
+        result.value = evaluatedResult
     }
 
     fun evaluateExpression() {
-        val currentExpression = _expression.value ?: ""
+        val currentExpression = expression.value ?: ""
         if (currentExpression.isNotEmpty()) {
             viewModelScope.launch {
                 try {
                     val finalResult =
                         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-                            val expression =
-                                net.objecthunter.exp4j.ExpressionBuilder(currentExpression).build()
-                            val result = expression.evaluate()
-                            val longResult = result.toLong()
-                            if (result == longResult.toDouble()) {
+                            val expressionBuilder =
+                                ExpressionBuilder(currentExpression).build()
+                            val resultVal = expressionBuilder.evaluate()
+                            val longResult = resultVal.toLong()
+                            if (resultVal == longResult.toDouble()) {
                                 "= $longResult"
                             } else {
-                                "= $result"
+                                "= $resultVal"
                             }
                         }
                     setResultValue(finalResult)
                     saveToHistory(currentExpression, finalResult)
                 } catch (_: Exception) {
-                    _result.value = "Error"
+                    result.value = "Error"
                 }
             }
         }

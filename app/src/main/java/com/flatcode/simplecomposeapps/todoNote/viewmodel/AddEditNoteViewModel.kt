@@ -10,7 +10,7 @@ import com.flatcode.simplecomposeapps.todoNote.data.NoteDao
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteDao: NoteDao,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val note = state.get<Notes>("note")
@@ -27,8 +27,8 @@ class AddEditNoteViewModel @Inject constructor(
     var noteTitle by mutableStateOf(state.get<String>("noteTitle") ?: note?.title ?: "")
     var noteContent by mutableStateOf(state.get<String>("noteContent") ?: note?.content ?: "")
 
-    private val _addEditNoteEvent = MutableSharedFlow<AddEditNoteEvent>()
-    val addEditNoteEvent = _addEditNoteEvent.asSharedFlow()
+    val addEditNoteEvent: SharedFlow<AddEditNoteEvent>
+        field = MutableSharedFlow<AddEditNoteEvent>()
 
     fun onSaveClick() {
         if (noteTitle.isBlank()) return
@@ -44,12 +44,12 @@ class AddEditNoteViewModel @Inject constructor(
 
     private fun createNote(note: Notes) = viewModelScope.launch {
         noteDao.insert(note)
-        _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
+        addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateNote(note: Notes) = viewModelScope.launch {
         noteDao.update(note)
-        _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
+        addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
     sealed class AddEditNoteEvent {

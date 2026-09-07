@@ -9,7 +9,6 @@ import com.flatcode.simplecomposeapps.news2.models.NewsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,13 +17,13 @@ class NewsEverythingViewModel @Inject constructor(
     private val repository: EverythingRepository
 ) : BaseViewModel() {
 
-    private val _everything = MutableStateFlow<Resource<NewsResponse<EverythingNewsItem>>>(Resource.Loading())
-    val everything: StateFlow<Resource<NewsResponse<EverythingNewsItem>>> = _everything.asStateFlow()
+    val everything: StateFlow<Resource<NewsResponse<EverythingNewsItem>>>
+        field = MutableStateFlow<Resource<NewsResponse<EverythingNewsItem>>>(Resource.Loading())
 
     fun getEverything(query: String) {
         viewModelScope.launch {
             repository.getEverything(query).collect {
-                _everything.value = it
+                everything.value = it
             }
         }
     }
