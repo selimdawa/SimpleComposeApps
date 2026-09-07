@@ -1,12 +1,16 @@
 package com.flatcode.simplecomposeapps.pdfreader.viewmodel
 
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.pdfreader.data.PdfDao
+import com.flatcode.simplecomposeapps.pdfreader.data.PdfEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -58,14 +62,41 @@ data class PdfUiState(
 }
 
 @HiltViewModel
-class PdfViewModel @Inject constructor() : ViewModel() {
+class PdfViewModel @Inject constructor(
+    private val pdfDao: PdfDao
+) : ViewModel() {
 
     val uiState: StateFlow<PdfUiState>
         field = MutableStateFlow(PdfUiState())
 
+    init {
+        loadLastPdf()
+    }
+
+    private fun loadLastPdf() {
+        viewModelScope.launch {
+            val settings = pdfDao.getSettings().first()
+            val uri = settings?.lastUri
+            val page = settings?.lastPage ?: 0
+            if (uri != null) {
+                setUri(uri.toUri())
+                uiState.update { it.copy(currentPage = page) }
+            }
+        }
+    }
+
     fun setUri(uri: Uri?) {
         if (uri == null) return
         uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
+
+        viewModelScope.launch {
+            val current = pdfDao.getSettings().first()
+            pdfDao.saveSettings(
+                PdfEntity(
+                    lastUri = uri.toString(), lastPage = current?.lastPage ?: 0
+                )
+            )
+        }
 
         if (uri.scheme?.startsWith("http") == true) {
             downloadPdf(uri.toString())
@@ -111,6 +142,10 @@ class PdfViewModel @Inject constructor() : ViewModel() {
 
     fun onPageChange(page: Int, pageCount: Int) {
         uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
+        viewModelScope.launch {
+            val current = pdfDao.getSettings().first()
+            pdfDao.saveSettings(PdfEntity(lastUri = current?.lastUri, lastPage = page))
+        }
     }
 
     fun toggleBottomBar() {

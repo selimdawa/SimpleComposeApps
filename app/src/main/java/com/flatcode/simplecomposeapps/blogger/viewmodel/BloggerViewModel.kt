@@ -27,7 +27,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         field = mutableStateListOf<Page>()
 
     val isLoading: State<Boolean>
-        field = mutableStateOf(false)
+        field = mutableStateOf(true)
 
     private val nextPageToken = mutableStateOf(DATA.EMPTY)
 
