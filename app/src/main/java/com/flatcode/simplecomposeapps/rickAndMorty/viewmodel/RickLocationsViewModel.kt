@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.RickAndMortyResponse
 import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
