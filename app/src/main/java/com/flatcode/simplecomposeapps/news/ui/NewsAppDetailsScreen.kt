@@ -55,7 +55,7 @@ fun NewsAppDetailsScreen(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = headline.title ?: DATA.EMPTY,
+                    text = headline.title,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold,
@@ -72,7 +72,7 @@ fun NewsAppDetailsScreen(
                 ) {
                     Column {
                         AsyncImage(
-                            model = headline.urlToImage ?: DATA.EMPTY,
+                            model = headline.urlToImage,
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -81,7 +81,7 @@ fun NewsAppDetailsScreen(
                         )
 
                         Text(
-                            text = headline.author ?: DATA.EMPTY,
+                            text = headline.author,
                             color = Color.White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -90,7 +90,7 @@ fun NewsAppDetailsScreen(
                         )
 
                         Text(
-                            text = headline.publishedAt ?: DATA.EMPTY,
+                            text = headline.publishedAt,
                             color = Color.White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -100,7 +100,7 @@ fun NewsAppDetailsScreen(
                 }
 
                 Text(
-                    text = headline.description ?: DATA.EMPTY,
+                    text = headline.description,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
@@ -113,7 +113,7 @@ fun NewsAppDetailsScreen(
                 )
 
                 Text(
-                    text = headline.content ?: DATA.EMPTY,
+                    text = headline.content,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold

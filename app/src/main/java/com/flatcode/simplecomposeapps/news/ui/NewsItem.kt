@@ -48,7 +48,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
                     .height(IntrinsicSize.Min)
             ) {
                 AsyncImage(
-                    model = headline.urlToImage ?: DATA.EMPTY,
+                    model = headline.urlToImage,
                     contentDescription = null,
                     modifier = Modifier
                         .weight(0.5f)
@@ -64,7 +64,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = (headline.title ?: DATA.EMPTY).trim(),
+                        text = headline.title.trim(),
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
