@@ -40,7 +40,7 @@ import io.selimdawa.multicolors.MultiColorButton
 fun MainScreen(
     viewModel: MainViewModel, onInfoClick: () -> Unit
 ) {
-    val items by viewModel.dataMain.observeAsState(emptyList())
+    val items by viewModel.dataMain.observeAsState(null)
     val isLoading by viewModel.isLoading.observeAsState(true)
 
     Scaffold(
@@ -81,14 +81,14 @@ fun MainScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (isLoading) {
+            if (isLoading || items == null) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .size(50.dp)
                         .align(Alignment.Center),
                     color = MC_TRACK
                 )
-            } else if (items.isEmpty()) {
+            } else if (items!!.isEmpty()) {
                 Text(
                     text = Strings.NONE_DISPLAY,
                     color = COLOR_ERROR,
@@ -108,7 +108,7 @@ fun MainScreen(
                         end = 5.dp
                     )
                 ) {
-                    items(items) { item ->
+                    items(items!!) { item ->
                         MainItem(item = item)
                     }
                 }

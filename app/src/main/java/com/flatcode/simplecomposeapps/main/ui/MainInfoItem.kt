@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.main.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -92,10 +92,11 @@ fun FeatureStatusRow(label: String, status: Boolean, color: Color) {
             text = label, color = color, fontSize = 18.sp, fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.width(10.dp))
-        Image(
+        Icon(
             imageVector = if (status) AppIcons.CircleGreen else AppIcons.CircleRed,
             contentDescription = null,
-            modifier = Modifier.size(25.dp)
+            modifier = Modifier.size(25.dp),
+            tint = if (status) Color.Green else Color.Red
         )
     }
 }

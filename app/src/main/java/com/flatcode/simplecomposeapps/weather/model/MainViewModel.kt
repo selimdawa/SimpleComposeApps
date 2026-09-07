@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel
         field = MutableStateFlow<WeatherModel?>(null)
 
     val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+        field = MutableStateFlow(true)
 
     var lastCity: String? = null
 
