@@ -184,9 +184,32 @@ object Strings {
 
     // Other
     const val NO_DATA_FOUND = "No Data Found"
+    const val NO_INFORMATION = "No information"
     const val UNKNOWN_ERROR = "An unknown error occurred"
     const val CLOSE = "Close"
     const val BACK = "Back"
     const val FAVORITE = "Favorite"
     const val YOUTUBE = "YouTube"
+
+    // Numbers
+    const val ONE = "One"
+    const val TWO = "Two"
+    const val THREE = "Three"
+    const val FOUR = "Four"
+    const val FIVE = "Five"
+    const val SIX = "Six"
+    const val SEVEN = "Seven"
+    const val EIGHT = "Eight"
+    const val NINE = "Nine"
+    const val TEN = "Ten"
+    const val ELEVEN = "Eleven"
+    const val TWELVE = "Twelve"
+    const val THIRTEEN = "Thirteen"
+    const val FOURTEEN = "Fourteen"
+    const val FIFTEEN = "Fifteen"
+    const val SIXTEEN = "Sixteen"
+    const val SEVENTEEN = "Seventeen"
+    const val EIGHTEEN = "Eighteen"
+    const val NINETEEN = "Nineteen"
+    const val TWENTY = "Twenty"
 }

@@ -75,13 +75,13 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         isLoading.value = true
         val url = if (isSearch) {
             when (nextPageToken.value) {
-                DATA.EMPTY -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/search?q=$currentQuery&key=${DATA.BLOGGER_API}"
-                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/search?q=$currentQuery&pageToken=${nextPageToken.value}&key=${DATA.BLOGGER_API}"
+                DATA.EMPTY -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/${DATA.SEARCH}?${DATA.Q}=$currentQuery&${DATA.KEY}=${DATA.BLOGGER_API}"
+                else -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/${DATA.SEARCH}?${DATA.Q}=$currentQuery&${DATA.PAGE_TOKEN}=${nextPageToken.value}&${DATA.KEY}=${DATA.BLOGGER_API}"
             }
         } else {
             when (nextPageToken.value) {
-                DATA.EMPTY -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts?maxResults=${DATA.MAX_POST_RESULTS}&key=${DATA.BLOGGER_API}"
-                else -> "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts?maxResults=${DATA.MAX_POST_RESULTS}&pageToken=${nextPageToken.value}&key=${DATA.BLOGGER_API}"
+                DATA.EMPTY -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}?${DATA.MAX_RESULTS}=${DATA.MAX_POST_RESULTS}&${DATA.KEY}=${DATA.BLOGGER_API}"
+                else -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}?${DATA.MAX_RESULTS}=${DATA.MAX_POST_RESULTS}&${DATA.PAGE_TOKEN}=${nextPageToken.value}&${DATA.KEY}=${DATA.BLOGGER_API}"
             }
         }
 
@@ -90,9 +90,9 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                nextPageToken.value = jsonObject.optString("nextPageToken", "end")
+                nextPageToken.value = jsonObject.optString(DATA.NEXT_PAGE_TOKEN, "end")
 
-                val jsonArray = jsonObject.optJSONArray("items")
+                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
                 if (jsonArray != null) {
                     for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
@@ -113,14 +113,14 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         isLoading.value = true
         pages.clear()
         val url =
-            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages?key=${DATA.BLOGGER_API}"
+            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.optJSONArray("items")
+                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
                 if (jsonArray != null) {
                     for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
@@ -144,7 +144,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         comments.clear()
 
         val url =
-            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId?key=${DATA.BLOGGER_API}"
+            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/$postId?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             if (response.isNullOrEmpty()) {
@@ -155,7 +155,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
                 val jsonObject = JSONObject(response)
                 details.value = parsePost(jsonObject)
 
-                val labelsArray = jsonObject.optJSONArray("labels")
+                val labelsArray = jsonObject.optJSONArray(DATA.LABELS)
                 if (labelsArray != null) {
                     for (i in 0 until labelsArray.length()) {
                         labels.add(Label(labelsArray.getString(i)))
@@ -180,7 +180,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         comments.clear()
 
         val url =
-            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/pages/$pageId?key=${DATA.BLOGGER_API}"
+            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}/$pageId?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             isLoading.value = false
@@ -200,26 +200,26 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
 
     private fun loadComments(postId: String) {
         val url =
-            "https://www.googleapis.com/blogger/v3/blogs/${DATA.BLOG_ID}/posts/$postId/comments?key=${DATA.BLOGGER_API}"
+            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/$postId/${DATA.COMMENTS_KEY}?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.optJSONArray("items")
+                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
                 if (jsonArray != null) {
                     for (i in 0 until jsonArray.length()) {
                         val item = jsonArray.getJSONObject(i)
-                        val author = item.getJSONObject("author")
-                        val image = author.getJSONObject("image").getString("url")
+                        val author = item.getJSONObject(DATA.AUTHOR)
+                        val image = author.getJSONObject(DATA.IMAGE).getString(DATA.URL)
                         comments.add(
                             Comment(
-                                id = item.getString("id"),
-                                name = author.getString("displayName"),
+                                id = item.getString(DATA.ID),
+                                name = author.getString(DATA.DISPLAY_NAME),
                                 profileImage = "https:$image",
-                                published = item.getString("published"),
-                                comment = item.getString("content")
+                                published = item.getString(DATA.PUBLISHED),
+                                comment = item.getString(DATA.CONTENT)
                             )
                         )
                     }
@@ -235,24 +235,24 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
     }
 
     private fun parsePost(item: JSONObject) = Post(
-        authorName = item.getJSONObject("author").getString("displayName"),
-        content = item.optString("content"),
-        id = item.getString("id"),
-        published = item.getString("published"),
-        selfLink = item.optString("selfLink"),
-        title = item.getString("title"),
-        updated = item.optString("updated"),
-        url = item.optString("url")
+        authorName = item.getJSONObject(DATA.AUTHOR).getString(DATA.DISPLAY_NAME),
+        content = item.optString(DATA.CONTENT),
+        id = item.getString(DATA.ID),
+        published = item.getString(DATA.PUBLISHED),
+        selfLink = item.optString(DATA.SELF_LINK),
+        title = item.getString(DATA.TITLE),
+        updated = item.optString(DATA.UPDATED),
+        url = item.optString(DATA.URL)
     )
 
     private fun parsePage(item: JSONObject) = Page(
-        authorName = item.getJSONObject("author").getString("displayName"),
-        content = item.optString("content"),
-        id = item.getString("id"),
-        published = item.getString("published"),
-        selfLink = item.optString("selfLink"),
-        title = item.getString("title"),
-        updated = item.optString("updated"),
-        url = item.optString("url")
+        authorName = item.getJSONObject(DATA.AUTHOR).getString(DATA.DISPLAY_NAME),
+        content = item.optString(DATA.CONTENT),
+        id = item.getString(DATA.ID),
+        published = item.getString(DATA.PUBLISHED),
+        selfLink = item.optString(DATA.SELF_LINK),
+        title = item.getString(DATA.TITLE),
+        updated = item.optString(DATA.UPDATED),
+        url = item.optString(DATA.URL)
     )
 }

@@ -1,8 +1,35 @@
 package com.flatcode.simplecomposeapps.utils
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.flatcode.simplecomposeapps.main.Main
+import com.flatcode.simplecomposeapps.main.MainInfo
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
+import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
+import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
+import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
+import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
+import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
+import com.flatcode.simplecomposeapps.news.activity.NewsAppActivity
+import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
+import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
+import com.flatcode.simplecomposeapps.web.WebAppActivity
+import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
+import com.flatcode.simplecomposeapps.dogs.DogsActivity
+import com.flatcode.simplecomposeapps.countries.CountriesActivity
+import com.flatcode.simplecomposeapps.calculator.CalculatorActivity
+import com.flatcode.simplecomposeapps.crypto.CryptoActivity
+import com.flatcode.simplecomposeapps.dictionary.DictionaryActivity
+import com.flatcode.simplecomposeapps.meals.activity.MealsActivity
+import com.flatcode.simplecomposeapps.pop.PopActivity
+import com.flatcode.simplecomposeapps.movies.MoviesActivity
+import com.flatcode.simplecomposeapps.news2.News2Activity
+import com.flatcode.simplecomposeapps.rickAndMorty.RickAndMortyActivity
+import com.flatcode.simplecomposeapps.weather.WeatherActivity
+import com.flatcode.simplecomposeapps.pokemon.PokemonActivity
+import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity
+import com.flatcode.simplecomposeapps.stockmarket.StockMarketActivity
 
 @Suppress("SpellCheckingInspection")
 object DATA {
@@ -69,8 +96,78 @@ object DATA {
     )
 
     val MULTI_DELETE_VALUES = listOf(
-        "One", "Two", "Three", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"
+        Strings.ONE, Strings.TWO, Strings.THREE, Strings.FOUR, Strings.FIVE,
+        Strings.SIX, Strings.SEVEN, Strings.EIGHT, Strings.NINE, Strings.TEN,
+        Strings.ELEVEN, Strings.TWELVE, Strings.THIRTEEN, Strings.FOURTEEN, Strings.FIFTEEN,
+        Strings.SIXTEEN, Strings.SEVENTEEN, Strings.EIGHTEEN, Strings.NINETEEN, Strings.TWENTY
+    )
+
+    val JOKE_CATEGORIES =
+        listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
+
+    val NEWS_CATEGORIES =
+        listOf("general", "business", "entertainment", "health", "science", "sports", "technology")
+
+    val WEATHER_TABS = listOf(Strings.HOURS, Strings.DAYS)
+
+    val MAIN_INFO_DATA = listOf(
+        MainInfo(STOP_WATCH, 1, 1, 1, 1),
+        MainInfo(CANDY_CRUSH, 1, 1, 1, 1),
+        MainInfo(MULTI_DELETE, 1, 1, 1, 1),
+        MainInfo(RANDOM_IMAGE, 1, 1, 1, 1),
+        MainInfo(BLOGGER, 1, 1, 0, 0),
+        MainInfo(JOKE, 1, 1, 1, 1),
+        MainInfo(NEWS, 1, 1, 1, 1),
+        MainInfo(PDF_READER, 1, 1, 1, 1),
+        MainInfo(VIDEO_PLAYER, 1, 1, 1, 1),
+        MainInfo(WEB_APP, 1, 1, 1, 1),
+        MainInfo(WORDPRESS, 1, 1, 1, 1),
+        MainInfo(DOGS, 1, 1, 1, 1),
+        MainInfo(COUNTRIES, 1, 1, 1, 1),
+        MainInfo(CALCULATOR, 1, 1, 1, 1),
+        MainInfo(CRYPTO, 1, 1, 1, 1),
+        MainInfo(DICTIONARY, 1, 0, 1, 1),
+        MainInfo(MEALS, 1, 1, 1, 1),
+        MainInfo(POP, 1, 1, 1, 1),
+        MainInfo(MOVIE, 1, 1, 1, 1),
+        MainInfo(NEWS_2, 1, 1, 1, 1),
+        MainInfo(RICK_AND_MORTY, 1, 1, 1, 1),
+        MainInfo(WEATHER, 1, 1, 1, 1),
+        MainInfo(POKE, 1, 1, 1, 1),
+        MainInfo(TODO_NOTE, 1, 1, 1, 1),
+        MainInfo(STOCK_MARKET, 1, 1, 1, 1)
+    )
+
+    private val counts = intArrayOf(
+        1, 1, 1, 1, 4, 1, 2, 2, 3, 2, 3, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1
+    )
+
+    val MAIN_DATA = listOf(
+        Main(AppIcons.StopWatch, STOP_WATCH, counts[0], StopWatchActivity::class.java),
+        Main(AppIcons.CandyCrush, CANDY_CRUSH, counts[1], CandyCrushGameActivity::class.java),
+        Main(AppIcons.MultiDelete, MULTI_DELETE, counts[2], MultiDeleteActivity::class.java),
+        Main(AppIcons.RandomImage, RANDOM_IMAGE, counts[3], RandomCatsImageActivity::class.java),
+        Main(AppIcons.Blogger, BLOGGER, counts[4], BloggerAppActivity::class.java),
+        Main(AppIcons.Joke, JOKE, counts[5], JokeAppActivity::class.java),
+        Main(AppIcons.NewsMulti, NEWS, counts[6], NewsAppActivity::class.java),
+        Main(AppIcons.PdfReader, PDF_READER, counts[7], PdfReaderActivity::class.java),
+        Main(AppIcons.VideoPlayer, VIDEO_PLAYER, counts[8], VideoPlayerActivity::class.java),
+        Main(AppIcons.WebApp, WEB_APP, counts[9], WebAppActivity::class.java),
+        Main(AppIcons.WordPress, WORDPRESS, counts[10], WordpressActivity::class.java),
+        Main(AppIcons.Dogs, DOGS, counts[11], DogsActivity::class.java),
+        Main(AppIcons.Countries, COUNTRIES, counts[12], CountriesActivity::class.java),
+        Main(AppIcons.Calculator, CALCULATOR, counts[13], CalculatorActivity::class.java),
+        Main(AppIcons.Crypto, CRYPTO, counts[14], CryptoActivity::class.java),
+        Main(AppIcons.Dictionary, DICTIONARY, counts[15], DictionaryActivity::class.java),
+        Main(AppIcons.Meals, MEALS, counts[16], MealsActivity::class.java),
+        Main(AppIcons.Pop, POP, counts[17], PopActivity::class.java),
+        Main(AppIcons.Movie, MOVIE, counts[18], MoviesActivity::class.java),
+        Main(AppIcons.News, NEWS_2, counts[19], News2Activity::class.java),
+        Main(AppIcons.RickAndMorty, RICK_AND_MORTY, counts[20], RickAndMortyActivity::class.java),
+        Main(AppIcons.Weather, WEATHER, counts[21], WeatherActivity::class.java),
+        Main(AppIcons.Poke, POKE, counts[22], PokemonActivity::class.java),
+        Main(AppIcons.TodoNote, TODO_NOTE, counts[23], TodoNoteActivity::class.java),
+        Main(AppIcons.StockMarket, STOCK_MARKET, counts[24], StockMarketActivity::class.java)
     )
 
     //Database
@@ -141,23 +238,6 @@ object DATA {
     var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search"
     var NEWS_API = "07f40de92d3644908496e8f9677ee838"
     var JOKE_URL = "https://v2.jokeapi.dev/joke/"
-
-    //Random Img Generating
-    const val KEY_NAME = "name"
-    const val KEY_ORIGIN = "origin"
-    const val KEY_DESC = "desc"
-    const val KEY_TEMP = "temp"
-    const val KEY_WIKI_URL = "wikiUrl"
-    const val KEY_MORE_LINK = "moreLink"
-    const val KEY_IMAGE_URL = "imageUrl"
-    const val JSON_URL = "url"
-    const val JSON_BREEDS = "breeds"
-    const val JSON_NAME = "name"
-    const val JSON_ORIGIN = "origin"
-    const val JSON_DESCRIPTION = "description"
-    const val JSON_TEMPERAMENT = "temperament"
-    const val JSON_WIKIPEDIA_URL = "wikipedia_url"
-    const val JSON_VCA_HOSPITALS_URL = "vcahospitals_url"
 
     //Calculator
     const val ZERO = "0"
@@ -245,4 +325,62 @@ object DATA {
     const val MC_TRACK = "mc_track"
     const val MC_TICK = "mc_tick"
     const val MC_BG = "mc_bg"
+
+    // Blogger API
+    const val BLOGGER_BASE_URL = "https://www.googleapis.com/blogger/v3/blogs/"
+    const val POSTS = "posts"
+    const val PAGES = "pages"
+    const val SEARCH = "search"
+    const val COMMENTS_KEY = "comments"
+    const val MAX_RESULTS = "maxResults"
+    const val PAGE_TOKEN = "pageToken"
+    const val Q = "q"
+    const val KEY = "key"
+
+    // JSON Keys & API Params
+    const val FORECAST = "forecast"
+    const val FORECAST_DAY = "forecastday"
+    const val LOCATION = "location"
+    const val NAME = "name"
+    const val LAT = "lat"
+    const val LON = "lon"
+    const val DATE = "date"
+    const val DAY = "day"
+    const val CONDITION = "condition"
+    const val TEXT = "text"
+    const val MAX_TEMP_C = "maxtemp_c"
+    const val MIN_TEMP_C = "mintemp_c"
+    const val ICON = "icon"
+    const val HOUR = "hour"
+    const val CURRENT = "current"
+    const val LAST_UPDATED = "last_updated"
+    const val TEMP_C = "temp_c"
+    const val TIME = "time"
+
+    const val NEXT_PAGE_TOKEN = "nextPageToken"
+    const val ITEMS = "items"
+    const val LABELS = "labels"
+    const val AUTHOR = "author"
+    const val DISPLAY_NAME = "displayName"
+    const val IMAGE = "image"
+    const val URL = "url"
+    const val ID = "id"
+    const val PUBLISHED = "published"
+    const val CONTENT = "content"
+    const val SELF_LINK = "selfLink"
+    const val TITLE = "title"
+    const val UPDATED = "updated"
+
+    const val IMAGE_NAME = "imageName"
+    const val SERIES = "series"
+
+    const val ERROR = "error"
+    const val MESSAGE = "message"
+    const val JOKES = "jokes"
+    const val TYPE = "type"
+    const val SINGLE = "single"
+    const val JOKE_KEY = "joke"
+    const val SETUP = "setup"
+    const val DELIVERY = "delivery"
+    const val CATEGORY = "category"
 }

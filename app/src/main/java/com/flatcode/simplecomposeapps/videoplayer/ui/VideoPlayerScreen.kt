@@ -22,12 +22,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,21 +97,41 @@ fun VideoPlayerScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(vertical = 8.dp)
-            ) {
-                if (selectedTab == 0) {
-                    items(uiState.folderList) { folder ->
-                        FolderItem(
-                            folder = folder,
-                            onClick = { folder.path?.let { onFolderClick(it) } })
-                    }
-                } else {
-                    items(uiState.videoFiles.indices.toList()) { index ->
-                        VideoItem(
-                            video = uiState.videoFiles[index],
-                            onClick = { onVideoClick(index) })
+            if (uiState.isLoading) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                    )
+                }
+            } else if ((selectedTab == 0 && uiState.folderList.isEmpty()) || (selectedTab == 1 && uiState.videoFiles.isEmpty())) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = Strings.NO_DATA_FOUND,
+                        color = COLOR_ERROR,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(horizontal = 20.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(vertical = 8.dp)
+                ) {
+                    if (selectedTab == 0) {
+                        items(uiState.folderList) { folder ->
+                            FolderItem(
+                                folder = folder,
+                                onClick = { folder.path?.let { onFolderClick(it) } })
+                        }
+                    } else {
+                        items(uiState.videoFiles.indices.toList()) { index ->
+                            VideoItem(
+                                video = uiState.videoFiles[index],
+                                onClick = { onVideoClick(index) })
+                        }
                     }
                 }
             }

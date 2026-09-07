@@ -1,0 +1,9 @@
+package com.flatcode.simplecomposeapps.videoplayer.data
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+
+@Database(entities = [VideoEntity::class, VideoSettingsEntity::class], version = 1, exportSchema = true)
+abstract class VideoDatabase : RoomDatabase() {
+    abstract fun videoDao(): VideoDao
+}
