@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,9 +41,19 @@ import com.flatcode.simplecomposeapps.web.ui.WebBookmarksScreen
 import com.flatcode.simplecomposeapps.web.ui.WebHistoryScreen
 import com.flatcode.simplecomposeapps.web.ui.WebMainScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class WebAppActivity : ComponentActivity() {
+
+    @Serializable
+    object Home
+
+    @Serializable
+    object History
+
+    @Serializable
+    object Bookmarks
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -83,7 +94,7 @@ fun WebBottomNavigation(navController: NavHostController) {
                 )
             },
                 label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                selected = currentDestination?.hierarchy?.any { it.route == item.route::class.qualifiedName } == true,
                 onClick = {
                     navController.navigate(item.route) {
                         popUpTo(DATA.WEB_NAV[0].route) { saveState = true }
@@ -117,27 +128,24 @@ fun WebNavHost(
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
-        DATA.WEB_NAV.forEach { item ->
-            composable(item.route) {
-                when (item.route) {
-                    Strings.HOME -> WebMainScreen(viewModel = viewModel)
-                    Strings.HISTORY -> WebHistoryScreen(
-                        viewModel = viewModel, onNavigateToUrl = { url ->
-                            val intent = Intent(context, WebViewActivity::class.java).apply {
-                                putExtra("url", url)
-                            }
-                            context.startActivity(intent)
-                        })
-
-                    Strings.BOOKMARKS -> WebBookmarksScreen(
-                        viewModel = viewModel, onNavigateToUrl = { url ->
-                            val intent = Intent(context, WebViewActivity::class.java).apply {
-                                putExtra("url", url)
-                            }
-                            context.startActivity(intent)
-                        })
-                }
-            }
+        composable<WebAppActivity.Home> { WebMainScreen(viewModel = viewModel) }
+        composable<WebAppActivity.History> {
+            WebHistoryScreen(
+                viewModel = viewModel, onNavigateToUrl = { url ->
+                    val intent = Intent(context, WebViewActivity::class.java).apply {
+                        putExtra("url", url)
+                    }
+                    context.startActivity(intent)
+                })
+        }
+        composable<WebAppActivity.Bookmarks> {
+            WebBookmarksScreen(
+                viewModel = viewModel, onNavigateToUrl = { url ->
+                    val intent = Intent(context, WebViewActivity::class.java).apply {
+                        putExtra("url", url)
+                    }
+                    context.startActivity(intent)
+                })
         }
     }
 }

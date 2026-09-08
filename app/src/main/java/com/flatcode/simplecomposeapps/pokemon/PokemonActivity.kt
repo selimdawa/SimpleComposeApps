@@ -10,13 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.flatcode.simplecomposeapps.pokemon.ui.PokemonDetailScreen
 import com.flatcode.simplecomposeapps.pokemon.ui.PokemonScreen
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class PokemonActivity : ComponentActivity() {
+
+    @Serializable
+    object List
+
+    @Serializable
+    data class Detail(val pokeId: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -34,23 +41,21 @@ fun PokemonAppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = "list",
+        startDestination = PokemonActivity.List,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
-        composable("list") {
+        composable<PokemonActivity.List> {
             PokemonScreen(
                 onPokemonClick = { id ->
-                    navController.navigate("detail/$id")
+                    navController.navigate(PokemonActivity.Detail(id))
                 })
         }
-        composable(
-            route = "detail/{pokeId}", arguments = DATA.POKE_DETAIL_ARGS
-        ) { backStackEntry ->
-            val pokeId = backStackEntry.arguments?.getInt("pokeId") ?: 0
+        composable<PokemonActivity.Detail> { backStackEntry ->
+            val args = backStackEntry.toRoute<PokemonActivity.Detail>()
             PokemonDetailScreen(
-                pokeId = pokeId, onBack = { navController.popBackStack() })
+                pokeId = args.pokeId, onBack = { navController.popBackStack() })
         }
     }
 }

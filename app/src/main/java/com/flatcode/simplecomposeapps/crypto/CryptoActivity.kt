@@ -10,13 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoDetailScreen
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoHomeScreen
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class CryptoActivity : ComponentActivity() {
+
+    @Serializable
+    object Home
+
+    @Serializable
+    data class Detail(val symbol: String, val coinId: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -34,28 +41,24 @@ fun CryptoAppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = CryptoActivity.Home,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
-        composable("home") {
+        composable<CryptoActivity.Home> {
             CryptoHomeScreen(
                 onCoinClick = { symbol, id ->
-                    navController.navigate("detail/$symbol/$id")
+                    navController.navigate(CryptoActivity.Detail(symbol, id))
                 }
             )
         }
-        composable(
-            route = "detail/{symbol}/{coinId}",
-            arguments = DATA.CRYPTO_DETAIL_ARGS
-        ) { backStackEntry ->
-            val symbol = backStackEntry.arguments?.getString("symbol") ?: ""
-            val coinId = backStackEntry.arguments?.getInt("coinId") ?: 0
+        composable<CryptoActivity.Detail> { backStackEntry ->
+            val args = backStackEntry.toRoute<CryptoActivity.Detail>()
             CryptoDetailScreen(
-                symbol = symbol,
-                coinId = coinId,
+                symbol = args.symbol,
+                coinId = args.coinId,
                 onBack = { navController.popBackStack() }
             )
         }

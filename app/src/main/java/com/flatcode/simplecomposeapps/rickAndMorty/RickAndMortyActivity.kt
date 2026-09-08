@@ -1,9 +1,9 @@
 package com.flatcode.simplecomposeapps.rickAndMorty
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
@@ -33,12 +33,21 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class RickAndMortyActivity : ComponentActivity() {
+
+    @Serializable
+    object Character
+
+    @Serializable
+    object Location
+
+    @Serializable
+    object Episode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -79,7 +88,7 @@ fun RickBottomNavigation(navController: NavHostController) {
                 )
             },
                 label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                selected = currentDestination?.hierarchy?.any { it.route == item.route::class.qualifiedName } == true,
                 onClick = {
                     navController.navigate(item.route) {
                         popUpTo(DATA.RICK_NAV[0].route) { saveState = true }
@@ -111,14 +120,8 @@ fun RickNavHost(
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
-        DATA.RICK_NAV.forEach { item ->
-            composable(item.route) {
-                when (item.route) {
-                    Strings.CHARACTER -> RickCharactersScreen()
-                    Strings.LOCATION -> RickLocationsScreen()
-                    Strings.EPISODE -> RickEpisodesScreen()
-                }
-            }
-        }
+        composable<RickAndMortyActivity.Character> { RickCharactersScreen() }
+        composable<RickAndMortyActivity.Location> { RickLocationsScreen() }
+        composable<RickAndMortyActivity.Episode> { RickEpisodesScreen() }
     }
 }

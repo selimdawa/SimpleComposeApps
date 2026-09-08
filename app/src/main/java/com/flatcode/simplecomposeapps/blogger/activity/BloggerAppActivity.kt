@@ -11,15 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerDetailsScreen
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerPagesScreen
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerScreen
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class BloggerAppActivity : ComponentActivity() {
+
+    @Serializable
+    object Home
+
+    @Serializable
+    object Pages
+
+    @Serializable
+    data class PostDetails(val postId: String)
+
+    @Serializable
+    data class PageDetails(val pageId: String)
 
     private val viewModel: BloggerViewModel by viewModels()
 
@@ -38,47 +51,41 @@ fun BloggerNavHost(viewModel: BloggerViewModel, onFinish: () -> Unit) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = BloggerAppActivity.Home,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
-        composable("home") {
+        composable<BloggerAppActivity.Home> {
             BloggerScreen(
                 viewModel = viewModel,
                 onBack = onFinish,
-                onPagesClick = { navController.navigate("pages") },
-                onPostClick = { postId -> navController.navigate("postDetails/$postId") }
+                onPagesClick = { navController.navigate(BloggerAppActivity.Pages) },
+                onPostClick = { postId -> navController.navigate(BloggerAppActivity.PostDetails(postId)) }
             )
         }
-        composable("pages") {
+        composable<BloggerAppActivity.Pages> {
             BloggerPagesScreen(
                 viewModel = viewModel,
                 onBack = { navController.popBackStack() },
-                onPageClick = { pageId -> navController.navigate("pageDetails/$pageId") }
+                onPageClick = { pageId -> navController.navigate(BloggerAppActivity.PageDetails(pageId)) }
             )
         }
-        composable(
-            route = "postDetails/{postId}",
-            arguments = DATA.BLOGGER_POST_ARGS
-        ) { backStackEntry ->
-            val postId = backStackEntry.arguments?.getString("postId") ?: ""
+        composable<BloggerAppActivity.PostDetails> { backStackEntry ->
+            val args = backStackEntry.toRoute<BloggerAppActivity.PostDetails>()
             BloggerDetailsScreen(
                 viewModel = viewModel,
-                id = postId,
+                id = args.postId,
                 isPage = false,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable(
-            route = "pageDetails/{pageId}",
-            arguments = DATA.BLOGGER_PAGE_ARGS
-        ) { backStackEntry ->
-            val pageId = backStackEntry.arguments?.getString("pageId") ?: ""
+        composable<BloggerAppActivity.PageDetails> { backStackEntry ->
+            val args = backStackEntry.toRoute<BloggerAppActivity.PageDetails>()
             BloggerDetailsScreen(
                 viewModel = viewModel,
-                id = pageId,
+                id = args.pageId,
                 isPage = true,
                 onBack = { navController.popBackStack() }
             )

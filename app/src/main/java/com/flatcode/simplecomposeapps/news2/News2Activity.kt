@@ -1,9 +1,11 @@
 package com.flatcode.simplecomposeapps.news2
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.ComponentActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -12,8 +14,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -32,12 +32,18 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class News2Activity : ComponentActivity() {
+
+    @Serializable
+    object Everything
+
+    @Serializable
+    object TopArticles
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -84,7 +90,7 @@ fun NewsBottomNavigation(navController: NavHostController) {
                     )
                 },
                 label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                selected = currentDestination?.hierarchy?.any { it.route == item.route::class.qualifiedName } == true,
                 onClick = {
                     navController.navigate(item.route) {
                         popUpTo(DATA.NEWS_NAV[0].route) { saveState = true }
@@ -117,13 +123,7 @@ fun NewsNavHost(
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
-        DATA.NEWS_NAV.forEach { item ->
-            composable(item.route) {
-                when (item.route) {
-                    Strings.EVERYTHING -> EverythingScreen()
-                    Strings.TOP_ARTICLES -> TopArticlesScreen()
-                }
-            }
-        }
+        composable<News2Activity.Everything> { EverythingScreen() }
+        composable<News2Activity.TopArticles> { TopArticlesScreen() }
     }
 }

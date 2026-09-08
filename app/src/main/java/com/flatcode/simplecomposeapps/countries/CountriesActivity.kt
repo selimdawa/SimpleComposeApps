@@ -10,13 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.flatcode.simplecomposeapps.countries.ui.CountryDetailScreen
 import com.flatcode.simplecomposeapps.countries.ui.DashboardScreen
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class CountriesActivity : ComponentActivity() {
+
+    @Serializable
+    object Dashboard
+
+    @Serializable
+    data class Detail(val countryUuid: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -34,26 +41,23 @@ fun CountriesAppNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = DATA.DASHBOARD,
+        startDestination = CountriesActivity.Dashboard,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
-        composable(DATA.DASHBOARD) {
+        composable<CountriesActivity.Dashboard> {
             DashboardScreen(
                 onCountryClick = { uuid ->
-                    navController.navigate("${DATA.DETAIL_BY_ID}$uuid")
+                    navController.navigate(CountriesActivity.Detail(uuid))
                 }
             )
         }
-        composable(
-            route = DATA.DETAIL_COUNTRY,
-            arguments = DATA.COUNTRY_DETAIL_ARGS
-        ) { backStackEntry ->
-            val countryUuid = backStackEntry.arguments?.getInt(DATA.COUNTRY_UUID) ?: 0
+        composable<CountriesActivity.Detail> { backStackEntry ->
+            val args = backStackEntry.toRoute<CountriesActivity.Detail>()
             CountryDetailScreen(
-                countryUuid = countryUuid,
+                countryUuid = args.countryUuid,
                 onBack = { navController.popBackStack() }
             )
         }

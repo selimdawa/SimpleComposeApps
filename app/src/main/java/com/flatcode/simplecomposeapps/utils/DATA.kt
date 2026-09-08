@@ -37,35 +37,35 @@ import androidx.navigation.navArgument
 object DATA {
 
     data class NavItem(
-        val route: String, val label: String, val icon: ImageVector
+        val route: Any, val label: String, val icon: ImageVector
     )
 
     val NEWS_NAV = listOf(
-        NavItem(Strings.EVERYTHING, Strings.EVERYTHING, AppIcons.MultiDelete),
-        NavItem(Strings.TOP_ARTICLES, Strings.TOP_ARTICLES, AppIcons.News)
+        NavItem(News2Activity.Everything, Strings.EVERYTHING, AppIcons.MultiDelete),
+        NavItem(News2Activity.TopArticles, Strings.TOP_ARTICLES, AppIcons.News)
     )
 
     val MEALS_NAV = listOf(
-        NavItem(Strings.HOME, Strings.HOME, AppIcons.Home),
-        NavItem(Strings.FAVORITES, Strings.FAVORITES, AppIcons.Favorite),
-        NavItem(Strings.CATEGORIES, Strings.CATEGORIES, AppIcons.Category)
+        NavItem(MealsActivity.Home, Strings.HOME, AppIcons.Home),
+        NavItem(MealsActivity.Favorites, Strings.FAVORITES, AppIcons.Favorite),
+        NavItem(MealsActivity.Categories, Strings.CATEGORIES, AppIcons.Category)
     )
 
     val RICK_NAV = listOf(
-        NavItem(Strings.CHARACTER, Strings.CHARACTER, AppIcons.RickAndMorty),
-        NavItem(Strings.LOCATION, Strings.LOCATION, AppIcons.Location),
-        NavItem(Strings.EPISODE, Strings.EPISODE, AppIcons.EventNote)
+        NavItem(RickAndMortyActivity.Character, Strings.CHARACTER, AppIcons.RickAndMorty),
+        NavItem(RickAndMortyActivity.Location, Strings.LOCATION, AppIcons.Location),
+        NavItem(RickAndMortyActivity.Episode, Strings.EPISODE, AppIcons.EventNote)
     )
 
     val TODO_NAV = listOf(
-        NavItem(Strings.TASKS, Strings.TASKS, AppIcons.TodoCheck),
-        NavItem(Strings.NOTES, Strings.NOTES, AppIcons.TodoNote)
+        NavItem(TodoNoteActivity.Tasks, Strings.TASKS, AppIcons.TodoCheck),
+        NavItem(TodoNoteActivity.Notes, Strings.NOTES, AppIcons.TodoNote)
     )
 
     val WEB_NAV = listOf(
-        NavItem(Strings.HOME, Strings.HOME, AppIcons.Home),
-        NavItem(Strings.HISTORY, Strings.HISTORY, AppIcons.History),
-        NavItem(Strings.BOOKMARKS, Strings.BOOKMARKS, AppIcons.Bookmark)
+        NavItem(WebAppActivity.Home, Strings.HOME, AppIcons.Home),
+        NavItem(WebAppActivity.History, Strings.HISTORY, AppIcons.History),
+        NavItem(WebAppActivity.Bookmarks, Strings.BOOKMARKS, AppIcons.Bookmark)
     )
 
     // Nav Arguments
