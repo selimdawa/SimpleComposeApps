@@ -4,7 +4,7 @@ import com.flatcode.simplecomposeapps.stockmarket.data.StockDao
 import com.flatcode.simplecomposeapps.stockmarket.data.toCompanyListing
 import com.flatcode.simplecomposeapps.stockmarket.data.toCompanyListingEntity
 import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListing
-import com.flatcode.simplecomposeapps.stockmarket.utils.Resource
+import com.flatcode.simplecomposeapps.utils.Resource
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class StockRepository @Inject constructor(
     private val dao: StockDao,
     private val parser: CSVParser<CompanyListing>,
 ) {
-    suspend fun getCompanyListings(
+    fun getCompanyListings(
         fetchFromRemote: Boolean,
         query: String,
     ): Flow<Resource<List<CompanyListing>>> = flow {

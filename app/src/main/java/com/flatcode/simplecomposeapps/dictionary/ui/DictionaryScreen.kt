@@ -46,7 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.dictionary.DictionaryViewModel
-import com.flatcode.simplecomposeapps.dictionary.utils.UiState
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
@@ -150,9 +150,9 @@ fun DictionaryScreen(
                     containerColor = COLOR_ERROR, contentColor = COLOR_ON_BACKGROUND
                 ),
                 shape = RoundedCornerShape(10.dp),
-                enabled = uiState !is UiState.Loading
+                enabled = uiState !is Resource.Loading<*>
             ) {
-                if (uiState is UiState.Loading) {
+                if (uiState is Resource.Loading) {
                     CircularProgressIndicator(color = MC_TRACK, modifier = Modifier.size(24.dp))
                 } else {
                     Text(
@@ -162,7 +162,7 @@ fun DictionaryScreen(
             }
 
             when (uiState) {
-                is UiState.Success -> {
+                is Resource.Success -> {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = DATA.MEANING_OF_THE_WORD,
@@ -175,7 +175,7 @@ fun DictionaryScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = (uiState as UiState.Success<String>).data,
+                        text = uiState.data ?: "",
                         color = COLOR_ERROR,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
@@ -186,10 +186,10 @@ fun DictionaryScreen(
                     )
                 }
 
-                is UiState.Error -> {
+                is Resource.Error -> {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = (uiState as UiState.Error).message,
+                        text = uiState.message ?: "Error",
                         color = COLOR_ERROR,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 20.dp)

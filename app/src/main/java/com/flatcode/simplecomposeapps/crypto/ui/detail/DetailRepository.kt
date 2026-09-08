@@ -1,11 +1,11 @@
 package com.flatcode.simplecomposeapps.crypto.ui.detail
 
-import com.flatcode.simplecomposeapps.crypto.base.BaseRepository
+import com.flatcode.simplecomposeapps.utils.BaseRepository
 import com.flatcode.simplecomposeapps.crypto.db.dao.CoinDetailDao
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinDetailEntity
 import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.network.CryptoApi
-import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
+import com.flatcode.simplecomposeapps.utils.Resource
 import javax.inject.Inject
 
 class DetailRepository @Inject constructor(
@@ -13,11 +13,11 @@ class DetailRepository @Inject constructor(
     private val coinDetailDao: CoinDetailDao
 ) : BaseRepository() {
 
-    suspend fun getCryptoDetail(apiKey: String, id: Int): NetworkResult<CoinDetail> {
+    suspend fun getCryptoDetail(apiKey: String, id: Int): Resource<CoinDetail> {
         // Try to get from database first
         val cachedDetail = coinDetailDao.getCoinDetail(id)
         if (cachedDetail != null) {
-            return NetworkResult.Success(
+            return Resource.Success(
                 CoinDetail(
                     id = cachedDetail.id,
                     name = cachedDetail.name,
@@ -31,7 +31,7 @@ class DetailRepository @Inject constructor(
         // If not in database, fetch from API
         val result = safeApiCall { api.getCryptoDetail(apiKey, id) }
         return when (result) {
-            is NetworkResult.Success -> {
+            is Resource.Success -> {
                 val coinDetail = result.data?.data?.get(id.toString())
                 if (coinDetail != null) {
                     // Save to database
@@ -44,13 +44,14 @@ class DetailRepository @Inject constructor(
                             logo = coinDetail.logo ?: ""
                         )
                     )
-                    NetworkResult.Success(coinDetail)
+                    Resource.Success(coinDetail)
                 } else {
-                    NetworkResult.Error("Coin details not found for id: $id")
+                    Resource.Error("Coin details not found for id: $id")
                 }
             }
-            is NetworkResult.Error -> NetworkResult.Error(result.message ?: "An error occurred")
-            is NetworkResult.Loading -> NetworkResult.Loading()
+            is Resource.Error -> Resource.Error(result.message ?: "An error occurred")
+            is Resource.Loading -> Resource.Loading()
+            else -> Resource.Idle
         }
     }
 }

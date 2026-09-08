@@ -6,9 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.stockmarket.network.StockRepository
-import com.flatcode.simplecomposeapps.stockmarket.utils.CompanyListingsEvent
 import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListingsState
-import com.flatcode.simplecomposeapps.stockmarket.utils.Resource
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,17 +27,16 @@ class CompanyListingsViewModel @Inject constructor(
         getCompanyListings()
     }
 
-    fun onEvent(event: CompanyListingsEvent) {
-        when (event) {
-            is CompanyListingsEvent.Refresh -> getCompanyListings(fetchFromRemote = true)
-            is CompanyListingsEvent.OnSearchQueryChange -> {
-                state = state.copy(searchQuery = event.query)
-                searchJob?.cancel()
-                searchJob = viewModelScope.launch {
-                    delay(500.milliseconds)
-                    getCompanyListings()
-                }
-            }
+    fun onRefresh() {
+        getCompanyListings(fetchFromRemote = true)
+    }
+
+    fun onSearchQueryChange(query: String) {
+        state = state.copy(searchQuery = query)
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500.milliseconds)
+            getCompanyListings()
         }
     }
 
@@ -57,6 +55,8 @@ class CompanyListingsViewModel @Inject constructor(
                     is Resource.Loading -> {
                         state = state.copy(isLoading = result.isLoading)
                     }
+                    
+                    else -> {}
                 }
             }
         }

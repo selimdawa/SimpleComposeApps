@@ -9,7 +9,7 @@ import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
 import com.flatcode.simplecomposeapps.crypto.model.home.Usd
 import com.flatcode.simplecomposeapps.crypto.ui.home.HomeRepository
-import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,21 +87,23 @@ class CryptoHomeViewModel @Inject constructor(
         getData(apiKey, "10")
     }
 
-    private fun handleResult(result: NetworkResult<CryptoResponse>) {
+    private fun handleResult(result: Resource<CryptoResponse>) {
         when (result) {
-            is NetworkResult.Success -> {
+            is Resource.Success -> {
                 val newList = _cryptoList.value.toMutableList()
                 result.data?.data?.let { newList.addAll(it) }
                 _cryptoList.value = newList
             }
 
-            is NetworkResult.Error -> {
+            is Resource.Error -> {
                 viewModelScope.launch { _error.emit(result.message) }
             }
 
-            is NetworkResult.Loading -> {
+            is Resource.Loading -> {
                 // Handle loading if needed
             }
+            
+            else -> {}
         }
     }
 }

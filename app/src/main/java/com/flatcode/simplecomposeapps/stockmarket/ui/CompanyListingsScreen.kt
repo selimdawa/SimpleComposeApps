@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.stockmarket.utils.CompanyListingsEvent
 import com.flatcode.simplecomposeapps.stockmarket.viewmodel.CompanyListingsViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
@@ -51,18 +50,14 @@ fun CompanyListingsScreen(
         ) {
             PullToRefreshBox(
                 isRefreshing = state.isRefreshing,
-                onRefresh = { viewModel.onEvent(CompanyListingsEvent.Refresh) },
+                onRefresh = { viewModel.onRefresh() },
                 modifier = Modifier.fillMaxSize()
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     OutlinedTextField(
                         value = state.searchQuery,
                         onValueChange = {
-                            viewModel.onEvent(
-                                CompanyListingsEvent.OnSearchQueryChange(
-                                    it
-                                )
-                            )
+                            viewModel.onSearchQueryChange(it)
                         },
                         modifier = Modifier
                             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
@@ -82,7 +77,7 @@ fun CompanyListingsScreen(
                         trailingIcon = {
                             if (state.searchQuery.isNotEmpty()) {
                                 IconButton(onClick = {
-                                    viewModel.onEvent(CompanyListingsEvent.OnSearchQueryChange(""))
+                                    viewModel.onSearchQueryChange("")
                                 }) {
                                     Icon(
                                         imageVector = Icons.Default.Clear, contentDescription = null

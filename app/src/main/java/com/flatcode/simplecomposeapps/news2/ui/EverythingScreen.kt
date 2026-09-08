@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.news2.viewmodel.NewsEverythingViewModel
-import com.flatcode.simplecomposeapps.news2.common.Resource
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 
@@ -57,6 +57,8 @@ fun EverythingScreen(
                     textAlign = TextAlign.Center
                 )
             }
+
+            else -> {}
         }
     }
 }

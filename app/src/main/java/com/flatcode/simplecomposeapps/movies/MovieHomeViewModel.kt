@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.movies.data.network.MovieRepository
-import com.flatcode.simplecomposeapps.movies.models.MoviesUiState
+import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,8 +16,8 @@ class MovieHomeViewModel @Inject constructor(
     private val repository: MovieRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<MoviesUiState>()
-    val uiState: LiveData<MoviesUiState> = _uiState
+    private val _uiState = MutableLiveData<Resource<List<MovieItemModel>>>(Resource.Idle)
+    val uiState: LiveData<Resource<List<MovieItemModel>>> = _uiState
 
     init {
         getMovies()
@@ -24,13 +25,13 @@ class MovieHomeViewModel @Inject constructor(
 
     private fun getMovies() {
         viewModelScope.launch {
-            _uiState.value = MoviesUiState.Loading
+            _uiState.value = Resource.Loading()
             try {
                 val moviesModel = repository.getMovies()
                 val movies = moviesModel.results
-                _uiState.value = MoviesUiState.Success(movies)
+                _uiState.value = Resource.Success(movies)
             } catch (e: Exception) {
-                _uiState.value = MoviesUiState.Error(e.localizedMessage ?: "Unknown error")
+                _uiState.value = Resource.Error(e.localizedMessage ?: "Unknown error")
             }
         }
     }

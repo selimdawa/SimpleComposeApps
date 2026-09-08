@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
 import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
-import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ class RickEpisodesViewModel @Inject constructor(
     private val _episodes = MutableStateFlow<Resource<List<Episode>>>(Resource.Loading())
     val episodes: StateFlow<Resource<List<Episode>>> = _episodes
 
-    private val _isLoading = MutableStateFlow(true)
+    private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
     private val _error = MutableStateFlow<String?>(null)
@@ -61,6 +61,8 @@ class RickEpisodesViewModel @Inject constructor(
                             _episodes.value = Resource.Loading()
                         }
                     }
+                    
+                    else -> {}
                 }
             }
         }

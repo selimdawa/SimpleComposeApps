@@ -1,6 +1,6 @@
 package com.flatcode.simplecomposeapps.rickAndMorty.data.repositories
 
-import com.flatcode.simplecomposeapps.rickAndMorty.data.base.BaseRepository
+import com.flatcode.simplecomposeapps.utils.BaseRepository
 import com.flatcode.simplecomposeapps.rickAndMorty.data.remote.ApiService
 import javax.inject.Inject
 

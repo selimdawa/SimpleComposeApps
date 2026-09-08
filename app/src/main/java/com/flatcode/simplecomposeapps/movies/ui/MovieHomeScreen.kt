@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.movies.MovieHomeViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
-import com.flatcode.simplecomposeapps.movies.models.MoviesUiState
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
@@ -51,15 +51,15 @@ fun MovieHomeScreen(
                 .padding(paddingValues)
         ) {
             when (uiState) {
-                is MoviesUiState.Loading -> {
+                is Resource.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center),
                         color = MC_TRACK
                     )
                 }
 
-                is MoviesUiState.Success -> {
-                    val movies = (uiState as MoviesUiState.Success).movies
+                is Resource.Success -> {
+                    val movies = uiState?.data ?: emptyList()
                     LazyVerticalStaggeredGrid(
                         columns = StaggeredGridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
@@ -74,9 +74,9 @@ fun MovieHomeScreen(
                     }
                 }
 
-                is MoviesUiState.Error -> {
+                is Resource.Error -> {
                     Text(
-                        text = (uiState as MoviesUiState.Error).message,
+                        text = uiState?.message ?: "Error",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),

@@ -1,6 +1,6 @@
 package com.flatcode.simplecomposeapps.news2.data.repositories
 
-import com.flatcode.simplecomposeapps.news2.base.BaseRepository
+import com.flatcode.simplecomposeapps.utils.BaseRepository
 import com.flatcode.simplecomposeapps.news2.data.remote.NewsApiServices
 import javax.inject.Inject
 

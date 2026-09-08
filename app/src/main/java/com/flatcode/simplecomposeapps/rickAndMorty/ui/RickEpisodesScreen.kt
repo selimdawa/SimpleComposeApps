@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
 import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickEpisodesViewModel
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -45,7 +45,9 @@ fun RickEpisodesScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.getEpisodes()
+        if (viewModel.episodes.value.data.isNullOrEmpty()) {
+            viewModel.getEpisodes()
+        }
     }
 
     Box(
@@ -63,7 +65,7 @@ fun RickEpisodesScreen(
             is Resource.Success -> {
                 val episodes = state.data ?: emptyList()
 
-                LaunchedEffect(listState) {
+                LaunchedEffect(listState, episodes.size) {
                     snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
                         .collect { lastVisibleItemIndex ->
                             if (lastVisibleItemIndex != null && lastVisibleItemIndex >= episodes.size - 5) {
@@ -105,6 +107,8 @@ fun RickEpisodesScreen(
                     color = COLOR_ERROR
                 )
             }
+
+            else -> {}
         }
     }
 }

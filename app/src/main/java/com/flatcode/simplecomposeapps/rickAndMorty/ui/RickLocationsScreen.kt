@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.rickAndMorty.utils.Resource
 import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickLocationsViewModel
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -45,7 +45,9 @@ fun RickLocationsScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.getLocations()
+        if (viewModel.locations.value.data.isNullOrEmpty()) {
+            viewModel.getLocations()
+        }
     }
 
     Box(
@@ -63,7 +65,7 @@ fun RickLocationsScreen(
             is Resource.Success -> {
                 val locations = state.data ?: emptyList()
 
-                LaunchedEffect(listState) {
+                LaunchedEffect(listState, locations.size) {
                     snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
                         .collect { lastVisibleItemIndex ->
                             if (lastVisibleItemIndex != null && lastVisibleItemIndex >= locations.size - 5) {
@@ -105,6 +107,8 @@ fun RickLocationsScreen(
                     color = COLOR_ERROR
                 )
             }
+
+            else -> {}
         }
     }
 }

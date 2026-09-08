@@ -6,7 +6,7 @@ import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
 import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
 import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.ui.detail.DetailRepository
-import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,17 +40,19 @@ class CryptoDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             when (val result = repository.getCryptoDetail(apiKey, id)) {
-                is NetworkResult.Success -> {
+                is Resource.Success -> {
                     _cryptoDetail.value = result.data
                 }
 
-                is NetworkResult.Error -> {
+                is Resource.Error -> {
                     _error.emit(result.message)
                 }
 
-                is NetworkResult.Loading -> {
+                is Resource.Loading -> {
                     // Handle loading
                 }
+                
+                else -> {}
             }
             _isLoading.value = false
         }
