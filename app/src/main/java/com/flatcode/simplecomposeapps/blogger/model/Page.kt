@@ -4,12 +4,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Page(
-    var authorName: String? = null,
-    var content: String? = null,
-    var id: String? = null,
-    var published: String? = null,
-    var selfLink: String? = null,
-    var title: String? = null,
-    var updated: String? = null,
-    var url: String? = null
-)
+    val author: Author? = null,
+    val content: String? = null,
+    val id: String? = null,
+    val published: String? = null,
+    val selfLink: String? = null,
+    val title: String? = null,
+    val updated: String? = null,
+    val url: String? = null
+) {
+    val authorName: String? get() = author?.displayName
+}

@@ -1,24 +1,24 @@
 package com.flatcode.simplecomposeapps.blogger.viewmodel
 
-import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.blogger.data.network.BloggerApi
 import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.blogger.model.Label
 import com.flatcode.simplecomposeapps.blogger.model.Page
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.json.JSONObject
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BloggerViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+class BloggerViewModel @Inject constructor(
+    private val api: BloggerApi
+) : ViewModel() {
 
     val posts = mutableStateListOf<Post>()
 
@@ -69,68 +69,41 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
 
     private fun fetchPosts(isSearch: Boolean) {
         _isLoading.value = true
-        val url = if (isSearch) {
-            when (nextPageToken.value) {
-                DATA.EMPTY -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/${DATA.SEARCH}?${DATA.Q}=$currentQuery&${DATA.KEY}=${DATA.BLOGGER_API}"
-                else -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/${DATA.SEARCH}?${DATA.Q}=$currentQuery&${DATA.PAGE_TOKEN}=${nextPageToken.value}&${DATA.KEY}=${DATA.BLOGGER_API}"
-            }
-        } else {
-            when (nextPageToken.value) {
-                DATA.EMPTY -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}?${DATA.MAX_RESULTS}=${DATA.MAX_POST_RESULTS}&${DATA.KEY}=${DATA.BLOGGER_API}"
-                else -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}?${DATA.MAX_RESULTS}=${DATA.MAX_POST_RESULTS}&${DATA.PAGE_TOKEN}=${nextPageToken.value}&${DATA.KEY}=${DATA.BLOGGER_API}"
-            }
-        }
-
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
-            if (response.isNullOrEmpty()) return@StringRequest
+        viewModelScope.launch {
             try {
-                val jsonObject = JSONObject(response)
-                nextPageToken.value = jsonObject.optString(DATA.NEXT_PAGE_TOKEN, "end")
-
-                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
-                if (jsonArray != null) {
-                    for (i in 0 until jsonArray.length()) {
-                        val item = jsonArray.getJSONObject(i)
-                        posts.add(parsePost(item))
-                    }
+                val response = if (isSearch) {
+                    api.searchPosts(
+                        query = currentQuery,
+                        pageToken = if (nextPageToken.value == DATA.EMPTY) null else nextPageToken.value
+                    )
+                } else {
+                    api.getPosts(
+                        pageToken = if (nextPageToken.value == DATA.EMPTY) null else nextPageToken.value
+                    )
                 }
+                nextPageToken.value = response.nextPageToken ?: "end"
+                response.items?.let { posts.addAll(it) }
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
-        }, {
-            _isLoading.value = false
-        })
-
-        Volley.newRequestQueue(getApplication()).add(stringRequest)
+        }
     }
 
     fun loadPages() {
         _isLoading.value = true
         pages.clear()
-        val url =
-            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}?${DATA.KEY}=${DATA.BLOGGER_API}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
-            if (response.isNullOrEmpty()) return@StringRequest
+        viewModelScope.launch {
             try {
-                val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
-                if (jsonArray != null) {
-                    for (i in 0 until jsonArray.length()) {
-                        val item = jsonArray.getJSONObject(i)
-                        pages.add(parsePage(item))
-                    }
-                }
+                val response = api.getPages()
+                response.items?.let { pages.addAll(it) }
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
-        }, {
-            _isLoading.value = false
-        })
-
-        Volley.newRequestQueue(getApplication()).add(stringRequest)
+        }
     }
 
     fun loadPostDetails(postId: String) {
@@ -139,34 +112,17 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         labels.clear()
         comments.clear()
 
-        val url =
-            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/$postId?${DATA.KEY}=${DATA.BLOGGER_API}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            if (response.isNullOrEmpty()) {
-                _isLoading.value = false
-                return@StringRequest
-            }
+        viewModelScope.launch {
             try {
-                val jsonObject = JSONObject(response)
-                _details.value = parsePost(jsonObject)
-
-                val labelsArray = jsonObject.optJSONArray(DATA.LABELS)
-                if (labelsArray != null) {
-                    for (i in 0 until labelsArray.length()) {
-                        labels.add(Label(labelsArray.getString(i)))
-                    }
-                }
+                val post = api.getPostDetails(postId)
+                _details.value = post
+                post.labels?.forEach { labels.add(Label(it)) }
                 loadComments(postId)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _isLoading.value = false
             }
-        }, {
-            _isLoading.value = false
-        })
-
-        Volley.newRequestQueue(getApplication()).add(stringRequest)
+        }
     }
 
     fun loadPageDetails(pageId: String) {
@@ -175,80 +131,39 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         labels.clear()
         comments.clear()
 
-        val url =
-            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}/$pageId?${DATA.KEY}=${DATA.BLOGGER_API}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
-            if (response.isNullOrEmpty()) return@StringRequest
+        viewModelScope.launch {
             try {
-                val jsonObject = JSONObject(response)
-                _details.value = parsePost(jsonObject)
+                _details.value = api.getPageDetails(pageId)
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
-        }, {
-            _isLoading.value = false
-        })
-
-        Volley.newRequestQueue(getApplication()).add(stringRequest)
+        }
     }
 
     private fun loadComments(postId: String) {
-        val url =
-            "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/$postId/${DATA.COMMENTS_KEY}?${DATA.KEY}=${DATA.BLOGGER_API}"
-
-        val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            _isLoading.value = false
-            if (response.isNullOrEmpty()) return@StringRequest
+        viewModelScope.launch {
             try {
-                val jsonObject = JSONObject(response)
-                val jsonArray = jsonObject.optJSONArray(DATA.ITEMS)
-                if (jsonArray != null) {
-                    for (i in 0 until jsonArray.length()) {
-                        val item = jsonArray.getJSONObject(i)
-                        val author = item.getJSONObject(DATA.AUTHOR)
-                        val image = author.getJSONObject(DATA.IMAGE).getString(DATA.URL)
-                        comments.add(
-                            Comment(
-                                id = item.getString(DATA.ID),
-                                name = author.getString(DATA.DISPLAY_NAME),
-                                profileImage = "https:$image",
-                                published = item.getString(DATA.PUBLISHED),
-                                comment = item.getString(DATA.CONTENT)
-                            )
+                val response = api.getComments(postId)
+                response.items?.forEach { item ->
+                    val author = item.author
+                    val image = author?.image?.url
+                    comments.add(
+                        Comment(
+                            id = item.id ?: DATA.EMPTY,
+                            name = author?.displayName ?: DATA.EMPTY,
+                            profileImage = "https:$image",
+                            published = item.published ?: DATA.EMPTY,
+                            comment = item.content ?: DATA.EMPTY
                         )
-                    }
+                    )
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                _isLoading.value = false
             }
-        }, {
-            _isLoading.value = false
-        })
-
-        Volley.newRequestQueue(getApplication()).add(stringRequest)
+        }
     }
-
-    private fun parsePost(item: JSONObject) = Post(
-        authorName = item.getJSONObject(DATA.AUTHOR).getString(DATA.DISPLAY_NAME),
-        content = item.optString(DATA.CONTENT),
-        id = item.getString(DATA.ID),
-        published = item.getString(DATA.PUBLISHED),
-        selfLink = item.optString(DATA.SELF_LINK),
-        title = item.getString(DATA.TITLE),
-        updated = item.optString(DATA.UPDATED),
-        url = item.optString(DATA.URL)
-    )
-
-    private fun parsePage(item: JSONObject) = Page(
-        authorName = item.getJSONObject(DATA.AUTHOR).getString(DATA.DISPLAY_NAME),
-        content = item.optString(DATA.CONTENT),
-        id = item.getString(DATA.ID),
-        published = item.getString(DATA.PUBLISHED),
-        selfLink = item.optString(DATA.SELF_LINK),
-        title = item.getString(DATA.TITLE),
-        updated = item.optString(DATA.UPDATED),
-        url = item.optString(DATA.URL)
-    )
 }
