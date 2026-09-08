@@ -1,9 +1,7 @@
 package com.flatcode.simplecomposeapps.joke.viewmodel
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.joke.data.network.JokeApi
@@ -19,17 +17,13 @@ class JokeViewModel @Inject constructor(
     private val api: JokeApi
 ) : ViewModel() {
 
-    val jokes: List<Joke>
-        field = mutableStateListOf<Joke>()
+    val jokes = mutableStateListOf<Joke>()
 
-    val isLoading: State<Boolean>
-        field = mutableStateOf(value = false)
+    val isLoading = mutableStateOf(value = false)
 
-    val errorMessage: State<String?>
-        field = mutableStateOf<String?>(null)
+    val errorMessage = mutableStateOf<String?>(null)
 
-    val selectedCategory: State<String>
-        field = mutableStateOf(value = "Any")
+    val selectedCategory = mutableStateOf(value = "Any")
 
     val categories = DATA.JOKE_CATEGORIES
 

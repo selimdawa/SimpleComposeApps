@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
-import com.flatcode.simplecomposeapps.meals.retrofit.MealApi
+import com.flatcode.simplecomposeapps.meals.data.network.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

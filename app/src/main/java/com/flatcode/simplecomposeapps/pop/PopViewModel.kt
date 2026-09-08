@@ -6,6 +6,7 @@ import com.flatcode.simplecomposeapps.pop.model.PopItem
 import com.flatcode.simplecomposeapps.pop.repository.FunkoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -40,7 +41,7 @@ class PopViewModel @Inject constructor(
         }
     }.stateIn(
         viewModelScope,
-        kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+        SharingStarted.WhileSubscribed(5000),
         emptyList()
     )
 

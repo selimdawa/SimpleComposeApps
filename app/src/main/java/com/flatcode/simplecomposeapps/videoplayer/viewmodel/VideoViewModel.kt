@@ -8,15 +8,13 @@ import android.os.Looper
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoDao
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
-import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
-import com.flatcode.simplecomposeapps.videoplayer.data.VideoSettingsEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -58,28 +56,20 @@ class VideoViewModel @Inject constructor(
     private fun observeData() {
         viewModelScope.launch {
             combine(
-                videoDao.getAllVideos(),
-                videoDao.getAllFolders(),
-                videoDao.getSettings()
+                videoDao.getAllVideos(), videoDao.getAllFolders(), videoDao.getSettings()
             ) { videos, folders, settings ->
-                VideoUiState(
-                    videoFiles = videos,
-                    folderList = folders,
-                    isLoading = false,
-                    isRefreshing = false,
-                    lastVideoId = settings?.lastVideoId,
-                    lastPosition = settings?.lastPosition ?: 0L
-                )
-            }.collect { newState ->
-                _uiState.value = newState
+                Triple(videos, folders, settings)
+            }.collect { (videos, folders, settings) ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        videoFiles = videos,
+                        folderList = folders,
+                        isLoading = if (videos.isNotEmpty() || folders.isNotEmpty()) false else currentState.isLoading,
+                        lastVideoId = settings?.lastVideoId,
+                        lastPosition = settings?.lastPosition ?: 0L
+                    )
+                }
             }
-        }
-    }
-
-    fun savePlayback(videoId: String, position: Long) {
-        viewModelScope.launch {
-            videoDao.saveSettings(VideoSettingsEntity(lastVideoId = videoId, lastPosition = position))
-            videoDao.updatePosition(videoId, position)
         }
     }
 
@@ -89,6 +79,7 @@ class VideoViewModel @Inject constructor(
                 _uiState.update { it.copy(isRefreshing = true) }
             }
             repository.syncWithRoom()
+            _uiState.update { it.copy(isLoading = false, isRefreshing = false) }
         }
     }
 

@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.wordpress.utils.WordPressApi
+import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.utils.loadWordPressContent
 
 @Composable

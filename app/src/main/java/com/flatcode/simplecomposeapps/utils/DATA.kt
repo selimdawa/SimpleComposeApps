@@ -1,3 +1,4 @@
+@file:Suppress("SpellCheckingInspection")
 package com.flatcode.simplecomposeapps.utils
 
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,7 +34,6 @@ import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
-@Suppress("SpellCheckingInspection")
 object DATA {
 
     data class NavItem(
@@ -445,7 +445,7 @@ object DATA {
     const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
 
     //Country
-    const val COUNTRY_GSON: String =
+    const val COUNTRIES_ENDPOINT: String =
         "atilsamancioglu/IA19-DataSetCountries/master/countrydataset.json"
     const val BASE_URL_COUNTRY = "https://raw.githubusercontent.com/"
 

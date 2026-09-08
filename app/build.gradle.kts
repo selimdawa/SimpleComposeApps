@@ -73,7 +73,7 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
-    //OkHttp (For internal Coil or other needs if necessary, but removing direct Retrofit/Volley refs)
+    //OkHttp (For internal Coil or other needs if necessary, but removing direct old refs)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)

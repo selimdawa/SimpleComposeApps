@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.movies.data.retrofit.api
+package com.flatcode.simplecomposeapps.movies.data.network
 
 import com.flatcode.simplecomposeapps.movies.models.MoviesModel
 import com.flatcode.simplecomposeapps.utils.DATA

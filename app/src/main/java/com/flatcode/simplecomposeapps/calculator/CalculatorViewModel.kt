@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorDao
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.objecthunter.exp4j.ExpressionBuilder
 import javax.inject.Inject
 
@@ -50,7 +52,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
             viewModelScope.launch {
                 try {
                     val finalResult =
-                        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                        withContext(Dispatchers.Default) {
                             val expressionBuilder =
                                 ExpressionBuilder(currentExpression).build()
                             val resultVal = expressionBuilder.evaluate()

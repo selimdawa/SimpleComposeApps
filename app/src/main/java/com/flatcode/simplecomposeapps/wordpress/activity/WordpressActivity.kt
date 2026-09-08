@@ -18,7 +18,7 @@ import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressDetailsScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressFavoritesScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressScreen
-import com.flatcode.simplecomposeapps.wordpress.utils.WordPressApi
+import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

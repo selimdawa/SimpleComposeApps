@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.wordpress.utils
+package com.flatcode.simplecomposeapps.wordpress.data.network
 
 import com.flatcode.simplecomposeapps.wordpress.model.Media
 import com.flatcode.simplecomposeapps.wordpress.model.Post

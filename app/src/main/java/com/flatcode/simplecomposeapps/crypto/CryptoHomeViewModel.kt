@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
 import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
+import com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
 import com.flatcode.simplecomposeapps.crypto.model.home.Usd
@@ -86,7 +87,7 @@ class CryptoHomeViewModel @Inject constructor(
         getData(apiKey, "10")
     }
 
-    private fun handleResult(result: NetworkResult<com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse>) {
+    private fun handleResult(result: NetworkResult<CryptoResponse>) {
         when (result) {
             is NetworkResult.Success -> {
                 val newList = _cryptoList.value.toMutableList()

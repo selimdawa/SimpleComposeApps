@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.meals.retrofit
+package com.flatcode.simplecomposeapps.meals.data.network
 
 import com.flatcode.simplecomposeapps.meals.model.CategoryList
 import com.flatcode.simplecomposeapps.meals.model.MealList

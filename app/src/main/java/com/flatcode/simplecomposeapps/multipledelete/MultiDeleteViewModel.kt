@@ -98,7 +98,7 @@ class MultiDeleteViewModel @Inject constructor(
 
     fun deleteSelected() {
         viewModelScope.launch {
-            multiDeleteDao.deleteByTexts(selectedItems.toList())
+            multiDeleteDao.deleteByTexts(selectedItems)
             exitSelectionMode()
         }
     }

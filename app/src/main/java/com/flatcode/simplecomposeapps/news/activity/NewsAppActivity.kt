@@ -65,4 +65,3 @@ fun NewsNavHost(viewModel: NewsViewModel) {
         }
     }
 }
-

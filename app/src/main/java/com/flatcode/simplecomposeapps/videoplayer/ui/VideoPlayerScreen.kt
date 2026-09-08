@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -127,9 +128,9 @@ fun VideoPlayerScreen(
                                 onClick = { onFolderClick(folder.name) })
                         }
                     } else {
-                        items(uiState.videoFiles.indices.toList()) { index ->
+                        itemsIndexed(uiState.videoFiles) { index, video ->
                             VideoItem(
-                                video = uiState.videoFiles[index],
+                                video = video,
                                 onClick = { onVideoClick(index) })
                         }
                     }

@@ -1,7 +1,6 @@
 package com.flatcode.simplecomposeapps.news.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -17,17 +16,13 @@ class NewsViewModel @Inject constructor(
     application: Application, private val newsApi: NewsAPI
 ) : AndroidViewModel(application) {
 
-    val headlines: List<NewsHeadlines>
-        field = mutableStateListOf<NewsHeadlines>()
+    val headlines = mutableStateListOf<NewsHeadlines>()
 
-    val isLoading: MutableState<Boolean>
-        field = mutableStateOf(false)
+    val isLoading = mutableStateOf(false)
 
-    val selectedCategory: MutableState<String>
-        field = mutableStateOf("general")
+    val selectedCategory = mutableStateOf("general")
 
-    val selectedHeadline: MutableState<NewsHeadlines?>
-        field = mutableStateOf<NewsHeadlines?>(null)
+    val selectedHeadline = mutableStateOf<NewsHeadlines?>(null)
 
     init {
         loadNews("general")
@@ -41,7 +36,7 @@ class NewsViewModel @Inject constructor(
                 val response = newsApi.getNewsHeadlines(category, query)
                 isLoading.value = false
                 headlines.clear()
-                response.articles?.filterNotNull()?.let { headlines.addAll(it) }
+                response.articles?.let { headlines.addAll(it) }
             } catch (e: Exception) {
                 isLoading.value = false
                 e.printStackTrace()

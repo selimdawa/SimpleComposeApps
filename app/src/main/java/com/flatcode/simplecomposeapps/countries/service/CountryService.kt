@@ -13,6 +13,6 @@ class CountryService @Inject constructor(
     private val client: HttpClient
 ) {
     suspend fun getCountries(): List<Country> {
-        return client.get("${DATA.BASE_URL_COUNTRY}${DATA.COUNTRY_GSON}").body()
+        return client.get("${DATA.BASE_URL_COUNTRY}${DATA.COUNTRIES_ENDPOINT}").body()
     }
 }

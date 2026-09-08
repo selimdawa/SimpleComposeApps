@@ -7,7 +7,7 @@ import com.flatcode.simplecomposeapps.wordpress.data.PostDao
 import com.flatcode.simplecomposeapps.wordpress.data.PostEntity
 import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.model.Post
-import com.flatcode.simplecomposeapps.wordpress.utils.WordPressApi
+import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
