@@ -40,7 +40,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.transformations
 import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageViewModel
-import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation

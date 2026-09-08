@@ -25,7 +25,7 @@ import com.flatcode.simplecomposeapps.rickAndMorty.RickAndMortyActivity
 import com.flatcode.simplecomposeapps.stockmarket.StockMarketActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity
-import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.weather.WeatherActivity
