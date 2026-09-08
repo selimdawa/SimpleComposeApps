@@ -3,14 +3,16 @@ package com.flatcode.simplecomposeapps
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.decode.VideoFrameDecoder
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.request.crossfade
+import coil3.video.VideoFrameDecoder
 import dagger.hilt.android.HiltAndroidApp
 import io.selimdawa.multicolors.MultiColorManager
 
 @HiltAndroidApp
-class MainApplication : Application(), ImageLoaderFactory {
+class MainApplication : Application(), SingletonImageLoader.Factory {
 
     override fun onCreate() {
         super.onCreate()
@@ -30,8 +32,8 @@ class MainApplication : Application(), ImageLoaderFactory {
         })
     }
 
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this).components {
+    override fun newImageLoader(context: PlatformContext): ImageLoader {
+        return ImageLoader.Builder(context).components {
             add(VideoFrameDecoder.Factory())
         }.crossfade(true).build()
     }

@@ -23,7 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImage
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark

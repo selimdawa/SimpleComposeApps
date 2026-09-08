@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.viewmodel.MealsHomeViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR

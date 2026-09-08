@@ -38,7 +38,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.ui.draw.rotate
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings

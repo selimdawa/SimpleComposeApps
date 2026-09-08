@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImage
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.pokemon.viewmodel.PokemonDetailsViewModel
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation

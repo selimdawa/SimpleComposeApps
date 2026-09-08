@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.navigation.safeargs.kotlin)
 }
 
 android {
@@ -64,15 +63,16 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
+    implementation(libs.coil.network.ktor3)
     implementation(libs.compose.shimmer)
     //Serialization
     implementation(libs.kotlinx.serialization.json)
     //Ktor
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.android)
-    implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotiation)
     //OkHttp (For internal Coil or other needs if necessary, but removing direct old refs)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)
@@ -87,7 +87,6 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     //Media & PDF
     implementation(libs.android.pdf.viewer)

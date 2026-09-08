@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -47,7 +46,7 @@ fun NewsNavHost(viewModel: NewsViewModel) {
             NewsScreen(
                 viewModel = viewModel,
                 onNewsClick = { headline ->
-                    (viewModel.selectedHeadline as MutableState).value = headline
+                    viewModel.selectedHeadline.value = headline
                     navController.navigate("details")
                 }
             )

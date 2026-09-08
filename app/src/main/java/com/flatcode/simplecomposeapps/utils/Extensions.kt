@@ -6,8 +6,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
-import coil.size.Size
-import coil.transform.Transformation
+import coil3.size.Size
+import coil3.transform.Transformation
 import java.util.Locale
 import kotlin.math.log10
 import kotlin.math.pow
@@ -49,7 +49,7 @@ fun Long.formatSize(): String {
     )
 }
 
-class SimpleBlurTransformation(private val radius: Float) : Transformation {
+class SimpleBlurTransformation(private val radius: Float) : Transformation() {
     override val cacheKey: String = "${SimpleBlurTransformation::class.java.name}-$radius"
 
     override suspend fun transform(input: Bitmap, size: Size): Bitmap {

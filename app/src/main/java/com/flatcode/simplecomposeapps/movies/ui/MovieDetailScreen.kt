@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.movies.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.AppIcons
