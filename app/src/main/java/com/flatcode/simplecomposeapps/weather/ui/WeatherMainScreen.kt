@@ -4,9 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.LocationManager
-import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -39,9 +37,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.weather.model.MainViewModel
@@ -50,15 +45,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import org.json.JSONObject
-import timber.log.Timber
-import java.util.Locale
-import kotlin.coroutines.resume
 
 @Composable
 fun WeatherMainScreen(
@@ -117,7 +104,7 @@ fun WeatherMainScreen(
                     onSearchClick = { showSearchDialog = true },
                     onSyncClick = {
                         viewModel.lastCity?.let {
-                            getWeatherRequest(it, context, viewModel, scope)
+                            viewModel.getWeather(it)
                         } ?: checkLocation(context, viewModel, scope)
                     })
 
@@ -176,7 +163,7 @@ fun WeatherMainScreen(
 
     if (showSearchDialog) {
         SearchDialog(onDismiss = { showSearchDialog = false }, onSearch = { city ->
-            getWeatherRequest(city, context, viewModel, scope)
+            viewModel.getWeather(city)
         })
     }
 }
@@ -204,113 +191,9 @@ private fun getLocation(
         .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token)
         .addOnCompleteListener { task ->
             task.result?.let {
-                getWeatherRequest("${it.latitude},${it.longitude}", context, viewModel, scope)
+                viewModel.getWeather("${it.latitude},${it.longitude}")
             }
-        }
-}
-
-private fun getWeatherRequest(
-    city: String, context: Context, viewModel: MainViewModel, scope: CoroutineScope
-) {
-    viewModel.lastCity = city
-    viewModel.setLoading(true)
-    val url = "${DATA.BASE_URL_WEATHER}${DATA.API_KEY_WEATHER}&q=$city&days=3&aqi=no&alerts=no"
-    val request = StringRequest(Request.Method.GET, url, { result ->
-        parseWeatherData(result, context, viewModel, scope)
-    }, { error ->
-        viewModel.setLoading(false)
-        Timber.d(error)
-    })
-    Volley.newRequestQueue(context).add(request)
-}
-
-private fun parseWeatherData(
-    result: String, context: Context, viewModel: MainViewModel, scope: CoroutineScope
-) {
-    scope.launch {
-        val mainObject = JSONObject(result)
-        val cityName = getCityName(mainObject, context)
-        val list = parseDays(mainObject, cityName, viewModel)
-        parseCurrentDate(mainObject, list, cityName, viewModel)
-        viewModel.setLoading(false)
-    }
-}
-
-private suspend fun getCityName(mainObject: JSONObject, context: Context): String =
-    withContext(Dispatchers.IO) {
-        val location = mainObject.getJSONObject(DATA.LOCATION)
-        val name = location.getString(DATA.NAME)
-        val lat = location.getDouble(DATA.LAT)
-        val lon = location.getDouble(DATA.LON)
-        val geocoder = Geocoder(context, Locale.getDefault())
-
-        return@withContext try {
-            val address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                suspendCancellableCoroutine { continuation ->
-                    geocoder.getFromLocation(lat, lon, 1) { addresses ->
-                        continuation.resume(addresses.firstOrNull())
-                    }
-                }
-            } else {
-                @Suppress("DEPRECATION") geocoder.getFromLocation(lat, lon, 1)?.firstOrNull()
-            }
-            address?.locality ?: address?.subAdminArea ?: name
-        } catch (_: Exception) {
-            name
-        }
-    }
-
-private fun parseDays(
-    mainObject: JSONObject, cityName: String, viewModel: MainViewModel
-): List<WeatherModel> {
-    val list = ArrayList<WeatherModel>()
-    val daysArray = mainObject.getJSONObject(DATA.FORECAST).getJSONArray(DATA.FORECAST_DAY)
-
-    for (i in 0 until daysArray.length()) {
-        val day = daysArray.getJSONObject(i)
-        val dayInfo = day.getJSONObject(DATA.DAY)
-        val condition = dayInfo.getJSONObject(DATA.CONDITION)
-
-        list.add(
-            WeatherModel(
-                city = cityName,
-                time = day.getString(DATA.DATE),
-                condition = condition.getString(DATA.TEXT),
-                currentTemp = DATA.EMPTY,
-                maxTemp = dayInfo.getString(DATA.MAX_TEMP_C).toFloat().toInt().toString(),
-                minTemp = dayInfo.getString(DATA.MIN_TEMP_C).toFloat().toInt().toString(),
-                imageUrl = condition.getString(DATA.ICON),
-                hours = day.getJSONArray(DATA.HOUR).toString(),
-            )
-        )
-    }
-    viewModel.updateList(list)
-    return list
-}
-
-private fun parseCurrentDate(
-    mainObject: JSONObject,
-    weatherItem: List<WeatherModel>,
-    cityName: String,
-    viewModel: MainViewModel
-) {
-    if (weatherItem.isEmpty()) return
-    val current = mainObject.getJSONObject(DATA.CURRENT)
-    val condition = current.getJSONObject(DATA.CONDITION)
-    val firstDay = weatherItem[0]
-
-    val item = WeatherModel(
-        city = cityName,
-        time = current.getString(DATA.LAST_UPDATED),
-        condition = condition.getString(DATA.TEXT),
-        currentTemp = "${current.getString(DATA.TEMP_C)}°C",
-        maxTemp = firstDay.maxTemp,
-        minTemp = firstDay.minTemp,
-        imageUrl = condition.getString(DATA.ICON),
-        hours = firstDay.hours
-    )
-    viewModel.updateCurrent(item)
-    viewModel.saveWeather(item)
+       }
 }
 
 private fun getHoursList(wItem: WeatherModel): List<WeatherModel> {
