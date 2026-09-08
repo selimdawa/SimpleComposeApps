@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
@@ -64,15 +65,18 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
     implementation(libs.compose.shimmer)
-    //Networking
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.retrofit.converter.moshi)
+    //Serialization
+    implementation(libs.kotlinx.serialization.json)
+    //Ktor
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+    //OkHttp (For internal Coil or other needs if necessary, but removing direct Retrofit/Volley refs)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)
-    implementation(libs.volley)
-    implementation(libs.gson)
     implementation(libs.jsoup)
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
@@ -94,8 +98,6 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.datastore.preferences)
     implementation(libs.timber)
-    implementation(libs.compose.destinations.core)
-    ksp(libs.compose.destinations.ksp)
     //Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

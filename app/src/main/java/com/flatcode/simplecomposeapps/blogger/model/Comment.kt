@@ -1,5 +1,8 @@
 package com.flatcode.simplecomposeapps.blogger.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Comment(
     var id: String? = null,
     var name: String? = null,

@@ -1,8 +1,9 @@
 package com.flatcode.simplecomposeapps.news.model
 
 import com.flatcode.simplecomposeapps.utils.DATA
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NewsHeadlines(
     var source: Source? = null,
     var author: String = DATA.EMPTY,
@@ -12,4 +13,4 @@ data class NewsHeadlines(
     var urlToImage: String = DATA.EMPTY,
     var publishedAt: String = DATA.EMPTY,
     var content: String = DATA.EMPTY
-) : Serializable
+)

@@ -1,5 +1,8 @@
 package com.flatcode.simplecomposeapps.blogger.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Page(
     var authorName: String? = null,
     var content: String? = null,

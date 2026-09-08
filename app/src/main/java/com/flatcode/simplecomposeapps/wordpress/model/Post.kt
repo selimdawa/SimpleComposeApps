@@ -1,21 +1,23 @@
 package com.flatcode.simplecomposeapps.wordpress.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Post(
-    @SerializedName("id")
+    @SerialName("id")
     val id: Int = 0,
 
-    @SerializedName("featured_media")
+    @SerialName("featured_media")
     val featuredMedia: Int = 0,
 
-    @SerializedName("title")
+    @SerialName("title")
     val title: Rendered? = null,
 
-    @SerializedName("excerpt")
+    @SerialName("excerpt")
     val excerpt: Rendered? = null,
 
-    @SerializedName("content")
+    @SerialName("content")
     val content: Rendered? = null,
 
     val sqLiteId: Int = 0,

@@ -1,20 +1,24 @@
 package com.flatcode.simplecomposeapps.crypto.model.detail
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class DetailResponse(
-    @SerializedName("data") val data: Map<String, CoinDetail>?,
-    @SerializedName("status") val status: Status?
+    @SerialName("data") val data: Map<String, CoinDetail>?,
+    @SerialName("status") val status: Status?
 )
 
+@Serializable
 data class CoinDetail(
-    @SerializedName("id") val id: Int?,
-    @SerializedName("name") val name: String?,
-    @SerializedName("symbol") val symbol: String?,
-    @SerializedName("description") val description: String?,
-    @SerializedName("logo") val logo: String?
+    @SerialName("id") val id: Int?,
+    @SerialName("name") val name: String?,
+    @SerialName("symbol") val symbol: String?,
+    @SerialName("description") val description: String?,
+    @SerialName("logo") val logo: String?
 )
 
+@Serializable
 data class Status(
-    @SerializedName("error_message") val errorMessage: String?
+    @SerialName("error_message") val errorMessage: String?
 )

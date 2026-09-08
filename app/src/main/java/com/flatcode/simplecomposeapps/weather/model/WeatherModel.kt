@@ -2,8 +2,10 @@ package com.flatcode.simplecomposeapps.weather.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "weather")
+@Serializable
 data class WeatherModel(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val city: String,

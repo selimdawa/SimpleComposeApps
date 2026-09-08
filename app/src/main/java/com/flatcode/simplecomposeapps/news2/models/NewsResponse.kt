@@ -1,9 +1,11 @@
 package com.flatcode.simplecomposeapps.news2.models
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NewsResponse<T>(
-    @SerializedName("status") val status: String,
-    @SerializedName("totalResults") val totalResults: Int,
-    @SerializedName("articles") val articles: List<T>
+    @SerialName("status") val status: String,
+    @SerialName("totalResults") val totalResults: Int,
+    @SerialName("articles") val articles: List<T>
 )

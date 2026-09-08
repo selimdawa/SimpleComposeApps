@@ -3,13 +3,16 @@ package com.flatcode.simplecomposeapps.rickAndMorty.data.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.IBaseDiffModel
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RickAndMortyResponse<T>(
     val info: Info,
     val results: List<T>
 )
 
+@Serializable
 data class Info(
     val count: Int,
     val pages: Int,
@@ -18,6 +21,7 @@ data class Info(
 )
 
 @Entity(tableName = "characters")
+@Serializable
 data class Character(
     @PrimaryKey override val id: Int,
     val name: String,
@@ -34,6 +38,7 @@ data class Character(
 ) : IBaseDiffModel<Int>
 
 @Entity(tableName = "locations")
+@Serializable
 data class Location(
     @PrimaryKey override val id: Int,
     val name: String,
@@ -45,16 +50,18 @@ data class Location(
 ) : IBaseDiffModel<Int>
 
 @Entity(tableName = "episodes")
+@Serializable
 data class Episode(
     @PrimaryKey override val id: Int,
     val name: String,
-    @SerializedName("air_date") val airDate: String,
+    @SerialName("air_date") val airDate: String,
     val episode: String,
     val characters: List<String>,
     val url: String,
     val created: String
 ) : IBaseDiffModel<Int>
 
+@Serializable
 data class LocationShort(
     val name: String,
     val url: String

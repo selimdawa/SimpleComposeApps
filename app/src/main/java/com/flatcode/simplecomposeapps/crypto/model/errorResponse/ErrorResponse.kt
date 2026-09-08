@@ -1,12 +1,15 @@
 package com.flatcode.simplecomposeapps.crypto.model.errorResponse
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ErrorResponse(
-    @SerializedName("status") val status: Status?
+    @SerialName("status") val status: Status?
 )
 
+@Serializable
 data class Status(
-    @SerializedName("error_code") val errorCode: Int?,
-    @SerializedName("error_message") val errorMessage: String?
+    @SerialName("error_code") val errorCode: Int?,
+    @SerialName("error_message") val errorMessage: String?
 )

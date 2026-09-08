@@ -1,7 +1,9 @@
 package com.flatcode.simplecomposeapps.pokemon.data.model
 
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItemDetails
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PokeModelDetails(
     val id: Int,
     val name: String,
@@ -11,22 +13,26 @@ data class PokeModelDetails(
     val weight: Int
 )
 
+@Serializable
 data class Type(
     val slot: Int,
     val type: TypeName
 )
 
+@Serializable
 data class TypeName(
     val name: String,
     val url: String
 )
 
+@Serializable
 data class Stat(
     val base_stat: Int,
     val effort: Int,
     val stat: StatName
 )
 
+@Serializable
 data class StatName(
     val name: String,
     val url: String

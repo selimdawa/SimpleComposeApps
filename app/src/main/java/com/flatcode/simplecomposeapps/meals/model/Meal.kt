@@ -2,8 +2,10 @@ package com.flatcode.simplecomposeapps.meals.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "mealInformation")
+@Serializable
 data class Meal(
     val dateModified: String?,
     @PrimaryKey val idMeal: String,

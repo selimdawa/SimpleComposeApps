@@ -1,9 +1,10 @@
 package com.flatcode.simplecomposeapps.news.model
 
 import com.flatcode.simplecomposeapps.utils.DATA
-import java.io.Serializable
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Source(
     var id: String = DATA.EMPTY,
     var name: String = DATA.EMPTY
-) : Serializable
+)

@@ -1,9 +1,11 @@
 package com.flatcode.simplecomposeapps.wordpress.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Rendered(
-    @SerializedName("rendered")
+    @SerialName("rendered")
     val rendered: String? = ""
 ) {
     override fun toString(): String {

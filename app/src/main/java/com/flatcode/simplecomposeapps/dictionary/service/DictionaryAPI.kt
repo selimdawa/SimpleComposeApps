@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.dictionary.service
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,6 +14,7 @@ interface DictionaryAPI {
     ): List<DictionaryResponse>
 }
 
+@Serializable
 data class DictionaryResponse(
-    @SerializedName("shortdef") val shortdef: List<String>?
+    @SerialName("shortdef") val shortdef: List<String>?
 )
