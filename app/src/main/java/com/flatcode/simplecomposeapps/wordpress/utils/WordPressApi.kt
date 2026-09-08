@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class WPApiService @Inject constructor(
+class WordPressApi @Inject constructor(
     private val client: HttpClient
 ) {
     suspend fun getPosts(): List<Post> {

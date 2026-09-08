@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.countries.model.Country
 import com.flatcode.simplecomposeapps.countries.model.CountrySettings
-import com.flatcode.simplecomposeapps.countries.service.CountryAPI
 import com.flatcode.simplecomposeapps.countries.service.CountryDAO
+import com.flatcode.simplecomposeapps.countries.service.CountryService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    application: Application, private val countryApi: CountryAPI,
+    application: Application, private val countryService: CountryService,
     private val countryDao: CountryDAO
 ) : AndroidViewModel(application) {
 
@@ -52,7 +52,7 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val list = withContext(Dispatchers.IO) {
-                    countryApi.getCountries()
+                    countryService.getCountries()
                 }
                 storeInSQLite(list)
                 Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT).show()

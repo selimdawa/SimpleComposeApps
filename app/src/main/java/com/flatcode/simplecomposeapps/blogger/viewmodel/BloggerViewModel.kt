@@ -133,7 +133,17 @@ class BloggerViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                _details.value = api.getPageDetails(pageId)
+                val page = api.getPageDetails(pageId)
+                _details.value = Post(
+                    author = page.author,
+                    content = page.content,
+                    id = page.id,
+                    published = page.published,
+                    selfLink = page.selfLink,
+                    title = page.title,
+                    updated = page.updated,
+                    url = page.url
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {

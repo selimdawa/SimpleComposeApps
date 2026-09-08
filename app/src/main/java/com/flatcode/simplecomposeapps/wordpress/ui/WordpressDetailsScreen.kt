@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.wordpress.utils.WordPressClient
+import com.flatcode.simplecomposeapps.wordpress.utils.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.utils.loadWordPressContent
 
 @Composable
@@ -53,6 +53,7 @@ fun WordpressDetailsScreen(
     title: String,
     content: String,
     isFavorite: Boolean,
+    api: WordPressApi,
     onBack: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
@@ -62,7 +63,7 @@ fun WordpressDetailsScreen(
     LaunchedEffect(featuredMediaId) {
         if (featuredMediaId != -1 && mediaUrl == null) {
             try {
-                val media = WordPressClient.apiService.getPostThumbnail(featuredMediaId)
+                val media = api.getPostThumbnail(featuredMediaId)
                 mediaUrl = media.guid?.rendered
             } catch (_: Exception) {
             }

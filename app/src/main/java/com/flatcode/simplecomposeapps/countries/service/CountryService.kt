@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CountryAPI @Inject constructor(
+class CountryService @Inject constructor(
     private val client: HttpClient
 ) {
     suspend fun getCountries(): List<Country> {

@@ -18,26 +18,31 @@ import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressDetailsScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressFavoritesScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressScreen
+import com.flatcode.simplecomposeapps.wordpress.utils.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WordpressActivity : ComponentActivity() {
 
     private val viewModel: WordpressViewModel by viewModels()
 
+    @Inject
+    lateinit var api: WordPressApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {
-            WordpressNavHost(viewModel = viewModel)
+            WordpressNavHost(viewModel = viewModel, api = api)
         }
     }
 }
 
 @Composable
-fun WordpressNavHost(viewModel: WordpressViewModel) {
+fun WordpressNavHost(viewModel: WordpressViewModel, api: WordPressApi) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -85,6 +90,7 @@ fun WordpressNavHost(viewModel: WordpressViewModel) {
                     title = post.title?.rendered.orEmpty(),
                     content = post.content?.rendered.orEmpty(),
                     isFavorite = uiState.favoritePosts.any { it.wpPostId == post.id || it.id == post.id },
+                    api = api,
                     onBack = { navController.popBackStack() },
                     onToggleFavorite = { viewModel.toggleFavorite(post) })
             } else {

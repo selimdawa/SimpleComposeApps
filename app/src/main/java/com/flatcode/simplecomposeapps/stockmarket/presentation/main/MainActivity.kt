@@ -6,15 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.flatcode.simplecomposeapps.stockmarket.presentation.company_listings.CompanyListingsScreen
+import com.flatcode.simplecomposeapps.stockmarket.presentation.util.CompanyListings
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.generated.NavGraphs
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,7 +24,15 @@ class MainActivity : ComponentActivity() {
             Surface(
                 modifier = Modifier.fillMaxSize(), color = COLOR_ON_BACKGROUND
             ) {
-                DestinationsNavHost(navGraph = NavGraphs.root)
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = CompanyListings
+                ) {
+                    composable<CompanyListings> {
+                        CompanyListingsScreen()
+                    }
+                }
             }
         }
     }

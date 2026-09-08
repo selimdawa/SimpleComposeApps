@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
@@ -46,22 +45,22 @@ fun BloggerPagesScreen(
         topBar = {
             TopAppBar(
                 title = {
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = Strings.BLOGGER_PAGES,
-                        color = White,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
-            }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = AppIcons.Back,
-                        contentDescription = null,
-                        tint = White
-                    )
-                }
-            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = Strings.BLOGGER_PAGES,
+                            color = White,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                }, navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = AppIcons.Back,
+                            contentDescription = null,
+                            tint = White
+                        )
+                    }
+                }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
             )
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
@@ -76,7 +75,7 @@ fun BloggerPagesScreen(
                 items(pages) { page ->
                     // Converting Page to Post for BloggerItem to reuse the Composable
                     val post = Post(
-                        authorName = page.authorName,
+                        author = page.author,
                         content = page.content,
                         id = page.id,
                         published = page.published,

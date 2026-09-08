@@ -1,45 +1,33 @@
 package com.flatcode.simplecomposeapps.news.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.State
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import com.flatcode.simplecomposeapps.news.OnFetchDataListener
-import com.flatcode.simplecomposeapps.news.RequestManager
-import com.flatcode.simplecomposeapps.news.model.NewsApiResponse
+import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.news.service.NewsAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+class NewsViewModel @Inject constructor(
+    application: Application, private val newsApi: NewsAPI
+) : AndroidViewModel(application) {
 
     val headlines: List<NewsHeadlines>
         field = mutableStateListOf<NewsHeadlines>()
 
-    val isLoading: State<Boolean>
+    val isLoading: MutableState<Boolean>
         field = mutableStateOf(false)
 
-    val selectedCategory: State<String>
+    val selectedCategory: MutableState<String>
         field = mutableStateOf("general")
 
-    val selectedHeadline: State<NewsHeadlines?>
+    val selectedHeadline: MutableState<NewsHeadlines?>
         field = mutableStateOf<NewsHeadlines?>(null)
-
-    private val requestManager = RequestManager(application)
-
-    private val listener = object : OnFetchDataListener<NewsApiResponse> {
-        override fun onFetchData(list: List<NewsHeadlines?>?, message: String?) {
-            isLoading.value = false
-            headlines.clear()
-            list?.filterNotNull()?.let { headlines.addAll(it) }
-        }
-
-        override fun onError(message: String?) {
-            isLoading.value = false
-        }
-    }
 
     init {
         loadNews("general")
@@ -48,7 +36,17 @@ class NewsViewModel @Inject constructor(application: Application) : AndroidViewM
     fun loadNews(category: String, query: String? = null) {
         isLoading.value = true
         selectedCategory.value = category
-        requestManager.getNewsHeadlines(listener, category, query)
+        viewModelScope.launch {
+            try {
+                val response = newsApi.getNewsHeadlines(category, query)
+                isLoading.value = false
+                headlines.clear()
+                response.articles?.filterNotNull()?.let { headlines.addAll(it) }
+            } catch (e: Exception) {
+                isLoading.value = false
+                e.printStackTrace()
+            }
+        }
     }
 
     fun searchNews(query: String) {

@@ -11,12 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Destination<RootGraph>(start = true)
 fun CompanyListingsScreen(
     viewModel: CompanyListingsViewModel = hiltViewModel(),
 ) {
