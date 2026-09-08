@@ -94,7 +94,6 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.datastore.preferences)
     implementation(libs.timber)
-    implementation(libs.opencsv)
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
     //Testing

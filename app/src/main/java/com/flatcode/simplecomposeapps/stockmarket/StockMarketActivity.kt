@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.flatcode.simplecomposeapps.stockmarket.presentation.ui.theme.StockMarketAppTheme
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.generated.NavGraphs
@@ -19,13 +17,16 @@ import io.selimdawa.multicolors.MultiColorManager
 @AndroidEntryPoint
 class StockMarketActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(
-                modifier = Modifier.fillMaxSize(), color = COLOR_ON_BACKGROUND
-            ) {
-                DestinationsNavHost(navGraph = NavGraphs.root)
+            StockMarketAppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(), color = COLOR_ON_BACKGROUND
+                ) {
+                    DestinationsNavHost(navGraph = NavGraphs.root)
+                }
             }
         }
     }
