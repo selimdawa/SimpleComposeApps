@@ -4,17 +4,39 @@ import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.RickAndMortyResponse
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ApiService {
-    @GET("character")
-    suspend fun getCharacters(@Query("page") page: Int? = null): Response<RickAndMortyResponse<Character>>
+@Singleton
+class ApiService @Inject constructor(
+    private val client: HttpClient
+) {
+    suspend fun getCharacters(
+        page: Int? = null
+    ): RickAndMortyResponse<Character> {
+        return client.get("${DATA.BASE_URL_RICK_AND_MORTY}character") {
+            page?.let { parameter("page", it) }
+        }.body()
+    }
 
-    @GET("location")
-    suspend fun getLocations(@Query("page") page: Int? = null): Response<RickAndMortyResponse<Location>>
+    suspend fun getLocations(
+        page: Int? = null
+    ): RickAndMortyResponse<Location> {
+        return client.get("${DATA.BASE_URL_RICK_AND_MORTY}location") {
+            page?.let { parameter("page", it) }
+        }.body()
+    }
 
-    @GET("episode")
-    suspend fun getEpisodes(@Query("page") page: Int? = null): Response<RickAndMortyResponse<Episode>>
+    suspend fun getEpisodes(
+        page: Int? = null
+    ): RickAndMortyResponse<Episode> {
+        return client.get("${DATA.BASE_URL_RICK_AND_MORTY}episode") {
+            page?.let { parameter("page", it) }
+        }.body()
+    }
 }
