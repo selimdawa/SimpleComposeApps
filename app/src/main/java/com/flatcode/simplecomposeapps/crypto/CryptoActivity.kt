@@ -3,7 +3,7 @@ package com.flatcode.simplecomposeapps.crypto
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
-class CryptoActivity : AppCompatActivity() {
+class CryptoActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MultiColorManager.applyTheme(this)

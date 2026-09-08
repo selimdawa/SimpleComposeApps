@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -39,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
-class MealsActivity : AppCompatActivity() {
+class MealsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MultiColorManager.applyTheme(this)

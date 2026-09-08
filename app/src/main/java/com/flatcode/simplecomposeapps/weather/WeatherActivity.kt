@@ -1,9 +1,9 @@
 package com.flatcode.simplecomposeapps.weather
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -15,15 +15,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
-class WeatherActivity : AppCompatActivity() {
+class WeatherActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Apply theme from the MultiColors library
         MultiColorManager.applyTheme(this)
-        
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        
+
         setContent {
             MultiColorManager.applyTheme(this)
             WeatherNav()

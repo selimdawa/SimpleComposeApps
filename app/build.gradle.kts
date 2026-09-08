@@ -54,8 +54,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     //Core & UI
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity.ktx)
     implementation(libs.multicolors)
     //Lifecycle
     implementation(libs.lifecycle.viewmodel.ktx)
@@ -89,7 +87,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     //Media & PDF
     implementation(libs.android.pdf.viewer)
-    implementation(libs.appintro)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
     //Other's
