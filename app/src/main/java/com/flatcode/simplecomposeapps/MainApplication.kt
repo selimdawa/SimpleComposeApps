@@ -8,7 +8,7 @@ import dagger.hilt.android.HiltAndroidApp
 import io.selimdawa.multicolors.MultiColorManager
 
 @HiltAndroidApp
-class Application : Application(), ImageLoaderFactory {
+class MainApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()

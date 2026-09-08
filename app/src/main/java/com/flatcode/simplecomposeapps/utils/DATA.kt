@@ -28,7 +28,7 @@ import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.weather.WeatherActivity
-import com.flatcode.simplecomposeapps.web.Activity.WebAppActivity
+import com.flatcode.simplecomposeapps.web.activity.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 import androidx.navigation.NavType
 import androidx.navigation.navArgument

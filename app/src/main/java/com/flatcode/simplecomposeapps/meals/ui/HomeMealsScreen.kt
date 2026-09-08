@@ -222,7 +222,7 @@ fun HomeMealsScreen(
                                 CategoryMealItem(
                                     item = category, modifier = Modifier.clickable {
                                         onCategoryClick(
-                                            category.strCategory ?: ""
+                                            category.strCategory
                                         )
                                     })
                             }

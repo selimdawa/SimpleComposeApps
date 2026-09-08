@@ -30,20 +30,19 @@ fun WordpressItem(post: Post, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
             .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
+                interactionSource = remember { MutableInteractionSource() }, indication = null
             ) { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(containerColor = MC_BG)
     ) {
-        val titleText = if (!post.title?.rendered.isNullOrBlank()) post.title?.rendered else post.wpTitle ?: ""
-        val excerptText = if (!post.excerpt?.rendered.isNullOrBlank()) post.excerpt?.rendered else post.wpExcerpt ?: ""
+        val titleText = post.title?.rendered?.takeIf { it.isNotBlank() } ?: post.wpTitle ?: ""
+        val excerptText = post.excerpt?.rendered?.takeIf { it.isNotBlank() } ?: post.wpExcerpt ?: ""
 
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            val parsedTitle = Jsoup.parse(titleText ?: "").text()
+            val parsedTitle = Jsoup.parse(titleText).text()
             if (parsedTitle.isNotBlank()) {
                 Text(
                     text = parsedTitle,
@@ -55,8 +54,8 @@ fun WordpressItem(post: Post, onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            
-            val parsedExcerpt = Jsoup.parse(excerptText ?: "").text()
+
+            val parsedExcerpt = Jsoup.parse(excerptText).text()
             if (parsedExcerpt.isNotBlank()) {
                 Text(
                     text = parsedExcerpt,

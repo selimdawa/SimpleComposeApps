@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <application
-        android:name=".Application"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_icon"
         android:label="${appName}"
@@ -79,11 +79,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".web.Activity.WebAppActivity"
+            android:name=".web.activity.WebAppActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".web.Activity.WebViewActivity"
+            android:name=".web.activity.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

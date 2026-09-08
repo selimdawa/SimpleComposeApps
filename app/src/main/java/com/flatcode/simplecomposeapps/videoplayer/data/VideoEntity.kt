@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.videoplayer.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,13 +9,13 @@ data class VideoEntity(
     @PrimaryKey val videoId: String,
     val title: String,
     val path: String,
-    val uriString: String,
-    val fileName: String,
-    val dateAdded: String,
-    val bucketName: String,
+    @ColumnInfo(defaultValue = "") val uriString: String,
+    @ColumnInfo(defaultValue = "") val fileName: String,
+    @ColumnInfo(defaultValue = "") val dateAdded: String,
+    @ColumnInfo(defaultValue = "") val bucketName: String,
     val size: Long,
-    val sizeReadable: String,
+    @ColumnInfo(defaultValue = "") val sizeReadable: String,
     val duration: Long,
-    val durationReadable: String,
+    @ColumnInfo(defaultValue = "") val durationReadable: String,
     val lastPosition: Long
 )

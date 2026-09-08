@@ -29,8 +29,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun CategoriesMealsScreen(
-    onCategoryClick: (String) -> Unit,
-    viewModel: MealsHomeViewModel = hiltViewModel()
+    onCategoryClick: (String) -> Unit, viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
     val categories by viewModel.observeCategoriesLiveData().observeAsState()
 
@@ -67,7 +66,7 @@ fun CategoriesMealsScreen(
                     CategoryMealItem(
                         item = category, modifier = Modifier.clickable {
                             onCategoryClick(
-                                category.strCategory ?: ""
+                                category.strCategory
                             )
                         })
                 }

@@ -97,8 +97,4 @@ class WebAppViewModel @Inject constructor(
     fun showSupportDialog(show: Boolean) {
         _uiState.update { it.copy(showSupportDialog = show) }
     }
-
-    fun setSelectedUrl(url: String?) {
-        _uiState.update { it.copy(selectedUrl = url) }
-    }
 }

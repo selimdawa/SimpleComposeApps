@@ -22,14 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.web.activity.WebViewActivity
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
-import com.flatcode.simplecomposeapps.web.Activity.WebViewActivity
 
 val CardTextSize = 18.sp
 val CardCornerRadius = 15.dp
@@ -157,9 +157,7 @@ fun WebMainScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 SocialItem(
-                    modifier = Modifier.weight(1f),
-                    imageResId = AppIcons.Facebook,
-                    onClick = {
+                    modifier = Modifier.weight(1f), imageResId = AppIcons.Facebook, onClick = {
                         val intent = Intent(context, WebViewActivity::class.java).apply {
                             putExtra("url", DATA.myFacebook)
                         }
@@ -167,9 +165,7 @@ fun WebMainScreen(
                     })
 
                 SocialItem(
-                    modifier = Modifier.weight(1f),
-                    imageResId = AppIcons.Instagram,
-                    onClick = {
+                    modifier = Modifier.weight(1f), imageResId = AppIcons.Instagram, onClick = {
                         val intent = Intent(context, WebViewActivity::class.java).apply {
                             putExtra("url", DATA.myInstagram)
                         }
@@ -243,10 +239,5 @@ fun Context.callPhone() {
     val intent = Intent(Intent.ACTION_DIAL).apply {
         data = "tel:${DATA.myMobileNumber}".toUri()
     }
-    startActivity(intent)
-}
-
-fun Context.openUrl(url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
     startActivity(intent)
 }

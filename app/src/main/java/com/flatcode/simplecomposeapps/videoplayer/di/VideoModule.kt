@@ -23,8 +23,7 @@ object VideoModule {
             context,
             VideoDatabase::class.java,
             "video_database"
-        ).fallbackToDestructiveMigration()
-            .build()
+        ).build()
     }
 
     @Provides

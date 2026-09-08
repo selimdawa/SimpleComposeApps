@@ -18,7 +18,6 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -146,15 +145,13 @@ fun TasksScreen(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(tasks, key = { it.id }) { task ->
-                        val dismissState = rememberSwipeToDismissBoxState(
-                            confirmValueChange = {
-                                if (it == SwipeToDismissBoxValue.EndToStart || it == SwipeToDismissBoxValue.StartToEnd) {
-                                    viewModel.onTaskSwiped(task)
-                                    true
-                                } else {
-                                    false
-                                }
-                            })
+                        val dismissState = rememberSwipeToDismissBoxState()
+
+                        LaunchedEffect(dismissState.currentValue) {
+                            if (dismissState.currentValue != SwipeToDismissBoxValue.Settled) {
+                                viewModel.onTaskSwiped(task)
+                            }
+                        }
 
                         LaunchedEffect(task) {
                             if (dismissState.currentValue != SwipeToDismissBoxValue.Settled) {
