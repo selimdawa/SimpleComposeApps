@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object PopDatabaseModule {
 
     @Provides
     @Singleton
@@ -22,7 +22,7 @@ object DatabaseModule {
             context,
             PopDatabase::class.java,
             "pop_db"
-        ).fallbackToDestructiveMigration().build()
+        ).build()
     }
 
     @Provides

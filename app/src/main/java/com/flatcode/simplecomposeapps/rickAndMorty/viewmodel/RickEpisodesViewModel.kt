@@ -16,23 +16,23 @@ class RickEpisodesViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    val episodes: StateFlow<Resource<List<Episode>>>
-        field = MutableStateFlow<Resource<List<Episode>>>(Resource.Loading())
+    private val _episodes = MutableStateFlow<Resource<List<Episode>>>(Resource.Loading())
+    val episodes: StateFlow<Resource<List<Episode>>> = _episodes
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    val error: StateFlow<String?>
-        field = MutableStateFlow<String?>(null)
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
 
     private var currentPage = 1
     private var isLastPage = false
     private val allEpisodes = mutableListOf<Episode>()
 
     fun getEpisodes() {
-        if (isLastPage || isLoading.value) return
-        isLoading.value = true
-        error.value = null
+        if (isLastPage || _isLoading.value) return
+        _isLoading.value = true
+        _error.value = null
 
         viewModelScope.launch {
             repository.getEpisodes(currentPage).collect { resource ->
@@ -41,24 +41,24 @@ class RickEpisodesViewModel @Inject constructor(
                         resource.data?.let { response ->
                             allEpisodes.addAll(response.results)
                             isLastPage = response.info.next == null
-                            episodes.value = Resource.Success(allEpisodes.toList())
+                            _episodes.value = Resource.Success(allEpisodes.toList())
                             currentPage++
                         }
-                        isLoading.value = false
+                        _isLoading.value = false
                     }
 
                     is Resource.Error -> {
                         if (allEpisodes.isEmpty()) {
-                            episodes.value = Resource.Error(resource.message ?: "Error")
+                            _episodes.value = Resource.Error(resource.message ?: "Error")
                         } else {
-                            error.value = resource.message ?: "Error"
+                            _error.value = resource.message ?: "Error"
                         }
-                        isLoading.value = false
+                        _isLoading.value = false
                     }
 
                     is Resource.Loading -> {
                         if (allEpisodes.isEmpty()) {
-                            episodes.value = Resource.Loading()
+                            _episodes.value = Resource.Loading()
                         }
                     }
                 }

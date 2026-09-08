@@ -36,7 +36,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.White
-import com.flatcode.simplecomposeapps.utils.openActivity
+import com.flatcode.simplecomposeapps.utils.launchActivity
 
 @Composable
 fun MainItem(item: Main) {
@@ -49,7 +49,7 @@ fun MainItem(item: Main) {
             .fillMaxWidth()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() }, indication = null
-            ) { item.c?.let { context.openActivity(it) } },
+            ) { item.c?.let { context.launchActivity(it) } },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {

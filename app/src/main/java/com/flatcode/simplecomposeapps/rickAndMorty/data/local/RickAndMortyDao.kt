@@ -10,7 +10,7 @@ import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AppDao {
+interface RickAndMortyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<Character>)
 

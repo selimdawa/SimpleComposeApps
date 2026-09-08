@@ -9,28 +9,24 @@ import androidx.core.graphics.scale
 import coil.size.Size
 import coil.transform.Transformation
 import java.util.Locale
+import kotlin.math.log10
+import kotlin.math.pow
 
-fun Context.openActivity(activityClass: Class<out Activity>?, finish: Boolean = false) {
+inline fun <reified T : Activity> Context.launchActivity(
+    finish: Boolean = false, block: Intent.() -> Unit = {}
+) {
+    val intent = Intent(this, T::class.java).apply(block)
+    startActivity(intent)
+    if (finish && this is Activity) finish()
+}
+
+fun Context.launchActivity(
+    activityClass: Class<out Activity>?, finish: Boolean = false, block: Intent.() -> Unit = {}
+) {
     if (activityClass == null) return
-    val intent = Intent(this, activityClass)
+    val intent = Intent(this, activityClass).apply(block)
     startActivity(intent)
-    if (finish && this is Activity) {
-        finish()
-    }
-}
-
-inline fun <reified T : Activity> Context.openActivity(finish: Boolean = false) {
-    val intent = Intent(this, T::class.java)
-    startActivity(intent)
-    if (finish && this is Activity) {
-        finish()
-    }
-}
-
-inline fun <reified T : Activity> Context.launchActivity(block: Intent.() -> Unit = {}) {
-    val intent = Intent(this, T::class.java)
-    intent.block()
-    startActivity(intent)
+    if (finish && this is Activity) finish()
 }
 
 fun Long.formatDuration(): String {
@@ -38,10 +34,19 @@ fun Long.formatDuration(): String {
     val minutes = (this / (1000 * 60)) % 60
     val hours = (this / (1000 * 60 * 60))
     return if (hours > 0) {
-        String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
+        "%d:%02d:%02d".format(Locale.getDefault(), hours, minutes, seconds)
     } else {
-        String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+        "%d:%02d".format(Locale.getDefault(), minutes, seconds)
     }
+}
+
+fun Long.formatSize(): String {
+    if (this <= 0) return "0 B"
+    val units = arrayOf("B", "KB", "MB", "GB", "TB")
+    val digitGroups = (log10(this.toDouble()) / log10(1024.0)).toInt()
+    return "%.1f %s".format(
+        Locale.getDefault(), this / 1024.0.pow(digitGroups.toDouble()), units[digitGroups]
+    )
 }
 
 class SimpleBlurTransformation(private val radius: Float) : Transformation {

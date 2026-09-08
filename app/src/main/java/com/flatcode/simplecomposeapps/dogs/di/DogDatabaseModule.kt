@@ -2,7 +2,7 @@ package com.flatcode.simplecomposeapps.dogs.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.dogs.data.AppDatabase
+import com.flatcode.simplecomposeapps.dogs.data.DogDatabase
 import com.flatcode.simplecomposeapps.dogs.data.DogDao
 import dagger.Module
 import dagger.Provides
@@ -14,18 +14,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 @Suppress("unused")
-object DatabaseModule {
+object DogDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideDogDatabase(@ApplicationContext context: Context): DogDatabase {
         return Room.databaseBuilder(
-            context, AppDatabase::class.java, "dogs_db"
+            context, DogDatabase::class.java, "dogs_db"
         ).build()
     }
 
     @Provides
-    fun provideDogDao(database: AppDatabase): DogDao {
+    fun provideDogDao(database: DogDatabase): DogDao {
         return database.dogDao()
     }
 }

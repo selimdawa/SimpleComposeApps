@@ -16,21 +16,21 @@ class DictionaryViewModel @Inject constructor(
     private val repository: DictionaryRepository
 ) : ViewModel() {
 
-    val uiState: StateFlow<UiState<String>>
-        field = MutableStateFlow<UiState<String>>(UiState.Idle)
+    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Idle)
+    val uiState: StateFlow<UiState<String>> = _uiState
 
     fun searchWord(word: String) {
         viewModelScope.launch {
-            uiState.value = UiState.Loading
+            _uiState.value = UiState.Loading
             try {
                 val definition = repository.getWordDefinition(word)
                 if (definition != "No definition found") {
-                    uiState.value = UiState.Success(definition)
+                    _uiState.value = UiState.Success(definition)
                 } else {
-                    uiState.value = UiState.Error("No definition found")
+                    _uiState.value = UiState.Error("No definition found")
                 }
             } catch (e: Exception) {
-                uiState.value = UiState.Error(e.message ?: Strings.UNKNOWN_ERROR)
+                _uiState.value = UiState.Error(e.message ?: Strings.UNKNOWN_ERROR)
             }
         }
     }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -43,27 +42,18 @@ import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.utils.DATA
-
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.style.TextAlign
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun NewsScreen(
     viewModel: NewsViewModel, onNewsClick: (NewsHeadlines) -> Unit
 ) {
     val headlines = viewModel.headlines
-    val isLoading by viewModel.isLoading
     val selectedCategory = viewModel.selectedCategory.value
 
     var searchQuery by remember { mutableStateOf("") }
 
-    val categories = DATA.NEWS_CATEGORIES
+    val categories =
+        listOf("general", "business", "entertainment", "health", "science", "sports", "technology")
 
     Scaffold(
         topBar = {
@@ -162,61 +152,12 @@ fun NewsScreen(
             }
 
             Box(modifier = Modifier.weight(1f)) {
-                if (isLoading && headlines.isEmpty()) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .align(Alignment.Center),
-                        color = MC_TRACK
-                    )
-                } else if (viewModel.errorMessage.value != null && headlines.isEmpty()) {
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        Text(
-                            text = viewModel.errorMessage.value!!,
-                            color = COLOR_ERROR,
-                            textAlign = TextAlign.Center,
-                            fontSize = 18.sp
-                        )
-                        Button(
-                            onClick = { viewModel.retry() },
-                            colors = ButtonDefaults.buttonColors(containerColor = COLOR_ERROR)
-                        ) {
-                            Text(text = "Retry", color = COLOR_ON_BACKGROUND)
-                        }
-                    }
-                } else if (headlines.isEmpty() && !isLoading) {
-                    Text(
-                        text = Strings.NONE_DISPLAY,
-                        color = COLOR_ERROR,
-                        fontSize = 32.sp,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(horizontal = 20.dp),
-                        textAlign = TextAlign.Center
-                    )
-                } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(bottom = 16.dp)
-                    ) {
-                        items(headlines) { headline ->
-                            NewsItem(headline = headline, onClick = { onNewsClick(headline) })
-                        }
-                    }
-
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .align(Alignment.Center),
-                            color = MC_TRACK
-                        )
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                ) {
+                    items(headlines) { headline ->
+                        NewsItem(headline = headline, onClick = { onNewsClick(headline) })
                     }
                 }
             }

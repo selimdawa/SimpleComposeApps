@@ -6,11 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.countries.model.Country
+import com.flatcode.simplecomposeapps.countries.model.CountrySettings
 import com.flatcode.simplecomposeapps.countries.service.CountryAPI
 import com.flatcode.simplecomposeapps.countries.service.CountryDAO
-import com.flatcode.simplecomposeapps.countries.utils.CustomDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -18,18 +19,18 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     application: Application, private val countryApi: CountryAPI,
-    private val countryDao: CountryDAO, private val customSharedPreferences: CustomDataStore,
+    private val countryDao: CountryDAO
 ) : AndroidViewModel(application) {
 
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     val countries = MutableLiveData<List<Country>>()
     val countryError = MutableLiveData<Boolean>()
-    val countryLoading = MutableLiveData<Boolean>()
+    val countryLoading = MutableLiveData<Boolean>(true)
 
     fun refreshData() {
         viewModelScope.launch {
-            val updateTime = customSharedPreferences.getTimeSync()
+            val updateTime = countryDao.getRefreshTime().first() ?: 0L
             if (updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
                 getDataFromSQLite()
             } else {
@@ -78,7 +79,7 @@ class DashboardViewModel @Inject constructor(
                 country.uuid = listLong[index].toInt()
             }
 
-            customSharedPreferences.saveTime(System.nanoTime())
+            countryDao.saveSettings(CountrySettings(refreshTime = System.nanoTime()))
             showCountries(list)
         }
     }

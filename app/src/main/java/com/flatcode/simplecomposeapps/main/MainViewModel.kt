@@ -35,8 +35,13 @@ class MainViewModel @Inject constructor(
     private fun checkAndPopulate() {
         viewModelScope.launch {
             val items = mainDao.getAllItems().first()
-            if (items.isEmpty()) {
-                mainDao.insertAll(DATA.MAIN_DATA.map { mapToEntity(it) })
+            val currentData = DATA.MAIN_DATA.map { mapToEntity(it) }
+            
+            if (items.size != currentData.size || items.any { it.activityClassName.isEmpty() }) {
+                mainDao.deleteAll()
+                mainDao.insertAll(currentData)
+            } else {
+                mainDao.insertAll(currentData)
             }
             isLoading.postValue(false)
         }
@@ -68,8 +73,8 @@ class MainViewModel @Inject constructor(
             else -> null
         }
         val activityClass = try {
-            Class.forName(entity.activityClassName) as? Class<out Activity>
-        } catch (e: Exception) {
+            Class.forName(entity.activityClassName).asSubclass(Activity::class.java)
+        } catch (_: Exception) {
             null
         }
         return Main(image, entity.title, entity.number, activityClass)

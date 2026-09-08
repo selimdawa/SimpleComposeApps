@@ -1,9 +1,9 @@
-package com.flatcode.simplecomposeapps.news2.di
+package com.flatcode.simplecomposeapps.meals.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.news2.data.local.AppDatabase
-import com.flatcode.simplecomposeapps.news2.data.local.NewsDao
+import com.flatcode.simplecomposeapps.meals.db.MealDao
+import com.flatcode.simplecomposeapps.meals.db.MealDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,20 +13,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object MealDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideMealDatabase(@ApplicationContext context: Context): MealDatabase {
         return Room.databaseBuilder(
             context,
-            AppDatabase::class.java,
-            "news_db"
+            MealDatabase::class.java,
+            "meal_db"
         ).build()
     }
 
     @Provides
-    fun provideNewsDao(database: AppDatabase): NewsDao {
-        return database.newsDao()
+    fun provideMealDao(database: MealDatabase): MealDao {
+        return database.mealDao()
     }
 }

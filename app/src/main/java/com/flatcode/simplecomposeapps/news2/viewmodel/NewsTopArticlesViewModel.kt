@@ -8,7 +8,6 @@ import com.flatcode.simplecomposeapps.news2.models.NewsResponse
 import com.flatcode.simplecomposeapps.news2.models.TopArticlesNewsItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +16,7 @@ class NewsTopArticlesViewModel @Inject constructor(
     private val repository: EverythingRepository
 ) : BaseViewModel() {
 
-    val topArticles: StateFlow<Resource<NewsResponse<TopArticlesNewsItem>>>
-        field = MutableStateFlow<Resource<NewsResponse<TopArticlesNewsItem>>>(Resource.Loading())
+    val topArticles = MutableStateFlow<Resource<NewsResponse<TopArticlesNewsItem>>>(Resource.Loading())
 
     fun getTopArticles(country: String) {
         viewModelScope.launch {

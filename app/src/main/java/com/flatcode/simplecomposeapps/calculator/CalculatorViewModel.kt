@@ -16,36 +16,36 @@ import javax.inject.Inject
 class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
     ViewModel() {
 
-    val expression: LiveData<String>
-        field = MutableLiveData("")
+    private val _expression = MutableLiveData("")
+    val expression: LiveData<String> = _expression
 
-    val result: LiveData<String>
-        field = MutableLiveData("")
+    private val _result = MutableLiveData("")
+    val result: LiveData<String> = _result
 
     val historyList: LiveData<List<CalculatorEntity>> = calculatorDao.getAllHistory().asLiveData()
 
     fun appendValue(value: String) {
-        expression.value = (expression.value ?: "") + value
+        _expression.value = (_expression.value ?: "") + value
     }
 
     fun clearAll() {
-        expression.value = ""
-        result.value = ""
+        _expression.value = ""
+        _result.value = ""
     }
 
     fun deleteLast() {
-        val currentExp = expression.value ?: ""
+        val currentExp = _expression.value ?: ""
         if (currentExp.isNotEmpty()) {
-            expression.value = currentExp.dropLast(1)
+            _expression.value = currentExp.dropLast(1)
         }
     }
 
     fun setResultValue(evaluatedResult: String) {
-        result.value = evaluatedResult
+        _result.value = evaluatedResult
     }
 
     fun evaluateExpression() {
-        val currentExpression = expression.value ?: ""
+        val currentExpression = _expression.value ?: ""
         if (currentExpression.isNotEmpty()) {
             viewModelScope.launch {
                 try {
@@ -64,7 +64,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
                     setResultValue(finalResult)
                     saveToHistory(currentExpression, finalResult)
                 } catch (_: Exception) {
-                    result.value = "Error"
+                    _result.value = "Error"
                 }
             }
         }

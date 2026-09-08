@@ -66,8 +66,8 @@ class PdfViewModel @Inject constructor(
     private val pdfDao: PdfDao
 ) : ViewModel() {
 
-    val uiState: StateFlow<PdfUiState>
-        field = MutableStateFlow(PdfUiState())
+    private val _uiState = MutableStateFlow(PdfUiState())
+    val uiState: StateFlow<PdfUiState> = _uiState
 
     init {
         loadLastPdf()
@@ -80,14 +80,14 @@ class PdfViewModel @Inject constructor(
             val page = settings?.lastPage ?: 0
             if (uri != null) {
                 setUri(uri.toUri())
-                uiState.update { it.copy(currentPage = page) }
+                _uiState.update { it.copy(currentPage = page) }
             }
         }
     }
 
     fun setUri(uri: Uri?) {
         if (uri == null) return
-        uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
+        _uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
 
         viewModelScope.launch {
             val current = pdfDao.getSettings().first()
@@ -103,14 +103,14 @@ class PdfViewModel @Inject constructor(
         } else {
             // For local URIs, we might not need to read bytes if PDFView can handle it directly,
             // but for consistency we keep it simple.
-            uiState.update { it.copy(isLoading = false) }
+            _uiState.update { it.copy(isLoading = false) }
         }
     }
 
     private fun downloadPdf(url: String) {
         viewModelScope.launch {
             val result = doDownload(url)
-            uiState.update { state ->
+            _uiState.update { state ->
                 when (result) {
                     is ByteArray -> state.copy(pdfData = result, isLoading = false)
                     is String -> state.copy(errorMessage = result, isLoading = false)
@@ -141,7 +141,7 @@ class PdfViewModel @Inject constructor(
     }
 
     fun onPageChange(page: Int, pageCount: Int) {
-        uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
+        _uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
         viewModelScope.launch {
             val current = pdfDao.getSettings().first()
             pdfDao.saveSettings(PdfEntity(lastUri = current?.lastUri, lastPage = page))
@@ -149,11 +149,11 @@ class PdfViewModel @Inject constructor(
     }
 
     fun toggleBottomBar() {
-        uiState.update { it.copy(isBottomBarVisible = !it.isBottomBarVisible) }
+        _uiState.update { it.copy(isBottomBarVisible = !_uiState.value.isBottomBarVisible) }
     }
 
     fun onError(t: Throwable) {
-        uiState.update {
+        _uiState.update {
             it.copy(
                 errorMessage = t.message ?: "Failed to load PDF", isLoading = false
             )

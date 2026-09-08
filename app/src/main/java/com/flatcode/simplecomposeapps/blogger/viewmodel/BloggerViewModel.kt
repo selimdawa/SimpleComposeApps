@@ -20,27 +20,23 @@ import javax.inject.Inject
 @HiltViewModel
 class BloggerViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
-    val posts: List<Post>
-        field = mutableStateListOf<Post>()
+    val posts = mutableStateListOf<Post>()
 
-    val pages: List<Page>
-        field = mutableStateListOf<Page>()
+    val pages = mutableStateListOf<Page>()
 
-    val isLoading: State<Boolean>
-        field = mutableStateOf(true)
+    private val _isLoading = mutableStateOf(true)
+    val isLoading: State<Boolean> = _isLoading
 
     private val nextPageToken = mutableStateOf(DATA.EMPTY)
 
     val hasMore: Boolean get() = nextPageToken.value != "end"
 
-    val details: State<Post?>
-        field = mutableStateOf<Post?>(null)
+    private val _details = mutableStateOf<Post?>(null)
+    val details: State<Post?> = _details
 
-    val labels: List<Label>
-        field = mutableStateListOf<Label>()
+    val labels = mutableStateListOf<Label>()
 
-    val comments: List<Comment>
-        field = mutableStateListOf<Comment>()
+    val comments = mutableStateListOf<Comment>()
 
     private var currentQuery = DATA.EMPTY
 
@@ -72,7 +68,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
     }
 
     private fun fetchPosts(isSearch: Boolean) {
-        isLoading.value = true
+        _isLoading.value = true
         val url = if (isSearch) {
             when (nextPageToken.value) {
                 DATA.EMPTY -> "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/${DATA.SEARCH}?${DATA.Q}=$currentQuery&${DATA.KEY}=${DATA.BLOGGER_API}"
@@ -86,7 +82,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
         }
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            isLoading.value = false
+            _isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
@@ -103,20 +99,20 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
                 e.printStackTrace()
             }
         }, {
-            isLoading.value = false
+            _isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPages() {
-        isLoading.value = true
+        _isLoading.value = true
         pages.clear()
         val url =
             "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            isLoading.value = false
+            _isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
@@ -131,15 +127,15 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
                 e.printStackTrace()
             }
         }, {
-            isLoading.value = false
+            _isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPostDetails(postId: String) {
-        isLoading.value = true
-        details.value = null
+        _isLoading.value = true
+        _details.value = null
         labels.clear()
         comments.clear()
 
@@ -148,12 +144,12 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
             if (response.isNullOrEmpty()) {
-                isLoading.value = false
+                _isLoading.value = false
                 return@StringRequest
             }
             try {
                 val jsonObject = JSONObject(response)
-                details.value = parsePost(jsonObject)
+                _details.value = parsePost(jsonObject)
 
                 val labelsArray = jsonObject.optJSONArray(DATA.LABELS)
                 if (labelsArray != null) {
@@ -164,18 +160,18 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
                 loadComments(postId)
             } catch (e: Exception) {
                 e.printStackTrace()
-                isLoading.value = false
+                _isLoading.value = false
             }
         }, {
-            isLoading.value = false
+            _isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
     }
 
     fun loadPageDetails(pageId: String) {
-        isLoading.value = true
-        details.value = null
+        _isLoading.value = true
+        _details.value = null
         labels.clear()
         comments.clear()
 
@@ -183,16 +179,16 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
             "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.PAGES}/$pageId?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            isLoading.value = false
+            _isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
-                details.value = parsePost(jsonObject)
+                _details.value = parsePost(jsonObject)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }, {
-            isLoading.value = false
+            _isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)
@@ -203,7 +199,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
             "${DATA.BLOGGER_BASE_URL}${DATA.BLOG_ID}/${DATA.POSTS}/$postId/${DATA.COMMENTS_KEY}?${DATA.KEY}=${DATA.BLOGGER_API}"
 
         val stringRequest = StringRequest(Request.Method.GET, url, { response ->
-            isLoading.value = false
+            _isLoading.value = false
             if (response.isNullOrEmpty()) return@StringRequest
             try {
                 val jsonObject = JSONObject(response)
@@ -228,7 +224,7 @@ class BloggerViewModel @Inject constructor(application: Application) : AndroidVi
                 e.printStackTrace()
             }
         }, {
-            isLoading.value = false
+            _isLoading.value = false
         })
 
         Volley.newRequestQueue(getApplication()).add(stringRequest)

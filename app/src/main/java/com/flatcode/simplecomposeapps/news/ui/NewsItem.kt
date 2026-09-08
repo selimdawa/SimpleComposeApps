@@ -34,7 +34,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(horizontal = 5.dp)
             .padding(bottom = 10.dp)
-            .clickable { onClick() }
+            .clickable { onClick() },
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),

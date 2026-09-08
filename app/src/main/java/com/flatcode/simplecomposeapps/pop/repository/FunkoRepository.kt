@@ -28,10 +28,10 @@ class FunkoRepository @Inject constructor(
                 if (listData.size >= 200) break
 
                 val item = jsonArray.getJSONObject(i)
-                val img = item.optString("imageName", "")
-                val name = item.optString("title", DATA.UNKNOWN)
+                val img = item.optString(DATA.IMAGE_NAME, "")
+                val name = item.optString(DATA.TITLE, DATA.UNKNOWN)
 
-                val seriesJson = item.optJSONArray("series")
+                val seriesJson = item.optJSONArray(DATA.SERIES)
                 val seriesList = mutableListOf<String>()
                 if (seriesJson != null) {
                     for (j in 0 until seriesJson.length()) {

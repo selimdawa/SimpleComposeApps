@@ -27,8 +27,8 @@ class AddEditTaskViewModel @Inject constructor(
     var taskName by mutableStateOf(state.get<String>("taskName") ?: task?.name ?: "")
     var taskImportant by mutableStateOf(state.get<Boolean>("taskImportant") ?: task?.important ?: false)
 
-    val addEditTaskEvent: SharedFlow<AddEditTaskEvent>
-        field = MutableSharedFlow<AddEditTaskEvent>()
+    private val _addEditTaskEvent = MutableSharedFlow<AddEditTaskEvent>()
+    val addEditTaskEvent: SharedFlow<AddEditTaskEvent> = _addEditTaskEvent
 
     fun onSaveClick() {
         if (taskName.isBlank()) {
@@ -46,12 +46,12 @@ class AddEditTaskViewModel @Inject constructor(
 
     private fun createTask(task: Task) = viewModelScope.launch {
         taskDao.insert(task)
-        addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
+        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
-        addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
+        _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
     sealed class AddEditTaskEvent {

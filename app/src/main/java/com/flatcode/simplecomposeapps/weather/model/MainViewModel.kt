@@ -14,14 +14,14 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel() {
 
-    val liveDataList: StateFlow<List<WeatherModel>>
-        field = MutableStateFlow<List<WeatherModel>>(emptyList())
+    private val _liveDataList = MutableStateFlow<List<WeatherModel>>(emptyList())
+    val liveDataList: StateFlow<List<WeatherModel>> = _liveDataList
 
-    val liveDataCurrent: StateFlow<WeatherModel?>
-        field = MutableStateFlow<WeatherModel?>(null)
+    private val _liveDataCurrent = MutableStateFlow<WeatherModel?>(null)
+    val liveDataCurrent: StateFlow<WeatherModel?> = _liveDataCurrent
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(true)
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
     var lastCity: String? = null
 
@@ -29,15 +29,15 @@ class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel
         dao.getLatestWeather().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun updateCurrent(weather: WeatherModel) {
-        liveDataCurrent.value = weather
+        _liveDataCurrent.value = weather
     }
 
     fun updateList(list: List<WeatherModel>) {
-        liveDataList.value = list
+        _liveDataList.value = list
     }
 
     fun setLoading(loading: Boolean) {
-        isLoading.value = loading
+        _isLoading.value = loading
     }
 
     fun saveWeather(weather: WeatherModel) = viewModelScope.launch {

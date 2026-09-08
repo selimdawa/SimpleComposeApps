@@ -2,6 +2,8 @@ package com.flatcode.simplecomposeapps.crypto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
+import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
 import com.flatcode.simplecomposeapps.crypto.model.home.Usd
@@ -12,34 +14,57 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CryptoHomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val repository: HomeRepository,
+    private val settingsDao: SettingsDao
 ) : ViewModel() {
 
-    val cryptoList: StateFlow<List<Data>>
-        field = MutableStateFlow<List<Data>>(emptyList())
+    private val _lastVisitedCoinId = MutableStateFlow<Int?>(null)
+    val lastVisitedCoinId: StateFlow<Int?> = _lastVisitedCoinId
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    init {
+        observeSettings()
+    }
 
-    val error: SharedFlow<String?>
-        field = MutableSharedFlow<String?>()
+    private fun observeSettings() {
+        viewModelScope.launch {
+            settingsDao.getSettings().collectLatest { settings ->
+                _lastVisitedCoinId.value = settings?.coinId
+            }
+        }
+    }
+
+    fun saveLastVisited(id: Int, symbol: String) {
+        viewModelScope.launch {
+            settingsDao.saveSettings(CryptoSettingsEntity(coinId = id, coinSymbol = symbol))
+        }
+    }
+
+    private val _cryptoList = MutableStateFlow<List<Data>>(emptyList())
+    val cryptoList: StateFlow<List<Data>> = _cryptoList
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
 
     private var currentPage = 1
 
     fun getData(apiKey: String, limit: String) {
         viewModelScope.launch {
-            isLoading.value = true
+            _isLoading.value = true
 
             // Try cache first if it's the first page
-            if (currentPage == 1 && cryptoList.value.isEmpty()) {
+            if (currentPage == 1 && _cryptoList.value.isEmpty()) {
                 val cached = repository.getCachedCoins()
                 if (cached.isNotEmpty()) {
-                    cryptoList.value = cached.map { entity ->
+                    _cryptoList.value = cached.map { entity ->
                         Data(
                             id = entity.id,
                             name = entity.name,
@@ -52,7 +77,7 @@ class CryptoHomeViewModel @Inject constructor(
 
             val result = repository.getLatestCrypto(apiKey, limit, currentPage.toString())
             handleResult(result)
-            isLoading.value = false
+            _isLoading.value = false
         }
     }
 
@@ -64,13 +89,13 @@ class CryptoHomeViewModel @Inject constructor(
     private fun handleResult(result: NetworkResult<com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse>) {
         when (result) {
             is NetworkResult.Success -> {
-                val newList = cryptoList.value.toMutableList()
+                val newList = _cryptoList.value.toMutableList()
                 result.data?.data?.let { newList.addAll(it) }
-                cryptoList.value = newList
+                _cryptoList.value = newList
             }
 
             is NetworkResult.Error -> {
-                viewModelScope.launch { error.emit(result.message) }
+                viewModelScope.launch { _error.emit(result.message) }
             }
 
             is NetworkResult.Loading -> {

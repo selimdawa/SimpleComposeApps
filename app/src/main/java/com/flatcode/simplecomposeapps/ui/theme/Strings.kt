@@ -173,6 +173,8 @@ object Strings {
     const val WEB_SITE = "WebSite"
     const val RATE_APP = "Rate App"
     const val SHARE_APP = "Share App"
+    const val HISTORY = "History"
+    const val BOOKMARKS = "Bookmarks"
 
     // Video Player
     const val FOLDERS = "Folders"

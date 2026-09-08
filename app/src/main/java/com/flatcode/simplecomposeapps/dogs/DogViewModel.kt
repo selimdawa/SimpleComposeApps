@@ -3,7 +3,7 @@ package com.flatcode.simplecomposeapps.dogs
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.dogs.data.DogRepository
-import com.flatcode.simplecomposeapps.dogs.utils.NetworkHelper
+import com.flatcode.simplecomposeapps.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,30 +24,30 @@ class DogViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    val uiState: StateFlow<DogUiState>
-        field = MutableStateFlow<DogUiState>(DogUiState.Start)
+    private val _uiState = MutableStateFlow<DogUiState>(DogUiState.Start)
+    val uiState: StateFlow<DogUiState> = _uiState
 
-    val breedsList: StateFlow<List<String>>
-        field = MutableStateFlow<List<String>>(emptyList())
+    private val _breedsList = MutableStateFlow<List<String>>(emptyList())
+    val breedsList: StateFlow<List<String>> = _breedsList
 
     fun setBreedsList(list: List<String>) {
-        breedsList.value = list
+        _breedsList.value = list
     }
 
     fun getDogPhotosList(breed: String) {
         viewModelScope.launch {
-            if (uiState.value !is DogUiState.Success) {
-                uiState.update { DogUiState.Loading }
+            if (_uiState.value !is DogUiState.Success) {
+                _uiState.update { DogUiState.Loading }
             }
 
             try {
                 repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
                     .collect { photos ->
-                        uiState.update { DogUiState.Success(photos) }
+                        _uiState.update { DogUiState.Success(photos) }
                     }
             } catch (_: Exception) {
-                if (uiState.value !is DogUiState.Success) {
-                    uiState.update { DogUiState.Error }
+                if (_uiState.value !is DogUiState.Success) {
+                    _uiState.update { DogUiState.Error }
                 }
             }
         }

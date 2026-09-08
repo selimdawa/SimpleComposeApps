@@ -17,18 +17,18 @@ class PopViewModel @Inject constructor(
     private val repository: FunkoRepository
 ) : ViewModel() {
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    val error: StateFlow<String?>
-        field = MutableStateFlow<String?>(null)
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
 
-    val searchQuery: StateFlow<String>
-        field = MutableStateFlow("")
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
 
     val pops: StateFlow<List<PopItem>> = combine(
         repository.getAllPops(),
-        searchQuery
+        _searchQuery
     ) { pops, query ->
         if (query.isEmpty()) {
             pops
@@ -50,18 +50,18 @@ class PopViewModel @Inject constructor(
 
     fun loadPops() {
         viewModelScope.launch {
-            isLoading.value = true
+            _isLoading.value = true
             try {
                 repository.loadPops()
-                error.value = null
+                _error.value = null
             } catch (e: Exception) {
-                error.value = e.message
+                _error.value = e.message
             }
-            isLoading.value = false
+            _isLoading.value = false
         }
     }
 
     fun onSearchQueryChanged(query: String) {
-        searchQuery.value = query
+        _searchQuery.value = query
     }
 }

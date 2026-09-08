@@ -4,7 +4,6 @@ import android.content.Context
 import com.flatcode.simplecomposeapps.countries.service.CountryAPI
 import com.flatcode.simplecomposeapps.countries.service.CountryDAO
 import com.flatcode.simplecomposeapps.countries.service.CountryDatabase
-import com.flatcode.simplecomposeapps.countries.utils.CustomDataStore
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.Module
 import dagger.Provides
@@ -22,7 +21,7 @@ annotation class CountryRetrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object CountryModule {
 
     @CountryRetrofit
     @Provides
@@ -50,11 +49,5 @@ object AppModule {
     @Singleton
     fun provideCountryDAO(database: CountryDatabase): CountryDAO {
         return database.countryDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideCustomDataStore(@ApplicationContext context: Context): CustomDataStore {
-        return CustomDataStore(context)
     }
 }

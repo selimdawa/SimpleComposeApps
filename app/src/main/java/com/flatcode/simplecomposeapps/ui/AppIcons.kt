@@ -141,6 +141,8 @@ object AppIcons {
     val EventNote: ImageVector = Icons.AutoMirrored.Filled.EventNote
     val Folder: ImageVector = Icons.Default.Folder
     val Home: ImageVector = Icons.Default.Home
+    val History: ImageVector = Icons.Default.History
+    val Bookmark: ImageVector = Icons.Default.Bookmark
     val Location: ImageVector = Icons.Default.LocationOn
     val Minus: ImageVector = Icons.Default.Remove
     val More: ImageVector = Icons.Default.MoreVert

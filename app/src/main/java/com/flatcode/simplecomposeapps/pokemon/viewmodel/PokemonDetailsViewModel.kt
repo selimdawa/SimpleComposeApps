@@ -15,17 +15,17 @@ class PokemonDetailsViewModel @Inject constructor(
     private val repository: PokeRepository
 ) : ViewModel() {
 
-    val details: LiveData<PokeItemDetails?>
-        field = MutableLiveData<PokeItemDetails?>()
+    private val _details = MutableLiveData<PokeItemDetails?>()
+    val details: LiveData<PokeItemDetails?> = _details
 
-    val isLoading: LiveData<Boolean>
-        field = MutableLiveData<Boolean>(true)
+    private val _isLoading = MutableLiveData<Boolean>(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun getPokemonDetails(id: Int) {
         viewModelScope.launch {
-            isLoading.value = true
-            details.value = repository.getPokemonDetails(id)
-            isLoading.value = false
+            _isLoading.value = true
+            _details.value = repository.getPokemonDetails(id)
+            _isLoading.value = false
         }
     }
 }

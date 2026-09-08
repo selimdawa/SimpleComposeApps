@@ -16,23 +16,23 @@ class RickLocationsViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    val locations: StateFlow<Resource<List<Location>>>
-        field = MutableStateFlow<Resource<List<Location>>>(Resource.Loading())
+    private val _locations = MutableStateFlow<Resource<List<Location>>>(Resource.Loading())
+    val locations: StateFlow<Resource<List<Location>>> = _locations
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    val error: StateFlow<String?>
-        field = MutableStateFlow<String?>(null)
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
 
     private var currentPage = 1
     private var isLastPage = false
     private val allLocations = mutableListOf<Location>()
 
     fun getLocations() {
-        if (isLastPage || isLoading.value) return
-        isLoading.value = true
-        error.value = null
+        if (isLastPage || _isLoading.value) return
+        _isLoading.value = true
+        _error.value = null
 
         viewModelScope.launch {
             repository.getLocations(currentPage).collect { resource ->
@@ -41,24 +41,24 @@ class RickLocationsViewModel @Inject constructor(
                         resource.data?.let { response ->
                             allLocations.addAll(response.results)
                             isLastPage = response.info.next == null
-                            locations.value = Resource.Success(allLocations.toList())
+                            _locations.value = Resource.Success(allLocations.toList())
                             currentPage++
                         }
-                        isLoading.value = false
+                        _isLoading.value = false
                     }
 
                     is Resource.Error -> {
                         if (allLocations.isEmpty()) {
-                            locations.value = Resource.Error(resource.message ?: "Error")
+                            _locations.value = Resource.Error(resource.message ?: "Error")
                         } else {
-                            error.value = resource.message ?: "Error"
+                            _error.value = resource.message ?: "Error"
                         }
-                        isLoading.value = false
+                        _isLoading.value = false
                     }
 
                     is Resource.Loading -> {
                         if (allLocations.isEmpty()) {
-                            locations.value = Resource.Loading()
+                            _locations.value = Resource.Loading()
                         }
                     }
                 }

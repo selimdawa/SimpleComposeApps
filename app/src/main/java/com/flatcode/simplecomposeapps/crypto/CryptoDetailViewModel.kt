@@ -2,6 +2,8 @@ package com.flatcode.simplecomposeapps.crypto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
+import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
 import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.ui.detail.DetailRepository
 import com.flatcode.simplecomposeapps.crypto.utils.NetworkResult
@@ -15,35 +17,42 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CryptoDetailViewModel @Inject constructor(
-    private val repository: DetailRepository
+    private val repository: DetailRepository,
+    private val settingsDao: SettingsDao
 ) : ViewModel() {
 
-    val cryptoDetail: StateFlow<CoinDetail?>
-        field = MutableStateFlow<CoinDetail?>(null)
+    fun saveLastVisited(id: Int, symbol: String) {
+        viewModelScope.launch {
+            settingsDao.saveSettings(CryptoSettingsEntity(coinId = id, coinSymbol = symbol))
+        }
+    }
 
-    val isLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _cryptoDetail = MutableStateFlow<CoinDetail?>(null)
+    val cryptoDetail: StateFlow<CoinDetail?> = _cryptoDetail
 
-    val error: SharedFlow<String?>
-        field = MutableSharedFlow<String?>()
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?> = _error
 
     fun getCryptoDetail(apiKey: String, id: Int) {
         viewModelScope.launch {
-            isLoading.value = true
+            _isLoading.value = true
             when (val result = repository.getCryptoDetail(apiKey, id)) {
                 is NetworkResult.Success -> {
-                    cryptoDetail.value = result.data
+                    _cryptoDetail.value = result.data
                 }
 
                 is NetworkResult.Error -> {
-                    error.emit(result.message)
+                    _error.emit(result.message)
                 }
 
                 is NetworkResult.Loading -> {
                     // Handle loading
                 }
             }
-            isLoading.value = false
+            _isLoading.value = false
         }
     }
 }

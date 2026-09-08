@@ -21,9 +21,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,7 +43,6 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.weather.model.MainViewModel
 import com.flatcode.simplecomposeapps.weather.model.WeatherModel
@@ -74,7 +72,7 @@ fun WeatherMainScreen(
     val isLoading by viewModel.isLoading.collectAsState()
 
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf(Strings.HOURS, Strings.DAYS)
+    val tabs = DATA.WEATHER_TABS
     var showSearchDialog by remember { mutableStateOf(false) }
 
     val pLauncher = rememberLauncherForActivityResult(
@@ -123,22 +121,20 @@ fun WeatherMainScreen(
                         } ?: checkLocation(context, viewModel, scope)
                     })
 
-                TabRow(
+                SecondaryTabRow(
                     selectedTabIndex = selectedTabIndex,
                     containerColor = Color.Transparent,
                     contentColor = Color.White,
-                    indicator = { tabPositions ->
-                        if (selectedTabIndex < tabPositions.size) {
-                            Box(
-                                modifier = Modifier
-                                    .tabIndicatorOffset(tabPositions[selectedTabIndex])
-                                    .height(3.dp)
-                                    .padding(horizontal = 48.dp)
-                                    .background(
-                                        color = Color.White, shape = RoundedCornerShape(3.dp)
-                                    )
-                            )
-                        }
+                    indicator = {
+                        Box(
+                            modifier = Modifier
+                                .tabIndicatorOffset(selectedTabIndex)
+                                .height(3.dp)
+                                .padding(horizontal = 48.dp)
+                                .background(
+                                    color = Color.White, shape = RoundedCornerShape(3.dp)
+                                )
+                        )
                     },
                     divider = {}) {
                     tabs.forEachIndexed { index, title ->
@@ -242,10 +238,10 @@ private fun parseWeatherData(
 
 private suspend fun getCityName(mainObject: JSONObject, context: Context): String =
     withContext(Dispatchers.IO) {
-        val location = mainObject.getJSONObject("location")
-        val name = location.getString("name")
-        val lat = location.getDouble("lat")
-        val lon = location.getDouble("lon")
+        val location = mainObject.getJSONObject(DATA.LOCATION)
+        val name = location.getString(DATA.NAME)
+        val lat = location.getDouble(DATA.LAT)
+        val lon = location.getDouble(DATA.LON)
         val geocoder = Geocoder(context, Locale.getDefault())
 
         return@withContext try {
@@ -268,23 +264,23 @@ private fun parseDays(
     mainObject: JSONObject, cityName: String, viewModel: MainViewModel
 ): List<WeatherModel> {
     val list = ArrayList<WeatherModel>()
-    val daysArray = mainObject.getJSONObject("forecast").getJSONArray("forecastday")
+    val daysArray = mainObject.getJSONObject(DATA.FORECAST).getJSONArray(DATA.FORECAST_DAY)
 
     for (i in 0 until daysArray.length()) {
         val day = daysArray.getJSONObject(i)
-        val dayInfo = day.getJSONObject("day")
-        val condition = dayInfo.getJSONObject("condition")
+        val dayInfo = day.getJSONObject(DATA.DAY)
+        val condition = dayInfo.getJSONObject(DATA.CONDITION)
 
         list.add(
             WeatherModel(
                 city = cityName,
-                time = day.getString("date"),
-                condition = condition.getString("text"),
+                time = day.getString(DATA.DATE),
+                condition = condition.getString(DATA.TEXT),
                 currentTemp = DATA.EMPTY,
-                maxTemp = dayInfo.getString("maxtemp_c").toFloat().toInt().toString(),
-                minTemp = dayInfo.getString("mintemp_c").toFloat().toInt().toString(),
-                imageUrl = condition.getString("icon"),
-                hours = day.getJSONArray("hour").toString(),
+                maxTemp = dayInfo.getString(DATA.MAX_TEMP_C).toFloat().toInt().toString(),
+                minTemp = dayInfo.getString(DATA.MIN_TEMP_C).toFloat().toInt().toString(),
+                imageUrl = condition.getString(DATA.ICON),
+                hours = day.getJSONArray(DATA.HOUR).toString(),
             )
         )
     }
@@ -299,18 +295,18 @@ private fun parseCurrentDate(
     viewModel: MainViewModel
 ) {
     if (weatherItem.isEmpty()) return
-    val current = mainObject.getJSONObject("current")
-    val condition = current.getJSONObject("condition")
+    val current = mainObject.getJSONObject(DATA.CURRENT)
+    val condition = current.getJSONObject(DATA.CONDITION)
     val firstDay = weatherItem[0]
 
     val item = WeatherModel(
         city = cityName,
-        time = current.getString("last_updated"),
-        condition = condition.getString("text"),
-        currentTemp = "${current.getString("temp_c")}°C",
+        time = current.getString(DATA.LAST_UPDATED),
+        condition = condition.getString(DATA.TEXT),
+        currentTemp = "${current.getString(DATA.TEMP_C)}°C",
         maxTemp = firstDay.maxTemp,
         minTemp = firstDay.minTemp,
-        imageUrl = condition.getString("icon"),
+        imageUrl = condition.getString(DATA.ICON),
         hours = firstDay.hours
     )
     viewModel.updateCurrent(item)
@@ -324,18 +320,18 @@ private fun getHoursList(wItem: WeatherModel): List<WeatherModel> {
 
     for (i in 0 until hoursArray.length()) {
         val hourObject = hoursArray.getJSONObject(i)
-        val conditionObject = hourObject.getJSONObject("condition")
-        val tempInt = hourObject.getString("temp_c").toFloat().toInt()
+        val conditionObject = hourObject.getJSONObject(DATA.CONDITION)
+        val tempInt = hourObject.getString(DATA.TEMP_C).toFloat().toInt()
 
         list.add(
             WeatherModel(
                 city = wItem.city,
-                time = hourObject.getString("time"),
-                condition = conditionObject.getString("text"),
+                time = hourObject.getString(DATA.TIME),
+                condition = conditionObject.getString(DATA.TEXT),
                 currentTemp = "$tempInt°C",
                 maxTemp = DATA.EMPTY,
                 minTemp = DATA.EMPTY,
-                imageUrl = conditionObject.getString("icon"),
+                imageUrl = conditionObject.getString(DATA.ICON),
                 hours = DATA.EMPTY,
             )
         )

@@ -27,8 +27,8 @@ class AddEditNoteViewModel @Inject constructor(
     var noteTitle by mutableStateOf(state.get<String>("noteTitle") ?: note?.title ?: "")
     var noteContent by mutableStateOf(state.get<String>("noteContent") ?: note?.content ?: "")
 
-    val addEditNoteEvent: SharedFlow<AddEditNoteEvent>
-        field = MutableSharedFlow<AddEditNoteEvent>()
+    private val _addEditNoteEvent = MutableSharedFlow<AddEditNoteEvent>()
+    val addEditNoteEvent: SharedFlow<AddEditNoteEvent> = _addEditNoteEvent
 
     fun onSaveClick() {
         if (noteTitle.isBlank()) return
@@ -44,12 +44,12 @@ class AddEditNoteViewModel @Inject constructor(
 
     private fun createNote(note: Notes) = viewModelScope.launch {
         noteDao.insert(note)
-        addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
+        _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateNote(note: Notes) = viewModelScope.launch {
         noteDao.update(note)
-        addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
+        _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
     sealed class AddEditNoteEvent {

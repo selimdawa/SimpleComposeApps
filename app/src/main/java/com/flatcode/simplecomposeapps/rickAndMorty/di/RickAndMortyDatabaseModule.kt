@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.rickAndMorty.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.rickAndMorty.data.local.AppDao
-import com.flatcode.simplecomposeapps.rickAndMorty.data.local.AppDatabase
+import com.flatcode.simplecomposeapps.rickAndMorty.data.local.RickAndMortyDao
+import com.flatcode.simplecomposeapps.rickAndMorty.data.local.RickAndMortyDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,20 +13,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object RickAndMortyDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideRickAndMortyDatabase(@ApplicationContext context: Context): RickAndMortyDatabase {
         return Room.databaseBuilder(
             context,
-            AppDatabase::class.java,
+            RickAndMortyDatabase::class.java,
             "rick_and_morty_db"
         ).build()
     }
 
     @Provides
-    fun provideAppDao(database: AppDatabase): AppDao {
-        return database.appDao()
+    fun provideRickAndMortyDao(database: RickAndMortyDatabase): RickAndMortyDao {
+        return database.rickAndMortyDao()
     }
 }

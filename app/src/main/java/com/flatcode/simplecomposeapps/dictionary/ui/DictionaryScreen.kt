@@ -166,7 +166,7 @@ fun DictionaryScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = DATA.MEANING_OF_THE_WORD,
-                        color = Color.White,
+                        color = COLOR_ERROR,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -176,7 +176,7 @@ fun DictionaryScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = (uiState as UiState.Success<String>).data,
-                        color = Color.White,
+                        color = COLOR_ERROR,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier

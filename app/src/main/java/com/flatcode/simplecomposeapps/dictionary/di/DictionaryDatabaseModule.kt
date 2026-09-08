@@ -2,7 +2,7 @@ package com.flatcode.simplecomposeapps.dictionary.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.dictionary.data.local.AppDatabase
+import com.flatcode.simplecomposeapps.dictionary.data.local.DictionaryDatabase
 import com.flatcode.simplecomposeapps.dictionary.data.local.WordDao
 import dagger.Module
 import dagger.Provides
@@ -13,20 +13,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DictionaryDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideDictionaryDatabase(@ApplicationContext context: Context): DictionaryDatabase {
         return Room.databaseBuilder(
             context,
-            AppDatabase::class.java,
+            DictionaryDatabase::class.java,
             "dictionary_db"
         ).build()
     }
 
     @Provides
-    fun provideWordDao(database: AppDatabase): WordDao {
+    fun provideWordDao(database: DictionaryDatabase): WordDao {
         return database.wordDao()
     }
 }

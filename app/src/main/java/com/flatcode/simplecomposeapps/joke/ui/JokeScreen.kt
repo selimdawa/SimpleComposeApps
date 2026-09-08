@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,19 +29,12 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.text.style.TextAlign
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-
 @Composable
 fun JokeScreen(viewModel: JokeViewModel) {
     val jokes = viewModel.jokes
-    val isLoading by viewModel.isLoading
-    val errorMessage by viewModel.errorMessage
-    val selectedCategory by viewModel.selectedCategory
+    val isLoading = viewModel.isLoading.value
+    val errorMessage = viewModel.errorMessage.value
+    val selectedCategory = viewModel.selectedCategory.value
     val categories = viewModel.categories
 
     Scaffold(
@@ -87,60 +78,21 @@ fun JokeScreen(viewModel: JokeViewModel) {
             }
 
             Box(modifier = Modifier.weight(1f)) {
-                if (isLoading && jokes.isEmpty()) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .align(Alignment.Center),
-                        color = MC_TRACK
-                    )
-                } else if (errorMessage != null && jokes.isEmpty()) {
-                    Column(
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        Text(
-                            text = errorMessage!!,
-                            color = COLOR_ERROR,
-                            textAlign = TextAlign.Center,
-                            fontSize = 18.sp
-                        )
-                        Button(
-                            onClick = { viewModel.retry() },
-                            colors = ButtonDefaults.buttonColors(containerColor = COLOR_ERROR)
-                        ) {
-                            Text(text = "Retry", color = COLOR_ON_BACKGROUND)
-                        }
-                    }
-                } else if (jokes.isEmpty() && !isLoading) {
-                    Text(
-                        text = Strings.NONE_DISPLAY,
-                        color = COLOR_ERROR,
-                        fontSize = 32.sp,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(horizontal = 20.dp),
-                        textAlign = TextAlign.Center
+                        color = COLOR_ERROR
                     )
-                } else {
+                } else if (!isLoading) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(jokes) { joke ->
                             JokeItem(joke = joke)
                         }
-                    }
-                    
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .align(Alignment.Center),
-                            color = MC_TRACK
-                        )
                     }
                 }
             }

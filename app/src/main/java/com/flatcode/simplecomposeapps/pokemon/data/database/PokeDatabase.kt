@@ -6,7 +6,7 @@ import com.flatcode.simplecomposeapps.pokemon.data.database.dao.PokeDao
 import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeDetailEntity
 import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeEntity
 
-@Database(entities = [PokeEntity::class, PokeDetailEntity::class], version = 1, exportSchema = false)
+@Database(entities = [PokeEntity::class, PokeDetailEntity::class], version = 1, exportSchema = true)
 abstract class PokeDatabase : RoomDatabase() {
     abstract fun pokeDao(): PokeDao
 }

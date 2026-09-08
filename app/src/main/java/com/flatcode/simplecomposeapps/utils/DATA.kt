@@ -1,43 +1,41 @@
 package com.flatcode.simplecomposeapps.utils
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.flatcode.simplecomposeapps.main.Main
-import com.flatcode.simplecomposeapps.main.MainInfo
-import com.flatcode.simplecomposeapps.ui.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
-import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
-import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
-import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
 import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
-import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
-import com.flatcode.simplecomposeapps.news.activity.NewsAppActivity
-import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
-import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
-import com.flatcode.simplecomposeapps.web.WebAppActivity
-import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
-import com.flatcode.simplecomposeapps.dogs.DogsActivity
-import com.flatcode.simplecomposeapps.countries.CountriesActivity
 import com.flatcode.simplecomposeapps.calculator.CalculatorActivity
+import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushGameActivity
+import com.flatcode.simplecomposeapps.countries.CountriesActivity
 import com.flatcode.simplecomposeapps.crypto.CryptoActivity
 import com.flatcode.simplecomposeapps.dictionary.DictionaryActivity
+import com.flatcode.simplecomposeapps.dogs.DogsActivity
+import com.flatcode.simplecomposeapps.joke.activity.JokeAppActivity
+import com.flatcode.simplecomposeapps.main.Main
+import com.flatcode.simplecomposeapps.main.MainInfo
 import com.flatcode.simplecomposeapps.meals.activity.MealsActivity
-import com.flatcode.simplecomposeapps.pop.PopActivity
 import com.flatcode.simplecomposeapps.movies.MoviesActivity
+import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteActivity
+import com.flatcode.simplecomposeapps.news.activity.NewsAppActivity
 import com.flatcode.simplecomposeapps.news2.News2Activity
-import com.flatcode.simplecomposeapps.rickAndMorty.RickAndMortyActivity
-import com.flatcode.simplecomposeapps.weather.WeatherActivity
+import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
 import com.flatcode.simplecomposeapps.pokemon.PokemonActivity
-import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity
+import com.flatcode.simplecomposeapps.pop.PopActivity
+import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
+import com.flatcode.simplecomposeapps.rickAndMorty.RickAndMortyActivity
 import com.flatcode.simplecomposeapps.stockmarket.StockMarketActivity
+import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
+import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity
+import com.flatcode.simplecomposeapps.ui.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
+import com.flatcode.simplecomposeapps.weather.WeatherActivity
+import com.flatcode.simplecomposeapps.web.WebAppActivity
+import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 
 @Suppress("SpellCheckingInspection")
 object DATA {
 
     data class NavItem(
-        val route: String,
-        val label: String,
-        val icon: ImageVector
+        val route: String, val label: String, val icon: ImageVector
     )
 
     val NEWS_NAV = listOf(
@@ -62,44 +60,185 @@ object DATA {
         NavItem(Strings.NOTES, Strings.NOTES, AppIcons.TodoNote)
     )
 
+    val WEB_NAV = listOf(
+        NavItem(Strings.HOME, Strings.HOME, AppIcons.Home),
+        NavItem(Strings.HISTORY, Strings.HISTORY, AppIcons.History),
+        NavItem(Strings.BOOKMARKS, Strings.BOOKMARKS, AppIcons.Bookmark)
+    )
+
     @Suppress("SpellCheckingInspection")
     val BREEDS_LIST = listOf(
-        "Affenpinscher", "African", "Airedale", "Akita", "Appenzeller", "Australian Shepherd",
-        "Basenji", "Beagle", "Bluetick", "Borzoi", "Bouvier", "Boxer", "Brabancon", "Briard",
-        "Buhund Norwegian", "Bulldog Boston", "Bulldog English", "Bulldog French",
-        "Bullterrier Staffordshire", "Cattledog Australian", "Chihuahua", "Chow", "Clumber",
-        "Cockapoo", "Collie Border", "Coonhound", "Corgi Cardigan", "Cotondetulear", "Dachshund",
-        "Dalmatian", "Dane Great", "Deerhound Scottish", "Dhole", "Dingo", "Doberman",
-        "Elkhound Norwegian", "Entlebucher", "Eskimo", "Finnish Lapphund", "Frise Bichon",
-        "Germanshepherd", "Golden", "Greyhound Italian", "Groenendael", "Havanese", "Hound Afghan",
-        "Hound Basset", "Hound Blood", "Hound English", "Hound Ibizan", "Hound Plott",
-        "Hound Walker", "Husky", "Keeshond", "Kelpie", "Komondor", "Kuvasz", "Labradoodle",
-        "Labrador", "Leonberg", "Lhasa", "Malamute", "Malinois", "Maltese", "Mastiff Bull",
-        "Mastiff English", "Mastiff Tibetan", "Mexicanhairless", "Mix", "Mountain Bernese",
-        "Mountain Swiss", "Newfoundland", "Otterhound", "Ovcharka Caucasian", "Papillon",
-        "Pekinese", "Pembroke", "Pinscher Miniature", "Pitbull", "Pointer German",
-        "Pointer Germanlonghair", "Pomeranian", "Poodle Medium", "Poodle Miniature",
-        "Poodle Standard", "Poodle Toy", "Pug", "Puggle", "Pyrenees", "Redbone",
-        "Retriever Chesapeake", "Retriever Curly", "Retriever Flatcoated", "Retriever Golden",
-        "Ridgeback Rhodesian", "Rottweiler", "Saluki", "Samoyed", "Schipperke", "Schnauzer Giant",
-        "Schnauzer Miniature", "Segugio Italian", "Setter English", "Setter Gordon",
-        "Setter Irish", "Sharpei", "Sheepdog English", "Sheepdog Shetland", "Shiba", "Shihtzu",
-        "Spaniel Blenheim", "Spaniel Brittany", "Spaniel Cocker", "Spaniel Irish",
-        "Spaniel Japanese", "Spaniel Sussex", "Spaniel Welsh", "Springer English", "Stbernard",
-        "Terrier America", "Terrier Australia", "Terrier Bedlington", "Terrier Borde",
-        "Terrier Cairn", "Terrier Dandi", "Terrier Fox", "Terrier Irish", "Terrier Kerryblue",
-        "Terrier Lakeland", "Terrier Norfolk", "Terrier Norwich", "Terrier Patterdale",
-        "Terrier Russell", "Terrier Scottish", "Terrier Sealyham", "Terrier Silky",
-        "Terrier Tibetan", "Terrier Toy", "Terrier Welsh", "Terrier Westhighland",
-        "Terrier Wheaten", "Terrier Yorkshire", "Tervuren", "Vizsla", "Waterdog Spanis",
-        "Weimaraner", "Whippet", "Wolfhound Irish"
+        "Affenpinscher",
+        "African",
+        "Airedale",
+        "Akita",
+        "Appenzeller",
+        "Australian Shepherd",
+        "Basenji",
+        "Beagle",
+        "Bluetick",
+        "Borzoi",
+        "Bouvier",
+        "Boxer",
+        "Brabancon",
+        "Briard",
+        "Buhund Norwegian",
+        "Bulldog Boston",
+        "Bulldog English",
+        "Bulldog French",
+        "Bullterrier Staffordshire",
+        "Cattledog Australian",
+        "Chihuahua",
+        "Chow",
+        "Clumber",
+        "Cockapoo",
+        "Collie Border",
+        "Coonhound",
+        "Corgi Cardigan",
+        "Cotondetulear",
+        "Dachshund",
+        "Dalmatian",
+        "Dane Great",
+        "Deerhound Scottish",
+        "Dhole",
+        "Dingo",
+        "Doberman",
+        "Elkhound Norwegian",
+        "Entlebucher",
+        "Eskimo",
+        "Finnish Lapphund",
+        "Frise Bichon",
+        "Germanshepherd",
+        "Golden",
+        "Greyhound Italian",
+        "Groenendael",
+        "Havanese",
+        "Hound Afghan",
+        "Hound Basset",
+        "Hound Blood",
+        "Hound English",
+        "Hound Ibizan",
+        "Hound Plott",
+        "Hound Walker",
+        "Husky",
+        "Keeshond",
+        "Kelpie",
+        "Komondor",
+        "Kuvasz",
+        "Labradoodle",
+        "Labrador",
+        "Leonberg",
+        "Lhasa",
+        "Malamute",
+        "Malinois",
+        "Maltese",
+        "Mastiff Bull",
+        "Mastiff English",
+        "Mastiff Tibetan",
+        "Mexicanhairless",
+        "Mix",
+        "Mountain Bernese",
+        "Mountain Swiss",
+        "Newfoundland",
+        "Otterhound",
+        "Ovcharka Caucasian",
+        "Papillon",
+        "Pekinese",
+        "Pembroke",
+        "Pinscher Miniature",
+        "Pitbull",
+        "Pointer German",
+        "Pointer Germanlonghair",
+        "Pomeranian",
+        "Poodle Medium",
+        "Poodle Miniature",
+        "Poodle Standard",
+        "Poodle Toy",
+        "Pug",
+        "Puggle",
+        "Pyrenees",
+        "Redbone",
+        "Retriever Chesapeake",
+        "Retriever Curly",
+        "Retriever Flatcoated",
+        "Retriever Golden",
+        "Ridgeback Rhodesian",
+        "Rottweiler",
+        "Saluki",
+        "Samoyed",
+        "Schipperke",
+        "Schnauzer Giant",
+        "Schnauzer Miniature",
+        "Segugio Italian",
+        "Setter English",
+        "Setter Gordon",
+        "Setter Irish",
+        "Sharpei",
+        "Sheepdog English",
+        "Sheepdog Shetland",
+        "Shiba",
+        "Shihtzu",
+        "Spaniel Blenheim",
+        "Spaniel Brittany",
+        "Spaniel Cocker",
+        "Spaniel Irish",
+        "Spaniel Japanese",
+        "Spaniel Sussex",
+        "Spaniel Welsh",
+        "Springer English",
+        "Stbernard",
+        "Terrier America",
+        "Terrier Australia",
+        "Terrier Bedlington",
+        "Terrier Borde",
+        "Terrier Cairn",
+        "Terrier Dandi",
+        "Terrier Fox",
+        "Terrier Irish",
+        "Terrier Kerryblue",
+        "Terrier Lakeland",
+        "Terrier Norfolk",
+        "Terrier Norwich",
+        "Terrier Patterdale",
+        "Terrier Russell",
+        "Terrier Scottish",
+        "Terrier Sealyham",
+        "Terrier Silky",
+        "Terrier Tibetan",
+        "Terrier Toy",
+        "Terrier Welsh",
+        "Terrier Westhighland",
+        "Terrier Wheaten",
+        "Terrier Yorkshire",
+        "Tervuren",
+        "Vizsla",
+        "Waterdog Spanis",
+        "Weimaraner",
+        "Whippet",
+        "Wolfhound Irish"
     )
 
     val MULTI_DELETE_VALUES = listOf(
-        Strings.ONE, Strings.TWO, Strings.THREE, Strings.FOUR, Strings.FIVE,
-        Strings.SIX, Strings.SEVEN, Strings.EIGHT, Strings.NINE, Strings.TEN,
-        Strings.ELEVEN, Strings.TWELVE, Strings.THIRTEEN, Strings.FOURTEEN, Strings.FIFTEEN,
-        Strings.SIXTEEN, Strings.SEVENTEEN, Strings.EIGHTEEN, Strings.NINETEEN, Strings.TWENTY
+        Strings.ONE,
+        Strings.TWO,
+        Strings.THREE,
+        Strings.FOUR,
+        Strings.FIVE,
+        Strings.SIX,
+        Strings.SEVEN,
+        Strings.EIGHT,
+        Strings.NINE,
+        Strings.TEN,
+        Strings.ELEVEN,
+        Strings.TWELVE,
+        Strings.THIRTEEN,
+        Strings.FOURTEEN,
+        Strings.FIFTEEN,
+        Strings.SIXTEEN,
+        Strings.SEVENTEEN,
+        Strings.EIGHTEEN,
+        Strings.NINETEEN,
+        Strings.TWENTY
     )
 
     val JOKE_CATEGORIES =
@@ -120,7 +259,7 @@ object DATA {
         MainInfo(NEWS, 1, 1, 1, 1),
         MainInfo(PDF_READER, 1, 1, 1, 1),
         MainInfo(VIDEO_PLAYER, 1, 1, 1, 1),
-        MainInfo(WEB_APP, 1, 1, 1, 1),
+        MainInfo(WEB, 1, 1, 1, 1),
         MainInfo(WORDPRESS, 1, 1, 1, 1),
         MainInfo(DOGS, 1, 1, 1, 1),
         MainInfo(COUNTRIES, 1, 1, 1, 1),
@@ -152,7 +291,7 @@ object DATA {
         Main(AppIcons.NewsMulti, NEWS, counts[6], NewsAppActivity::class.java),
         Main(AppIcons.PdfReader, PDF_READER, counts[7], PdfReaderActivity::class.java),
         Main(AppIcons.VideoPlayer, VIDEO_PLAYER, counts[8], VideoPlayerActivity::class.java),
-        Main(AppIcons.WebApp, WEB_APP, counts[9], WebAppActivity::class.java),
+        Main(AppIcons.WebApp, WEB, counts[9], WebAppActivity::class.java),
         Main(AppIcons.WordPress, WORDPRESS, counts[10], WordpressActivity::class.java),
         Main(AppIcons.Dogs, DOGS, counts[11], DogsActivity::class.java),
         Main(AppIcons.Countries, COUNTRIES, counts[12], CountriesActivity::class.java),
@@ -185,7 +324,7 @@ object DATA {
     const val NEWS = "News"
     const val PDF_READER = "Pdf Reader"
     const val VIDEO_PLAYER = "Video Player"
-    const val WEB_APP = "Web"
+    const val WEB = "Web"
     const val WORDPRESS = "WordPress Blog"
     const val DOGS = "Dogs"
     const val COUNTRIES = "Countries"

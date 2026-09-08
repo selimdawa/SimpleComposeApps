@@ -26,11 +26,11 @@ class RandomCatsImageViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : AndroidViewModel(application) {
 
-    val imageUrl: State<String>
-        field = mutableStateOf("")
+    private val _imageUrl = mutableStateOf("")
+    val imageUrl: State<String> = _imageUrl
 
-    val isLoading: State<Boolean>
-        field = mutableStateOf(true)
+    private val _isLoading = mutableStateOf(true)
+    val isLoading: State<Boolean> = _isLoading
 
     val savedImages = mutableStateListOf<String>()
 
@@ -44,8 +44,8 @@ class RandomCatsImageViewModel @Inject constructor(
             catImageDao.getAllImages().collectLatest { entities ->
                 savedImages.clear()
                 savedImages.addAll(entities.map { it.url })
-                if (imageUrl.value.isEmpty() && savedImages.isNotEmpty() && !networkHelper.isNetworkConnected()) {
-                    imageUrl.value = savedImages.random()
+                if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty() && !networkHelper.isNetworkConnected()) {
+                    _imageUrl.value = savedImages.random()
                 }
             }
         }
@@ -53,24 +53,24 @@ class RandomCatsImageViewModel @Inject constructor(
 
     fun getImage() {
         val url = DATA.API_RANDOM_IMAGE
-        isLoading.value = true
+        _isLoading.value = true
 
         val queue = Volley.newRequestQueue(getApplication())
         val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
                 val kittyData = response.getJSONObject(0)
-                val catUrl = kittyData.getString(DATA.JSON_URL)
-                imageUrl.value = catUrl
+                val catUrl = kittyData.getString(DATA.URL)
+                _imageUrl.value = catUrl
                 saveImage(catUrl)
             } catch (_: JSONException) {
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }, {
-            if (imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
-                imageUrl.value = savedImages.random()
+            if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
+                _imageUrl.value = savedImages.random()
             }
-            isLoading.value = false
+            _isLoading.value = false
         })
         queue.add(arrayRequest)
     }
