@@ -1,30 +1,25 @@
 package com.flatcode.simplecomposeapps.randomcatsimage
 
-import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageDao
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageEntity
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.randomcatsimage.network.CatImageApi
 import com.flatcode.simplecomposeapps.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.json.JSONException
 import javax.inject.Inject
 
 @HiltViewModel
 class RandomCatsImageViewModel @Inject constructor(
-    application: Application,
+    private val api: CatImageApi,
     private val catImageDao: CatImageDao,
     private val networkHelper: NetworkHelper
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val _imageUrl = mutableStateOf("")
     val imageUrl: State<String> = _imageUrl
@@ -52,27 +47,24 @@ class RandomCatsImageViewModel @Inject constructor(
     }
 
     fun getImage() {
-        val url = DATA.API_RANDOM_IMAGE
         _isLoading.value = true
 
-        val queue = Volley.newRequestQueue(getApplication())
-        val arrayRequest = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+        viewModelScope.launch {
             try {
-                val kittyData = response.getJSONObject(0)
-                val catUrl = kittyData.getString(DATA.URL)
-                _imageUrl.value = catUrl
-                saveImage(catUrl)
-            } catch (_: JSONException) {
+                val response = api.getRandomImage()
+                if (response.isNotEmpty()) {
+                    val catUrl = response[0].url
+                    _imageUrl.value = catUrl
+                    saveImage(catUrl)
+                }
+            } catch (e: Exception) {
+                if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
+                    _imageUrl.value = savedImages.random()
+                }
             } finally {
                 _isLoading.value = false
             }
-        }, {
-            if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
-                _imageUrl.value = savedImages.random()
-            }
-            _isLoading.value = false
-        })
-        queue.add(arrayRequest)
+        }
     }
 
     private fun saveImage(url: String) {
