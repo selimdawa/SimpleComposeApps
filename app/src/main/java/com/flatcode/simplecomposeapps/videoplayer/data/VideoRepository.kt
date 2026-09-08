@@ -46,10 +46,8 @@ class VideoRepository(
                 )
             }
 
-        videoDao.clearAllVideos()
-        videoDao.insertVideos(videoEntities)
-        videoDao.clearAllFolders()
-        videoDao.insertFolders(folders)
+        videoDao.replaceAllVideos(videoEntities)
+        videoDao.replaceAllFolders(folders)
     }
 
     private suspend fun getVideosFromMediaStore(): List<VideoFiles> = withContext(Dispatchers.IO) {

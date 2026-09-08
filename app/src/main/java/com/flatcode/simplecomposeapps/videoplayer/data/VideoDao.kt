@@ -32,6 +32,18 @@ interface VideoDao {
     @Query("DELETE FROM folders")
     suspend fun clearAllFolders()
 
+    @Transaction
+    suspend fun replaceAllVideos(videos: List<VideoEntity>) {
+        clearAllVideos()
+        insertVideos(videos)
+    }
+
+    @Transaction
+    suspend fun replaceAllFolders(folders: List<FolderEntity>) {
+        clearAllFolders()
+        insertFolders(folders)
+    }
+
     @Query("SELECT * FROM video_settings WHERE id = 1")
     fun getSettings(): Flow<VideoSettingsEntity?>
 
