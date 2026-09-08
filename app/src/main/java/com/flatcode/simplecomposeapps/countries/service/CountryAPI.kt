@@ -1,10 +1,18 @@
 package com.flatcode.simplecomposeapps.countries.service
 
-import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.countries.model.Country
-import retrofit2.http.GET
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface CountryAPI {
-    @GET(DATA.COUNTRY_GSON)
-    suspend fun getCountries(): List<Country>
+@Singleton
+class CountryAPI @Inject constructor(
+    private val client: HttpClient
+) {
+    suspend fun getCountries(): List<Country> {
+        return client.get("${DATA.BASE_URL_COUNTRY}${DATA.COUNTRY_GSON}").body()
+    }
 }

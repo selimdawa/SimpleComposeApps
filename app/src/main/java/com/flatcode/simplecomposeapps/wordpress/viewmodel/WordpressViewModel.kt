@@ -7,7 +7,7 @@ import com.flatcode.simplecomposeapps.wordpress.data.PostDao
 import com.flatcode.simplecomposeapps.wordpress.data.PostEntity
 import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.model.Post
-import com.flatcode.simplecomposeapps.wordpress.utils.WordPressClient
+import com.flatcode.simplecomposeapps.wordpress.utils.WPApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +31,7 @@ data class WordpressUiState(
 @HiltViewModel
 class WordpressViewModel @Inject constructor(
     application: Application,
+    private val api: WPApiService,
     private val postDao: PostDao
 ) : AndroidViewModel(application) {
 
@@ -91,7 +92,6 @@ class WordpressViewModel @Inject constructor(
             else _uiState.update { it.copy(isRefreshing = true) }
 
             try {
-                val api = WordPressClient.apiService
                 val posts = api.getPosts()
 
                 val favoriteIds = postDao.getFavoriteIds().toSet()
