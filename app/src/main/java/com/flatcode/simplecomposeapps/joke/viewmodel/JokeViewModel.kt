@@ -1,22 +1,23 @@
 package com.flatcode.simplecomposeapps.joke.viewmodel
 
-import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.joke.data.network.JokeApi
 import com.flatcode.simplecomposeapps.joke.model.Joke
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.json.JSONException
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class JokeViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+class JokeViewModel @Inject constructor(
+    private val api: JokeApi
+) : ViewModel() {
 
     val jokes: List<Joke>
         field = mutableStateListOf<Joke>()
@@ -45,48 +46,23 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
     }
 
     private fun getJokes(category: String) {
-        val url = "${DATA.JOKE_URL}$category?amount=10"
         isLoading.value = true
         errorMessage.value = null
         jokes.clear()
 
-        val queue = Volley.newRequestQueue(getApplication())
-        val objectRequest = JsonObjectRequest(
-            Request.Method.GET, url, null,
-            { response ->
-                try {
-                    if (response.optBoolean("error")) {
-                        errorMessage.value = response.optString("message", "Failed to fetch jokes")
-                    } else {
-                        val jokesArray = response.getJSONArray("jokes")
-                        for (i in 0 until jokesArray.length()) {
-                            val jokeData = jokesArray.getJSONObject(i)
-                            val jokeType = jokeData.optString("type")
-
-                            val jokeObject = Joke().apply {
-                                type = jokeType
-                                if (jokeType == "single") {
-                                    joke = jokeData.optString("joke")
-                                } else {
-                                    setup = jokeData.optString("setup")
-                                    delivery = jokeData.optString("delivery")
-                                }
-                                this.category = jokeData.optString("category")
-                            }
-                            jokes.add(jokeObject)
-                        }
-                    }
-                } catch (_: JSONException) {
-                    errorMessage.value = "Failed to parse jokes"
-                } finally {
-                    isLoading.value = false
+        viewModelScope.launch {
+            try {
+                val response = api.getJokes(category)
+                if (response.error) {
+                    errorMessage.value = response.message ?: "Failed to fetch jokes"
+                } else {
+                    response.jokes?.let { jokes.addAll(it) }
                 }
-            },
-            { error ->
-                errorMessage.value = error.message ?: "Unknown error"
+            } catch (e: Exception) {
+                errorMessage.value = e.message ?: "Unknown error"
+            } finally {
                 isLoading.value = false
             }
-        )
-        queue.add(objectRequest)
+        }
     }
 }
