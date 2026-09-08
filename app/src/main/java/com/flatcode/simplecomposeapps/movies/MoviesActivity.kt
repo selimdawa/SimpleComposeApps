@@ -17,13 +17,11 @@ import com.flatcode.simplecomposeapps.movies.ui.MovieHomeScreen
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class MoviesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

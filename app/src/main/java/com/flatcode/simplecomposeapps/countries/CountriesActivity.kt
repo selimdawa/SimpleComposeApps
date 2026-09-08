@@ -14,13 +14,11 @@ import com.flatcode.simplecomposeapps.countries.ui.CountryDetailScreen
 import com.flatcode.simplecomposeapps.countries.ui.DashboardScreen
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class CountriesActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

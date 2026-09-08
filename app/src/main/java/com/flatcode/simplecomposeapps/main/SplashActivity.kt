@@ -35,13 +35,11 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.launchActivity
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class SplashActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {

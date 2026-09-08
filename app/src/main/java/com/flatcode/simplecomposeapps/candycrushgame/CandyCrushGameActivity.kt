@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.candycrushgame.ui.CandyCrushScreen
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class CandyCrushGameActivity : ComponentActivity() {
@@ -21,7 +20,6 @@ class CandyCrushGameActivity : ComponentActivity() {
     private val viewModel: CandyCrushViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

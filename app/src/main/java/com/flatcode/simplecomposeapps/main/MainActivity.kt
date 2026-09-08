@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import com.flatcode.simplecomposeapps.main.ui.MainAboutDialog
 import com.flatcode.simplecomposeapps.main.ui.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,9 +20,6 @@ class MainActivity : ComponentActivity() {
     private val mainInfoViewModel: MainInfoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Apply theme from the MultiColors library
-        MultiColorManager.applyTheme(this)
-        
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

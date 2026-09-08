@@ -14,13 +14,11 @@ import com.flatcode.simplecomposeapps.crypto.ui.CryptoDetailScreen
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoHomeScreen
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class CryptoActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

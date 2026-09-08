@@ -14,13 +14,11 @@ import com.flatcode.simplecomposeapps.pokemon.ui.PokemonDetailScreen
 import com.flatcode.simplecomposeapps.pokemon.ui.PokemonScreen
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class PokemonActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

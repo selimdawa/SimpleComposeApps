@@ -15,7 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.randomcatsimage.ui.RandomCatsImageScreen
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class RandomCatsImageActivity : ComponentActivity() {
@@ -23,7 +22,6 @@ class RandomCatsImageActivity : ComponentActivity() {
     private val viewModel: RandomCatsImageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

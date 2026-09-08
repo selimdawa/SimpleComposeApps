@@ -40,13 +40,11 @@ import com.flatcode.simplecomposeapps.web.ui.WebBookmarksScreen
 import com.flatcode.simplecomposeapps.web.ui.WebHistoryScreen
 import com.flatcode.simplecomposeapps.web.ui.WebMainScreen
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class WebAppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

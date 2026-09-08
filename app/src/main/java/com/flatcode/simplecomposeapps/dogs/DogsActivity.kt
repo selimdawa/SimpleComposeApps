@@ -15,7 +15,6 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.dogs.ui.DogsScreen
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
-import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class DogsActivity : ComponentActivity() {
@@ -23,7 +22,6 @@ class DogsActivity : ComponentActivity() {
     private lateinit var viewModel: DogViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
