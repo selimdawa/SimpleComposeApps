@@ -30,7 +30,7 @@ class JokeViewModel @Inject constructor(application: Application) : AndroidViewM
     val selectedCategory: State<String>
         field = mutableStateOf(value = "Any")
 
-    val categories = listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
+    val categories = DATA.JOKE_CATEGORIES
 
     init {
         getJokes("Any")

@@ -7,18 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
 import com.flatcode.simplecomposeapps.movies.ui.MovieDetailScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieFavoriteScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieHomeScreen
+import com.flatcode.simplecomposeapps.utils.DATA
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
-import com.google.gson.Gson
 
 @AndroidEntryPoint
 class MoviesActivity : AppCompatActivity() {
@@ -45,38 +44,30 @@ fun MoviesAppNavHost() {
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable("home") {
-            MovieHomeScreen(
-                onMovieClick = { movie ->
-                    val movieJson = java.net.URLEncoder.encode(gson.toJson(movie), "UTF-8")
-                    navController.navigate("detail/$movieJson")
-                },
-                onFavoriteClick = {
-                    navController.navigate("favorites")
-                }
-            )
+            MovieHomeScreen(onMovieClick = { movie ->
+                val movieJson = java.net.URLEncoder.encode(gson.toJson(movie), "UTF-8")
+                navController.navigate("detail/$movieJson")
+            }, onFavoriteClick = {
+                navController.navigate("favorites")
+            })
         }
         composable("favorites") {
-            MovieFavoriteScreen(
-                onBack = { navController.popBackStack() },
-                onMovieClick = { movie ->
-                    val movieJson = java.net.URLEncoder.encode(gson.toJson(movie), "UTF-8")
-                    navController.navigate("detail/$movieJson")
-                }
-            )
+            MovieFavoriteScreen(onBack = { navController.popBackStack() }, onMovieClick = { movie ->
+                val movieJson = java.net.URLEncoder.encode(gson.toJson(movie), "UTF-8")
+                navController.navigate("detail/$movieJson")
+            })
         }
         composable(
-            route = "detail/{movieJson}",
-            arguments = listOf(navArgument("movieJson") { type = NavType.StringType })
+            route = "detail/{movieJson}", arguments = DATA.MOVIE_DETAIL_ARGS
         ) { backStackEntry ->
             val movieJson = backStackEntry.arguments?.getString("movieJson") ?: ""
-            val movie = gson.fromJson(java.net.URLDecoder.decode(movieJson, "UTF-8"), MovieItemModel::class.java)
-            MovieDetailScreen(
-                movie = movie,
-                onBack = { navController.popBackStack() }
+            val movie = gson.fromJson(
+                java.net.URLDecoder.decode(movieJson, "UTF-8"), MovieItemModel::class.java
             )
+            MovieDetailScreen(
+                movie = movie, onBack = { navController.popBackStack() })
         }
     }
 }

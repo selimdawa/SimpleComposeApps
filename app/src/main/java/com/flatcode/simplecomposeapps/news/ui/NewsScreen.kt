@@ -42,6 +42,7 @@ import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun NewsScreen(
@@ -52,13 +53,12 @@ fun NewsScreen(
 
     var searchQuery by remember { mutableStateOf("") }
 
-    val categories =
-        listOf("general", "business", "entertainment", "health", "science", "sports", "technology")
+    val categories = DATA.NEWS_CATEGORIES
 
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = "News App",
+                title = DATA.NEWS,
                 hasBack = false,
             )
         }, containerColor = COLOR_ON_BACKGROUND

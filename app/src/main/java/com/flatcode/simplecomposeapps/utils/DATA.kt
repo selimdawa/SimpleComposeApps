@@ -30,6 +30,8 @@ import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.weather.WeatherActivity
 import com.flatcode.simplecomposeapps.web.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 @Suppress("SpellCheckingInspection")
 object DATA {
@@ -65,6 +67,17 @@ object DATA {
         NavItem(Strings.HISTORY, Strings.HISTORY, AppIcons.History),
         NavItem(Strings.BOOKMARKS, Strings.BOOKMARKS, AppIcons.Bookmark)
     )
+
+    // Nav Arguments
+    val BLOGGER_POST_ARGS = listOf(navArgument("postId") { type = NavType.StringType })
+    val BLOGGER_PAGE_ARGS = listOf(navArgument("pageId") { type = NavType.StringType })
+    val COUNTRY_DETAIL_ARGS = listOf(navArgument(COUNTRY_UUID) { type = NavType.IntType })
+    val CRYPTO_DETAIL_ARGS = listOf(
+        navArgument("symbol") { type = NavType.StringType },
+        navArgument("coinId") { type = NavType.IntType }
+    )
+    val MOVIE_DETAIL_ARGS = listOf(navArgument("movieJson") { type = NavType.StringType })
+    val POKE_DETAIL_ARGS = listOf(navArgument("pokeId") { type = NavType.IntType })
 
     @Suppress("SpellCheckingInspection")
     val BREEDS_LIST = listOf(
@@ -307,6 +320,21 @@ object DATA {
         Main(AppIcons.Poke, POKE, counts[22], PokemonActivity::class.java),
         Main(AppIcons.TodoNote, TODO_NOTE, counts[23], TodoNoteActivity::class.java),
         Main(AppIcons.StockMarket, STOCK_MARKET, counts[24], StockMarketActivity::class.java)
+    )
+
+    val ICON_PATH_DATA = listOf(
+        Triple("M36.06,28.92L36.06,32.18", 0xFFE7E7E7, 0xFFCCCCCf),
+        Triple("M39.45,29.88L37.82,32.71", 0xFFCACACA, 0xFFC8C8CC),
+        Triple("M42.12,32.32L39.3,33.95", 0xFFCDCDCD, 0xFFBBBBBE),
+        Triple("M39.8,35.98L43.06,35.98", 0xFFCBCBCB, 0xFFB2B2B7),
+        Triple("M32.77,29.99L34.4,32.81", 0xFFEDEDED, 0xFFD0D0D4),
+        Triple("M30.1,32.42L32.92,34.05", 0xFF525252, 0xFF949497),
+        Triple("M32.42,35.98L29.16,35.98", 0xFF6E6E6E, 0xFF97979B),
+        Triple("M36.06,43.08L36.06,39.82", 0xFFA0A0A0, 0xFFA8A8AC),
+        Triple("M39.7,41.99L38.07,39.16", 0xFFCACACA, 0xFFCACACA),
+        Triple("M42.19,39.4L39.37,37.77", 0xFFCCCCCC, 0xFFB6B6BA),
+        Triple("M32.46,41.98L34.09,39.16", 0xFF909090, 0xFFA1A1A5),
+        Triple("M29.85,39.4L32.67,37.77", 0xFF7A7A7A, 0xFF9D9DA0)
     )
 
     //Database

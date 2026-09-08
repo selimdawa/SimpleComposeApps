@@ -7,13 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoDetailScreen
 import com.flatcode.simplecomposeapps.crypto.ui.CryptoHomeScreen
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -52,10 +51,7 @@ fun CryptoAppNavHost() {
         }
         composable(
             route = "detail/{symbol}/{coinId}",
-            arguments = listOf(
-                navArgument("symbol") { type = NavType.StringType },
-                navArgument("coinId") { type = NavType.IntType }
-            )
+            arguments = DATA.CRYPTO_DETAIL_ARGS
         ) { backStackEntry ->
             val symbol = backStackEntry.arguments?.getString("symbol") ?: ""
             val coinId = backStackEntry.arguments?.getInt("coinId") ?: 0

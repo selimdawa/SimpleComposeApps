@@ -1,20 +1,18 @@
 package com.flatcode.simplecomposeapps.countries
 
 import android.os.Bundle
-import com.flatcode.simplecomposeapps.utils.DATA
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.countries.ui.CountryDetailScreen
 import com.flatcode.simplecomposeapps.countries.ui.DashboardScreen
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import io.selimdawa.multicolors.MultiColorManager
 
@@ -53,7 +51,7 @@ fun CountriesAppNavHost() {
         }
         composable(
             route = DATA.DETAIL_COUNTRY,
-            arguments = listOf(navArgument(DATA.COUNTRY_UUID) { type = NavType.IntType })
+            arguments = DATA.COUNTRY_DETAIL_ARGS
         ) { backStackEntry ->
             val countryUuid = backStackEntry.arguments?.getInt(DATA.COUNTRY_UUID) ?: 0
             CountryDetailScreen(

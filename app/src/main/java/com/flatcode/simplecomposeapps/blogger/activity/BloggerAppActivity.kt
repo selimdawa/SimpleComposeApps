@@ -8,15 +8,14 @@ import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerDetailsScreen
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerPagesScreen
 import com.flatcode.simplecomposeapps.blogger.ui.BloggerScreen
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,7 +61,7 @@ fun BloggerNavHost(viewModel: BloggerViewModel, onFinish: () -> Unit) {
         }
         composable(
             route = "postDetails/{postId}",
-            arguments = listOf(navArgument("postId") { type = NavType.StringType })
+            arguments = DATA.BLOGGER_POST_ARGS
         ) { backStackEntry ->
             val postId = backStackEntry.arguments?.getString("postId") ?: ""
             BloggerDetailsScreen(
@@ -74,7 +73,7 @@ fun BloggerNavHost(viewModel: BloggerViewModel, onFinish: () -> Unit) {
         }
         composable(
             route = "pageDetails/{pageId}",
-            arguments = listOf(navArgument("pageId") { type = NavType.StringType })
+            arguments = DATA.BLOGGER_PAGE_ARGS
         ) { backStackEntry ->
             val pageId = backStackEntry.arguments?.getString("pageId") ?: ""
             BloggerDetailsScreen(

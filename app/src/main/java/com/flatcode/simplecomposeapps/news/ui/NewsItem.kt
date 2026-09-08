@@ -32,8 +32,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp)
-            .padding(bottom = 10.dp)
+            .padding(start = 10.dp, end = 10.dp,bottom = 10.dp)
             .clickable { onClick() },
     ) {
         Card(
