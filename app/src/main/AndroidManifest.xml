@@ -79,7 +79,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".web.WebAppActivity"
+            android:name=".web.Activity.WebAppActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".web.Activity.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

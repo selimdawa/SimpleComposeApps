@@ -1,180 +1,252 @@
 package com.flatcode.simplecomposeapps.web.ui
 
+import android.content.Context
 import android.content.Intent
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.R
+import com.flatcode.simplecomposeapps.ui.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.web.WebAppUiState
-import com.flatcode.simplecomposeapps.web.WebAppViewModel
-import com.flatcode.simplecomposeapps.web.WebBottomNavigation
+import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
+import com.flatcode.simplecomposeapps.web.Activity.WebViewActivity
+
+val CardTextSize = 18.sp
+val CardCornerRadius = 15.dp
+val SocialSize = 70.dp
 
 @Composable
 fun WebMainScreen(
-    viewModel: WebAppViewModel
+    viewModel: WebAppViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
-    val onShareApp = {
-        val share = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Share App with\nhttps://play.google.com/store/apps/details?id=${context.packageName}"
-            )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(COLOR_ON_BACKGROUND)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 5.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                WebItem(
+                    modifier = Modifier.weight(1f),
+                    cardModifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
+                    cornerRadius = CardCornerRadius,
+                    imageResId = AppIcons.Support,
+                    imageTint = Color.White,
+                    imageSize = 80.dp,
+                    text = Strings.SUPPORT,
+                    textColor = Color.White,
+                    textSize = CardTextSize,
+                    onClick = { viewModel.showSupportDialog(true) })
+
+                WebItem(
+                    modifier = Modifier.weight(1f),
+                    cardModifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 5.dp, end = 5.dp, bottom = 5.dp),
+                    cornerRadius = CardCornerRadius,
+                    imageResId = AppIcons.AboutUs,
+                    imageTint = Color.White,
+                    imageSize = 80.dp,
+                    text = Strings.ABOUT_US,
+                    textColor = Color.White,
+                    textSize = CardTextSize,
+                    onClick = { viewModel.showAboutDialog(true) })
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                WebItem(
+                    modifier = Modifier.weight(1f),
+                    cardModifier = Modifier
+                        .fillMaxSize()
+                        .padding(5.dp),
+                    cornerRadius = CardCornerRadius,
+                    imageResId = AppIcons.Website,
+                    imageTint = Color.White,
+                    imageSize = 100.dp,
+                    text = Strings.WEB_SITE,
+                    textColor = Color.White,
+                    textSize = 24.sp,
+                    onClick = {
+                        val intent = Intent(context, WebViewActivity::class.java).apply {
+                            putExtra("url", DATA.mySite)
+                        }
+                        context.startActivity(intent)
+                    })
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                WebItem(
+                    modifier = Modifier.weight(1f),
+                    cardModifier = Modifier
+                        .fillMaxSize()
+                        .padding(5.dp),
+                    cornerRadius = CardCornerRadius,
+                    imageResId = R.drawable.ic_share,
+                    imageTint = Color.White,
+                    imageSize = 80.dp,
+                    text = Strings.SHARE_APP,
+                    textColor = Color.White,
+                    textSize = CardTextSize,
+                    onClick = { context.shareApp() })
+
+                WebItem(
+                    modifier = Modifier.weight(1f),
+                    cardModifier = Modifier
+                        .fillMaxSize()
+                        .padding(5.dp),
+                    cornerRadius = CardCornerRadius,
+                    imageResId = AppIcons.Rate,
+                    imageTint = Color.White,
+                    imageWidth = 120.dp,
+                    imageHeight = 80.dp,
+                    text = Strings.RATE_APP,
+                    textColor = Color.White,
+                    textSize = CardTextSize,
+                    onClick = { context.rateApp() })
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(SocialSize),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                SocialItem(
+                    modifier = Modifier.weight(1f),
+                    imageResId = AppIcons.Facebook,
+                    onClick = {
+                        val intent = Intent(context, WebViewActivity::class.java).apply {
+                            putExtra("url", DATA.myFacebook)
+                        }
+                        context.startActivity(intent)
+                    })
+
+                SocialItem(
+                    modifier = Modifier.weight(1f),
+                    imageResId = AppIcons.Instagram,
+                    onClick = {
+                        val intent = Intent(context, WebViewActivity::class.java).apply {
+                            putExtra("url", DATA.myInstagram)
+                        }
+                        context.startActivity(intent)
+                    })
+
+                SocialItem(
+                    modifier = Modifier
+                        .weight(1f)
+                        .scale(1.2f),
+                    imageResId = AppIcons.Twitter,
+                    onClick = {
+                        val intent = Intent(context, WebViewActivity::class.java).apply {
+                            putExtra("url", DATA.myTwitter)
+                        }
+                        context.startActivity(intent)
+                    },
+                    padding = 0.dp
+                )
+            }
         }
-        context.startActivity(Intent.createChooser(share, "Share link!"))
-    }
 
-    val onRateApp = {
-        val uri = "market://details?id=${context.packageName}".toUri()
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        try {
-            context.startActivity(intent)
-        } catch (_: Exception) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, "http://google.com".toUri()))
+        if (uiState.showAboutDialog) {
+            WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
         }
-    }
 
-    val onEmail = {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = "mailto:${DATA.myEmail}".toUri()
+        if (uiState.showSupportDialog) {
+            WebSupportDialog(
+                onDismiss = { viewModel.showSupportDialog(false) },
+                onEmail = { context.sendEmail() },
+                onPhone = { context.callPhone() })
         }
-        context.startActivity(intent)
-    }
-
-    val onPhone = {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = "tel:${DATA.myMobileNumber}".toUri()
-        }
-        context.startActivity(intent)
-    }
-
-    val showNav = DATA.WEB_NAV.any { it.route == currentDestination?.route }
-
-    Scaffold(containerColor = COLOR_ON_BACKGROUND, topBar = {
-        ToolbarContent(
-            title = DATA.WEB, hasBack = false, includeStatusBarsPadding = true
-        )
-    }, bottomBar = {
-        if (showNav) {
-            WebBottomNavigation(navController = navController)
-        }
-    }) { paddingValues ->
-        WebNavHost(
-            navController = navController,
-            viewModel = viewModel,
-            uiState = uiState,
-            onShareApp = onShareApp,
-            onRateApp = onRateApp,
-            onEmail = onEmail,
-            onPhone = onPhone,
-            modifier = Modifier.padding(paddingValues)
-        )
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun WebNavHost(
-    navController: NavHostController,
-    viewModel: WebAppViewModel,
-    uiState: WebAppUiState,
-    onShareApp: () -> Unit,
-    onRateApp: () -> Unit,
-    onEmail: () -> Unit,
-    onPhone: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    NavHost(
-        navController = navController,
-        startDestination = DATA.WEB_NAV[0].route,
-        modifier = modifier.fillMaxSize(),
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }) {
-        DATA.WEB_NAV.forEach { item ->
-            composable(item.route) {
-                when (item.route) {
-                    Strings.HOME -> {
-                        WebAppScreen(
-                            onWebSite = { navController.navigate("webView/${DATA.WEBSITE}") },
-                            onInstagram = { navController.navigate("webView/${DATA.INSTAGRAM}") },
-                            onTwitter = { navController.navigate("webView/${DATA.TWITTER}") },
-                            onFacebook = { navController.navigate("webView/${DATA.FACEBOOK}") },
-                            onAboutUs = { viewModel.showAboutDialog(true) },
-                            onSupport = { viewModel.showSupportDialog(true) },
-                            onShareApp = onShareApp,
-                            onRateApp = onRateApp
-                        )
+fun WebMainScreenPreview() {
+    WebMainScreen()
+}
 
-                        if (uiState.showAboutDialog) {
-                            WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
-                        }
-
-                        if (uiState.showSupportDialog) {
-                            WebSupportDialog(
-                                onDismiss = { viewModel.showSupportDialog(false) },
-                                onEmail = onEmail,
-                                onPhone = onPhone
-                            )
-                        }
-                    }
-
-                    Strings.HISTORY -> {
-                        WebHistoryScreen(
-                            viewModel = viewModel, onNavigateToUrl = { url ->
-                                navController.navigate("webView_direct?url=$url")
-                            })
-                    }
-
-                    Strings.BOOKMARKS -> {
-                        WebBookmarksScreen(
-                            viewModel = viewModel, onNavigateToUrl = { url ->
-                                navController.navigate("webView_direct?url=$url")
-                            })
-                    }
-                }
-            }
-        }
-        composable("webView/{name}") { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val url = when (name) {
-                DATA.WEBSITE -> DATA.mySite
-                DATA.INSTAGRAM -> DATA.myInstagram
-                DATA.FACEBOOK -> DATA.myFacebook
-                DATA.TWITTER -> DATA.myTwitter
-                else -> DATA.mySite
-            }
-            WebViewScreen(
-                url = url, viewModel = viewModel
-            )
-        }
-        composable("webView_direct?url={url}") { backStackEntry ->
-            val url = backStackEntry.arguments?.getString("url") ?: ""
-            WebViewScreen(
-                url = url, viewModel = viewModel
-            )
-        }
+fun Context.shareApp() {
+    val share = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(
+            Intent.EXTRA_TEXT,
+            "Share App with\nhttps://play.google.com/store/apps/details?id=$packageName"
+        )
     }
+    startActivity(Intent.createChooser(share, "Share link!"))
+}
+
+fun Context.rateApp() {
+    val uri = "market://details?id=$packageName".toUri()
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    try {
+        startActivity(intent)
+    } catch (_: Exception) {
+        startActivity(Intent(Intent.ACTION_VIEW, "http://google.com".toUri()))
+    }
+}
+
+fun Context.sendEmail() {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = "mailto:${DATA.myEmail}".toUri()
+    }
+    startActivity(intent)
+}
+
+fun Context.callPhone() {
+    val intent = Intent(Intent.ACTION_DIAL).apply {
+        data = "tel:${DATA.myMobileNumber}".toUri()
+    }
+    startActivity(intent)
+}
+
+fun Context.openUrl(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+    startActivity(intent)
 }

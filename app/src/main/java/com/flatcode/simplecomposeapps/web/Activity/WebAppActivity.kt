@@ -1,5 +1,6 @@
-package com.flatcode.simplecomposeapps.web
+package com.flatcode.simplecomposeapps.web.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -32,6 +35,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 import com.flatcode.simplecomposeapps.web.ui.WebBookmarksScreen
 import com.flatcode.simplecomposeapps.web.ui.WebHistoryScreen
 import com.flatcode.simplecomposeapps.web.ui.WebMainScreen
@@ -50,12 +54,12 @@ class WebAppActivity : ComponentActivity() {
             val navController = rememberNavController()
             Scaffold(
                 topBar = {
-                    ToolbarContent(
-                        title = DATA.WEB, hasBack = false
-                    )
-                }, bottomBar = {
-                    WebBottomNavigation(navController = navController)
-                }, containerColor = COLOR_ON_BACKGROUND
+                ToolbarContent(
+                    title = DATA.WEB, hasBack = false
+                )
+            }, bottomBar = {
+                WebBottomNavigation(navController = navController)
+            }, containerColor = COLOR_ON_BACKGROUND
             ) { paddingValues ->
                 WebNavHost(
                     navController = navController, modifier = Modifier.padding(paddingValues)
@@ -76,10 +80,10 @@ fun WebBottomNavigation(navController: NavHostController) {
         DATA.WEB_NAV.forEach { item ->
             NavigationBarItem(
                 icon = {
-                    Icon(
-                        item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
-                    )
-                },
+                Icon(
+                    item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
+                )
+            },
                 label = { Text(item.label) },
                 selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                 onClick = {
@@ -105,6 +109,8 @@ fun WebBottomNavigation(navController: NavHostController) {
 fun WebNavHost(
     navController: NavHostController, modifier: Modifier = Modifier
 ) {
+    val viewModel: WebAppViewModel = hiltViewModel()
+    val context = LocalContext.current
     NavHost(
         navController = navController,
         startDestination = DATA.WEB_NAV[0].route,
@@ -116,9 +122,22 @@ fun WebNavHost(
         DATA.WEB_NAV.forEach { item ->
             composable(item.route) {
                 when (item.route) {
-                    Strings.HOME -> WebMainScreen()
-                    Strings.HISTORY -> WebHistoryScreen()
-                    Strings.BOOKMARKS -> WebBookmarksScreen()
+                    Strings.HOME -> WebMainScreen(viewModel = viewModel)
+                    Strings.HISTORY -> WebHistoryScreen(
+                        viewModel = viewModel, onNavigateToUrl = { url ->
+                            val intent = Intent(context, WebViewActivity::class.java).apply {
+                                putExtra("url", url)
+                            }
+                            context.startActivity(intent)
+                        })
+
+                    Strings.BOOKMARKS -> WebBookmarksScreen(
+                        viewModel = viewModel, onNavigateToUrl = { url ->
+                            val intent = Intent(context, WebViewActivity::class.java).apply {
+                                putExtra("url", url)
+                            }
+                            context.startActivity(intent)
+                        })
                 }
             }
         }

@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.ui.theme.White
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 val SocialMarginHorizontal = 5.dp
 val SocialPadding = 5.dp
@@ -36,7 +36,7 @@ fun SocialItem(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            colorFilter = ColorFilter.tint(White)
+            colorFilter = ColorFilter.tint(COLOR_ERROR)
         )
     }
 }

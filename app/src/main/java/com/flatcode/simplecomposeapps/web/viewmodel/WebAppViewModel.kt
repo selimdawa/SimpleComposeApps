@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.web
+package com.flatcode.simplecomposeapps.web.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,9 +7,6 @@ import com.flatcode.simplecomposeapps.web.data.WebDao
 import com.flatcode.simplecomposeapps.web.data.WebEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,7 +19,8 @@ data class WebAppUiState(
     val bookmarks: List<WebEntity> = emptyList(),
     val isLoading: Boolean = false,
     val currentUrl: String = "",
-    val currentTitle: String = ""
+    val currentTitle: String = "",
+    val selectedUrl: String? = null
 )
 
 @HiltViewModel
@@ -32,9 +30,6 @@ class WebAppViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(WebAppUiState())
     val uiState: StateFlow<WebAppUiState> = _uiState
-
-    private val _reloadEvent = MutableSharedFlow<Unit>()
-    val reloadEvent: SharedFlow<Unit> = _reloadEvent.asSharedFlow()
 
     init {
         observeHistory()
@@ -87,12 +82,6 @@ class WebAppViewModel @Inject constructor(
         }
     }
 
-    fun clearHistory() {
-        viewModelScope.launch {
-            webDao.clearByType("HISTORY")
-        }
-    }
-
     fun setLoading(loading: Boolean) {
         _uiState.update { it.copy(isLoading = loading) }
     }
@@ -109,9 +98,7 @@ class WebAppViewModel @Inject constructor(
         _uiState.update { it.copy(showSupportDialog = show) }
     }
 
-    fun reload() {
-        viewModelScope.launch {
-            _reloadEvent.emit(Unit)
-        }
+    fun setSelectedUrl(url: String?) {
+        _uiState.update { it.copy(selectedUrl = url) }
     }
 }

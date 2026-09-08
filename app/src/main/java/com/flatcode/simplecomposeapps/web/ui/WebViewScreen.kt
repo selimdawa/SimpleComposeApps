@@ -1,42 +1,41 @@
 package com.flatcode.simplecomposeapps.web.ui
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.web.WebAppViewModel
-import kotlinx.coroutines.flow.collectLatest
+import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebViewScreen(
     url: String,
     viewModel: WebAppViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var webView: WebView? = null
-
-    LaunchedEffect(Unit) {
-        viewModel.reloadEvent.collectLatest {
-            webView?.reload()
-        }
-    }
+    var webView by remember { mutableStateOf<WebView?>(null) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(COLOR_ON_BACKGROUND)
     ) {
         AndroidView(
             factory = { context ->
