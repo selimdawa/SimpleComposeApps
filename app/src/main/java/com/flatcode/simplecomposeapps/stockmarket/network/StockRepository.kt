@@ -1,13 +1,10 @@
-package com.flatcode.simplecomposeapps.stockmarket.data.repository
+package com.flatcode.simplecomposeapps.stockmarket.network
 
-import com.flatcode.simplecomposeapps.stockmarket.data.csv.CSVParser
-import com.flatcode.simplecomposeapps.stockmarket.data.local.StockDao
-import com.flatcode.simplecomposeapps.stockmarket.data.mapper.toCompanyListing
-import com.flatcode.simplecomposeapps.stockmarket.data.mapper.toCompanyListingEntity
-import com.flatcode.simplecomposeapps.stockmarket.data.remote.StockApi
-import com.flatcode.simplecomposeapps.stockmarket.domain.model.CompanyListing
-import com.flatcode.simplecomposeapps.stockmarket.domain.repository.StockRepository
-import com.flatcode.simplecomposeapps.stockmarket.util.Resource
+import com.flatcode.simplecomposeapps.stockmarket.data.StockDao
+import com.flatcode.simplecomposeapps.stockmarket.data.toCompanyListing
+import com.flatcode.simplecomposeapps.stockmarket.data.toCompanyListingEntity
+import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListing
+import com.flatcode.simplecomposeapps.stockmarket.utils.Resource
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.coroutines.flow.Flow
@@ -16,12 +13,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StockRepositoryImpl @Inject constructor(
+class StockRepository @Inject constructor(
     private val api: StockApi,
     private val dao: StockDao,
     private val parser: CSVParser<CompanyListing>,
-) : StockRepository {
-    override suspend fun getCompanyListings(
+) {
+    suspend fun getCompanyListings(
         fetchFromRemote: Boolean,
         query: String,
     ): Flow<Resource<List<CompanyListing>>> = flow {
@@ -39,7 +36,10 @@ class StockRepositoryImpl @Inject constructor(
             val remote = parser.parse(response.bodyAsChannel().toInputStream())
             dao.clearCompanyListings()
             dao.insertCompanyListings(remote.map { it.toCompanyListingEntity() })
-            emit(Resource.Success(data = dao.searchCompanyListing("").map { it.toCompanyListing() }))
+            emit(
+                Resource.Success(
+                    data = dao.searchCompanyListing("").map { it.toCompanyListing() })
+            )
         } catch (_: Exception) {
             emit(Resource.Error("Error loading data"))
         } finally {

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.stockmarket.domain.model
+package com.flatcode.simplecomposeapps.stockmarket.model
 
 data class CompanyListing(
     val name: String,

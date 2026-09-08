@@ -369,6 +369,10 @@ object DATA {
     const val TODO_NOTE = "TODO-Note"
     const val STOCK_MARKET = "Stock Market"
 
+    //Stock Market
+    const val API_KEY_STOCK = "CY75KFHR7APO4MSF"
+    const val BASE_URL_STOCK = "https://alphavantage.co/"
+
     const val ADD_RESULT_OK = 1
     const val EDIT_RESULT_OK = 2
 

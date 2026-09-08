@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.stockmarket.data.local
+package com.flatcode.simplecomposeapps.stockmarket.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,9 +13,11 @@ interface StockDao {
     @Query("DELETE FROM companylistingentity")
     suspend fun clearCompanyListings()
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM companylistingentity 
         WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%' OR UPPER(:query) == symbol
-    """)
+    """
+    )
     suspend fun searchCompanyListing(query: String): List<CompanyListingEntity>
 }

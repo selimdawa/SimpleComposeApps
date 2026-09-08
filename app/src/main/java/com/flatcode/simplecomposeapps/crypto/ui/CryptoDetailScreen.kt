@@ -3,8 +3,6 @@ package com.flatcode.simplecomposeapps.crypto.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -50,12 +48,9 @@ fun CryptoDetailScreen(
     Scaffold(
         topBar = {
             ToolbarContent(
-                title = DATA.CRYPTO_DETAILS,
-                hasBack = true,
-                onBackClick = onBack
+                title = DATA.CRYPTO_DETAILS, hasBack = true, onBackClick = onBack
             )
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -64,8 +59,7 @@ fun CryptoDetailScreen(
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MC_TRACK
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
             } else {
                 coinDetail?.let { detail ->

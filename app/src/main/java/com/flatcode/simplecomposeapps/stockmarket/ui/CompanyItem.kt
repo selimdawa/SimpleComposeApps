@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.stockmarket.presentation.company_listings
+package com.flatcode.simplecomposeapps.stockmarket.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.stockmarket.domain.model.CompanyListing
+import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListing
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable

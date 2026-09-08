@@ -163,14 +163,6 @@
             android:name=".blogger.activity.BloggerAppActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".stockmarket.presentation.main.MainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".stockmarket.presentation.splash.SplashActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

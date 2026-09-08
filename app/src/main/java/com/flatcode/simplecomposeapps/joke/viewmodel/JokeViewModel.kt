@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.joke.data.network.JokeApi
+import com.flatcode.simplecomposeapps.joke.network.JokeApi
 import com.flatcode.simplecomposeapps.joke.model.Joke
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA

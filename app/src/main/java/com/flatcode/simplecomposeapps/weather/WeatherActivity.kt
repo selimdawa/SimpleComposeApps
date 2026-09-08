@@ -35,8 +35,7 @@ fun WeatherNav() {
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable("main") {
             WeatherMainScreen()
         }

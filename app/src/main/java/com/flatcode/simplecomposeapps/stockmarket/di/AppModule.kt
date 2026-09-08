@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.stockmarket.di
 
 import android.app.Application
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.stockmarket.data.local.StockDao
-import com.flatcode.simplecomposeapps.stockmarket.data.local.StockDatabase
+import com.flatcode.simplecomposeapps.stockmarket.data.StockDao
+import com.flatcode.simplecomposeapps.stockmarket.data.StockDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

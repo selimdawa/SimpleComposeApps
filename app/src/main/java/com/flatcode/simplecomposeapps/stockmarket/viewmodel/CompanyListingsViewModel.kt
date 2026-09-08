@@ -1,12 +1,14 @@
-package com.flatcode.simplecomposeapps.stockmarket.presentation.company_listings
+package com.flatcode.simplecomposeapps.stockmarket.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.stockmarket.domain.repository.StockRepository
-import com.flatcode.simplecomposeapps.stockmarket.util.Resource
+import com.flatcode.simplecomposeapps.stockmarket.network.StockRepository
+import com.flatcode.simplecomposeapps.stockmarket.utils.CompanyListingsEvent
+import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListingsState
+import com.flatcode.simplecomposeapps.stockmarket.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,6 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class CompanyListingsViewModel @Inject constructor(
     private val repository: StockRepository
 ) : ViewModel() {
+
     var state by mutableStateOf(CompanyListingsState())
     private var searchJob: Job? = null
 
@@ -32,7 +35,7 @@ class CompanyListingsViewModel @Inject constructor(
                 state = state.copy(searchQuery = event.query)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
-                    delay(500L.milliseconds)
+                    delay(500.milliseconds)
                     getCompanyListings()
                 }
             }

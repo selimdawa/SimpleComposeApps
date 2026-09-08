@@ -1,6 +1,6 @@
-package com.flatcode.simplecomposeapps.stockmarket.data.csv
+package com.flatcode.simplecomposeapps.stockmarket.network
 
-import com.flatcode.simplecomposeapps.stockmarket.domain.model.CompanyListing
+import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -8,6 +8,10 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
 import javax.inject.Singleton
+
+interface CSVParser<T> {
+    suspend fun parse(stream: InputStream): List<T>
+}
 
 @Singleton
 class CompanyListingsParser @Inject constructor() : CSVParser<CompanyListing> {

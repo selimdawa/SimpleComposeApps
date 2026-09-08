@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.joke.data.network
+package com.flatcode.simplecomposeapps.joke.network
 
 import com.flatcode.simplecomposeapps.joke.model.JokeResponse
 import com.flatcode.simplecomposeapps.utils.DATA

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.stockmarket.data.local
+package com.flatcode.simplecomposeapps.stockmarket.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
