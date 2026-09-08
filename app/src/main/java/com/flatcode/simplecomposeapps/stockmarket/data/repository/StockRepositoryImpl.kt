@@ -8,6 +8,8 @@ import com.flatcode.simplecomposeapps.stockmarket.data.remote.StockApi
 import com.flatcode.simplecomposeapps.stockmarket.domain.model.CompanyListing
 import com.flatcode.simplecomposeapps.stockmarket.domain.repository.StockRepository
 import com.flatcode.simplecomposeapps.stockmarket.util.Resource
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -33,7 +35,8 @@ class StockRepositoryImpl @Inject constructor(
         }
 
         try {
-            val remote = parser.parse(api.getListings().byteStream())
+            val response = api.getListings()
+            val remote = parser.parse(response.bodyAsChannel().toInputStream())
             dao.clearCompanyListings()
             dao.insertCompanyListings(remote.map { it.toCompanyListingEntity() })
             emit(Resource.Success(data = dao.searchCompanyListing("").map { it.toCompanyListing() }))
