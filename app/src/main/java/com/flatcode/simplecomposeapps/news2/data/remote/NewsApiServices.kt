@@ -1,21 +1,35 @@
 package com.flatcode.simplecomposeapps.news2.data.remote
 
-import com.flatcode.simplecomposeapps.news2.models.NewsResponse
 import com.flatcode.simplecomposeapps.news2.models.EverythingNewsItem
+import com.flatcode.simplecomposeapps.news2.models.NewsResponse
 import com.flatcode.simplecomposeapps.news2.models.TopArticlesNewsItem
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface NewsApiServices {
-
-    @GET("everything")
+@Singleton
+class NewsApiServices @Inject constructor(
+    private val client: HttpClient
+) {
     suspend fun getEverything(
-        @Query("q") query: String
-    ): Response<NewsResponse<EverythingNewsItem>>
+        query: String
+    ): NewsResponse<EverythingNewsItem> {
+        return client.get("${DATA.BASE_URL_NEWS}everything") {
+            parameter("q", query)
+            parameter("apiKey", DATA.API_NEWS)
+        }.body()
+    }
 
-    @GET("top-headlines")
     suspend fun getTopArticles(
-        @Query("country") country: String
-    ): Response<NewsResponse<TopArticlesNewsItem>>
+        country: String
+    ): NewsResponse<TopArticlesNewsItem> {
+        return client.get("${DATA.BASE_URL_NEWS}top-headlines") {
+            parameter("country", country)
+            parameter("apiKey", DATA.API_NEWS)
+        }.body()
+    }
 }

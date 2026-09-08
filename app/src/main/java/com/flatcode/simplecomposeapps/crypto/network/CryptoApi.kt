@@ -3,23 +3,37 @@ package com.flatcode.simplecomposeapps.crypto.network
 import com.flatcode.simplecomposeapps.crypto.model.detail.DetailResponse
 import com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse
 import com.flatcode.simplecomposeapps.utils.DATA
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface CryptoApi {
-
-    @GET(DATA.LATEST_CRYPTO)
+@Singleton
+class CryptoApi @Inject constructor(
+    private val client: HttpClient
+) {
     suspend fun getLatestCrypto(
-        @Header("X-CMC_PRO_API_KEY") apiKey: String,
-        @Query("limit") limit: String,
-        @Query("start") start: String
-    ): Response<CryptoResponse>
+        apiKey: String,
+        limit: String,
+        start: String
+    ): CryptoResponse {
+        return client.get("${DATA.BASE_URL_CRYPTO}${DATA.LATEST_CRYPTO}") {
+            header("X-CMC_PRO_API_KEY", apiKey)
+            parameter("limit", limit)
+            parameter("start", start)
+        }.body()
+    }
 
-    @GET(DATA.INFO_CRYPTO)
     suspend fun getCryptoDetail(
-        @Header("X-CMC_PRO_API_KEY") apiKey: String,
-        @Query("id") id: Int
-    ): Response<DetailResponse>
+        apiKey: String,
+        id: Int
+    ): DetailResponse {
+        return client.get("${DATA.BASE_URL_CRYPTO}${DATA.INFO_CRYPTO}") {
+            header("X-CMC_PRO_API_KEY", apiKey)
+            parameter("id", id)
+        }.body()
+    }
 }

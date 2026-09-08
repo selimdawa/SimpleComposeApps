@@ -10,9 +10,6 @@ import com.flatcode.simplecomposeapps.meals.model.MealList
 import com.flatcode.simplecomposeapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,16 +21,16 @@ class MealDetailViewModel @Inject constructor(
     private var mealDetailsLiveData = MutableLiveData<Meal>()
 
     fun getMealDetail(id: String) {
-        mealApi.getMealDetails(id).enqueue(object : Callback<MealList> {
-            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if (response.body() != null) {
-                    mealDetailsLiveData.value = response.body()!!.meals[0]
+        viewModelScope.launch {
+            try {
+                val response = mealApi.getMealDetails(id)
+                if (response.meals.isNotEmpty()) {
+                    mealDetailsLiveData.value = response.meals[0]
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            override fun onFailure(call: Call<MealList>, t: Throwable) {
-            }
-        })
+        }
     }
 
     fun observeMealDetailsLiveData(): LiveData<Meal> {

@@ -1,20 +1,31 @@
 package com.flatcode.simplecomposeapps.dogs.service
 
-import com.google.gson.annotations.SerializedName
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ApiService {
-    @GET("{breed}/images")
-    suspend fun getBreedImages(@Path("breed") breed: String): DogApi
+@Singleton
+class ApiService @Inject constructor(
+    private val client: HttpClient
+) {
+    suspend fun getBreedImages(breed: String): DogApi {
+        return client.get("${DATA.BASE_URL_DOGS}$breed/images").body()
+    }
 
-    @GET("{breed}/{subBreed}/images")
     suspend fun getSubBreedImages(
-        @Path("breed") breed: String,
-        @Path("subBreed") subBreed: String,
-    ): DogApi
+        breed: String,
+        subBreed: String,
+    ): DogApi {
+        return client.get("${DATA.BASE_URL_DOGS}$breed/$subBreed/images").body()
+    }
 }
 
+@Serializable
 data class DogApi(
-    @SerializedName("message") val images: List<String>
+    @SerialName("message") val images: List<String>
 )

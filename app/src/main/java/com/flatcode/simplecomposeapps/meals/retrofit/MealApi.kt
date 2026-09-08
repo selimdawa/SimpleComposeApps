@@ -3,27 +3,47 @@ package com.flatcode.simplecomposeapps.meals.retrofit
 import com.flatcode.simplecomposeapps.meals.model.CategoryList
 import com.flatcode.simplecomposeapps.meals.model.MealList
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategoryList
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface MealApi {
+@Singleton
+class MealApi @Inject constructor(
+    private val client: HttpClient
+) {
+    suspend fun getRandomMeal(): MealList {
+        return client.get("${DATA.BASE_URL_MEALS}random.php").body()
+    }
 
-    @GET("random.php")
-    fun getRandomMeal(): Call<MealList>
+    suspend fun getMealDetails(id: String): MealList {
+        return client.get("${DATA.BASE_URL_MEALS}lookup.php") {
+            parameter("i", id)
+        }.body()
+    }
 
-    @GET("lookup.php")
-    fun getMealDetails(@Query("i") id: String): Call<MealList>
+    suspend fun getPopularItems(categoryName: String): MealsByCategoryList {
+        return client.get("${DATA.BASE_URL_MEALS}filter.php") {
+            parameter("c", categoryName)
+        }.body()
+    }
 
-    @GET("filter.php")
-    fun getPopularItems(@Query("c") categoryName: String): Call<MealsByCategoryList>
+    suspend fun getCategories(): CategoryList {
+        return client.get("${DATA.BASE_URL_MEALS}categories.php").body()
+    }
 
-    @GET("categories.php")
-    fun getCategories(): Call<CategoryList>
+    suspend fun getMealsByCategory(categoryName: String): MealsByCategoryList {
+        return client.get("${DATA.BASE_URL_MEALS}filter.php") {
+            parameter("c", categoryName)
+        }.body()
+    }
 
-    @GET("filter.php")
-    fun getMealsByCategory(@Query("c") categoryName: String): Call<MealsByCategoryList>
-
-    @GET("search.php")
-    fun searchMeals(@Query("s") searchQuery: String): Call<MealList>
+    suspend fun searchMeals(searchQuery: String): MealList {
+        return client.get("${DATA.BASE_URL_MEALS}search.php") {
+            parameter("s", searchQuery)
+        }.body()
+    }
 }

@@ -14,9 +14,6 @@ import com.flatcode.simplecomposeapps.meals.model.MealsByCategoryList
 import com.flatcode.simplecomposeapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,43 +28,38 @@ class MealsHomeViewModel @Inject constructor(
     private var favoritesMealsLiveData = mealDao.getAllMeals()
 
     fun getRandomMeal() {
-        mealApi.getRandomMeal().enqueue(object : Callback<MealList> {
-            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if (response.body() != null) {
-                    val randomMeal: Meal = response.body()!!.meals[0]
-                    randomMealLiveData.value = randomMeal
+        viewModelScope.launch {
+            try {
+                val response = mealApi.getRandomMeal()
+                if (response.meals.isNotEmpty()) {
+                    randomMealLiveData.value = response.meals[0]
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            override fun onFailure(call: Call<MealList>, t: Throwable) {
-            }
-        })
+        }
     }
 
     fun getPopularItems() {
-        mealApi.getPopularItems("Seafood").enqueue(object : Callback<MealsByCategoryList> {
-            override fun onResponse(call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>) {
-                if (response.body() != null) {
-                    popularItemsLiveData.value = response.body()!!.meals
-                }
+        viewModelScope.launch {
+            try {
+                val response = mealApi.getPopularItems("Seafood")
+                popularItemsLiveData.value = response.meals
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
-            }
-        })
+        }
     }
 
     fun getCategories() {
-        mealApi.getCategories().enqueue(object : Callback<CategoryList> {
-            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
-                response.body()?.let { categoryList ->
-                    categoriesLiveData.postValue(categoryList.categories)
-                }
+        viewModelScope.launch {
+            try {
+                val response = mealApi.getCategories()
+                categoriesLiveData.postValue(response.categories)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
-            }
-        })
+        }
     }
 
     fun insertMeal(meal: Meal) {

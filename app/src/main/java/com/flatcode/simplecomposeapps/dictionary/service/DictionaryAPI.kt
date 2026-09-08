@@ -1,17 +1,27 @@
 package com.flatcode.simplecomposeapps.dictionary.service
 
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface DictionaryAPI {
-    @GET("{word}")
+@Singleton
+class DictionaryAPI @Inject constructor(
+    private val client: HttpClient
+) {
     suspend fun getDefinition(
-        @Path("word") word: String,
-        @Query("key") apiKey: String
-    ): List<DictionaryResponse>
+        word: String,
+        apiKey: String
+    ): List<DictionaryResponse> {
+        return client.get("${DATA.DICTIONARY_BASIC_URL}$word") {
+            parameter("key", apiKey)
+        }.body()
+    }
 }
 
 @Serializable
