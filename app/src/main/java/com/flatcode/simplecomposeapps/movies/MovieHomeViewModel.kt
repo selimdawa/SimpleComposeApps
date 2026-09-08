@@ -26,13 +26,9 @@ class MovieHomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = MoviesUiState.Loading
             try {
-                val response = repository.getMovies()
-                if (response.isSuccessful) {
-                    val movies = response.body()?.results ?: emptyList()
-                    _uiState.value = MoviesUiState.Success(movies)
-                } else {
-                    _uiState.value = MoviesUiState.Error("Error: ${response.code()}")
-                }
+                val moviesModel = repository.getMovies()
+                val movies = moviesModel.results
+                _uiState.value = MoviesUiState.Success(movies)
             } catch (e: Exception) {
                 _uiState.value = MoviesUiState.Error(e.localizedMessage ?: "Unknown error")
             }
