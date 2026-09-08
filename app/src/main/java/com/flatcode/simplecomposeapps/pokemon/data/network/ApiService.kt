@@ -2,20 +2,31 @@ package com.flatcode.simplecomposeapps.pokemon.data.network
 
 import com.flatcode.simplecomposeapps.pokemon.data.model.PokeModel
 import com.flatcode.simplecomposeapps.pokemon.data.model.PokeModelDetails
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.flatcode.simplecomposeapps.utils.DATA
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ApiService {
-    @GET("pokemon")
+@Singleton
+class ApiService @Inject constructor(
+    private val client: HttpClient
+) {
     suspend fun getPokemon(
-        @Query("limit") limit: Int,
-        @Query("offset") offset: Int
-    ): Response<PokeModel>
+        limit: Int,
+        offset: Int
+    ): PokeModel {
+        return client.get("${DATA.BASE_URL_POKE}pokemon") {
+            parameter("limit", limit)
+            parameter("offset", offset)
+        }.body()
+    }
 
-    @GET("pokemon/{id}")
     suspend fun getPokemonDetails(
-        @Path("id") id: Int
-    ): Response<PokeModelDetails>
+        id: Int
+    ): PokeModelDetails {
+        return client.get("${DATA.BASE_URL_POKE}pokemon/$id").body()
+    }
 }

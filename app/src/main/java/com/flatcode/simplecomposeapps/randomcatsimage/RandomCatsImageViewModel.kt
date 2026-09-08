@@ -57,7 +57,7 @@ class RandomCatsImageViewModel @Inject constructor(
                     _imageUrl.value = catUrl
                     saveImage(catUrl)
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
                     _imageUrl.value = savedImages.random()
                 }

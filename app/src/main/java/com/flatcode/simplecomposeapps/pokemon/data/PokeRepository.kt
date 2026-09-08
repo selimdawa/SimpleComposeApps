@@ -18,10 +18,12 @@ class PokeRepository @Inject constructor(
     val allPokemon: Flow<List<PokeItem>> = pokeDao.getAllPokemon().map { it.map { it.toDomain() } }
 
     suspend fun getPokemonFromApi() {
-        val response = api.getPokemon(151, 0)
-        if (response.isSuccessful && response.body() != null) {
-            val pokemon = response.body()!!.results.map { it.toDatabase() }
+        try {
+            val response = api.getPokemon(151, 0)
+            val pokemon = response.results.map { it.toDatabase() }
             pokeDao.insertAll(pokemon)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -29,12 +31,14 @@ class PokeRepository @Inject constructor(
         val localDetails = pokeDao.getPokemonDetails(id)
         if (localDetails != null) return localDetails.toDomain()
 
-        val response = api.getPokemonDetails(id)
-        if (response.isSuccessful && response.body() != null) {
-            val details = response.body()!!.toDomain()
+        return try {
+            val response = api.getPokemonDetails(id)
+            val details = response.toDomain()
             pokeDao.insertDetails(details.toDatabase())
-            return details
+            details
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
-        return null
     }
 }
