@@ -1,31 +1,80 @@
 package com.flatcode.simplecomposeapps.web.ui
 
+import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.web.WebAppViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun WebViewScreen(
-    url: String
+    url: String,
+    viewModel: WebAppViewModel
 ) {
-    AndroidView(
-        factory = { context ->
-            WebView(context).apply {
-                settings.javaScriptEnabled = true
-                settings.loadsImagesAutomatically = true
-                webViewClient = WebViewClient()
-                scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-                loadUrl(url)
-            }
-        }, modifier = Modifier
+    val uiState by viewModel.uiState.collectAsState()
+    var webView: WebView? = null
+
+    LaunchedEffect(Unit) {
+        viewModel.reloadEvent.collectLatest {
+            webView?.reload()
+        }
+    }
+
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
-    )
+    ) {
+        AndroidView(
+            factory = { context ->
+                    WebView(context).apply {
+                        settings.javaScriptEnabled = true
+                        settings.domStorageEnabled = true
+                        settings.loadsImagesAutomatically = true
+                        webViewClient = object : WebViewClient() {
+                            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                                super.onPageStarted(view, url, favicon)
+                                viewModel.setLoading(true)
+                            }
+
+                            override fun onPageFinished(view: WebView?, url: String?) {
+                                super.onPageFinished(view, url)
+                                viewModel.setLoading(false)
+                                val title = view?.title ?: ""
+                                val currentUrl = url ?: ""
+                                viewModel.updateCurrentPage(title, currentUrl)
+                                viewModel.addHistory(title, currentUrl)
+                            }
+                        }
+                        scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+                        loadUrl(url)
+                        webView = this
+                    }
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+
+            if (uiState.isLoading) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter),
+                    color = COLOR_ERROR,
+                    trackColor = COLOR_ON_BACKGROUND
+                )
+            }
+        }
 }

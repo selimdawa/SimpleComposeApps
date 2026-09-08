@@ -29,7 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 
 @Composable
 fun WebItem(
@@ -52,11 +53,9 @@ fun WebItem(
         verticalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = cardModifier.clickable(
-                interactionSource = remember { MutableInteractionSource() }, indication = null
-            ) { onClick() },
+            modifier = cardModifier.clickable { onClick() },
             shape = RoundedCornerShape(cornerRadius),
-            colors = CardDefaults.cardColors(containerColor = MC_BG)
+            colors = CardDefaults.cardColors(containerColor = COLOR_ON_BACKGROUND)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

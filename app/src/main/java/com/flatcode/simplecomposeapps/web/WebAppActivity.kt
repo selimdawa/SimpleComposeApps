@@ -1,133 +1,126 @@
 package com.flatcode.simplecomposeapps.web
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.core.net.toUri
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.web.ui.WebAboutDialog
-import com.flatcode.simplecomposeapps.web.ui.WebAppScreen
-import com.flatcode.simplecomposeapps.web.ui.WebSupportDialog
-import com.flatcode.simplecomposeapps.web.ui.WebViewScreen
+import com.flatcode.simplecomposeapps.web.ui.WebBookmarksScreen
+import com.flatcode.simplecomposeapps.web.ui.WebHistoryScreen
+import com.flatcode.simplecomposeapps.web.ui.WebMainScreen
 import dagger.hilt.android.AndroidEntryPoint
+import io.selimdawa.multicolors.MultiColorManager
 
 @AndroidEntryPoint
 class WebAppActivity : ComponentActivity() {
 
-    private val viewModel: WebAppViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        MultiColorManager.applyTheme(this)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {
-            WebNavHost(
-                viewModel = viewModel,
-                onShareApp = { shareApp() },
-                onRateApp = { rateApp() },
-                onEmail = { sendEmail() },
-                onPhone = { callPhone() })
+            val navController = rememberNavController()
+            Scaffold(
+                topBar = {
+                    ToolbarContent(
+                        title = DATA.WEB, hasBack = false
+                    )
+                }, bottomBar = {
+                    WebBottomNavigation(navController = navController)
+                }, containerColor = COLOR_ON_BACKGROUND
+            ) { paddingValues ->
+                WebNavHost(
+                    navController = navController, modifier = Modifier.padding(paddingValues)
+                )
+            }
         }
     }
+}
 
-    private fun shareApp() {
-        val share = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Share App with\nhttps://play.google.com/store/apps/details?id=$packageName"
+@Composable
+fun WebBottomNavigation(navController: NavHostController) {
+    NavigationBar(
+        containerColor = COLOR_ON_BACKGROUND, contentColor = COLOR_ERROR
+    ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        DATA.WEB_NAV.forEach { item ->
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
+                    )
+                },
+                label = { Text(item.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(DATA.WEB_NAV[0].route) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MC_TRACK,
+                    unselectedIconColor = Gray,
+                    selectedTextColor = MC_TRACK,
+                    unselectedTextColor = Gray,
+                    indicatorColor = Color.Transparent
+                )
             )
         }
-        startActivity(Intent.createChooser(share, "Share link!"))
-    }
-
-    private fun rateApp() {
-        val uri = "market://details?id=$packageName".toUri()
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            startActivity(Intent(Intent.ACTION_VIEW, "http://google.com".toUri()))
-        }
-    }
-
-    private fun sendEmail() {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = "mailto:${DATA.myEmail}".toUri()
-        }
-        startActivity(intent)
-    }
-
-    private fun callPhone() {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = "tel:${DATA.myMobileNumber}".toUri()
-        }
-        startActivity(intent)
     }
 }
 
 @Composable
 fun WebNavHost(
-    viewModel: WebAppViewModel,
-    onShareApp: () -> Unit,
-    onRateApp: () -> Unit,
-    onEmail: () -> Unit,
-    onPhone: () -> Unit
+    navController: NavHostController, modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "main",
+        startDestination = DATA.WEB_NAV[0].route,
+        modifier = modifier,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
-        composable("main") {
-            val uiState by viewModel.uiState.collectAsState()
-            WebAppScreen(
-                onWebSite = { navController.navigate("webView/${DATA.WEBSITE}") },
-                onInstagram = { navController.navigate("webView/${DATA.INSTAGRAM}") },
-                onTwitter = { navController.navigate("webView/${DATA.TWITTER}") },
-                onFacebook = { navController.navigate("webView/${DATA.FACEBOOK}") },
-                onAboutUs = { viewModel.showAboutDialog(true) },
-                onSupport = { viewModel.showSupportDialog(true) },
-                onShareApp = onShareApp,
-                onRateApp = onRateApp
-            )
-
-            if (uiState.showAboutDialog) {
-                WebAboutDialog(onDismiss = { viewModel.showAboutDialog(false) })
+        DATA.WEB_NAV.forEach { item ->
+            composable(item.route) {
+                when (item.route) {
+                    Strings.HOME -> WebMainScreen()
+                    Strings.HISTORY -> WebHistoryScreen()
+                    Strings.BOOKMARKS -> WebBookmarksScreen()
+                }
             }
-
-            if (uiState.showSupportDialog) {
-                WebSupportDialog(
-                    onDismiss = { viewModel.showSupportDialog(false) },
-                    onEmail = onEmail,
-                    onPhone = onPhone
-                )
-            }
-        }
-        composable("webView/{name}") { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val url = when (name) {
-                DATA.WEBSITE -> DATA.mySite
-                DATA.INSTAGRAM -> DATA.myInstagram
-                DATA.FACEBOOK -> DATA.myFacebook
-                DATA.TWITTER -> DATA.myTwitter
-                else -> DATA.mySite
-            }
-            WebViewScreen(url = url)
         }
     }
 }
