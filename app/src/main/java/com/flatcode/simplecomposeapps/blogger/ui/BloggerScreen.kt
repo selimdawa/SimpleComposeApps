@@ -15,6 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,8 +33,8 @@ fun BloggerScreen(
     onPagesClick: () -> Unit,
     onPostClick: (String) -> Unit
 ) {
-    val posts = viewModel.posts
-    val isLoading = viewModel.isLoading.value
+    val posts by viewModel.posts.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(false)
     val hasMore = viewModel.hasMore
 
     LaunchedEffect(Unit) {

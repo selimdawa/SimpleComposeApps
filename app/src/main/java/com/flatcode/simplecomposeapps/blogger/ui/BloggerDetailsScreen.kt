@@ -25,6 +25,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,10 +49,10 @@ import java.util.Locale
 fun BloggerDetailsScreen(
     viewModel: BloggerViewModel, id: String, isPage: Boolean = false, onBack: () -> Unit
 ) {
-    val details = viewModel.details.value
-    val labels = viewModel.labels
-    val comments = viewModel.comments
-    val isLoading = viewModel.isLoading.value
+    val details by viewModel.details.observeAsState()
+    val labels by viewModel.labels.observeAsState(emptyList())
+    val comments by viewModel.comments.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(false)
     val scrollState = rememberScrollState()
 
     val inputDateFormat = remember { SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH) }
@@ -92,7 +94,7 @@ fun BloggerDetailsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (details != null) {
+            details?.let { item ->
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -100,22 +102,22 @@ fun BloggerDetailsScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = details.title ?: DATA.EMPTY,
+                        text = item.title ?: DATA.EMPTY,
                         color = White,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
 
                     val formattedDate = try {
-                        val date = inputDateFormat.parse(details.published ?: DATA.EMPTY)
-                        if (date != null) outputDateFormat.format(date) else details.published
+                        val date = inputDateFormat.parse(item.published ?: DATA.EMPTY)
+                        if (date != null) outputDateFormat.format(date) else item.published
                             ?: DATA.EMPTY
                     } catch (_: Exception) {
-                        details.published ?: DATA.EMPTY
+                        item.published ?: DATA.EMPTY
                     }
 
                     Text(
-                        text = Strings.publishInfo(details.authorName ?: DATA.EMPTY, formattedDate),
+                        text = Strings.publishInfo(item.authorName ?: DATA.EMPTY, formattedDate),
                         color = White.copy(alpha = 0.7f),
                         fontSize = 14.sp,
                         modifier = Modifier.padding(vertical = 8.dp)
@@ -131,7 +133,7 @@ fun BloggerDetailsScreen(
                         },
                         update = { webView ->
                             webView.loadDataWithBaseURL(
-                                null, details.content ?: "", "text/html", "UTF-8", null
+                                null, item.content ?: "", "text/html", "UTF-8", null
                             )
                         },
                         modifier = Modifier

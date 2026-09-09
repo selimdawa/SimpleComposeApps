@@ -18,6 +18,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,8 +36,8 @@ import com.flatcode.simplecomposeapps.ui.theme.White
 fun BloggerPagesScreen(
     viewModel: BloggerViewModel, onBack: () -> Unit, onPageClick: (String) -> Unit
 ) {
-    val pages = viewModel.pages
-    val isLoading = viewModel.isLoading.value
+    val pages by viewModel.pages.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(false)
 
     LaunchedEffect(Unit) {
         viewModel.loadPages()
