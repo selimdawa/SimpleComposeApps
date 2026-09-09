@@ -8,6 +8,8 @@ object Strings {
     const val HINT_TEXT_BREEDS = "Breeds list"
     const val SELECT_BREED = "Please select a breed"
 
+    const val NO_INTERNET_CONNECTION = "No internet connection"
+
     // Dictionary
     const val HINT_SEARCH = "Enter your word"
     const val BUTTON_FIND = "Find"

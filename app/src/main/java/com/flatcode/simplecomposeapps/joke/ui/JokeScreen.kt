@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.joke.viewmodel.JokeViewModel
@@ -79,14 +80,17 @@ fun JokeScreen(viewModel: JokeViewModel) {
                 }
             }
 
-            Box(modifier = Modifier.weight(1f)) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 if (errorMessage != null) {
                     Text(
                         text = errorMessage!!,
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .padding(16.dp),
-                        color = COLOR_ERROR
+                            .padding(24.dp),
+                        color = COLOR_ERROR,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
                 } else if (!isLoading) {
                     LazyColumn(
