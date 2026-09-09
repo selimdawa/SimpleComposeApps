@@ -2,16 +2,15 @@ package com.flatcode.simplecomposeapps.pdfreader.viewmodel
 
 import android.net.Uri
 import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.pdfreader.data.PdfDao
 import com.flatcode.simplecomposeapps.pdfreader.data.PdfEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -66,8 +65,8 @@ class PdfViewModel @Inject constructor(
     private val pdfDao: PdfDao
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(PdfUiState())
-    val uiState: StateFlow<PdfUiState> = _uiState
+    private val _uiState = MutableLiveData(PdfUiState())
+    val uiState: LiveData<PdfUiState> = _uiState
 
     init {
         loadLastPdf()
@@ -80,14 +79,16 @@ class PdfViewModel @Inject constructor(
             val page = settings?.lastPage ?: 0
             if (uri != null) {
                 setUri(uri.toUri())
-                _uiState.update { it.copy(currentPage = page) }
+                val currentState = _uiState.value ?: PdfUiState()
+                _uiState.value = currentState.copy(currentPage = page)
             }
         }
     }
 
     fun setUri(uri: Uri?) {
         if (uri == null) return
-        _uiState.update { it.copy(uri = uri, isLoading = true, errorMessage = null) }
+        val currentState = _uiState.value ?: PdfUiState()
+        _uiState.value = currentState.copy(uri = uri, isLoading = true, errorMessage = null)
 
         viewModelScope.launch {
             val current = pdfDao.getSettings().first()
@@ -101,21 +102,19 @@ class PdfViewModel @Inject constructor(
         if (uri.scheme?.startsWith("http") == true) {
             downloadPdf(uri.toString())
         } else {
-            // For local URIs, we might not need to read bytes if PDFView can handle it directly,
-            // but for consistency we keep it simple.
-            _uiState.update { it.copy(isLoading = false) }
+            val updatedState = _uiState.value ?: PdfUiState()
+            _uiState.value = updatedState.copy(isLoading = false)
         }
     }
 
     private fun downloadPdf(url: String) {
         viewModelScope.launch {
             val result = doDownload(url)
-            _uiState.update { state ->
-                when (result) {
-                    is ByteArray -> state.copy(pdfData = result, isLoading = false)
-                    is String -> state.copy(errorMessage = result, isLoading = false)
-                    else -> state.copy(errorMessage = "Unknown error", isLoading = false)
-                }
+            val currentState = _uiState.value ?: PdfUiState()
+            _uiState.value = when (result) {
+                is ByteArray -> currentState.copy(pdfData = result, isLoading = false)
+                is String -> currentState.copy(errorMessage = result, isLoading = false)
+                else -> currentState.copy(errorMessage = "Unknown error", isLoading = false)
             }
         }
     }
@@ -141,7 +140,8 @@ class PdfViewModel @Inject constructor(
     }
 
     fun onPageChange(page: Int, pageCount: Int) {
-        _uiState.update { it.copy(currentPage = page, pageCount = pageCount) }
+        val currentState = _uiState.value ?: PdfUiState()
+        _uiState.value = currentState.copy(currentPage = page, pageCount = pageCount)
         viewModelScope.launch {
             val current = pdfDao.getSettings().first()
             pdfDao.saveSettings(PdfEntity(lastUri = current?.lastUri, lastPage = page))
@@ -149,14 +149,14 @@ class PdfViewModel @Inject constructor(
     }
 
     fun toggleBottomBar() {
-        _uiState.update { it.copy(isBottomBarVisible = !_uiState.value.isBottomBarVisible) }
+        val currentState = _uiState.value ?: PdfUiState()
+        _uiState.value = currentState.copy(isBottomBarVisible = !currentState.isBottomBarVisible)
     }
 
     fun onError(t: Throwable) {
-        _uiState.update {
-            it.copy(
-                errorMessage = t.message ?: "Failed to load PDF", isLoading = false
-            )
-        }
+        val currentState = _uiState.value ?: PdfUiState()
+        _uiState.value = currentState.copy(
+            errorMessage = t.message ?: "Failed to load PDF", isLoading = false
+        )
     }
 }
