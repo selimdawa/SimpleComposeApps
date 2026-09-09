@@ -24,12 +24,11 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +43,6 @@ import com.flatcode.simplecomposeapps.weather.model.WeatherModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import kotlinx.coroutines.CoroutineScope
 import org.json.JSONArray
 
 @Composable
@@ -52,11 +50,10 @@ fun WeatherMainScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val weatherCurrent by viewModel.liveDataCurrent.collectAsState()
-    val weatherList by viewModel.liveDataList.collectAsState()
-    val savedWeather by viewModel.savedWeather.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
+    val weatherCurrent by viewModel.liveDataCurrent.observeAsState()
+    val weatherList by viewModel.liveDataList.observeAsState(emptyList())
+    val savedWeather by viewModel.savedWeather.observeAsState()
+    val isLoading by viewModel.isLoading.observeAsState(true)
 
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = DATA.WEATHER_TABS
@@ -66,7 +63,7 @@ fun WeatherMainScreen(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            checkLocation(context, viewModel, scope)
+            checkLocation(context, viewModel)
         } else {
             Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
         }
@@ -82,7 +79,7 @@ fun WeatherMainScreen(
                     context, Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                checkLocation(context, viewModel, scope)
+                checkLocation(context, viewModel)
             } else {
                 pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
@@ -105,7 +102,7 @@ fun WeatherMainScreen(
                     onSyncClick = {
                         viewModel.lastCity?.let {
                             viewModel.getWeather(it)
-                        } ?: checkLocation(context, viewModel, scope)
+                        } ?: checkLocation(context, viewModel)
                     })
 
                 SecondaryTabRow(
@@ -152,7 +149,7 @@ fun WeatherMainScreen(
                         WeatherListItem(
                             item = item, onClick = {
                                 if (selectedTabIndex == 1) {
-                                    viewModel.updateCurrent(it)
+                                    viewModel.updateCurrent(item)
                                 }
                             })
                     }
@@ -169,18 +166,18 @@ fun WeatherMainScreen(
 }
 
 private fun checkLocation(
-    context: Context, viewModel: MainViewModel, scope: CoroutineScope
+    context: Context, viewModel: MainViewModel
 ) {
     val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        getLocation(context, viewModel, scope)
+        getLocation(context, viewModel)
     } else {
         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
     }
 }
 
 private fun getLocation(
-    context: Context, viewModel: MainViewModel, scope: CoroutineScope
+    context: Context, viewModel: MainViewModel
 ) {
     if (ContextCompat.checkSelfPermission(
             context, Manifest.permission.ACCESS_FINE_LOCATION
@@ -193,7 +190,7 @@ private fun getLocation(
             task.result?.let {
                 viewModel.getWeather("${it.latitude},${it.longitude}")
             }
-       }
+        }
 }
 
 private fun getHoursList(wItem: WeatherModel): List<WeatherModel> {

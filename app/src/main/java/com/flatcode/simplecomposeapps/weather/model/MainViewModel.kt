@@ -1,39 +1,35 @@
 package com.flatcode.simplecomposeapps.weather.model
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.weather.db.WeatherDao
 import com.flatcode.simplecomposeapps.weather.network.WeatherApi
 import com.flatcode.simplecomposeapps.weather.network.WeatherResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dao: WeatherDao,
-    private val api: WeatherApi
+    private val dao: WeatherDao, private val api: WeatherApi
 ) : ViewModel() {
 
-    private val _liveDataList = MutableStateFlow<List<WeatherModel>>(emptyList())
-    val liveDataList: StateFlow<List<WeatherModel>> = _liveDataList
+    private val _liveDataList = MutableLiveData<List<WeatherModel>>(emptyList())
+    val liveDataList: LiveData<List<WeatherModel>> = _liveDataList
 
-    private val _liveDataCurrent = MutableStateFlow<WeatherModel?>(null)
-    val liveDataCurrent: StateFlow<WeatherModel?> = _liveDataCurrent
+    private val _liveDataCurrent = MutableLiveData<WeatherModel?>(null)
+    val liveDataCurrent: LiveData<WeatherModel?> = _liveDataCurrent
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     var lastCity: String? = null
 
-    val savedWeather: StateFlow<WeatherModel?> =
-        dao.getLatestWeather().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+    val savedWeather: LiveData<WeatherModel?> = dao.getLatestWeather().asLiveData()
 
     fun updateCurrent(weather: WeatherModel) {
         _liveDataCurrent.value = weather
