@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.FolderOpen
@@ -43,6 +44,7 @@ import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Search
@@ -85,8 +87,6 @@ object AppIcons {
     val Rate = R.drawable.ic_rate
     val Email = R.drawable.email
     val Phone = R.drawable.ic_phone
-    val Down = R.drawable.down
-    val Refresh = R.drawable.refresh
     val CandyBackground = R.drawable.ccs_82_background
 
     // Candies
@@ -152,6 +152,9 @@ object AppIcons {
     val Pause: ImageVector = Icons.Default.Pause
     val Stop: ImageVector = Icons.Default.Stop
     val Back: ImageVector = Icons.AutoMirrored.Filled.ArrowBack
+
+    val Down: ImageVector = Icons.Default.FileDownload
+    val Refresh: ImageVector = Icons.Default.Refresh
 
     val FolderOpen: ImageVector = Icons.Default.FolderOpen
     val Fullscreen: ImageVector = Icons.Default.Fullscreen
