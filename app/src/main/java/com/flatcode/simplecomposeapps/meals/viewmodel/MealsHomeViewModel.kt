@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
 import com.flatcode.simplecomposeapps.meals.model.Category
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
-import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -47,18 +47,6 @@ class MealsHomeViewModel @Inject constructor(
         viewModelScope.launch {
             _categories.value = Resource.Loading()
             _categories.value = repository.getCategories()
-        }
-    }
-
-    fun insertMeal(meal: Meal) {
-        viewModelScope.launch {
-            repository.upsertMeal(meal)
-        }
-    }
-
-    fun deleteMeal(meal: Meal) {
-        viewModelScope.launch {
-            repository.deleteMeal(meal)
         }
     }
 }

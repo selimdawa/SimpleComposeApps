@@ -67,15 +67,6 @@ class MealRepository @Inject constructor(
         }
     }
 
-    suspend fun searchMeals(searchQuery: String) = withContext(Dispatchers.IO) {
-        try {
-            val response = mealApi.searchMeals(searchQuery)
-            Resource.Success(response.meals)
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
-        }
-    }
-
     suspend fun upsertMeal(meal: Meal) = withContext(Dispatchers.IO) {
         mealDao.upsert(meal)
     }
