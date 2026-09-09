@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
-import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
 import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.ui.detail.DetailRepository
 import com.flatcode.simplecomposeapps.utils.Resource

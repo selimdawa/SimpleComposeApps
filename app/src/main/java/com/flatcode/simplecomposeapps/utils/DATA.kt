@@ -31,8 +31,6 @@ import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.weather.WeatherActivity
 import com.flatcode.simplecomposeapps.web.activity.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 
 object DATA {
 
@@ -67,17 +65,6 @@ object DATA {
         NavItem(WebAppActivity.History, Strings.HISTORY, AppIcons.History),
         NavItem(WebAppActivity.Bookmarks, Strings.BOOKMARKS, AppIcons.Bookmark)
     )
-
-    // Nav Arguments
-    val BLOGGER_POST_ARGS = listOf(navArgument("postId") { type = NavType.StringType })
-    val BLOGGER_PAGE_ARGS = listOf(navArgument("pageId") { type = NavType.StringType })
-    val COUNTRY_DETAIL_ARGS = listOf(navArgument(COUNTRY_UUID) { type = NavType.IntType })
-    val CRYPTO_DETAIL_ARGS = listOf(
-        navArgument("symbol") { type = NavType.StringType },
-        navArgument("coinId") { type = NavType.IntType }
-    )
-    val MOVIE_DETAIL_ARGS = listOf(navArgument("movieJson") { type = NavType.StringType })
-    val POKE_DETAIL_ARGS = listOf(navArgument("pokeId") { type = NavType.IntType })
 
     @Suppress("SpellCheckingInspection")
     val BREEDS_LIST = listOf(
@@ -398,12 +385,6 @@ object DATA {
     var mySite = "https://www.google.com" // WebSite here
     var myMobileNumber = "+963994683386" // Mobile Number here
     var myEmail = "selimdawa@gmail.com" // Email here
-    var aboutUs = "About Here" // About here
-    var WEB_NAME = "webName"
-    var WEBSITE = "website"
-    var INSTAGRAM = "instagram"
-    var FACEBOOK = "facebook"
-    var TWITTER = "twitter"
 
     //API & Url
     var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search"
@@ -479,13 +460,7 @@ object DATA {
 
     //Weather
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
-    const val BASE_URL_WEATHER = "https://api.weatherapi.com/v1/forecast.json?key="
 
-    // Routes
-    const val DASHBOARD = "dashboard"
-    const val DETAIL_COUNTRY = "detail/{countryUuid}"
-    const val COUNTRY_UUID = "countryUuid"
-    const val DETAIL_BY_ID = "detail/"
 
     // Formats
     fun symbolBrackets(s: String) = "($s)"
@@ -509,49 +484,12 @@ object DATA {
     const val KEY = "key"
 
     // JSON Keys & API Params
-    const val FORECAST = "forecast"
-    const val FORECAST_DAY = "forecastday"
-    const val LOCATION = "location"
-    const val NAME = "name"
-    const val LAT = "lat"
-    const val LON = "lon"
-    const val DATE = "date"
-    const val DAY = "day"
     const val CONDITION = "condition"
     const val TEXT = "text"
-    const val MAX_TEMP_C = "maxtemp_c"
-    const val MIN_TEMP_C = "mintemp_c"
     const val ICON = "icon"
-    const val HOUR = "hour"
-    const val CURRENT = "current"
-    const val LAST_UPDATED = "last_updated"
     const val TEMP_C = "temp_c"
     const val TIME = "time"
 
-    const val NEXT_PAGE_TOKEN = "nextPageToken"
-    const val ITEMS = "items"
-    const val LABELS = "labels"
-    const val AUTHOR = "author"
-    const val DISPLAY_NAME = "displayName"
-    const val IMAGE = "image"
-    const val URL = "url"
-    const val ID = "id"
-    const val PUBLISHED = "published"
-    const val CONTENT = "content"
-    const val SELF_LINK = "selfLink"
-    const val TITLE = "title"
-    const val UPDATED = "updated"
-
     const val IMAGE_NAME = "imageName"
     const val SERIES = "series"
-
-    const val ERROR = "error"
-    const val MESSAGE = "message"
-    const val JOKES = "jokes"
-    const val TYPE = "type"
-    const val SINGLE = "single"
-    const val JOKE_KEY = "joke"
-    const val SETUP = "setup"
-    const val DELIVERY = "delivery"
-    const val CATEGORY = "category"
 }

@@ -57,7 +57,6 @@ fun CryptoAppNavHost() {
         composable<CryptoActivity.Detail> { backStackEntry ->
             val args = backStackEntry.toRoute<CryptoActivity.Detail>()
             CryptoDetailScreen(
-                symbol = args.symbol,
                 coinId = args.coinId,
                 onBack = { navController.popBackStack() }
             )
