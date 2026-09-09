@@ -41,7 +41,13 @@ class CandyCrushViewModel @Inject constructor(
             if (data != null && data.boardState.isNotEmpty()) {
                 _highScore.value = data.highScore
                 _score.value = data.score
-                _board.value = data.boardState.split(",").map { it.toInt() }
+                val savedBoard = data.boardState.split(",").map { it.toInt() }
+                // Reset board if it contains resource IDs from previous version
+                if (savedBoard.all { it in candies.indices || it == notCandy }) {
+                    _board.value = savedBoard
+                } else {
+                    createBoard()
+                }
             } else {
                 createBoard()
             }
@@ -52,23 +58,23 @@ class CandyCrushViewModel @Inject constructor(
     private fun createBoard() {
         val newBoard = mutableListOf<Int>()
         repeat(noOfBlocks * noOfBlocks) { index ->
-            var randomCandy: Int
+            var randomCandyIndex: Int
             do {
-                randomCandy = candies[floor(Math.random() * candies.size).toInt()]
-            } while (wouldCreateMatch(newBoard, index, randomCandy))
-            newBoard.add(randomCandy)
+                randomCandyIndex = floor(Math.random() * candies.size).toInt()
+            } while (wouldCreateMatch(newBoard, index, randomCandyIndex))
+            newBoard.add(randomCandyIndex)
         }
         _board.value = newBoard
     }
 
-    private fun wouldCreateMatch(currentBoard: List<Int>, index: Int, candy: Int): Boolean {
+    private fun wouldCreateMatch(currentBoard: List<Int>, index: Int, candyIndex: Int): Boolean {
         val row = index / noOfBlocks
         val col = index % noOfBlocks
 
         // Check left
-        if (col >= 2 && currentBoard[index - 1] == candy && currentBoard[index - 2] == candy) return true
+        if (col >= 2 && currentBoard[index - 1] == candyIndex && currentBoard[index - 2] == candyIndex) return true
         // Check up
-        if (row >= 2 && currentBoard[index - noOfBlocks] == candy && currentBoard[index - 2 * noOfBlocks] == candy) return true
+        if (row >= 2 && currentBoard[index - noOfBlocks] == candyIndex && currentBoard[index - 2 * noOfBlocks] == candyIndex) return true
 
         return false
     }
@@ -166,15 +172,15 @@ class CandyCrushViewModel @Inject constructor(
                 currentBoard[i] = notCandy
                 changed = true
                 if (i in firstRow && currentBoard[i] == notCandy) {
-                    val randomColor = floor(Math.random() * candies.size).toInt()
-                    currentBoard[i] = candies[randomColor]
+                    val randomCandyIndex = floor(Math.random() * candies.size).toInt()
+                    currentBoard[i] = randomCandyIndex
                 }
             }
         }
         for (i in 0 until noOfBlocks) {
             if (currentBoard[i] == notCandy) {
-                val randomColor = floor(Math.random() * candies.size).toInt()
-                currentBoard[i] = candies[randomColor]
+                val randomCandyIndex = floor(Math.random() * candies.size).toInt()
+                currentBoard[i] = randomCandyIndex
                 changed = true
             }
         }

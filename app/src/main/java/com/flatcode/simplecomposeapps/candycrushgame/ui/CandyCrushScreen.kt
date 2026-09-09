@@ -78,7 +78,8 @@ fun CandyCrushScreen(
                             .aspectRatio(1f),
                         userScrollEnabled = false
                     ) {
-                        itemsIndexed(board) { index, candyResId ->
+                        itemsIndexed(board) { index, candyIndex ->
+                            val candyResId = if (candyIndex in viewModel.candies.indices) viewModel.candies[candyIndex] else -1
                             CandyItem(
                                 candyResId = candyResId, onSwipe = { direction ->
                                     val targetIndex = when (direction) {
