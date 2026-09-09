@@ -1,8 +1,7 @@
 package com.flatcode.simplecomposeapps.randomcatsimage
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageDao
@@ -21,13 +20,13 @@ class RandomCatsImageViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private val _imageUrl = mutableStateOf("")
-    val imageUrl: State<String> = _imageUrl
+    private val _imageUrl = MutableLiveData("")
+    val imageUrl: LiveData<String> = _imageUrl
 
-    private val _isLoading = mutableStateOf(true)
-    val isLoading: State<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    val savedImages = mutableStateListOf<String>()
+    private val _savedImages = MutableLiveData<List<String>>(emptyList())
 
     init {
         getImage()
@@ -37,10 +36,10 @@ class RandomCatsImageViewModel @Inject constructor(
     private fun observeSavedImages() {
         viewModelScope.launch {
             catImageDao.getAllImages().collectLatest { entities ->
-                savedImages.clear()
-                savedImages.addAll(entities.map { it.url })
-                if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty() && !networkHelper.isNetworkConnected()) {
-                    _imageUrl.value = savedImages.random()
+                val urls = entities.map { it.url }
+                _savedImages.postValue(urls)
+                if ((_imageUrl.value ?: "").isEmpty() && urls.isNotEmpty() && !networkHelper.isNetworkConnected()) {
+                    _imageUrl.postValue(urls.random())
                 }
             }
         }
@@ -58,8 +57,9 @@ class RandomCatsImageViewModel @Inject constructor(
                     saveImage(catUrl)
                 }
             } catch (_: Exception) {
-                if (_imageUrl.value.isEmpty() && savedImages.isNotEmpty()) {
-                    _imageUrl.value = savedImages.random()
+                val currentSaved = _savedImages.value ?: emptyList()
+                if ((_imageUrl.value ?: "").isEmpty() && currentSaved.isNotEmpty()) {
+                    _imageUrl.value = currentSaved.random()
                 }
             } finally {
                 _isLoading.value = false
