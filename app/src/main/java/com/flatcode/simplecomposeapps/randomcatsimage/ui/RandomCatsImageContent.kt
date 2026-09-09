@@ -33,7 +33,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
@@ -148,7 +147,7 @@ fun RandomCatsImageContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(id = AppIcons.Down),
+                        imageVector = AppIcons.Down,
                         contentDescription = "Download",
                         tint = Color.White,
                         modifier = Modifier.size(30.dp)
@@ -195,7 +194,7 @@ fun RandomCatsImageContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(id = AppIcons.Refresh),
+                        imageVector = AppIcons.Refresh,
                         contentDescription = "Refresh",
                         tint = Color.White,
                         modifier = Modifier.size(30.dp)

@@ -87,6 +87,7 @@ object AppIcons {
     val Rate = R.drawable.ic_rate
     val Email = R.drawable.email
     val Phone = R.drawable.ic_phone
+    val ShareIcon = R.drawable.ic_share
     val CandyBackground = R.drawable.ccs_82_background
 
     // Candies

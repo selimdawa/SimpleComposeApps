@@ -21,7 +21,7 @@ object News2DatabaseModule {
         return Room.databaseBuilder(
             context,
             News2Database::class.java,
-            "news_db"
+            "news2_db"
         ).build()
     }
 

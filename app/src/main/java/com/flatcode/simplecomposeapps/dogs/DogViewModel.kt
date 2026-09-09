@@ -23,6 +23,8 @@ class DogViewModel @Inject constructor(
     private val _breedsList = MutableLiveData<List<String>>(emptyList())
     val breedsList: LiveData<List<String>> = _breedsList
 
+    val isNetworkAvailable = networkHelper.isNetworkAvailable
+
     fun setBreedsList(list: List<String>) {
         _breedsList.value = list
     }

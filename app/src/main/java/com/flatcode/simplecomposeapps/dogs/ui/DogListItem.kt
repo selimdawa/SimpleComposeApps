@@ -11,8 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 @Composable
@@ -33,7 +36,10 @@ fun DogListItem(
                 .padding(2.dp), shape = RoundedCornerShape(10.dp)
         ) {
             AsyncImage(
-                model = imageUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = "Dog image",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop

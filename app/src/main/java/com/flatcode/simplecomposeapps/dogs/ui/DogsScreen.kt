@@ -1,6 +1,10 @@
 package com.flatcode.simplecomposeapps.dogs.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +28,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +37,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.dogs.DogViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -50,6 +57,7 @@ fun DogsScreen(
 ) {
     val breeds by viewModel.breedsList.observeAsState(emptyList())
     val uiState by viewModel.uiState.observeAsState(Resource.Idle)
+    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsState(initial = true)
 
     var expanded by remember { mutableStateOf(false) }
     var selectedBreed by remember { mutableStateOf("") }
@@ -66,6 +74,23 @@ fun DogsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            AnimatedVisibility(
+                visible = !isNetworkAvailable,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                Text(
+                    text = Strings.NO_INTERNET_CONNECTION,
+                    color = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(COLOR_ERROR)
+                        .padding(8.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp
+                )
+            }
+
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded },
@@ -123,31 +148,36 @@ fun DogsScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Box(modifier = Modifier.fillMaxSize()) {
+                val photos = uiState.data ?: emptyList()
+
+                if (photos.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(photos, key = { it }) { photo ->
+                            DogListItem(imageUrl = photo)
+                        }
+                    }
+                }
+
                 when (uiState) {
                     is Resource.Loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center), color = MC_TRACK
-                        )
+                        if (photos.isEmpty()) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                            )
+                        }
                     }
 
                     is Resource.Error -> {
-                        Image(
-                            imageVector = AppIcons.ConnectionError,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(170.dp)
-                        )
-                    }
-
-                    is Resource.Success -> {
-                        val photos = (uiState as Resource.Success<List<String>>).data ?: emptyList()
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            items(photos) { photo ->
-                                DogListItem(imageUrl = photo)
-                            }
+                        if (photos.isEmpty()) {
+                            Image(
+                                imageVector = AppIcons.ConnectionError,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .size(170.dp)
+                            )
                         }
                     }
 

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.R
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -127,7 +126,7 @@ fun WebMainScreen(
                         .fillMaxSize()
                         .padding(5.dp),
                     cornerRadius = CardCornerRadius,
-                    imageResId = R.drawable.ic_share,
+                    imageResId = AppIcons.ShareIcon,
                     imageTint = Color.White,
                     imageSize = 80.dp,
                     text = Strings.SHARE_APP,
