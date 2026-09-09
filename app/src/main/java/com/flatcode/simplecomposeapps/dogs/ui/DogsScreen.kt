@@ -24,7 +24,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.dogs.DogUiState
 import com.flatcode.simplecomposeapps.dogs.DogViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -42,15 +41,15 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
-
+import com.flatcode.simplecomposeapps.utils.Resource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogsScreen(
     viewModel: DogViewModel
 ) {
-    val breeds by viewModel.breedsList.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
+    val breeds by viewModel.breedsList.observeAsState(emptyList())
+    val uiState by viewModel.uiState.observeAsState(Resource.Idle)
 
     var expanded by remember { mutableStateOf(false) }
     var selectedBreed by remember { mutableStateOf("") }
@@ -125,13 +124,13 @@ fun DogsScreen(
 
             Box(modifier = Modifier.fillMaxSize()) {
                 when (uiState) {
-                    is DogUiState.Loading -> {
+                    is Resource.Loading -> {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                         )
                     }
 
-                    is DogUiState.Error -> {
+                    is Resource.Error -> {
                         Image(
                             imageVector = AppIcons.ConnectionError,
                             contentDescription = null,
@@ -141,8 +140,8 @@ fun DogsScreen(
                         )
                     }
 
-                    is DogUiState.Success -> {
-                        val photos = (uiState as DogUiState.Success).photos
+                    is Resource.Success -> {
+                        val photos = (uiState as Resource.Success<List<String>>).data ?: emptyList()
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {

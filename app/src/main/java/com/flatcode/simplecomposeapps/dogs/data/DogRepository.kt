@@ -1,8 +1,11 @@
 package com.flatcode.simplecomposeapps.dogs.data
 
 import com.flatcode.simplecomposeapps.dogs.service.ApiService
+import com.flatcode.simplecomposeapps.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,10 +14,11 @@ class DogRepository @Inject constructor(
     private val apiService: ApiService,
     private val dogDao: DogDao,
 ) {
-    fun getDogsByBreed(breed: String, isOnline: Boolean): Flow<List<String>> = flow {
+    fun getDogsByBreed(breed: String, isOnline: Boolean): Flow<Resource<List<String>>> = flow {
+        emit(Resource.Loading())
         val localData = dogDao.getDogsByBreedOnce(breed).map { it.imageUrl }
         if (localData.isNotEmpty()) {
-            emit(localData)
+            emit(Resource.Success(localData))
         }
 
         if (isOnline) {
@@ -31,12 +35,14 @@ class DogRepository @Inject constructor(
                 dogDao.deleteDogsByBreed(breed)
                 dogDao.insertDogs(entities)
 
-                emit(entities.map { it.imageUrl })
+                emit(Resource.Success(entities.map { it.imageUrl }))
             } catch (e: Exception) {
-                if (localData.isEmpty()) throw e
+                if (localData.isEmpty()) {
+                    emit(Resource.Error(e.message ?: "An error occurred"))
+                }
             }
         } else if (localData.isEmpty()) {
-            throw Exception("No internet and no cached data")
+            emit(Resource.Error("No internet and no cached data"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

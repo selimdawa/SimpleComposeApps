@@ -1,22 +1,15 @@
 package com.flatcode.simplecomposeapps.dogs
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.dogs.data.DogRepository
 import com.flatcode.simplecomposeapps.utils.NetworkHelper
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface DogUiState {
-    data object Start : DogUiState
-    data object Loading : DogUiState
-    data class Success(val photos: List<String>) : DogUiState
-    data object Error : DogUiState
-}
 
 @HiltViewModel
 class DogViewModel @Inject constructor(
@@ -24,11 +17,11 @@ class DogViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<DogUiState>(DogUiState.Start)
-    val uiState: StateFlow<DogUiState> = _uiState
+    private val _uiState = MutableLiveData<Resource<List<String>>>(Resource.Idle)
+    val uiState: LiveData<Resource<List<String>>> = _uiState
 
-    private val _breedsList = MutableStateFlow<List<String>>(emptyList())
-    val breedsList: StateFlow<List<String>> = _breedsList
+    private val _breedsList = MutableLiveData<List<String>>(emptyList())
+    val breedsList: LiveData<List<String>> = _breedsList
 
     fun setBreedsList(list: List<String>) {
         _breedsList.value = list
@@ -36,20 +29,10 @@ class DogViewModel @Inject constructor(
 
     fun getDogPhotosList(breed: String) {
         viewModelScope.launch {
-            if (_uiState.value !is DogUiState.Success) {
-                _uiState.update { DogUiState.Loading }
-            }
-
-            try {
-                repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
-                    .collect { photos ->
-                        _uiState.update { DogUiState.Success(photos) }
-                    }
-            } catch (_: Exception) {
-                if (_uiState.value !is DogUiState.Success) {
-                    _uiState.update { DogUiState.Error }
+            repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
+                .collect { resource ->
+                    _uiState.value = resource
                 }
-            }
         }
     }
 }
