@@ -44,13 +44,13 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_TICK
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
 fun PokemonDetailScreen(
     pokeId: Int, onBack: () -> Unit, viewModel: PokemonDetailsViewModel = hiltViewModel()
 ) {
-    val details by viewModel.details.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState(true)
+    val detailsResult by viewModel.details.observeAsState(Resource.Idle)
 
     LaunchedEffect(pokeId) {
         viewModel.getPokemonDetails(pokeId)
@@ -58,7 +58,7 @@ fun PokemonDetailScreen(
 
     Scaffold(
         topBar = {
-            ToolbarContent(title = details?.name?.replaceFirstChar { it.uppercase() } ?: DATA.POKE,
+            ToolbarContent(title = detailsResult.data?.name?.replaceFirstChar { it.uppercase() } ?: DATA.POKE,
                 hasBack = true,
                 onBackClick = onBack)
         }, containerColor = COLOR_ON_BACKGROUND
@@ -68,96 +68,101 @@ fun PokemonDetailScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (isLoading) {
-                LoadingAnimation(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .align(Alignment.Center)
-                )
-            } else if (details == null) {
-                Image(
-                    painter = painterResource(id = R.drawable.offline),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit
-                )
-            } else {
-                details?.let { item ->
-                    Column(
+            when (detailsResult) {
+                is Resource.Loading -> {
+                    LoadingAnimation(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(320.dp)
-                                .background(COLOR_ON_BACKGROUND),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            SubcomposeAsyncImage(
-                                model = "${DATA.RAW_URL_POKE}${item.id}.png",
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(280.dp)
-                                    .padding(16.dp),
-                                contentScale = ContentScale.Fit,
-                                loading = {
-                                    Box(
-                                        modifier = Modifier.fillMaxSize(),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        LoadingAnimation(modifier = Modifier.size(80.dp))
-                                    }
-                                })
-                        }
-
+                            .size(80.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+                is Resource.Error -> {
+                    Image(
+                        painter = painterResource(id = R.drawable.offline),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+                is Resource.Success -> {
+                    detailsResult.data?.let { item ->
                         Column(
-                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
                         ) {
-                            Text(
-                                text = Strings.TYPE,
-                                color = COLOR_ERROR,
-                                fontSize = 25.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 5.dp)
-                            )
-
-                            Row(
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 5.dp),
-                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                                    .height(320.dp)
+                                    .background(COLOR_ON_BACKGROUND),
+                                contentAlignment = Alignment.Center
                             ) {
-                                PokeTypeBadge(type = item.type1)
-                                item.type2?.let { PokeTypeBadge(type = it) }
+                                SubcomposeAsyncImage(
+                                    model = "${DATA.RAW_URL_POKE}${item.id}.png",
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(280.dp)
+                                        .padding(16.dp),
+                                    contentScale = ContentScale.Fit,
+                                    loading = {
+                                        Box(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            LoadingAnimation(modifier = Modifier.size(80.dp))
+                                        }
+                                    })
                             }
 
-                            Spacer(modifier = Modifier.height(5.dp))
+                            Column(
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                            ) {
+                                Text(
+                                    text = Strings.TYPE,
+                                    color = COLOR_ERROR,
+                                    fontSize = 25.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(vertical = 5.dp)
+                                )
 
-                            PokeStatRow(label = Strings.HP, value = item.hp.toString())
-                            PokeStatRow(label = Strings.SPEED, value = item.speed.toString())
-                            PokeStatRow(label = Strings.ATTACK, value = item.attack.toString())
-                            PokeStatRow(label = Strings.DEFENSE, value = item.defense.toString())
-                            PokeStatRow(
-                                label = Strings.SPECIAL_ATTACK,
-                                value = item.specialAttack.toString()
-                            )
-                            PokeStatRow(
-                                label = Strings.SPECIAL_DEFENSE,
-                                value = item.specialDefense.toString()
-                            )
-                            PokeStatRow(
-                                label = Strings.HEIGHT, value = "${item.height.toDouble() / 10.0} m"
-                            )
-                            PokeStatRow(
-                                label = Strings.WEIGHT,
-                                value = "${item.weight.toDouble() / 10.0} kg"
-                            )
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 5.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                                ) {
+                                    PokeTypeBadge(type = item.type1)
+                                    item.type2?.let { PokeTypeBadge(type = it) }
+                                }
+
+                                Spacer(modifier = Modifier.height(5.dp))
+
+                                PokeStatRow(label = Strings.HP, value = item.hp.toString())
+                                PokeStatRow(label = Strings.SPEED, value = item.speed.toString())
+                                PokeStatRow(label = Strings.ATTACK, value = item.attack.toString())
+                                PokeStatRow(label = Strings.DEFENSE, value = item.defense.toString())
+                                PokeStatRow(
+                                    label = Strings.SPECIAL_ATTACK,
+                                    value = item.specialAttack.toString()
+                                )
+                                PokeStatRow(
+                                    label = Strings.SPECIAL_DEFENSE,
+                                    value = item.specialDefense.toString()
+                                )
+                                PokeStatRow(
+                                    label = Strings.HEIGHT, value = "${item.height.toDouble() / 10.0} m"
+                                )
+                                PokeStatRow(
+                                    label = Strings.WEIGHT,
+                                    value = "${item.weight.toDouble() / 10.0} kg"
+                                )
+                            }
                         }
                     }
                 }
+                else -> {}
             }
         }
     }

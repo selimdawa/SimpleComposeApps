@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.pokemon.data.PokeRepository
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItemDetails
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,17 +16,13 @@ class PokemonDetailsViewModel @Inject constructor(
     private val repository: PokeRepository
 ) : ViewModel() {
 
-    private val _details = MutableLiveData<PokeItemDetails?>()
-    val details: LiveData<PokeItemDetails?> = _details
-
-    private val _isLoading = MutableLiveData<Boolean>(true)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _details = MutableLiveData<Resource<PokeItemDetails>>(Resource.Idle)
+    val details: LiveData<Resource<PokeItemDetails>> = _details
 
     fun getPokemonDetails(id: Int) {
         viewModelScope.launch {
-            _isLoading.value = true
+            _details.value = Resource.Loading()
             _details.value = repository.getPokemonDetails(id)
-            _isLoading.value = false
         }
     }
 }

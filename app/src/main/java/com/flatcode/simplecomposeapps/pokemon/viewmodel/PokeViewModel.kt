@@ -7,11 +7,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.pokemon.data.PokeRepository
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-enum class ApiStatus { LOADING, ERROR, DONE }
 
 @HiltViewModel
 class PokeViewModel @Inject constructor(
@@ -20,8 +19,8 @@ class PokeViewModel @Inject constructor(
 
     val pokemon: LiveData<List<PokeItem>> = repository.allPokemon.asLiveData()
 
-    private val _status = MutableLiveData<ApiStatus>(ApiStatus.LOADING)
-    val status: LiveData<ApiStatus> = _status
+    private val _status = MutableLiveData<Resource<Unit>>(Resource.Idle)
+    val status: LiveData<Resource<Unit>> = _status
 
     init {
         getPokemon()
@@ -29,13 +28,8 @@ class PokeViewModel @Inject constructor(
 
     private fun getPokemon() {
         viewModelScope.launch {
-            _status.value = ApiStatus.LOADING
-            try {
-                repository.getPokemonFromApi()
-                _status.value = ApiStatus.DONE
-            } catch (_: Exception) {
-                _status.value = ApiStatus.ERROR
-            }
+            _status.value = Resource.Loading()
+            _status.value = repository.getPokemonFromApi()
         }
     }
 }

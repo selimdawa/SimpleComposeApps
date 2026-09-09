@@ -19,20 +19,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.pokemon.viewmodel.ApiStatus
 import com.flatcode.simplecomposeapps.pokemon.viewmodel.PokeViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
 fun PokemonScreen(
     onPokemonClick: (Int) -> Unit, viewModel: PokeViewModel = hiltViewModel()
 ) {
     val pokemonList by viewModel.pokemon.observeAsState(emptyList())
-    val status by viewModel.status.observeAsState(ApiStatus.LOADING)
+    val status by viewModel.status.observeAsState(Resource.Idle)
 
     Scaffold(
         topBar = {
@@ -46,7 +46,7 @@ fun PokemonScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (status == ApiStatus.LOADING && pokemonList.isEmpty()) {
+            if (status is Resource.Loading && pokemonList.isEmpty()) {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
