@@ -14,12 +14,13 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.web.viewmodel.WebAppUiState
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 import com.flatcode.simplecomposeapps.web.ui.WebViewScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,7 @@ class WebViewActivity : ComponentActivity() {
 
         setContent {
             val viewModel: WebAppViewModel = hiltViewModel()
-            val uiState by viewModel.uiState.collectAsState()
+            val uiState by viewModel.uiState.observeAsState(WebAppUiState())
             
             // Check if current page is bookmarked
             val isBookmarked = uiState.bookmarks.any { it.url == uiState.currentUrl }
