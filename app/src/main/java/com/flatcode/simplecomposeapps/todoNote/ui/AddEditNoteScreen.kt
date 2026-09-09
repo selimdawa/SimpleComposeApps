@@ -20,6 +20,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +42,9 @@ fun AddEditNoteScreen(
     onBack: (Int?) -> Unit,
     viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
+    val noteTitle by viewModel.noteTitle.observeAsState("")
+    val noteContent by viewModel.noteContent.observeAsState("")
+
     LaunchedEffect(Unit) {
         viewModel.addEditNoteEvent.collect { event ->
             if (event is AddEditNoteViewModel.AddEditNoteEvent.NavigateBackWithResult) {
@@ -97,8 +102,8 @@ fun AddEditNoteScreen(
                 .padding(10.dp)
         ) {
             OutlinedTextField(
-                value = viewModel.noteTitle,
-                onValueChange = { viewModel.noteTitle = it },
+                value = noteTitle,
+                onValueChange = { viewModel.noteTitle.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text(Strings.TITLE) },
                 label = { Text(Strings.TITLE) },
@@ -109,8 +114,8 @@ fun AddEditNoteScreen(
             Spacer(modifier = Modifier.height(5.dp))
 
             OutlinedTextField(
-                value = viewModel.noteContent,
-                onValueChange = { viewModel.noteContent = it },
+                value = noteContent,
+                onValueChange = { viewModel.noteContent.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),

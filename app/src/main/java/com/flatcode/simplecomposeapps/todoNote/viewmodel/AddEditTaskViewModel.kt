@@ -1,8 +1,5 @@
 package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,27 +16,29 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
     private val taskDao: TaskDao,
-    state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val task = state.get<Task>("task")
 
-    var taskName by mutableStateOf(state.get<String>("taskName") ?: task?.name ?: "")
-    var taskImportant by mutableStateOf(state.get<Boolean>("taskImportant") ?: task?.important ?: false)
+    val taskName = state.getLiveData("taskName", task?.name ?: "")
+    val taskImportant = state.getLiveData("taskImportant", task?.important ?: false)
 
     private val _addEditTaskEvent = MutableSharedFlow<AddEditTaskEvent>()
     val addEditTaskEvent: SharedFlow<AddEditTaskEvent> = _addEditTaskEvent
 
     fun onSaveClick() {
-        if (taskName.isBlank()) {
+        val name = taskName.value ?: ""
+        val important = taskImportant.value ?: false
+        if (name.isBlank()) {
             return
         }
 
         if (task != null) {
-            val updatedTask = task.copy(name = taskName, important = taskImportant)
+            val updatedTask = task.copy(name = name, important = important)
             updateTask(updatedTask)
         } else {
-            val newTask = Task(name = taskName, important = taskImportant)
+            val newTask = Task(name = name, important = important)
             createTask(newTask)
         }
     }

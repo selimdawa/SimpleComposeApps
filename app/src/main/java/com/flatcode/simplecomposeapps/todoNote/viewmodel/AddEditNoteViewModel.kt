@@ -1,8 +1,5 @@
 package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,25 +16,27 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteDao: NoteDao,
-    state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val note = state.get<Notes>("note")
 
-    var noteTitle by mutableStateOf(state.get<String>("noteTitle") ?: note?.title ?: "")
-    var noteContent by mutableStateOf(state.get<String>("noteContent") ?: note?.content ?: "")
+    val noteTitle = state.getLiveData("noteTitle", note?.title ?: "")
+    val noteContent = state.getLiveData("noteContent", note?.content ?: "")
 
     private val _addEditNoteEvent = MutableSharedFlow<AddEditNoteEvent>()
     val addEditNoteEvent: SharedFlow<AddEditNoteEvent> = _addEditNoteEvent
 
     fun onSaveClick() {
-        if (noteTitle.isBlank()) return
+        val title = noteTitle.value ?: ""
+        val content = noteContent.value ?: ""
+        if (title.isBlank()) return
 
         if (note != null) {
-            val updatedNote = note.copy(title = noteTitle, content = noteContent)
+            val updatedNote = note.copy(title = title, content = content)
             updateNote(updatedNote)
         } else {
-            val newNote = Notes(title = noteTitle, content = noteContent)
+            val newNote = Notes(title = title, content = content)
             createNote(newNote)
         }
     }
