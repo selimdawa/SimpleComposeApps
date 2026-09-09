@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.dogs.data.DogRepository
-import com.flatcode.simplecomposeapps.utils.NetworkHelper
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,27 +14,48 @@ import javax.inject.Inject
 @HiltViewModel
 class DogViewModel @Inject constructor(
     private val repository: DogRepository,
-    private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<Resource<List<String>>>(Resource.Idle)
-    val uiState: LiveData<Resource<List<String>>> = _uiState
+    private val _photos = MutableLiveData<List<String>>(emptyList())
+    val photos: LiveData<List<String>> = _photos
+
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>(null)
+    val errorMessage: LiveData<String?> = _errorMessage
 
     private val _breedsList = MutableLiveData<List<String>>(emptyList())
     val breedsList: LiveData<List<String>> = _breedsList
-
-    val isNetworkAvailable = networkHelper.isNetworkAvailable
 
     fun setBreedsList(list: List<String>) {
         _breedsList.value = list
     }
 
     fun getDogPhotosList(breed: String) {
+        _isLoading.value = true
+        _errorMessage.value = null
+
         viewModelScope.launch {
-            repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
-                .collect { resource ->
-                    _uiState.value = resource
-                }
+            val result = repository.getDogsFromApi(breed)
+            if (result is Resource.Success) {
+                _photos.value = result.data ?: emptyList()
+                _errorMessage.value = null
+            } else {
+                loadFromDb(breed)
+            }
+            _isLoading.value = false
+        }
+    }
+
+    private suspend fun loadFromDb(breed: String) {
+        val cached = repository.getDogsFromDb(breed)
+        if (cached.isNotEmpty()) {
+            _photos.value = cached
+            _errorMessage.value = null
+        } else {
+            _photos.value = emptyList()
+            _errorMessage.value = DATA.FAILED_LOAD_DATA
         }
     }
 }

@@ -11,15 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
@@ -27,7 +27,7 @@ fun RandomCatsImageScreen(
     viewModel: RandomCatsImageViewModel, onDownload: (String) -> Unit
 ) {
     val isLoading by viewModel.isLoading.observeAsState(false)
-    val imageUrl by viewModel.imageUrl.observeAsState("")
+    val errorMessage by viewModel.errorMessage.observeAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
@@ -42,22 +42,25 @@ fun RandomCatsImageScreen(
                 .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
-            RandomCatsImageContent(
-                viewModel = viewModel, onDownload = onDownload
-            )
-
-            if (isLoading) {
-                CircularProgressIndicator(color = MC_TRACK)
-            } else if (imageUrl.isEmpty()) {
+            if (errorMessage != null) {
                 Text(
-                    text = Strings.NONE_DISPLAY,
+                    text = errorMessage!!,
                     color = COLOR_ERROR,
-                    fontSize = 32.sp,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(horizontal = 20.dp),
                     textAlign = TextAlign.Center
                 )
+            } else {
+                RandomCatsImageContent(
+                    viewModel = viewModel, onDownload = onDownload
+                )
+
+                if (isLoading) {
+                    CircularProgressIndicator(color = MC_TRACK)
+                }
             }
         }
     }

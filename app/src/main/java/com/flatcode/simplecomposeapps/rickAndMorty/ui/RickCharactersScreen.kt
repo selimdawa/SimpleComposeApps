@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.rickAndMorty.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,9 +17,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickCharactersViewModel
 import com.flatcode.simplecomposeapps.utils.Resource
@@ -34,15 +34,7 @@ fun RickCharactersScreen(
 ) {
     val state by viewModel.characters.observeAsState(Resource.Loading())
     val isLoading by viewModel.isLoading.observeAsState(false)
-    val error by viewModel.error.observeAsState()
-    val context = LocalContext.current
     val listState = rememberLazyListState()
-
-    LaunchedEffect(error) {
-        error?.let {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     LaunchedEffect(Unit) {
         if (state.data.isNullOrEmpty()) {
@@ -102,9 +94,11 @@ fun RickCharactersScreen(
                     text = state.message ?: "Error",
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center,
-                    color = COLOR_ERROR
+                        .padding(24.dp),
+                    color = COLOR_ERROR,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
             }
 

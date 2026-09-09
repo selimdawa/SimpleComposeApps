@@ -9,18 +9,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.crypto.CryptoHomeViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -32,6 +37,7 @@ fun CryptoHomeScreen(
 ) {
     val cryptoList by viewModel.cryptoList.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
+    val errorMessage by viewModel.error.observeAsState()
 
     val listState = rememberLazyListState()
     val shouldLoadMore by remember {
@@ -65,27 +71,40 @@ fun CryptoHomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            LazyColumn(
-                state = listState, modifier = Modifier.fillMaxSize()
-            ) {
-                items(cryptoList) { coin ->
-                    CryptoItem(
-                        item = coin, onClick = {
-                            val symbol = coin.symbol ?: ""
-                            val id = coin.id ?: 0
-                            onCoinClick(symbol, id)
-                        })
-                }
+            if (errorMessage != null && cryptoList.isEmpty()) {
+                Text(
+                    text = errorMessage!!,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(24.dp),
+                    color = COLOR_ERROR,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            } else {
+                LazyColumn(
+                    state = listState, modifier = Modifier.fillMaxSize()
+                ) {
+                    items(cryptoList) { coin ->
+                        CryptoItem(
+                            item = coin, onClick = {
+                                val symbol = coin.symbol ?: ""
+                                val id = coin.id ?: 0
+                                onCoinClick(symbol, id)
+                            })
+                    }
 
-                if (isLoading && cryptoList.isNotEmpty()) {
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(color = MC_TRACK)
+                    if (isLoading && cryptoList.isNotEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(color = MC_TRACK)
+                            }
                         }
                     }
                 }

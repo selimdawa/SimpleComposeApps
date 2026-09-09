@@ -13,8 +13,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +27,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.crypto.CryptoDetailViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
@@ -39,6 +40,7 @@ fun CryptoDetailScreen(
 ) {
     val coinDetail by viewModel.cryptoDetail.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState(true)
+    val errorMessage by viewModel.error.observeAsState()
 
     LaunchedEffect(coinId) {
         viewModel.getCryptoDetail(DATA.API_KEY_CRYPTO, coinId)
@@ -56,7 +58,18 @@ fun CryptoDetailScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (isLoading) {
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage!!,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(24.dp),
+                    color = COLOR_ERROR,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            } else if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )

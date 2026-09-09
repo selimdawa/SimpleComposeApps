@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "top_articles_news")
 @Serializable
 data class TopArticlesNewsItem(
-    @PrimaryKey override val id: String,
     val title: String,
     val urlToImage: String?,
-    val url: String
+    val url: String,
+    @PrimaryKey override val id: String = url
 ) : IBaseDiffModel<String>
