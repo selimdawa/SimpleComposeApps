@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.joke.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.joke.network.JokeApi
@@ -17,13 +17,17 @@ class JokeViewModel @Inject constructor(
     private val api: JokeApi
 ) : ViewModel() {
 
-    val jokes = mutableStateListOf<Joke>()
+    private val _jokes = MutableLiveData<List<Joke>>(emptyList())
+    val jokes: LiveData<List<Joke>> = _jokes
 
-    val isLoading = mutableStateOf(value = false)
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    val errorMessage = mutableStateOf<String?>(null)
+    private val _errorMessage = MutableLiveData<String?>(null)
+    val errorMessage: LiveData<String?> = _errorMessage
 
-    val selectedCategory = mutableStateOf(value = "Any")
+    private val _selectedCategory = MutableLiveData("Any")
+    val selectedCategory: LiveData<String> = _selectedCategory
 
     val categories = DATA.JOKE_CATEGORIES
 
@@ -32,30 +36,28 @@ class JokeViewModel @Inject constructor(
     }
 
     fun onCategorySelected(category: String) {
-        selectedCategory.value = category
-        // Mapping as per original code logic if needed, but JokeAPI supports all now.
-        // The original code had: val endpoint = if (currentCategory == "Pun") "Programming" else currentCategory
+        _selectedCategory.value = category
         val endpoint = if (category == "Pun") Strings.PROGRAMMING else category
         getJokes(endpoint)
     }
 
     private fun getJokes(category: String) {
-        isLoading.value = true
-        errorMessage.value = null
-        jokes.clear()
+        _isLoading.value = true
+        _errorMessage.value = null
+        _jokes.value = emptyList()
 
         viewModelScope.launch {
             try {
                 val response = api.getJokes(category)
                 if (response.error) {
-                    errorMessage.value = response.message ?: "Failed to fetch jokes"
+                    _errorMessage.value = response.message ?: "Failed to fetch jokes"
                 } else {
-                    response.jokes?.let { jokes.addAll(it) }
+                    _jokes.value = response.jokes ?: emptyList()
                 }
             } catch (e: Exception) {
-                errorMessage.value = e.message ?: "Unknown error"
+                _errorMessage.value = e.message ?: "Unknown error"
             } finally {
-                isLoading.value = false
+                _isLoading.value = false
             }
         }
     }

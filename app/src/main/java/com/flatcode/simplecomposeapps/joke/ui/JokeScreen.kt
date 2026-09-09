@@ -17,6 +17,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,10 +33,10 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun JokeScreen(viewModel: JokeViewModel) {
-    val jokes = viewModel.jokes
-    val isLoading = viewModel.isLoading.value
-    val errorMessage = viewModel.errorMessage.value
-    val selectedCategory = viewModel.selectedCategory.value
+    val jokes by viewModel.jokes.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(false)
+    val errorMessage by viewModel.errorMessage.observeAsState()
+    val selectedCategory by viewModel.selectedCategory.observeAsState("Any")
     val categories = viewModel.categories
 
     Scaffold(
@@ -80,7 +82,7 @@ fun JokeScreen(viewModel: JokeViewModel) {
             Box(modifier = Modifier.weight(1f)) {
                 if (errorMessage != null) {
                     Text(
-                        text = errorMessage,
+                        text = errorMessage!!,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),
