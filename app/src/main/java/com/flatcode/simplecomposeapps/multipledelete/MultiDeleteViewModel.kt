@@ -1,8 +1,7 @@
 package com.flatcode.simplecomposeapps.multipledelete
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,15 +19,17 @@ class MultiDeleteViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
-    val items = mutableStateListOf<String>()
+    private val _items = MutableLiveData<List<String>>(emptyList())
+    val items: LiveData<List<String>> = _items
 
-    val selectedItems = mutableStateListOf<String>()
+    private val _selectedItems = MutableLiveData<Set<String>>(emptySet())
+    val selectedItems: LiveData<Set<String>> = _selectedItems
 
-    private val _isSelectionMode = mutableStateOf(false)
-    val isSelectionMode: State<Boolean> = _isSelectionMode
+    private val _isSelectionMode = MutableLiveData(false)
+    val isSelectionMode: LiveData<Boolean> = _isSelectionMode
 
-    private val _isLoading = mutableStateOf(true)
-    val isLoading: State<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     init {
         observeItems()
@@ -37,9 +38,8 @@ class MultiDeleteViewModel @Inject constructor(
     private fun observeItems() {
         viewModelScope.launch {
             multiDeleteDao.getAllItems().collectLatest { entities ->
-                items.clear()
-                items.addAll(entities.map { it.text })
-                _isLoading.value = false
+                _items.postValue(entities.map { it.text })
+                _isLoading.postValue(false)
             }
         }
     }
@@ -62,43 +62,46 @@ class MultiDeleteViewModel @Inject constructor(
     }
 
     fun toggleSelection(item: String) {
-        if (selectedItems.contains(item)) {
-            selectedItems.remove(item)
-            if (selectedItems.isEmpty()) {
+        val currentSelected = (_selectedItems.value ?: emptySet()).toMutableSet()
+        if (currentSelected.contains(item)) {
+            currentSelected.remove(item)
+            if (currentSelected.isEmpty()) {
                 _isSelectionMode.value = false
             }
         } else {
-            selectedItems.add(item)
+            currentSelected.add(item)
             _isSelectionMode.value = true
         }
+        _selectedItems.value = currentSelected
     }
 
     fun enterSelectionMode(item: String) {
         _isSelectionMode.value = true
-        if (!selectedItems.contains(item)) {
-            selectedItems.add(item)
-        }
+        val currentSelected = (_selectedItems.value ?: emptySet()).toMutableSet()
+        currentSelected.add(item)
+        _selectedItems.value = currentSelected
     }
 
     fun exitSelectionMode() {
         _isSelectionMode.value = false
-        selectedItems.clear()
+        _selectedItems.value = emptySet()
     }
 
     fun selectAll() {
-        if (selectedItems.size == items.size) {
-            selectedItems.clear()
+        val currentItems = _items.value ?: emptyList()
+        if ((_selectedItems.value ?: emptySet()).size == currentItems.size) {
+            _selectedItems.value = emptySet()
             _isSelectionMode.value = false
         } else {
-            selectedItems.clear()
-            selectedItems.addAll(items)
+            _selectedItems.value = currentItems.toSet()
             _isSelectionMode.value = true
         }
     }
 
     fun deleteSelected() {
         viewModelScope.launch {
-            multiDeleteDao.deleteByTexts(selectedItems)
+            val selected = _selectedItems.value?.toList() ?: emptyList()
+            multiDeleteDao.deleteByTexts(selected)
             exitSelectionMode()
         }
     }
