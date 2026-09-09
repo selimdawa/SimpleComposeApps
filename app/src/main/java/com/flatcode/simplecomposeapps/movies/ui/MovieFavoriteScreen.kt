@@ -32,7 +32,7 @@ fun MovieFavoriteScreen(
     onMovieClick: (MovieItemModel) -> Unit,
     viewModel: MovieFavoriteViewModel = hiltViewModel()
 ) {
-    val favorites by viewModel.getAllMovies().observeAsState(emptyList())
+    val favorites by viewModel.allMovies.observeAsState(emptyList())
 
     Scaffold(
         topBar = {

@@ -21,9 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,10 +46,10 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun MovieDetailScreen(
     movie: MovieItemModel, onBack: () -> Unit, viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
-    var isFavorite by remember { mutableStateOf(false) }
+    val isFavorite by viewModel.isFavorite.observeAsState(false)
 
     LaunchedEffect(movie.id) {
-        isFavorite = viewModel.isFavorite(movie.id)
+        viewModel.checkFavoriteStatus(movie.id)
     }
 
     Scaffold(
@@ -115,8 +113,7 @@ fun MovieDetailScreen(
                     )
 
                     IconButton(onClick = {
-                        viewModel.toggleFavorite(movie, isFavorite)
-                        isFavorite = !isFavorite
+                        viewModel.toggleFavorite(movie)
                     }) {
                         Icon(
                             imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,

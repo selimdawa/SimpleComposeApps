@@ -13,7 +13,5 @@ class MovieFavoriteViewModel @Inject constructor(
     private val repository: MoviesRepository
 ) : ViewModel() {
 
-    fun getAllMovies(): LiveData<List<MovieItemModel>> {
-        return repository.allMovies.asLiveData()
-    }
+    val allMovies: LiveData<List<MovieItemModel>> = repository.allMovies.asLiveData()
 }

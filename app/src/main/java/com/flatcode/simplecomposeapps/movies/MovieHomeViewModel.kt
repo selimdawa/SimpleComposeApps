@@ -23,16 +23,10 @@ class MovieHomeViewModel @Inject constructor(
         getMovies()
     }
 
-    private fun getMovies() {
+    fun getMovies() {
         viewModelScope.launch {
             _uiState.value = Resource.Loading()
-            try {
-                val moviesModel = repository.getMovies()
-                val movies = moviesModel.results
-                _uiState.value = Resource.Success(movies)
-            } catch (e: Exception) {
-                _uiState.value = Resource.Error(e.localizedMessage ?: "Unknown error")
-            }
+            _uiState.value = repository.getMovies()
         }
     }
 }
