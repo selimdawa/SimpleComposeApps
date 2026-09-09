@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.stockmarket.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,10 +21,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListingsState
 import com.flatcode.simplecomposeapps.stockmarket.viewmodel.StockMarketViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
@@ -36,7 +40,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun CompanyListingsScreen(
     viewModel: StockMarketViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.state
+    val state by viewModel.state.observeAsState(CompanyListingsState())
 
     Scaffold(
         topBar = {
@@ -109,7 +113,7 @@ fun CompanyListingsScreen(
                     ) {
                         items(state.companies.size) { i ->
                             val company = state.companies[i]
-                            CompanyItem(
+                            StockMarketItem(
                                 company = company, modifier = Modifier.fillMaxWidth()
                             )
                         }

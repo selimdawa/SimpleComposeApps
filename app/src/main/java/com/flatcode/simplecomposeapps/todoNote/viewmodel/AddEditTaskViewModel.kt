@@ -16,7 +16,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
     private val taskDao: TaskDao,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val task = state.get<Task>("task")

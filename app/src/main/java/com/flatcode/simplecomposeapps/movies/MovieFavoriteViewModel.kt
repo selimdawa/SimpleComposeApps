@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieFavoriteViewModel @Inject constructor(
-    private val repository: MoviesRepository
+    repository: MoviesRepository
 ) : ViewModel() {
 
     val allMovies: LiveData<List<MovieItemModel>> = repository.allMovies.asLiveData()

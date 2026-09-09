@@ -26,7 +26,7 @@ import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
-fun CompanyItem(
+fun StockMarketItem(
     company: CompanyListing, modifier: Modifier = Modifier
 ) {
     Column(

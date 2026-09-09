@@ -1,8 +1,7 @@
 package com.flatcode.simplecomposeapps.stockmarket.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListingsState
@@ -20,7 +19,9 @@ class StockMarketViewModel @Inject constructor(
     private val repository: StockRepository
 ) : ViewModel() {
 
-    var state by mutableStateOf(CompanyListingsState())
+    private val _state = MutableLiveData(CompanyListingsState())
+    val state: LiveData<CompanyListingsState> = _state
+
     private var searchJob: Job? = null
 
     init {
@@ -32,7 +33,7 @@ class StockMarketViewModel @Inject constructor(
     }
 
     fun onSearchQueryChange(query: String) {
-        state = state.copy(searchQuery = query)
+        _state.value = _state.value?.copy(searchQuery = query)
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500.milliseconds)
@@ -41,19 +42,19 @@ class StockMarketViewModel @Inject constructor(
     }
 
     private fun getCompanyListings(
-        query: String = state.searchQuery.lowercase(),
+        query: String = _state.value?.searchQuery?.lowercase() ?: "",
         fetchFromRemote: Boolean = false,
     ) {
         viewModelScope.launch {
             repository.getCompanyListings(fetchFromRemote, query).collect { result ->
                 when (result) {
                     is Resource.Success -> {
-                        result.data?.let { state = state.copy(companies = it) }
+                        result.data?.let { _state.value = _state.value?.copy(companies = it) }
                     }
 
                     is Resource.Error -> Unit
                     is Resource.Loading -> {
-                        state = state.copy(isLoading = result.isLoading)
+                        _state.value = _state.value?.copy(isLoading = result.isLoading)
                     }
 
                     else -> {}

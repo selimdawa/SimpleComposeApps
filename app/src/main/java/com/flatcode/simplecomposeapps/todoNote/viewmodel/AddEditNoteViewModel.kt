@@ -16,7 +16,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteDao: NoteDao,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val note = state.get<Notes>("note")
