@@ -23,7 +23,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.SubcomposeAsyncImage
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
 import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark
@@ -51,21 +56,27 @@ fun PokemonItem(
             colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                SubcomposeAsyncImage(
-                    model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png",
-                    contentDescription = "Pokemon image",
+                var isImageLoading by remember { mutableStateOf(true) }
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                         .background(image_profile),
-                    contentScale = ContentScale.Fit,
-                    loading = {
-                        Box(
-                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                        ) {
-                            LoadingAnimation(modifier = Modifier.size(80.dp))
+                    contentAlignment = Alignment.Center
+                ) {
+                    AsyncImage(
+                        model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png",
+                        contentDescription = "Pokemon image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit,
+                        onState = { state ->
+                            isImageLoading = state is AsyncImagePainter.State.Loading
                         }
-                    })
+                    )
+                    if (isImageLoading) {
+                        LoadingAnimation(modifier = Modifier.size(80.dp))
+                    }
+                }
 
                 Column(
                     modifier = Modifier

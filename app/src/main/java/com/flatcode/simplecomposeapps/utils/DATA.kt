@@ -328,6 +328,7 @@ object DATA {
     const val EMPTY = ""
     const val DATA = "data"
     const val UNKNOWN = "Unknown"
+    const val FAILED_LOAD_DATA = "Failed to load data"
 
     //Main
     const val STOP_WATCH = "Stop Watch"

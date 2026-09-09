@@ -41,14 +41,14 @@ data class StatName(
 fun PokeModelDetails.toDomain() = PokeItemDetails(
     id = id,
     name = name,
-    type1 = types[0].type.name,
-    type2 = if (types.size > 1) types[1].type.name else null,
-    hp = stats[0].base_stat,
-    attack = stats[1].base_stat,
-    defense = stats[2].base_stat,
-    specialAttack = stats[3].base_stat,
-    specialDefense = stats[4].base_stat,
-    speed = stats[5].base_stat,
+    type1 = types.getOrNull(0)?.type?.name ?: "unknown",
+    type2 = types.getOrNull(1)?.type?.name,
+    hp = stats.find { it.stat.name == "hp" }?.base_stat ?: 0,
+    attack = stats.find { it.stat.name == "attack" }?.base_stat ?: 0,
+    defense = stats.find { it.stat.name == "defense" }?.base_stat ?: 0,
+    specialAttack = stats.find { it.stat.name == "special-attack" }?.base_stat ?: 0,
+    specialDefense = stats.find { it.stat.name == "special-defense" }?.base_stat ?: 0,
+    speed = stats.find { it.stat.name == "speed" }?.base_stat ?: 0,
     height = height,
     weight = weight
 )

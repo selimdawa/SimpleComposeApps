@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.pokemon.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,18 +22,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil3.compose.SubcomposeAsyncImage
-import com.flatcode.simplecomposeapps.R
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
 import com.flatcode.simplecomposeapps.pokemon.viewmodel.PokemonDetailsViewModel
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -58,9 +60,8 @@ fun PokemonDetailScreen(
 
     Scaffold(
         topBar = {
-            ToolbarContent(title = detailsResult.data?.name?.replaceFirstChar { it.uppercase() } ?: DATA.POKE,
-                hasBack = true,
-                onBackClick = onBack)
+            ToolbarContent(title = detailsResult.data?.name?.replaceFirstChar { it.uppercase() }
+                ?: DATA.POKE, hasBack = true, onBackClick = onBack)
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
@@ -76,16 +77,27 @@ fun PokemonDetailScreen(
                             .align(Alignment.Center)
                     )
                 }
+
                 is Resource.Error -> {
-                    Image(
-                        painter = painterResource(id = R.drawable.offline),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Fit
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = DATA.FAILED_LOAD_DATA,
+                            color = COLOR_ERROR,
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(20.dp)
+                        )
+                    }
                 }
+
                 is Resource.Success -> {
                     detailsResult.data?.let { item ->
+                        val errorColor = COLOR_ERROR
+                        val onBgColor = COLOR_ON_BACKGROUND
+
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -95,10 +107,10 @@ fun PokemonDetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(320.dp)
-                                    .background(COLOR_ON_BACKGROUND),
-                                contentAlignment = Alignment.Center
+                                    .background(onBgColor), contentAlignment = Alignment.Center
                             ) {
-                                SubcomposeAsyncImage(
+                                var isImageLoading by remember { mutableStateOf(true) }
+                                AsyncImage(
                                     model = "${DATA.RAW_URL_POKE}${item.id}.png",
                                     contentDescription = null,
                                     modifier = Modifier
@@ -106,14 +118,12 @@ fun PokemonDetailScreen(
                                         .height(280.dp)
                                         .padding(16.dp),
                                     contentScale = ContentScale.Fit,
-                                    loading = {
-                                        Box(
-                                            modifier = Modifier.fillMaxSize(),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            LoadingAnimation(modifier = Modifier.size(80.dp))
-                                        }
+                                    onState = { state ->
+                                        isImageLoading = state is AsyncImagePainter.State.Loading
                                     })
+                                if (isImageLoading) {
+                                    LoadingAnimation(modifier = Modifier.size(80.dp))
+                                }
                             }
 
                             Column(
@@ -121,7 +131,7 @@ fun PokemonDetailScreen(
                             ) {
                                 Text(
                                     text = Strings.TYPE,
-                                    color = COLOR_ERROR,
+                                    color = errorColor,
                                     fontSize = 25.sp,
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.padding(vertical = 5.dp)
@@ -139,29 +149,51 @@ fun PokemonDetailScreen(
 
                                 Spacer(modifier = Modifier.height(5.dp))
 
-                                PokeStatRow(label = Strings.HP, value = item.hp.toString())
-                                PokeStatRow(label = Strings.SPEED, value = item.speed.toString())
-                                PokeStatRow(label = Strings.ATTACK, value = item.attack.toString())
-                                PokeStatRow(label = Strings.DEFENSE, value = item.defense.toString())
+                                PokeStatRow(
+                                    label = Strings.HP,
+                                    value = item.hp.toString(),
+                                    color = errorColor
+                                )
+                                PokeStatRow(
+                                    label = Strings.SPEED,
+                                    value = item.speed.toString(),
+                                    color = errorColor
+                                )
+                                PokeStatRow(
+                                    label = Strings.ATTACK,
+                                    value = item.attack.toString(),
+                                    color = errorColor
+                                )
+                                PokeStatRow(
+                                    label = Strings.DEFENSE,
+                                    value = item.defense.toString(),
+                                    color = errorColor
+                                )
                                 PokeStatRow(
                                     label = Strings.SPECIAL_ATTACK,
-                                    value = item.specialAttack.toString()
+                                    value = item.specialAttack.toString(),
+                                    color = errorColor
                                 )
                                 PokeStatRow(
                                     label = Strings.SPECIAL_DEFENSE,
-                                    value = item.specialDefense.toString()
+                                    value = item.specialDefense.toString(),
+                                    color = errorColor
                                 )
                                 PokeStatRow(
-                                    label = Strings.HEIGHT, value = "${item.height.toDouble() / 10.0} m"
+                                    label = Strings.HEIGHT,
+                                    value = "${item.height.toDouble() / 10.0} m",
+                                    color = errorColor
                                 )
                                 PokeStatRow(
                                     label = Strings.WEIGHT,
-                                    value = "${item.weight.toDouble() / 10.0} kg"
+                                    value = "${item.weight.toDouble() / 10.0} kg",
+                                    color = errorColor
                                 )
                             }
                         }
                     }
                 }
+
                 else -> {}
             }
         }
@@ -193,7 +225,7 @@ fun PokeTypeBadge(type: String) {
 }
 
 @Composable
-fun PokeStatRow(label: String, value: String) {
+fun PokeStatRow(label: String, value: String, color: Color = COLOR_ERROR) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -202,12 +234,12 @@ fun PokeStatRow(label: String, value: String) {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = label, color = COLOR_ERROR, fontSize = 22.sp, fontWeight = FontWeight.Bold
+            text = label, color = color, fontSize = 22.sp, fontWeight = FontWeight.Bold
         )
         Text(
             text = value,
             modifier = Modifier.padding(start = 10.dp),
-            color = COLOR_ERROR,
+            color = color,
             fontSize = 22.sp
         )
     }
