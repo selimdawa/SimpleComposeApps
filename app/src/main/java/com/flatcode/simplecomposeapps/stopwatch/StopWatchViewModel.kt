@@ -3,8 +3,8 @@ package com.flatcode.simplecomposeapps.stopwatch
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,14 +21,14 @@ class StopWatchViewModel @Inject constructor(
     private val stopWatchDao: StopWatchDao
 ) : ViewModel() {
 
-    private val _timeDisplay = mutableStateOf(DATA.ZERO_TIME)
-    val timeDisplay: State<String> = _timeDisplay
+    private val _timeDisplay = MutableLiveData(DATA.ZERO_TIME)
+    val timeDisplay: LiveData<String> = _timeDisplay
 
-    private val _lastTime = mutableStateOf(DATA.ZERO_TIME)
-    val lastTime: State<String> = _lastTime
+    private val _lastTime = MutableLiveData(DATA.ZERO_TIME)
+    val lastTime: LiveData<String> = _lastTime
 
-    private val _isRunning = mutableStateOf(false)
-    val isRunning: State<Boolean> = _isRunning
+    private val _isRunning = MutableLiveData(false)
+    val isRunning: LiveData<Boolean> = _isRunning
 
     init {
         observeLastTime()
@@ -37,7 +37,7 @@ class StopWatchViewModel @Inject constructor(
     private fun observeLastTime() {
         viewModelScope.launch {
             stopWatchDao.getLastTime().collectLatest {
-                _lastTime.value = it ?: DATA.ZERO_TIME
+                _lastTime.postValue(it ?: DATA.ZERO_TIME)
             }
         }
     }
@@ -66,7 +66,7 @@ class StopWatchViewModel @Inject constructor(
     }
 
     fun startOrPause() {
-        if (!_isRunning.value) {
+        if (!(_isRunning.value ?: false)) {
             tStart = SystemClock.uptimeMillis()
             handler.postDelayed(runnable, 0)
             _isRunning.value = true
@@ -78,8 +78,8 @@ class StopWatchViewModel @Inject constructor(
     }
 
     fun stop() {
-        if (!_isRunning.value) {
-            val finalTime = _timeDisplay.value
+        if (!(_isRunning.value ?: false)) {
+            val finalTime = _timeDisplay.value ?: DATA.ZERO_TIME
             _lastTime.value = finalTime
             viewModelScope.launch {
                 stopWatchDao.saveLastTime(StopWatchEntity(lastTime = finalTime))

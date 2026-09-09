@@ -12,9 +12,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +29,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun StopWatchScreen(
     viewModel: StopWatchViewModel
 ) {
-    val lastTimeValue by viewModel.lastTime
+    val lastTimeValue by viewModel.lastTime.observeAsState(DATA.ZERO_TIME)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {

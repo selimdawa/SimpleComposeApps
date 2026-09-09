@@ -15,6 +15,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,13 +26,14 @@ import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.White
+import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun StopWatchContent(
     viewModel: StopWatchViewModel
 ) {
-    val timeDisplay by viewModel.timeDisplay
-    val isRunning by viewModel.isRunning
+    val timeDisplay by viewModel.timeDisplay.observeAsState(DATA.ZERO_TIME)
+    val isRunning by viewModel.isRunning.observeAsState(false)
 
     Card(
         modifier = Modifier.size(300.dp),
