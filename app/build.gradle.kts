@@ -73,15 +73,11 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.content.negotiation)
-    //OkHttp (For internal Coil or other needs if necessary, but removing direct old refs)
-    implementation(platform(libs.okhttp.bom))
-    implementation(libs.okhttp.core)
-    implementation(libs.okhttp.logging)
     implementation(libs.jsoup)
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    // Room
+    //Room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     //Hilt

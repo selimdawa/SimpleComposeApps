@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.flatcode.simplecomposeapps.stockmarket.ui.CompanyListingsScreen
 import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListings
+import com.flatcode.simplecomposeapps.stockmarket.ui.CompanyListingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,8 +35,7 @@ fun StockMarketNav() {
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable<CompanyListings> {
             CompanyListingsScreen()
         }

@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.stockmarket.network.StockRepository
 import com.flatcode.simplecomposeapps.stockmarket.model.CompanyListingsState
+import com.flatcode.simplecomposeapps.stockmarket.network.StockRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -55,7 +55,7 @@ class CompanyListingsViewModel @Inject constructor(
                     is Resource.Loading -> {
                         state = state.copy(isLoading = result.isLoading)
                     }
-                    
+
                     else -> {}
                 }
             }
