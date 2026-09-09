@@ -33,7 +33,6 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun CryptoDetailScreen(
-    symbol: String,
     coinId: Int,
     onBack: () -> Unit,
     viewModel: CryptoDetailViewModel = hiltViewModel()

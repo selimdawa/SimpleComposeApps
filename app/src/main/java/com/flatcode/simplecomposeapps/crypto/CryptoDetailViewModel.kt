@@ -15,15 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CryptoDetailViewModel @Inject constructor(
-    private val repository: DetailRepository,
-    private val settingsDao: SettingsDao
+    private val repository: DetailRepository
 ) : ViewModel() {
 
-    fun saveLastVisited(id: Int, symbol: String) {
-        viewModelScope.launch {
-            settingsDao.saveSettings(CryptoSettingsEntity(coinId = id, coinSymbol = symbol))
-        }
-    }
 
     private val _cryptoDetail = MutableLiveData<CoinDetail?>(null)
     val cryptoDetail: LiveData<CoinDetail?> = _cryptoDetail

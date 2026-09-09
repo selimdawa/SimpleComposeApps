@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
-import com.flatcode.simplecomposeapps.crypto.db.entity.CryptoSettingsEntity
 import com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
@@ -13,36 +11,13 @@ import com.flatcode.simplecomposeapps.crypto.model.home.Usd
 import com.flatcode.simplecomposeapps.crypto.ui.home.HomeRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CryptoHomeViewModel @Inject constructor(
-    private val repository: HomeRepository,
-    private val settingsDao: SettingsDao
+    private val repository: HomeRepository
 ) : ViewModel() {
-
-    private val _lastVisitedCoinId = MutableLiveData<Int?>(null)
-    val lastVisitedCoinId: LiveData<Int?> = _lastVisitedCoinId
-
-    init {
-        observeSettings()
-    }
-
-    private fun observeSettings() {
-        viewModelScope.launch {
-            settingsDao.getSettings().collectLatest { settings ->
-                _lastVisitedCoinId.postValue(settings?.coinId)
-            }
-        }
-    }
-
-    fun saveLastVisited(id: Int, symbol: String) {
-        viewModelScope.launch {
-            settingsDao.saveSettings(CryptoSettingsEntity(coinId = id, coinSymbol = symbol))
-        }
-    }
 
     private val _cryptoList = MutableLiveData<List<Data>>(emptyList())
     val cryptoList: LiveData<List<Data>> = _cryptoList
