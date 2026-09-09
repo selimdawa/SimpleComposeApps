@@ -18,8 +18,8 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,10 +40,10 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun PopScreen(
     viewModel: PopViewModel = hiltViewModel()
 ) {
-    val pops by viewModel.pops.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val searchQuery by viewModel.searchQuery.collectAsState()
-    val error by viewModel.error.collectAsState()
+    val pops by viewModel.pops.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(true)
+    val searchQuery by viewModel.searchQuery.observeAsState("")
+    val error by viewModel.error.observeAsState()
 
     Scaffold(
         topBar = {

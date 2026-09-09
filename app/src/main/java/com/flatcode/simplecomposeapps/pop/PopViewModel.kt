@@ -1,15 +1,15 @@
 package com.flatcode.simplecomposeapps.pop
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.pop.model.PopItem
 import com.flatcode.simplecomposeapps.pop.repository.FunkoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,16 +18,16 @@ class PopViewModel @Inject constructor(
     private val repository: FunkoRepository
 ) : ViewModel() {
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> = _error
 
     private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery
+    val searchQuery: LiveData<String> = _searchQuery.asLiveData()
 
-    val pops: StateFlow<List<PopItem>> = combine(
+    val pops: LiveData<List<PopItem>> = combine(
         repository.getAllPops(),
         _searchQuery
     ) { pops, query ->
@@ -39,11 +39,7 @@ class PopViewModel @Inject constructor(
                         it.series.contains(query, ignoreCase = true)
             }
         }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        emptyList()
-    )
+    }.asLiveData()
 
     init {
         loadPops()
