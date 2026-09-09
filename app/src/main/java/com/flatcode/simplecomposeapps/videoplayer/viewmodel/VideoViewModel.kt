@@ -7,16 +7,15 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoDao
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,8 +35,8 @@ class VideoViewModel @Inject constructor(
     private val repository: VideoRepository
 ) : AndroidViewModel(application) {
 
-    private val _uiState = MutableStateFlow(VideoUiState())
-    val uiState: StateFlow<VideoUiState> = _uiState
+    private val _uiState = MutableLiveData(VideoUiState())
+    val uiState: LiveData<VideoUiState> = _uiState
 
     private val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean, uri: Uri?) {
@@ -60,7 +59,8 @@ class VideoViewModel @Inject constructor(
             ) { videos, folders, settings ->
                 Triple(videos, folders, settings)
             }.collect { (videos, folders, settings) ->
-                _uiState.update { currentState ->
+                val currentState = _uiState.value ?: VideoUiState()
+                _uiState.postValue(
                     currentState.copy(
                         videoFiles = videos,
                         folderList = folders,
@@ -68,18 +68,20 @@ class VideoViewModel @Inject constructor(
                         lastVideoId = settings?.lastVideoId,
                         lastPosition = settings?.lastPosition ?: 0L
                     )
-                }
+                )
             }
         }
     }
 
     fun loadVideos(isInternalUpdate: Boolean = false) {
         viewModelScope.launch {
+            val currentState = _uiState.value ?: VideoUiState()
             if (!isInternalUpdate) {
-                _uiState.update { it.copy(isRefreshing = true) }
+                _uiState.value = currentState.copy(isRefreshing = true)
             }
             repository.syncWithRoom()
-            _uiState.update { it.copy(isLoading = false, isRefreshing = false) }
+            val updatedState = _uiState.value ?: VideoUiState()
+            _uiState.value = updatedState.copy(isLoading = false, isRefreshing = false)
         }
     }
 

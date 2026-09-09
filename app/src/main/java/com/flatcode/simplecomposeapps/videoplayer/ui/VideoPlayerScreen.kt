@@ -1,11 +1,13 @@
 package com.flatcode.simplecomposeapps.videoplayer.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -15,27 +17,25 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoUiState
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
-
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.style.TextAlign
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +44,7 @@ fun VideoPlayerScreen(
     onVideoClick: (Int) -> Unit,
     onFolderClick: (String) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.observeAsState(VideoUiState())
 
     var selectedTab by remember { mutableIntStateOf(0) }
 

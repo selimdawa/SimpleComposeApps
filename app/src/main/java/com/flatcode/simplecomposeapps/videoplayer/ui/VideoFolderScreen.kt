@@ -9,13 +9,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
+import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoUiState
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +26,7 @@ fun VideoFolderScreen(
     folderName: String,
     onVideoClick: (Int, List<VideoEntity>) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.observeAsState(VideoUiState())
 
     val filteredVideos = remember(uiState.videoFiles, folderName) {
         uiState.videoFiles.filter { it.bucketName == folderName }

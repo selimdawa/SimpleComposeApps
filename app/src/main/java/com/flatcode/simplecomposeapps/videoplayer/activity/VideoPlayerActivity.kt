@@ -43,7 +43,8 @@ class VideoPlayerActivity : ComponentActivity() {
             VideoPlayerScreen(
                 viewModel = viewModel,
                 onVideoClick = { position ->
-                    VideoData.videoFile = ArrayList(viewModel.uiState.value.videoFiles)
+                    val videos = viewModel.uiState.value?.videoFiles ?: emptyList()
+                    VideoData.videoFile = ArrayList(videos)
                     // Navigate to PlayerActivity
                     val intent = Intent(this, PlayerActivity::class.java).apply {
                         putExtra("position", position)
