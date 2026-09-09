@@ -2,7 +2,6 @@ package com.flatcode.simplecomposeapps.countries.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,15 +26,14 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
 fun DashboardScreen(
     onCountryClick: (Int) -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val countries by viewModel.countries.observeAsState(emptyList())
-    val isLoading by viewModel.countryLoading.observeAsState(true)
-    val isError by viewModel.countryError.observeAsState(false)
+    val result by viewModel.countriesResult.observeAsState(Resource.Idle)
 
     LaunchedEffect(Unit) {
         viewModel.refreshData()
@@ -53,36 +51,44 @@ fun DashboardScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (isLoading && countries.isEmpty()) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
-                )
-            } else if (isError) {
-                Text(
-                    text = Strings.ERROR_LOADING_COUNTRIES,
-                    modifier = Modifier.align(Alignment.Center),
-                    color = COLOR_ERROR
-                )
-            } else if (!isLoading && countries.isEmpty()) {
-                Text(
-                    text = Strings.NONE_DISPLAY,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
-                    color = COLOR_ERROR
-                )
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(countries) { country ->
-                        CountryItem(
-                            item = country,
-                            modifier = Modifier.clickable { onCountryClick(country.uuid) })
+            when (result) {
+                is Resource.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                    )
+                }
+                is Resource.Error -> {
+                    Text(
+                        text = result.message ?: Strings.ERROR_LOADING_COUNTRIES,
+                        modifier = Modifier.align(Alignment.Center),
+                        color = COLOR_ERROR
+                    )
+                }
+                is Resource.Success -> {
+                    val countries = result.data ?: emptyList()
+                    if (countries.isEmpty()) {
+                        Text(
+                            text = Strings.NONE_DISPLAY,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(16.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            color = COLOR_ERROR
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(countries) { country ->
+                                CountryItem(
+                                    item = country,
+                                    modifier = Modifier.clickable { onCountryClick(country.uuid) })
+                            }
+                        }
                     }
                 }
+                else -> {}
             }
         }
     }

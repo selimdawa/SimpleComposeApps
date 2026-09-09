@@ -234,7 +234,7 @@ fun MealDetailScreen(
                         if (!it.strYoutube.isNullOrEmpty()) {
                             IconButton(
                                 onClick = {
-                                    val intent = Intent(Intent.ACTION_VIEW, it.strYoutube!!.toUri())
+                                    val intent = Intent(Intent.ACTION_VIEW, it.strYoutube.toUri())
                                     context.startActivity(intent)
                                 }, modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
