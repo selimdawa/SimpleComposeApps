@@ -1,13 +1,13 @@
 package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
 import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
 import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,21 +16,21 @@ class RickLocationsViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
 
-    private val _locations = MutableStateFlow<Resource<List<Location>>>(Resource.Loading())
-    val locations: StateFlow<Resource<List<Location>>> = _locations
+    private val _locations = MutableLiveData<Resource<List<Location>>>(Resource.Loading())
+    val locations: LiveData<Resource<List<Location>>> = _locations
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> = _error
 
     private var currentPage = 1
     private var isLastPage = false
     private val allLocations = mutableListOf<Location>()
 
     fun getLocations() {
-        if (isLastPage || _isLoading.value) return
+        if (isLastPage || (_isLoading.value ?: false)) return
         _isLoading.value = true
         _error.value = null
 

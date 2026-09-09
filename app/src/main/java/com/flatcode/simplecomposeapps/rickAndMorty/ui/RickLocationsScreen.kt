@@ -13,8 +13,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,9 +32,9 @@ import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 fun RickLocationsScreen(
     viewModel: RickLocationsViewModel = hiltViewModel()
 ) {
-    val state by viewModel.locations.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val error by viewModel.error.collectAsState()
+    val state by viewModel.locations.observeAsState(Resource.Loading())
+    val isLoading by viewModel.isLoading.observeAsState(false)
+    val error by viewModel.error.observeAsState()
     val context = LocalContext.current
     val listState = rememberLazyListState()
 
@@ -45,7 +45,7 @@ fun RickLocationsScreen(
     }
 
     LaunchedEffect(Unit) {
-        if (viewModel.locations.value.data.isNullOrEmpty()) {
+        if (state.data.isNullOrEmpty()) {
             viewModel.getLocations()
         }
     }
