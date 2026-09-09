@@ -26,6 +26,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,8 +49,8 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun NewsScreen(
     viewModel: NewsViewModel, onNewsClick: (NewsHeadlines) -> Unit
 ) {
-    val headlines = viewModel.headlines
-    val selectedCategory = viewModel.selectedCategory.value
+    val headlines by viewModel.headlines.observeAsState(emptyList())
+    val selectedCategory by viewModel.selectedCategory.observeAsState("general")
 
     var searchQuery by remember { mutableStateOf("") }
 

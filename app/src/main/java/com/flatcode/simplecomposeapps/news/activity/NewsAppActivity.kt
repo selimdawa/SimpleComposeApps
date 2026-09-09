@@ -46,7 +46,7 @@ fun NewsNavHost(viewModel: NewsViewModel) {
             NewsScreen(
                 viewModel = viewModel,
                 onNewsClick = { headline ->
-                    viewModel.selectedHeadline.value = headline
+                    viewModel.selectHeadline(headline)
                     navController.navigate("details")
                 }
             )

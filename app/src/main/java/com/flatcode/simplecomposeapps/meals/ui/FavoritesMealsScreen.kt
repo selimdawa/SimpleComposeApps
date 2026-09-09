@@ -30,18 +30,14 @@ fun FavoritesMealsScreen(
     onMealClick: (String, String, String) -> Unit,
     viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
-    val favorites by viewModel.observeFavoritesMealsLiveData().observeAsState()
+    val favorites by viewModel.favoritesMeals.observeAsState(emptyList())
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(COLOR_ON_BACKGROUND)
     ) {
-        if (favorites == null) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center), color = MC_TRACK
-            )
-        } else if (favorites!!.isEmpty()) {
+        if (favorites.isEmpty()) {
             Text(
                 text = Strings.NO_DATA_FOUND,
                 modifier = Modifier.align(Alignment.Center),
@@ -56,7 +52,7 @@ fun FavoritesMealsScreen(
                     .fillMaxSize()
                     .padding(horizontal = 5.dp)
             ) {
-                items(favorites!!) { meal ->
+                items(favorites) { meal ->
                     MealItem(
                         item = meal, modifier = Modifier.clickable {
                             onMealClick(

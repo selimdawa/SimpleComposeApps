@@ -39,6 +39,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
 fun HomeMealsScreen(
@@ -46,9 +47,9 @@ fun HomeMealsScreen(
     onCategoryClick: (String) -> Unit,
     viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
-    val randomMeal by viewModel.observeRandomMealLiveData().observeAsState()
-    val popularItems by viewModel.observerPopularItemsLiveData().observeAsState()
-    val categories by viewModel.observeCategoriesLiveData().observeAsState()
+    val randomMealResult by viewModel.randomMeal.observeAsState(Resource.Idle)
+    val popularItemsResult by viewModel.popularItems.observeAsState(Resource.Idle)
+    val categoriesResult by viewModel.categories.observeAsState(Resource.Idle)
 
     LaunchedEffect(Unit) {
         viewModel.getRandomMeal()
@@ -63,7 +64,6 @@ fun HomeMealsScreen(
             .verticalScroll(rememberScrollState())
             .padding(start = 5.dp, end = 5.dp)
     ) {
-        // What would you like to eat?
         Text(
             modifier = Modifier.padding(horizontal = 5.dp),
             text = Strings.WHAT_WOULD_YOU_LIKE_TO_EAT,
@@ -75,25 +75,35 @@ fun HomeMealsScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         // Random Meal
-        randomMeal?.let { meal ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.8f)
-                    .padding(start = 5.dp, end = 5.dp)
-                    .clickable {
-                        onMealClick(
-                            meal.idMeal, meal.strMeal ?: "", meal.strMealThumb ?: ""
-                        )
-                    }, shape = RoundedCornerShape(12.dp)
-            ) {
-                AsyncImage(
-                    model = meal.strMealThumb,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+        when (randomMealResult) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
+            is Resource.Success -> {
+                randomMealResult.data?.let { meal ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1.8f)
+                            .padding(start = 5.dp, end = 5.dp)
+                            .clickable {
+                                onMealClick(
+                                    meal.idMeal, meal.strMeal ?: "", meal.strMealThumb ?: ""
+                                )
+                            }, shape = RoundedCornerShape(12.dp)
+                    ) {
+                        AsyncImage(
+                            model = meal.strMealThumb,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
+            else -> {}
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -109,83 +119,90 @@ fun HomeMealsScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (popularItems == null) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
-            )
-        } else if (popularItems!!.isEmpty()) {
-            Text(
-                modifier = Modifier.padding(horizontal = 5.dp),
-                text = Strings.NO_DATA_FOUND,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                color = COLOR_ERROR
-            )
-        } else {
-            LazyRow {
-                items(popularItems!!) { meal ->
-                    PopularMealItem(
-                        item = Meal(
-                            idMeal = meal.idMeal,
-                            strMeal = meal.strMeal,
-                            strMealThumb = meal.strMealThumb,
-                            dateModified = null,
-                            strArea = null,
-                            strCategory = null,
-                            strCreativeCommonsConfirmed = null,
-                            strDrinkAlternate = null,
-                            strImageSource = null,
-                            strIngredient1 = null,
-                            strIngredient10 = null,
-                            strIngredient11 = null,
-                            strIngredient12 = null,
-                            strIngredient13 = null,
-                            strIngredient14 = null,
-                            strIngredient15 = null,
-                            strIngredient16 = null,
-                            strIngredient17 = null,
-                            strIngredient18 = null,
-                            strIngredient19 = null,
-                            strIngredient2 = null,
-                            strIngredient20 = null,
-                            strIngredient3 = null,
-                            strIngredient4 = null,
-                            strIngredient5 = null,
-                            strIngredient6 = null,
-                            strIngredient7 = null,
-                            strIngredient8 = null,
-                            strIngredient9 = null,
-                            strInstructions = null,
-                            strMeasure1 = null,
-                            strMeasure10 = null,
-                            strMeasure11 = null,
-                            strMeasure12 = null,
-                            strMeasure13 = null,
-                            strMeasure14 = null,
-                            strMeasure15 = null,
-                            strMeasure16 = null,
-                            strMeasure17 = null,
-                            strMeasure18 = null,
-                            strMeasure19 = null,
-                            strMeasure2 = null,
-                            strMeasure20 = null,
-                            strMeasure3 = null,
-                            strMeasure4 = null,
-                            strMeasure5 = null,
-                            strMeasure6 = null,
-                            strMeasure7 = null,
-                            strMeasure8 = null,
-                            strMeasure9 = null,
-                            strSource = null,
-                            strTags = null,
-                            strYoutube = null
-                        ), modifier = Modifier.clickable {
-                            onMealClick(
-                                meal.idMeal, meal.strMeal, meal.strMealThumb
-                            )
-                        })
+        when (popularItemsResult) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
+                )
+            }
+            is Resource.Success -> {
+                val popularItems = popularItemsResult.data ?: emptyList()
+                if (popularItems.isEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 5.dp),
+                        text = Strings.NO_DATA_FOUND,
+                        textAlign = TextAlign.Center,
+                        fontSize = 16.sp,
+                        color = COLOR_ERROR
+                    )
+                } else {
+                    LazyRow {
+                        items(popularItems) { meal ->
+                            PopularMealItem(
+                                item = Meal(
+                                    idMeal = meal.idMeal,
+                                    strMeal = meal.strMeal,
+                                    strMealThumb = meal.strMealThumb,
+                                    dateModified = null,
+                                    strArea = null,
+                                    strCategory = null,
+                                    strCreativeCommonsConfirmed = null,
+                                    strDrinkAlternate = null,
+                                    strImageSource = null,
+                                    strIngredient1 = null,
+                                    strIngredient10 = null,
+                                    strIngredient11 = null,
+                                    strIngredient12 = null,
+                                    strIngredient13 = null,
+                                    strIngredient14 = null,
+                                    strIngredient15 = null,
+                                    strIngredient16 = null,
+                                    strIngredient17 = null,
+                                    strIngredient18 = null,
+                                    strIngredient19 = null,
+                                    strIngredient2 = null,
+                                    strIngredient20 = null,
+                                    strIngredient3 = null,
+                                    strIngredient4 = null,
+                                    strIngredient5 = null,
+                                    strIngredient6 = null,
+                                    strIngredient7 = null,
+                                    strIngredient8 = null,
+                                    strIngredient9 = null,
+                                    strInstructions = null,
+                                    strMeasure1 = null,
+                                    strMeasure10 = null,
+                                    strMeasure11 = null,
+                                    strMeasure12 = null,
+                                    strMeasure13 = null,
+                                    strMeasure14 = null,
+                                    strMeasure15 = null,
+                                    strMeasure16 = null,
+                                    strMeasure17 = null,
+                                    strMeasure18 = null,
+                                    strMeasure19 = null,
+                                    strMeasure2 = null,
+                                    strMeasure20 = null,
+                                    strMeasure3 = null,
+                                    strMeasure4 = null,
+                                    strMeasure5 = null,
+                                    strMeasure6 = null,
+                                    strMeasure7 = null,
+                                    strMeasure8 = null,
+                                    strMeasure9 = null,
+                                    strSource = null,
+                                    strTags = null,
+                                    strYoutube = null
+                                ), modifier = Modifier.clickable {
+                                    onMealClick(
+                                        meal.idMeal, meal.strMeal, meal.strMealThumb
+                                    )
+                                })
+                        }
+                    }
                 }
             }
+            else -> {}
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -201,38 +218,45 @@ fun HomeMealsScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (categories == null) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
-            )
-        } else if (categories!!.isEmpty()) {
-            Text(
-                text = Strings.NO_DATA_FOUND,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                color = COLOR_ERROR
-            )
-        } else {
-            Column {
-                categories!!.chunked(3).forEach { rowItems ->
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        rowItems.forEach { category ->
-                            Box(modifier = Modifier.weight(1f)) {
-                                CategoryMealItem(
-                                    item = category, modifier = Modifier.clickable {
-                                        onCategoryClick(
-                                            category.strCategory
-                                        )
-                                    })
+        when (categoriesResult) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
+                )
+            }
+            is Resource.Success -> {
+                val categories = categoriesResult.data ?: emptyList()
+                if (categories.isEmpty()) {
+                    Text(
+                        text = Strings.NO_DATA_FOUND,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontSize = 16.sp,
+                        color = COLOR_ERROR
+                    )
+                } else {
+                    Column {
+                        categories.chunked(3).forEach { rowItems ->
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                rowItems.forEach { category ->
+                                    Box(modifier = Modifier.weight(1f)) {
+                                        CategoryMealItem(
+                                            item = category, modifier = Modifier.clickable {
+                                                onCategoryClick(
+                                                    category.strCategory
+                                                )
+                                            })
+                                    }
+                                }
+                                repeat(3 - rowItems.size) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
-                        }
-                        repeat(3 - rowItems.size) {
-                            Spacer(modifier = Modifier.weight(1f))
                         }
                     }
                 }
             }
+            else -> {}
         }
     }
 }
