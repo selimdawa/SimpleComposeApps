@@ -16,7 +16,7 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
-class CompanyListingsViewModel @Inject constructor(
+class StockMarketViewModel @Inject constructor(
     private val repository: StockRepository
 ) : ViewModel() {
 

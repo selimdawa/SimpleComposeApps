@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.stockmarket.viewmodel.CompanyListingsViewModel
+import com.flatcode.simplecomposeapps.stockmarket.viewmodel.StockMarketViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
@@ -34,7 +34,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompanyListingsScreen(
-    viewModel: CompanyListingsViewModel = hiltViewModel(),
+    viewModel: StockMarketViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state
 
