@@ -278,7 +278,7 @@ object DATA {
         MainInfo(COUNTRIES, 1, 1, 1, 1),
         MainInfo(CALCULATOR, 1, 1, 1, 1),
         MainInfo(CRYPTO, 1, 1, 1, 1),
-        MainInfo(DICTIONARY, 1, 0, 1, 1),
+        MainInfo(DICTIONARY, 1, 1, 1, 1),
         MainInfo(MEALS, 1, 1, 1, 1),
         MainInfo(POP, 1, 1, 1, 1),
         MainInfo(MOVIE, 1, 1, 1, 1),

@@ -37,7 +37,5 @@ class MainActivity : ComponentActivity() {
                     infoViewModel = mainInfoViewModel, onDismiss = { showAboutDialog = false })
             }
         }
-
-        mainViewModel.getItems()
     }
 }

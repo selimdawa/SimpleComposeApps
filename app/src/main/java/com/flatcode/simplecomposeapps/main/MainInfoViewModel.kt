@@ -3,17 +3,23 @@ package com.flatcode.simplecomposeapps.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flatcode.simplecomposeapps.utils.DATA
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.main.data.MainInfoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainInfoViewModel @Inject constructor() : ViewModel() {
+class MainInfoViewModel @Inject constructor(
+    private val repository: MainInfoRepository
+) : ViewModel() {
 
     private val _dataMainInfo = MutableLiveData<List<MainInfo>>()
     val dataMainInfo: LiveData<List<MainInfo>> = _dataMainInfo
 
     fun getInfoItems() {
-        _dataMainInfo.value = DATA.MAIN_INFO_DATA
+        viewModelScope.launch {
+            _dataMainInfo.value = repository.getInfoItems()
+        }
     }
 }
