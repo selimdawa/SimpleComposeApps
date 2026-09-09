@@ -89,12 +89,9 @@ object Strings {
     const val TASKS = "Tasks"
     const val MSG_TASK_ADDED = "Task Added"
     const val MSG_TASK_UPDATED = "Task updated"
-    const val MSG_ALL_COMPLETED_TASKS_DELETED = "All completed tasks deleted."
     const val MSG_TASK_DELETED = "Task deleted"
-    const val ACTION_UNDO = "UNDO"
     const val TITLE_NEW_TASK = "New Task"
     const val TITLE_EDIT_TASK = "Edit Task"
-    const val ADD_EDIT_TASK = "addEditTask"
     const val ADD_TASK = "Add Task"
     const val SORT_BY_NAME = "Sort by name"
     const val SORT_BY_DATE = "Sort by date created"
@@ -110,7 +107,6 @@ object Strings {
     const val MSG_ALL_NOTES_DELETED = "All notes deleted."
     const val TITLE_NEW_NOTE = "New Note"
     const val TITLE_EDIT_NOTE = "Edit Note"
-    const val ADD_EDIT_NOTE = "addEditNote"
     const val ADD_NOTE = "Add Note"
     const val NO_NOTES_FOUND = "No notes found"
     const val NO_TASKS_FOUND = "No tasks found"
@@ -119,12 +115,6 @@ object Strings {
     const val IMPORTANT_TASK = "Important Task"
     const val TASK = "Task"
     const val EMPTY = "Empty"
-    const val _0 = "0"
-    const val IMAGE_INFO = "Image Info"
-    const val DESCRIPTION = "Description"
-    const val TEMPERAMENT = "Temperament"
-    const val WIKIPEDIA = "Wikipedia"
-    const val MORE_INFO = "More Info"
     fun releaseDate(date: String) = "Release Date: $date"
 
     fun numberPlaceholder(n: Int) = n.toString()
@@ -156,9 +146,6 @@ object Strings {
 
     //PDF Reader
     const val PICK_FILE = "Pick File"
-    const val TITLE_PERMISSION = "Storage Permissions"
-    const val DESCRIPTION_PERMISSION =
-        "You will now be prompted to allow the app to access the phone's storage. Without this permission, documents might fail to open in some cases."
     const val SHARE_FILE = "Share File"
     const val PRINT = "Print File"
     const val FULL_SCREEN = "Full Screen"
@@ -186,7 +173,6 @@ object Strings {
 
     // Other
     const val NO_DATA_FOUND = "No Data Found"
-    const val NO_INFORMATION = "No information"
     const val UNKNOWN_ERROR = "An unknown error occurred"
     const val CLOSE = "Close"
     const val BACK = "Back"
