@@ -8,30 +8,29 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
+import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
-import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
-
-
-import androidx.compose.material3.Text
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressUiState
+import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 
 @Composable
 fun WordpressScreen(
     viewModel: WordpressViewModel, onPostClick: (Int) -> Unit, onFavoritesClick: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.observeAsState(WordpressUiState())
 
     Scaffold(
         topBar = {
