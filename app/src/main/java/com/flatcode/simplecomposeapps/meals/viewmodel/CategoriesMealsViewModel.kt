@@ -5,30 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
-import com.flatcode.simplecomposeapps.meals.data.network.MealApi
+import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesMealsViewModel @Inject constructor(
-    private val mealApi: MealApi
+    private val repository: MealRepository
 ) : ViewModel() {
 
-    private var mealsLiveData = MutableLiveData<List<MealsByCategory>>()
+    private val _meals = MutableLiveData<Resource<List<MealsByCategory>>>()
+    val meals: LiveData<Resource<List<MealsByCategory>>> = _meals
 
     fun getMealsByCategory(categoryName: String) {
         viewModelScope.launch {
-            try {
-                val response = mealApi.getMealsByCategory(categoryName)
-                mealsLiveData.postValue(response.meals)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            _meals.value = Resource.Loading()
+            _meals.value = repository.getMealsByCategory(categoryName)
         }
-    }
-
-    fun observeMealsLiveData(): LiveData<List<MealsByCategory>> {
-        return mealsLiveData
     }
 }

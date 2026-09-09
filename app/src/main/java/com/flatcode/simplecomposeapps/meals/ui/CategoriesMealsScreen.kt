@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.meals.viewmodel.MealsHomeViewModel
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
@@ -31,7 +32,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 fun CategoriesMealsScreen(
     onCategoryClick: (String) -> Unit, viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
-    val categories by viewModel.observeCategoriesLiveData().observeAsState()
+    val categoriesResult by viewModel.categories.observeAsState(Resource.Idle)
 
     LaunchedEffect(Unit) {
         viewModel.getCategories()
@@ -42,35 +43,51 @@ fun CategoriesMealsScreen(
             .fillMaxSize()
             .background(COLOR_ON_BACKGROUND)
     ) {
-        if (categories == null) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center), color = MC_TRACK
-            )
-        } else if (categories!!.isEmpty()) {
-            Text(
-                text = Strings.NO_DATA_FOUND,
-                modifier = Modifier.align(Alignment.Center),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                color = COLOR_ERROR
-            )
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(0.dp),
-                verticalArrangement = Arrangement.spacedBy(0.dp)
-            ) {
-                items(categories!!) { category ->
-                    CategoryMealItem(
-                        item = category, modifier = Modifier.clickable {
-                            onCategoryClick(
-                                category.strCategory
-                            )
-                        })
+        when (categoriesResult) {
+            is Resource.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                )
+            }
+            is Resource.Success -> {
+                val categories = categoriesResult.data ?: emptyList()
+                if (categories.isEmpty()) {
+                    Text(
+                        text = Strings.NO_DATA_FOUND,
+                        modifier = Modifier.align(Alignment.Center),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp,
+                        color = COLOR_ERROR
+                    )
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(3),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(horizontal = 10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(0.dp),
+                        verticalArrangement = Arrangement.spacedBy(0.dp)
+                    ) {
+                        items(categories) { category ->
+                            CategoryMealItem(
+                                item = category, modifier = Modifier.clickable {
+                                    onCategoryClick(
+                                        category.strCategory
+                                    )
+                                })
+                        }
+                    }
                 }
             }
+            is Resource.Error -> {
+                Text(
+                    text = categoriesResult.message ?: Strings.UNKNOWN_ERROR,
+                    modifier = Modifier.align(Alignment.Center),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    color = COLOR_ERROR
+                )
+            }
+            else -> {}
         }
     }
 }

@@ -4,86 +4,61 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.meals.db.MealDao
 import com.flatcode.simplecomposeapps.meals.model.Category
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
-import com.flatcode.simplecomposeapps.meals.data.network.MealApi
+import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MealsHomeViewModel @Inject constructor(
-    private val mealApi: MealApi,
-    private val mealDao: MealDao
+    private val repository: MealRepository
 ) : ViewModel() {
 
-    private var randomMealLiveData = MutableLiveData<Meal>()
-    private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
-    private var categoriesLiveData = MutableLiveData<List<Category>>()
-    private var favoritesMealsLiveData = mealDao.getAllMeals()
+    private val _randomMeal = MutableLiveData<Resource<Meal>>()
+    val randomMeal: LiveData<Resource<Meal>> = _randomMeal
+
+    private val _popularItems = MutableLiveData<Resource<List<MealsByCategory>>>()
+    val popularItems: LiveData<Resource<List<MealsByCategory>>> = _popularItems
+
+    private val _categories = MutableLiveData<Resource<List<Category>>>()
+    val categories: LiveData<Resource<List<Category>>> = _categories
+
+    val favoritesMeals: LiveData<List<Meal>> = repository.getFavoriteMeals()
 
     fun getRandomMeal() {
         viewModelScope.launch {
-            try {
-                val response = mealApi.getRandomMeal()
-                if (response.meals.isNotEmpty()) {
-                    randomMealLiveData.value = response.meals[0]
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            _randomMeal.value = Resource.Loading()
+            _randomMeal.value = repository.getRandomMeal()
         }
     }
 
     fun getPopularItems() {
         viewModelScope.launch {
-            try {
-                val response = mealApi.getPopularItems("Seafood")
-                popularItemsLiveData.value = response.meals
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            _popularItems.value = Resource.Loading()
+            _popularItems.value = repository.getPopularItems("Seafood")
         }
     }
 
     fun getCategories() {
         viewModelScope.launch {
-            try {
-                val response = mealApi.getCategories()
-                categoriesLiveData.postValue(response.categories)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            _categories.value = Resource.Loading()
+            _categories.value = repository.getCategories()
         }
     }
 
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
-            mealDao.upsert(meal)
+            repository.upsertMeal(meal)
         }
     }
 
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
-            mealDao.delete(meal)
+            repository.deleteMeal(meal)
         }
-    }
-
-    fun observeRandomMealLiveData(): LiveData<Meal> {
-        return randomMealLiveData
-    }
-
-    fun observerPopularItemsLiveData(): LiveData<List<MealsByCategory>> {
-        return popularItemsLiveData
-    }
-
-    fun observeCategoriesLiveData(): LiveData<List<Category>> {
-        return categoriesLiveData
-    }
-
-    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> {
-        return favoritesMealsLiveData
     }
 }

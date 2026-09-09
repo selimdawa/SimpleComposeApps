@@ -4,50 +4,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.meals.db.MealDao
 import com.flatcode.simplecomposeapps.meals.model.Meal
-import com.flatcode.simplecomposeapps.meals.data.network.MealApi
+import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
+import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MealDetailViewModel @Inject constructor(
-    private val mealApi: MealApi, private val mealDao: MealDao
+    private val repository: MealRepository
 ) : ViewModel() {
 
-    private var mealDetailsLiveData = MutableLiveData<Meal>()
+    private val _mealDetails = MutableLiveData<Resource<Meal>>()
+    val mealDetails: LiveData<Resource<Meal>> = _mealDetails
 
     fun getMealDetail(id: String) {
         viewModelScope.launch {
-            try {
-                val response = mealApi.getMealDetails(id)
-                if (response.meals.isNotEmpty()) {
-                    mealDetailsLiveData.value = response.meals[0]
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            _mealDetails.value = Resource.Loading()
+            _mealDetails.value = repository.getMealDetails(id)
         }
     }
 
-    fun observeMealDetailsLiveData(): LiveData<Meal> {
-        return mealDetailsLiveData
-    }
-
     fun isMealFavorite(id: String): LiveData<Meal?> {
-        return mealDao.getMealById(id)
+        return repository.getMealById(id)
     }
 
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
-            mealDao.upsert(meal)
+            repository.upsertMeal(meal)
         }
     }
 
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
-            mealDao.delete(meal)
+            repository.deleteMeal(meal)
         }
     }
 }
