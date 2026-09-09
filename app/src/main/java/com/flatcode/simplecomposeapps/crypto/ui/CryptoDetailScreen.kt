@@ -13,7 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +38,8 @@ fun CryptoDetailScreen(
     onBack: () -> Unit,
     viewModel: CryptoDetailViewModel = hiltViewModel()
 ) {
-    val coinDetail by viewModel.cryptoDetail.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
+    val coinDetail by viewModel.cryptoDetail.observeAsState()
+    val isLoading by viewModel.isLoading.observeAsState(true)
 
     LaunchedEffect(coinId) {
         viewModel.getCryptoDetail(DATA.API_KEY_CRYPTO, coinId)

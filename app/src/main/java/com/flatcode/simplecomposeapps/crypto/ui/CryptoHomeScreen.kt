@@ -11,7 +11,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -30,8 +30,8 @@ fun CryptoHomeScreen(
     onCoinClick: (String, Int) -> Unit,
     viewModel: CryptoHomeViewModel = hiltViewModel()
 ) {
-    val cryptoList by viewModel.cryptoList.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
+    val cryptoList by viewModel.cryptoList.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(true)
 
     val listState = rememberLazyListState()
     val shouldLoadMore by remember {

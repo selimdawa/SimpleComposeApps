@@ -1,5 +1,7 @@
 package com.flatcode.simplecomposeapps.crypto
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
@@ -8,10 +10,6 @@ import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.ui.detail.DetailRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,14 +25,14 @@ class CryptoDetailViewModel @Inject constructor(
         }
     }
 
-    private val _cryptoDetail = MutableStateFlow<CoinDetail?>(null)
-    val cryptoDetail: StateFlow<CoinDetail?> = _cryptoDetail
+    private val _cryptoDetail = MutableLiveData<CoinDetail?>(null)
+    val cryptoDetail: LiveData<CoinDetail?> = _cryptoDetail
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error = MutableSharedFlow<String?>()
-    val error: SharedFlow<String?> = _error
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> = _error
 
     fun getCryptoDetail(apiKey: String, id: Int) {
         viewModelScope.launch {
@@ -45,13 +43,9 @@ class CryptoDetailViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _error.emit(result.message)
+                    _error.value = result.message
                 }
 
-                is Resource.Loading -> {
-                    // Handle loading
-                }
-                
                 else -> {}
             }
             _isLoading.value = false

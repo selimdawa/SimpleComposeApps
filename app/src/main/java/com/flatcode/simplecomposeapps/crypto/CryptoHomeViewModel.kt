@@ -1,5 +1,7 @@
 package com.flatcode.simplecomposeapps.crypto
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.crypto.db.dao.SettingsDao
@@ -11,10 +13,6 @@ import com.flatcode.simplecomposeapps.crypto.model.home.Usd
 import com.flatcode.simplecomposeapps.crypto.ui.home.HomeRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,8 +23,8 @@ class CryptoHomeViewModel @Inject constructor(
     private val settingsDao: SettingsDao
 ) : ViewModel() {
 
-    private val _lastVisitedCoinId = MutableStateFlow<Int?>(null)
-    val lastVisitedCoinId: StateFlow<Int?> = _lastVisitedCoinId
+    private val _lastVisitedCoinId = MutableLiveData<Int?>(null)
+    val lastVisitedCoinId: LiveData<Int?> = _lastVisitedCoinId
 
     init {
         observeSettings()
@@ -35,7 +33,7 @@ class CryptoHomeViewModel @Inject constructor(
     private fun observeSettings() {
         viewModelScope.launch {
             settingsDao.getSettings().collectLatest { settings ->
-                _lastVisitedCoinId.value = settings?.coinId
+                _lastVisitedCoinId.postValue(settings?.coinId)
             }
         }
     }
@@ -46,14 +44,14 @@ class CryptoHomeViewModel @Inject constructor(
         }
     }
 
-    private val _cryptoList = MutableStateFlow<List<Data>>(emptyList())
-    val cryptoList: StateFlow<List<Data>> = _cryptoList
+    private val _cryptoList = MutableLiveData<List<Data>>(emptyList())
+    val cryptoList: LiveData<List<Data>> = _cryptoList
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _error = MutableSharedFlow<String?>()
-    val error: SharedFlow<String?> = _error
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> = _error
 
     private var currentPage = 1
 
@@ -61,8 +59,7 @@ class CryptoHomeViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
 
-            // Try cache first if it's the first page
-            if (currentPage == 1 && _cryptoList.value.isEmpty()) {
+            if (currentPage == 1 && (_cryptoList.value ?: emptyList()).isEmpty()) {
                 val cached = repository.getCachedCoins()
                 if (cached.isNotEmpty()) {
                     _cryptoList.value = cached.map { entity ->
@@ -90,19 +87,15 @@ class CryptoHomeViewModel @Inject constructor(
     private fun handleResult(result: Resource<CryptoResponse>) {
         when (result) {
             is Resource.Success -> {
-                val newList = _cryptoList.value.toMutableList()
+                val newList = (_cryptoList.value ?: emptyList()).toMutableList()
                 result.data?.data?.let { newList.addAll(it) }
                 _cryptoList.value = newList
             }
 
             is Resource.Error -> {
-                viewModelScope.launch { _error.emit(result.message) }
+                _error.value = result.message
             }
 
-            is Resource.Loading -> {
-                // Handle loading if needed
-            }
-            
             else -> {}
         }
     }
