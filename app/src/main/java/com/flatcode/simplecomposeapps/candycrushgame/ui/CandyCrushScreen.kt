@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,8 +40,8 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun CandyCrushScreen(
     viewModel: CandyCrushViewModel
 ) {
-    val score by viewModel.score
-    val board = viewModel.board
+    val score by viewModel.score.observeAsState(0)
+    val board by viewModel.board.observeAsState(emptyList())
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
