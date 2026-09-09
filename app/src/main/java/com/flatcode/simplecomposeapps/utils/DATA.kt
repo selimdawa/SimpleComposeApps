@@ -491,5 +491,6 @@ object DATA {
     const val TIME = "time"
 
     const val IMAGE_NAME = "imageName"
+    const val TITLE = "title"
     const val SERIES = "series"
 }

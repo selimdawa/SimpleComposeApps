@@ -19,13 +19,10 @@ import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.pdfreader.ui.PdfReaderScreen
-import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfUiState
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,14 +35,14 @@ class PdfReaderActivity : ComponentActivity() {
     private val viewModel: PdfViewModel by viewModels()
 
     private val documentPickerLauncher = registerForActivityResult(OpenDocument()) { selectedUri ->
-        selectedUri?.let { viewModel.setUri(it) }
+        selectedUri?.let { handleUri(it) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        intent.data?.let { viewModel.setUri(it) }
+        intent.data?.let { handleUri(it) }
 
         if (viewModel.uiState.value?.uri == null) {
             documentPickerLauncher.launch(arrayOf("application/pdf"))
@@ -56,9 +53,20 @@ class PdfReaderActivity : ComponentActivity() {
                 viewModel = viewModel,
                 onPickFile = { documentPickerLauncher.launch(arrayOf("application/pdf")) },
                 onShare = { shareFile() },
-                onPrint = { printDocument() }
-            )
+                onPrint = { printDocument() })
         }
+    }
+
+    private fun handleUri(uri: Uri) {
+        if (uri.scheme == "content") {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: SecurityException) {
+            }
+        }
+        viewModel.setUri(uri)
     }
 
     private fun shareFile() {
@@ -97,8 +105,7 @@ class PdfReaderActivity : ComponentActivity() {
             }
             val info = PrintDocumentInfo.Builder("document.pdf")
                 .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                .setPageCount(PrintDocumentInfo.PAGE_COUNT_UNKNOWN)
-                .build()
+                .setPageCount(PrintDocumentInfo.PAGE_COUNT_UNKNOWN).build()
             callback?.onLayoutFinished(info, true)
         }
 
@@ -125,10 +132,7 @@ class PdfReaderActivity : ComponentActivity() {
 
 @Composable
 fun PdfReaderNavHost(
-    viewModel: PdfViewModel,
-    onPickFile: () -> Unit,
-    onShare: () -> Unit,
-    onPrint: () -> Unit
+    viewModel: PdfViewModel, onPickFile: () -> Unit, onShare: () -> Unit, onPrint: () -> Unit
 ) {
     val navController = rememberNavController()
     NavHost(
@@ -137,8 +141,7 @@ fun PdfReaderNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
-    ) {
+        popExitTransition = { ExitTransition.None }) {
         composable("reader") {
             PdfReaderScreen(
                 viewModel = viewModel,
@@ -146,8 +149,7 @@ fun PdfReaderNavHost(
                 onMeta = { /* Reverted */ },
                 onShare = onShare,
                 onPrint = onPrint,
-                onFullscreen = { viewModel.toggleBottomBar() }
-            )
+                onFullscreen = { viewModel.toggleBottomBar() })
         }
     }
 }
