@@ -58,8 +58,7 @@ class FunkoRepository @Inject constructor(
                 listData.add(PopItem(i, name, img, series))
             }
 
-            popDao.deleteAllPops()
-            popDao.insertPops(listData)
+            popDao.refreshPops(listData)
         }
     }
 

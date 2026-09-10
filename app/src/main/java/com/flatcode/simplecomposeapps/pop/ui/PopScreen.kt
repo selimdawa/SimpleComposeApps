@@ -91,30 +91,7 @@ fun PopScreen(
             )
 
             Box(modifier = Modifier.fillMaxSize()) {
-                if (isLoading && pops.isEmpty()) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center), color = MC_TRACK
-                    )
-                } else if (error != null && pops.isEmpty()) {
-                    Text(
-                        text = error ?: Strings.ERROR,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center,
-                        color = COLOR_ERROR
-                    )
-                } else if (pops.isEmpty()) {
-                    Text(
-                        text = Strings.NONE_DISPLAY,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 18.sp,
-                        color = COLOR_ERROR
-                    )
-                } else {
+                if (pops.isNotEmpty()) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
@@ -124,6 +101,29 @@ fun PopScreen(
                             PopItem(item = pop)
                         }
                     }
+                } else if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center), color = MC_TRACK
+                    )
+                } else if (error != null) {
+                    Text(
+                        text = error ?: Strings.ERROR,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        color = COLOR_ERROR
+                    )
+                } else {
+                    Text(
+                        text = Strings.NONE_DISPLAY,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 18.sp,
+                        color = COLOR_ERROR
+                    )
                 }
             }
         }

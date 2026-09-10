@@ -10,8 +10,11 @@ import com.flatcode.simplecomposeapps.pop.repository.FunkoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class PopViewModel @Inject constructor(
@@ -51,6 +54,9 @@ class PopViewModel @Inject constructor(
             try {
                 repository.loadPops()
                 _error.value = null
+                withTimeoutOrNull(2000.milliseconds) {
+                    repository.getAllPops().first { it.isNotEmpty() }
+                }
             } catch (e: Exception) {
                 _error.value = e.message
             }

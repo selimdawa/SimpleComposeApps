@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.flatcode.simplecomposeapps.pop.model.PopItem
 import kotlinx.coroutines.flow.Flow
 
@@ -17,4 +18,10 @@ interface PopDao {
 
     @Query("DELETE FROM pops")
     suspend fun deleteAllPops()
+
+    @Transaction
+    suspend fun refreshPops(pops: List<PopItem>) {
+        deleteAllPops()
+        insertPops(pops)
+    }
 }
