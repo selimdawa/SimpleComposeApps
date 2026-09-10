@@ -17,15 +17,24 @@ interface RickAndMortyDao {
     @Query("SELECT * FROM characters")
     fun getAllCharacters(): Flow<List<Character>>
 
+    @Query("SELECT * FROM characters")
+    suspend fun getCharacters(): List<Character>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEpisodes(episodes: List<Episode>)
 
     @Query("SELECT * FROM episodes")
     fun getAllEpisodes(): Flow<List<Episode>>
 
+    @Query("SELECT * FROM episodes")
+    suspend fun getEpisodes(): List<Episode>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLocations(locations: List<Location>)
 
     @Query("SELECT * FROM locations")
     fun getAllLocations(): Flow<List<Location>>
+
+    @Query("SELECT * FROM locations")
+    suspend fun getLocations(): List<Location>
 }
