@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.meals.model.Meal
-import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
+import com.flatcode.simplecomposeapps.meals.repository.MealRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,13 +32,13 @@ class MealDetailViewModel @Inject constructor(
 
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
-            repository.upsertMeal(meal)
+            repository.upsertMeal(meal.copy(isFavorite = true))
         }
     }
 
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
-            repository.deleteMeal(meal)
+            repository.upsertMeal(meal.copy(isFavorite = false))
         }
     }
 }

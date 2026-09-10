@@ -147,7 +147,7 @@ fun CategoryMealsScreen(
 
                 is Resource.Error -> {
                     Text(
-                        text = mealsResult.message ?: Strings.UNKNOWN_ERROR,
+                        text = mealsResult.message ?: Strings.FAILED_LOAD_DATA,
                         modifier = Modifier.align(Alignment.Center),
                         textAlign = TextAlign.Center,
                         fontSize = 20.sp,

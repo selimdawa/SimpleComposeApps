@@ -22,7 +22,7 @@ object MealDatabaseModule {
             context,
             MealDatabase::class.java,
             "meal_db"
-        ).build()
+        ).fallbackToDestructiveMigration(true).build()
     }
 
     @Provides

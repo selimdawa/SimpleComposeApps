@@ -43,7 +43,7 @@ fun CategoryMealItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
-                    model = item.strCategoryThumb,
+                    model = item.strCategoryThumb.ifEmpty { image_profile },
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()

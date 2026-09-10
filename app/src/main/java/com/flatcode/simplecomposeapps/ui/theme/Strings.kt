@@ -64,6 +64,7 @@ object Strings {
     const val MEAL_REMOVED = "Meal removed from favorites"
     const val MEAL_SAVED = "Meal is saved"
     const val UNDO = "Undo"
+    const val FAILED_LOAD_DATA = "Failed to load data"
 
     // News
     const val EVERYTHING = "Everything"

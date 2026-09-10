@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.meals.data.repository.MealRepository
+import com.flatcode.simplecomposeapps.meals.repository.MealRepository
 import com.flatcode.simplecomposeapps.meals.model.Category
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.meals.data.network
+package com.flatcode.simplecomposeapps.meals.network
 
 import com.flatcode.simplecomposeapps.meals.model.CategoryList
 import com.flatcode.simplecomposeapps.meals.model.MealList
@@ -38,12 +38,6 @@ class MealApi @Inject constructor(
     suspend fun getMealsByCategory(categoryName: String): MealsByCategoryList {
         return client.get("${DATA.BASE_URL_MEALS}filter.php") {
             parameter("c", categoryName)
-        }.body()
-    }
-
-    suspend fun searchMeals(searchQuery: String): MealList {
-        return client.get("${DATA.BASE_URL_MEALS}search.php") {
-            parameter("s", searchQuery)
         }.body()
     }
 }

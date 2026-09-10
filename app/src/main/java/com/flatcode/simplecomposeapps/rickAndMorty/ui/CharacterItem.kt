@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.model.LocationShort
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings

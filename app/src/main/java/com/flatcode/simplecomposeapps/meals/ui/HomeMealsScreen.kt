@@ -39,6 +39,7 @@ import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
@@ -52,9 +53,9 @@ fun HomeMealsScreen(
     val categoriesResult by viewModel.categories.observeAsState(Resource.Idle)
 
     LaunchedEffect(Unit) {
-        viewModel.getRandomMeal()
-        viewModel.getPopularItems()
-        viewModel.getCategories()
+        if (randomMealResult.data == null) viewModel.getRandomMeal()
+        if (popularItemsResult.data.isNullOrEmpty()) viewModel.getPopularItems()
+        if (categoriesResult.data.isNullOrEmpty()) viewModel.getCategories()
     }
 
     Column(
@@ -95,14 +96,28 @@ fun HomeMealsScreen(
                             }, shape = RoundedCornerShape(12.dp)
                     ) {
                         AsyncImage(
-                            model = meal.strMealThumb,
+                            model = (meal.strMealThumb ?: "").ifEmpty { image_profile },
                             contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(image_profile),
                             contentScale = ContentScale.Crop
                         )
                     }
                 }
             }
+
+            is Resource.Error -> {
+                Text(
+                    text = randomMealResult.message ?: Strings.FAILED_LOAD_DATA,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    color = COLOR_ERROR,
+                    textAlign = TextAlign.Center
+                )
+            }
+
             else -> {}
         }
 

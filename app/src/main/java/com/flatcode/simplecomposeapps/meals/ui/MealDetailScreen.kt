@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
@@ -44,6 +45,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.meals.viewmodel.MealDetailViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
@@ -92,9 +94,11 @@ fun MealDetailScreen(
                     .height(320.dp)
             ) {
                 AsyncImage(
-                    model = thumb,
+                    model = thumb.ifEmpty { image_profile },
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(image_profile),
                     contentScale = ContentScale.Crop
                 )
 
@@ -123,9 +127,10 @@ fun MealDetailScreen(
                 // Floating Action Button anchored to image bottom
                 if (mealResult is Resource.Success) {
                     val meal = mealResult.data
+                    val favorite = isFavorite?.isFavorite == true
                     FloatingActionButton(
                         onClick = {
-                            if (isFavorite == null) {
+                            if (!favorite) {
                                 meal?.let { viewModel.insertMeal(it) }
                                 Toast.makeText(context, Strings.MEAL_SAVED, Toast.LENGTH_SHORT).show()
                             } else {
@@ -142,7 +147,7 @@ fun MealDetailScreen(
                         contentColor = White
                     ) {
                         Icon(
-                            imageVector = if (isFavorite != null) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            imageVector = if (favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                             contentDescription = Strings.FAVORITE,
                             tint = White
                         )
@@ -159,99 +164,115 @@ fun MealDetailScreen(
             }
 
             // Content below image
-            if (mealResult is Resource.Success) {
-                val m = mealResult.data
-                m?.let {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 10.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+            when (mealResult) {
+                is Resource.Success -> {
+                    val m = mealResult.data
+                    m?.let {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp, vertical = 10.dp)
                         ) {
                             Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Icon(
-                                    imageVector = AppIcons.Category,
-                                    contentDescription = null,
-                                    tint = MC_TRACK,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(
-                                    text = Strings.categoryPlaceholder(it.strCategory ?: ""),
-                                    color = MC_TRACK,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Icon(
+                                        imageVector = AppIcons.Category,
+                                        contentDescription = null,
+                                        tint = MC_TRACK,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                    Text(
+                                        text = Strings.categoryPlaceholder(it.strCategory ?: ""),
+                                        color = MC_TRACK,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp
+                                    )
+                                }
+
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.weight(2f)
+                                ) {
+                                    Icon(
+                                        imageVector = AppIcons.Location,
+                                        contentDescription = null,
+                                        tint = MC_TRACK,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                    Text(
+                                        text = Strings.areaPlaceholder(it.strArea ?: ""),
+                                        color = MC_TRACK,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 14.sp
+                                    )
+                                }
                             }
 
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.weight(2f)
-                            ) {
-                                Icon(
-                                    imageVector = AppIcons.Location,
-                                    contentDescription = null,
-                                    tint = MC_TRACK,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(
-                                    text = Strings.areaPlaceholder(it.strArea ?: ""),
-                                    color = MC_TRACK,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp
-                                )
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(
+                                text = Strings.INSTRUCTIONS,
+                                color = COLOR_ERROR,
+                                fontSize = 21.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Text(
+                                text = it.strInstructions ?: "",
+                                color = COLOR_ERROR,
+                                fontSize = 12.sp,
+                                lineHeight = 18.sp
+                            )
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            // YouTube Icon
+                            if (!it.strYoutube.isNullOrEmpty()) {
+                                IconButton(
+                                    onClick = {
+                                        val intent = Intent(Intent.ACTION_VIEW, it.strYoutube.toUri())
+                                        context.startActivity(intent)
+                                    }, modifier = Modifier
+                                        .align(Alignment.CenterHorizontally)
+                                        .size(40.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = AppIcons.Video,
+                                        contentDescription = Strings.YOUTUBE,
+                                        tint = MC_TRACK,
+                                        modifier = Modifier.size(40.dp)
+                                    )
+                                }
                             }
+
+                            Spacer(modifier = Modifier.height(20.dp))
                         }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Text(
-                            text = Strings.INSTRUCTIONS,
-                            color = COLOR_ERROR,
-                            fontSize = 21.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Text(
-                            text = it.strInstructions ?: "",
-                            color = COLOR_ERROR,
-                            fontSize = 12.sp,
-                            lineHeight = 18.sp
-                        )
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        // YouTube Icon
-                        if (!it.strYoutube.isNullOrEmpty()) {
-                            IconButton(
-                                onClick = {
-                                    val intent = Intent(Intent.ACTION_VIEW, it.strYoutube.toUri())
-                                    context.startActivity(intent)
-                                }, modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .size(40.dp)
-                            ) {
-                                Icon(
-                                    imageVector = AppIcons.Video,
-                                    contentDescription = Strings.YOUTUBE,
-                                    tint = MC_TRACK,
-                                    modifier = Modifier.size(40.dp)
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(20.dp))
                     }
                 }
+
+                is Resource.Error -> {
+                    Text(
+                        text = mealResult.message ?: Strings.FAILED_LOAD_DATA,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 50.dp),
+                        color = COLOR_ERROR,
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp
+                    )
+                }
+
+                else -> {}
             }
         }
     }
