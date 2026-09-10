@@ -10,7 +10,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MultiDeletePrefs
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,6 +36,7 @@ object MultiDeleteModule {
         return database.multiDeleteDao()
     }
 
+    @MultiDeletePrefs
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {

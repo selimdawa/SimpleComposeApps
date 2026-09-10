@@ -1,11 +1,14 @@
 package com.flatcode.simplecomposeapps.weather.model
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.weather.db.WeatherDao
+import com.flatcode.simplecomposeapps.weather.di.WeatherPrefs
 import com.flatcode.simplecomposeapps.weather.network.WeatherApi
 import com.flatcode.simplecomposeapps.weather.network.WeatherResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val dao: WeatherDao, private val api: WeatherApi
+    private val dao: WeatherDao,
+    private val api: WeatherApi,
+    @WeatherPrefs private val prefs: SharedPreferences
 ) : ViewModel() {
 
     private val _liveDataList = MutableLiveData<List<WeatherModel>>(emptyList())
@@ -30,6 +35,10 @@ class WeatherViewModel @Inject constructor(
     var lastCity: String? = null
 
     val savedWeather: LiveData<WeatherModel?> = dao.getLatestWeather().asLiveData()
+
+    var isLocationRequested: Boolean
+        get() = prefs.getBoolean("location_requested", false)
+        set(value) = prefs.edit { putBoolean("location_requested", value) }
 
     fun updateCurrent(weather: WeatherModel) {
         _liveDataCurrent.value = weather
@@ -46,6 +55,8 @@ class WeatherViewModel @Inject constructor(
     fun saveWeather(weather: WeatherModel) = viewModelScope.launch {
         dao.insertWeather(weather)
     }
+
+    suspend fun getLatestWeatherSingle(): WeatherModel? = dao.getLatestWeatherSingle()
 
     fun getWeather(city: String) {
         lastCity = city

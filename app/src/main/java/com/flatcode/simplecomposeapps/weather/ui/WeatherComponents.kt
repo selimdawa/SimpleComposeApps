@@ -224,6 +224,7 @@ fun SearchDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp),
+                    singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.White,
                         unfocusedBorderColor = Color.White.copy(alpha = 0.7f),

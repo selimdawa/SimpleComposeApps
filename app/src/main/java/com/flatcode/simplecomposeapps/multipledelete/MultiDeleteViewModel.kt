@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteDao
 import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteEntity
+import com.flatcode.simplecomposeapps.multipledelete.di.MultiDeletePrefs
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MultiDeleteViewModel @Inject constructor(
     private val multiDeleteDao: MultiDeleteDao,
-    private val sharedPreferences: SharedPreferences
+    @MultiDeletePrefs private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<String>>(emptyList())

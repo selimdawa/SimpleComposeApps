@@ -75,13 +75,20 @@ fun WeatherMainScreen(
 
     LaunchedEffect(Unit) {
         if (viewModel.lastCity == null) {
-            if (ContextCompat.checkSelfPermission(
-                    context, Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                checkLocation(context, viewModel)
-            } else {
-                pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            val latest = viewModel.getLatestWeatherSingle()
+            if (latest != null) {
+                viewModel.lastCity = latest.city
+                viewModel.getWeather(latest.city)
+            } else if (!viewModel.isLocationRequested) {
+                viewModel.isLocationRequested = true
+                if (ContextCompat.checkSelfPermission(
+                        context, Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    checkLocation(context, viewModel)
+                } else {
+                    pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
             }
         }
     }
@@ -102,7 +109,16 @@ fun WeatherMainScreen(
                     onSyncClick = {
                         viewModel.lastCity?.let {
                             viewModel.getWeather(it)
-                        } ?: checkLocation(context, viewModel)
+                        } ?: run {
+                            if (ContextCompat.checkSelfPermission(
+                                    context, Manifest.permission.ACCESS_FINE_LOCATION
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                checkLocation(context, viewModel)
+                            } else {
+                                pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                            }
+                        }
                     })
 
                 SecondaryTabRow(
