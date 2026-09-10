@@ -8,7 +8,7 @@ import com.flatcode.simplecomposeapps.crypto.model.home.CryptoResponse
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
 import com.flatcode.simplecomposeapps.crypto.model.home.Usd
-import com.flatcode.simplecomposeapps.crypto.ui.home.HomeRepository
+import com.flatcode.simplecomposeapps.crypto.ui.home.CryptoRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CryptoHomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val repository: CryptoRepository
 ) : ViewModel() {
 
     private val _cryptoList = MutableLiveData<List<Data>>(emptyList())
@@ -62,8 +62,13 @@ class CryptoHomeViewModel @Inject constructor(
     private fun handleResult(result: Resource<CryptoResponse>) {
         when (result) {
             is Resource.Success -> {
-                val newList = (_cryptoList.value ?: emptyList()).toMutableList()
-                result.data?.data?.let { newList.addAll(it) }
+                val newList = if (currentPage == 1) mutableListOf() else (_cryptoList.value ?: emptyList()).toMutableList()
+                result.data?.data?.let { coins ->
+
+                    val currentIds = newList.map { it.id }.toSet()
+                    val distinctNewCoins = coins.filter { it.id !in currentIds }
+                    newList.addAll(distinctNewCoins)
+                }
                 _cryptoList.value = newList
             }
 

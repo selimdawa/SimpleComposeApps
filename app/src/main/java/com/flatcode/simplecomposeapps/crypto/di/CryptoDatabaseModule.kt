@@ -23,8 +23,10 @@ object CryptoDatabaseModule {
         return Room.databaseBuilder(
             context,
             CryptoDatabase::class.java,
-            "crypto_db"
-        ).build()
+            "crypto_db",
+        ).fallbackToDestructiveMigration(dropAllTables = true)
+            .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
+            .build()
     }
 
     @Provides

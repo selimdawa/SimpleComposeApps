@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.meals.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.model.Meal
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable
 fun PopularMealItem(
@@ -29,9 +31,11 @@ fun PopularMealItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         AsyncImage(
-            model = item.strMealThumb,
+            model = (item.strMealThumb ?: "").ifEmpty { image_profile },
             contentDescription = null,
-            modifier = Modifier.fillParentMaxSize(), // Placeholder for fillMaxSize in this context
+            modifier = Modifier
+                .fillParentMaxSize()
+                .background(image_profile),
             contentScale = ContentScale.Crop
         )
     }
