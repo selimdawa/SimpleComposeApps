@@ -1,9 +1,8 @@
-package com.flatcode.simplecomposeapps.rickAndMorty.data.repositories
+package com.flatcode.simplecomposeapps.rickAndMorty.data
 
-import com.flatcode.simplecomposeapps.rickAndMorty.data.local.RickAndMortyDao
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Info
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.RickAndMortyResponse
-import com.flatcode.simplecomposeapps.rickAndMorty.data.remote.ApiService
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Info
+import com.flatcode.simplecomposeapps.rickAndMorty.model.RickAndMortyResponse
+import com.flatcode.simplecomposeapps.rickAndMorty.network.RickAndMortyApi
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +10,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(
-    private val api: ApiService,
+class RickAndMortyRepository @Inject constructor(
+    private val api: RickAndMortyApi,
     private val dao: RickAndMortyDao
 ) {
 
@@ -23,13 +22,9 @@ class MainRepository @Inject constructor(
             dao.insertCharacters(response.results)
             emit(Resource.Success(response))
         } catch (_: Exception) {
-            if (page == null || page == 1) {
-                val cached = dao.getCharacters()
-                if (cached.isNotEmpty()) {
-                    emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
-                } else {
-                    emit(Resource.Error(DATA.FAILED_LOAD_DATA))
-                }
+            val cached = dao.getCharacters()
+            if (cached.isNotEmpty()) {
+                emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
                 emit(Resource.Error(DATA.FAILED_LOAD_DATA))
             }
@@ -43,13 +38,9 @@ class MainRepository @Inject constructor(
             dao.insertLocations(response.results)
             emit(Resource.Success(response))
         } catch (_: Exception) {
-            if (page == null || page == 1) {
-                val cached = dao.getLocations()
-                if (cached.isNotEmpty()) {
-                    emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
-                } else {
-                    emit(Resource.Error(DATA.FAILED_LOAD_DATA))
-                }
+            val cached = dao.getLocations()
+            if (cached.isNotEmpty()) {
+                emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
                 emit(Resource.Error(DATA.FAILED_LOAD_DATA))
             }
@@ -63,13 +54,9 @@ class MainRepository @Inject constructor(
             dao.insertEpisodes(response.results)
             emit(Resource.Success(response))
         } catch (_: Exception) {
-            if (page == null || page == 1) {
-                val cached = dao.getEpisodes()
-                if (cached.isNotEmpty()) {
-                    emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
-                } else {
-                    emit(Resource.Error(DATA.FAILED_LOAD_DATA))
-                }
+            val cached = dao.getEpisodes()
+            if (cached.isNotEmpty()) {
+                emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
                 emit(Resource.Error(DATA.FAILED_LOAD_DATA))
             }

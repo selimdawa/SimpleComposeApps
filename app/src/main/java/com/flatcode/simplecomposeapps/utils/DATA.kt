@@ -21,7 +21,7 @@ import com.flatcode.simplecomposeapps.pdfreader.activity.PdfReaderActivity
 import com.flatcode.simplecomposeapps.pokemon.PokemonActivity
 import com.flatcode.simplecomposeapps.pop.PopActivity
 import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageActivity
-import com.flatcode.simplecomposeapps.rickAndMorty.RickAndMortyActivity
+import com.flatcode.simplecomposeapps.rickAndMorty.activity.RickAndMortyActivity
 import com.flatcode.simplecomposeapps.stockmarket.StockMarketActivity
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchActivity
 import com.flatcode.simplecomposeapps.todoNote.TodoNoteActivity

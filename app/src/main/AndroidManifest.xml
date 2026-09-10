@@ -124,7 +124,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rickAndMorty.RickAndMortyActivity"
+            android:name=".rickAndMorty.activity.RickAndMortyActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

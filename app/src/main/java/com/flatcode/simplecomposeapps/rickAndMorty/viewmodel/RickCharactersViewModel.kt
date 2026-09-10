@@ -2,10 +2,10 @@ package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
-import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
-import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.data.RickAndMortyRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RickCharactersViewModel @Inject constructor(
-    private val repository: MainRepository
-) : BaseViewModel() {
+    private val repository: RickAndMortyRepository
+) : ViewModel() {
 
     private val _characters = MutableLiveData<Resource<List<Character>>>(Resource.Loading())
     val characters: LiveData<Resource<List<Character>>> = _characters

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.rickAndMorty
+package com.flatcode.simplecomposeapps.rickAndMorty.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class WeatherViewModel @Inject constructor(
     private val dao: WeatherDao, private val api: WeatherApi
 ) : ViewModel() {
 

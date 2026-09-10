@@ -1,9 +1,9 @@
-package com.flatcode.simplecomposeapps.rickAndMorty.data.remote
+package com.flatcode.simplecomposeapps.rickAndMorty.network
 
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.RickAndMortyResponse
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Episode
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Location
+import com.flatcode.simplecomposeapps.rickAndMorty.model.RickAndMortyResponse
 import com.flatcode.simplecomposeapps.utils.DATA
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApiService @Inject constructor(
+class RickAndMortyApi @Inject constructor(
     private val client: HttpClient
 ) {
     suspend fun getCharacters(

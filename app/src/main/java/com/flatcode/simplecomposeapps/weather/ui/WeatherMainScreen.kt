@@ -38,7 +38,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.weather.model.MainViewModel
+import com.flatcode.simplecomposeapps.weather.model.WeatherViewModel
 import com.flatcode.simplecomposeapps.weather.model.WeatherModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -47,7 +47,7 @@ import org.json.JSONArray
 
 @Composable
 fun WeatherMainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val weatherCurrent by viewModel.liveDataCurrent.observeAsState()
@@ -166,7 +166,7 @@ fun WeatherMainScreen(
 }
 
 private fun checkLocation(
-    context: Context, viewModel: MainViewModel
+    context: Context, viewModel: WeatherViewModel
 ) {
     val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -177,7 +177,7 @@ private fun checkLocation(
 }
 
 private fun getLocation(
-    context: Context, viewModel: MainViewModel
+    context: Context, viewModel: WeatherViewModel
 ) {
     if (ContextCompat.checkSelfPermission(
             context, Manifest.permission.ACCESS_FINE_LOCATION

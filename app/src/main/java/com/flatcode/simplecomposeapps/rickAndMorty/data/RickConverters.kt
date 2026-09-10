@@ -1,7 +1,7 @@
-package com.flatcode.simplecomposeapps.rickAndMorty.data.local
+package com.flatcode.simplecomposeapps.rickAndMorty.data
 
 import androidx.room.TypeConverter
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.LocationShort
+import com.flatcode.simplecomposeapps.rickAndMorty.model.LocationShort
 import kotlinx.serialization.json.Json
 
 class RickConverters {

@@ -1,12 +1,12 @@
-package com.flatcode.simplecomposeapps.rickAndMorty.data.local
+package com.flatcode.simplecomposeapps.rickAndMorty.data
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Character
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Episode
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Episode
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Location
 import kotlinx.coroutines.flow.Flow
 
 @Dao

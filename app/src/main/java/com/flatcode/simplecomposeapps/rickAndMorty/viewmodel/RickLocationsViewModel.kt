@@ -2,10 +2,10 @@ package com.flatcode.simplecomposeapps.rickAndMorty.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.rickAndMorty.data.models.Location
-import com.flatcode.simplecomposeapps.rickAndMorty.data.repositories.MainRepository
-import com.flatcode.simplecomposeapps.rickAndMorty.ui.base.BaseViewModel
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Location
+import com.flatcode.simplecomposeapps.rickAndMorty.data.RickAndMortyRepository
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RickLocationsViewModel @Inject constructor(
-    private val repository: MainRepository
-) : BaseViewModel() {
+    private val repository: RickAndMortyRepository
+) : ViewModel() {
 
     private val _locations = MutableLiveData<Resource<List<Location>>>(Resource.Loading())
     val locations: LiveData<Resource<List<Location>>> = _locations

@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.rickAndMorty.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.rickAndMorty.data.local.RickAndMortyDao
-import com.flatcode.simplecomposeapps.rickAndMorty.data.local.RickAndMortyDatabase
+import com.flatcode.simplecomposeapps.rickAndMorty.data.RickAndMortyDao
+import com.flatcode.simplecomposeapps.rickAndMorty.data.RickAndMortyDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RickAndMortyDatabaseModule {
+object RickAndMortyModule {
 
     @Provides
     @Singleton
