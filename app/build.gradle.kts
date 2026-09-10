@@ -17,8 +17,8 @@ android {
         applicationId = "com.flatcode.simplecomposeapps"
         minSdk = 24
         targetSdk = 37
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appName"] = "Simple Compose Apps"
@@ -67,7 +67,9 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
     implementation(libs.coil.video)
-    implementation(libs.coil.network.ktor3)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     implementation(libs.compose.shimmer)
     //Serialization
     implementation(libs.kotlinx.serialization.json)
@@ -99,7 +101,6 @@ dependencies {
     implementation(libs.timber)
     //Testing
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
