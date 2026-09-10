@@ -1,7 +1,6 @@
 package com.flatcode.simplecomposeapps.news.data.repository
 
 import com.flatcode.simplecomposeapps.news.data.local.NewsDao
-import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.service.NewsAPI
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NewsRepository @Inject constructor(
-    private val api: NewsAPI,
-    private val newsDao: NewsDao
+    private val api: NewsAPI, private val newsDao: NewsDao
 ) {
     suspend fun getNewsHeadlines(category: String?, query: String?) = withContext(Dispatchers.IO) {
         try {

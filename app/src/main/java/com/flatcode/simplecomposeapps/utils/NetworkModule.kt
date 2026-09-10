@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.di
+package com.flatcode.simplecomposeapps.utils
 
 import dagger.Module
 import dagger.Provides

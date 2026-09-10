@@ -16,6 +16,9 @@ interface NewsDao {
     @Query("SELECT * FROM everything_news")
     fun getAllEverything(): Flow<List<EverythingNewsItem>>
 
+    @Query("SELECT * FROM everything_news")
+    suspend fun getEverything(): List<EverythingNewsItem>
+
     @Query("DELETE FROM everything_news")
     suspend fun deleteAllEverything()
 
@@ -24,6 +27,9 @@ interface NewsDao {
 
     @Query("SELECT * FROM top_articles_news")
     fun getAllTopArticles(): Flow<List<TopArticlesNewsItem>>
+
+    @Query("SELECT * FROM top_articles_news")
+    suspend fun getTopArticles(): List<TopArticlesNewsItem>
 
     @Query("DELETE FROM top_articles_news")
     suspend fun deleteAllTopArticles()
