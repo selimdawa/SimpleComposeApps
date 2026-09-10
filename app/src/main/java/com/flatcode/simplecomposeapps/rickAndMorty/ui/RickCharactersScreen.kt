@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickCharactersViewModel
 import com.flatcode.simplecomposeapps.utils.Resource
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 
 @Composable
 fun RickCharactersScreen(

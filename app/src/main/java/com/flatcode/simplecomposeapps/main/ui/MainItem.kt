@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.main.Main
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Dark
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.launchActivity

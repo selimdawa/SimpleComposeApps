@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.blogger.model.Label
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.White
 
 @Composable

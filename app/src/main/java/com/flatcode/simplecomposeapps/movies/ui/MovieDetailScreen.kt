@@ -36,7 +36,7 @@ import com.flatcode.simplecomposeapps.movies.viewmodel.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.image_profile

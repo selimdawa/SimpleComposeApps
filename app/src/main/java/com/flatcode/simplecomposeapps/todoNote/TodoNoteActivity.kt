@@ -32,10 +32,10 @@ import com.flatcode.simplecomposeapps.todoNote.ui.AddEditNoteScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.TasksScreen
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable

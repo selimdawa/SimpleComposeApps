@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorEntity
 import com.flatcode.simplecomposeapps.ui.theme.Gray2
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 
 @Composable
 fun CalculatorHistoryItem(

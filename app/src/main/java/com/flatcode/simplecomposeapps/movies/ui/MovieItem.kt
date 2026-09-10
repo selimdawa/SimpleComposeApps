@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 
 @Composable

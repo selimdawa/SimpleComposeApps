@@ -40,10 +40,10 @@ import coil3.compose.AsyncImagePainter
 import com.flatcode.simplecomposeapps.pokemon.viewmodel.PokemonDetailsViewModel
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.MC_TICK
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TICK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource

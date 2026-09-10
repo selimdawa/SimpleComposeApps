@@ -36,8 +36,8 @@ import androidx.navigation.NavHostController
 import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.TasksViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable

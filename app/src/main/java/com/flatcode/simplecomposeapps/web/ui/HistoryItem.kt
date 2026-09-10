@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.ConfigurationCompat
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.web.data.WebEntity
 import java.text.SimpleDateFormat

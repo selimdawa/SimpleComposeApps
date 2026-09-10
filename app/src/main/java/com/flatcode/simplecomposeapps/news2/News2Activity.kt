@@ -29,10 +29,10 @@ import androidx.navigation.compose.rememberNavController
 import com.flatcode.simplecomposeapps.news2.ui.EverythingScreen
 import com.flatcode.simplecomposeapps.news2.ui.TopArticlesScreen
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable

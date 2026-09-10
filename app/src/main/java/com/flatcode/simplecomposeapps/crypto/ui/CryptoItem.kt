@@ -32,8 +32,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import java.util.Locale
 import com.flatcode.simplecomposeapps.crypto.model.home.Data
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -109,7 +110,7 @@ fun CryptoItem(
                 }
 
                 Text(
-                    text = String.format("%.6f $", item.quote?.usd?.price ?: 0.0),
+                    text = String.format(Locale.US, "%.6f $", item.quote?.usd?.price ?: 0.0),
                     modifier = Modifier
                         .weight(0.8f)
                         .padding(horizontal = 10.dp, vertical = 10.dp)

@@ -34,8 +34,8 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
 import com.flatcode.simplecomposeapps.countries.model.Country
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 

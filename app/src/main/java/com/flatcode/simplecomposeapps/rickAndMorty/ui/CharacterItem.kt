@@ -37,7 +37,7 @@ import coil3.request.transformations
 import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
 import com.flatcode.simplecomposeapps.rickAndMorty.model.LocationShort
 import com.flatcode.simplecomposeapps.ui.theme.Gray
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation

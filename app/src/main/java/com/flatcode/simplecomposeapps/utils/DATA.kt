@@ -2,6 +2,7 @@
 
 package com.flatcode.simplecomposeapps.utils
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
 import com.flatcode.simplecomposeapps.calculator.CalculatorActivity
@@ -32,6 +33,7 @@ import com.flatcode.simplecomposeapps.videoplayer.activity.VideoPlayerActivity
 import com.flatcode.simplecomposeapps.weather.WeatherActivity
 import com.flatcode.simplecomposeapps.web.activity.WebAppActivity
 import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
+import io.selimdawa.multicolors.MultiColorCompose
 
 object DATA {
 
@@ -310,12 +312,14 @@ object DATA {
     var myMobileNumber = "+963994683386"
     var myEmail = "selimdawa@gmail.com"
 
-    // Theme Attributes
-    const val COLOR_ERROR = "colorError"
-    const val COLOR_ON_BACKGROUND = "colorOnBackground"
-    const val MC_TRACK = "mc_track"
-    const val MC_TICK = "mc_tick"
-    const val MC_BG = "mc_bg"
+    // Themes Multi-Colors
+    val MC_BG @Composable get() = MultiColorCompose.mc_bg
+    val MC_TRACK @Composable get() = MultiColorCompose.mc_track
+    val MC_TICK @Composable get() = MultiColorCompose.mc_tick
+    //val MC_CENTER @Composable get() = MultiColorCompose.mc_center
+    //val PRIMARY @Composable get() = MultiColorCompose.colorPrimary
+    val COLOR_ON_BACKGROUND @Composable get() = MultiColorCompose.colorOnBackground
+    val COLOR_ERROR @Composable get() = MultiColorCompose.colorError
 
     // JSON Keys & Params
     const val MAX_POST_RESULTS = "10"

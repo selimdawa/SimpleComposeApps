@@ -24,10 +24,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfUiState
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
-import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle

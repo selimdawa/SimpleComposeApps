@@ -32,7 +32,7 @@ import coil3.compose.AsyncImagePainter
 import com.flatcode.simplecomposeapps.pokemon.model.PokeItem
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.ShimmerColor
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.image_profile

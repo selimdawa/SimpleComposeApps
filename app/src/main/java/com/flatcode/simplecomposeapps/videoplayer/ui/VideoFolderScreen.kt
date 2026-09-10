@@ -14,7 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoUiState
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel

@@ -40,7 +40,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.ui.draw.rotate
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.ui.theme.MC_BG
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.weather.model.WeatherModel
 
