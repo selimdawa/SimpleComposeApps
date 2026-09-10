@@ -24,9 +24,7 @@ object CryptoDatabaseModule {
             context,
             CryptoDatabase::class.java,
             "crypto_db",
-        ).fallbackToDestructiveMigration(dropAllTables = true)
-            .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
-            .build()
+        ).build()
     }
 
     @Provides

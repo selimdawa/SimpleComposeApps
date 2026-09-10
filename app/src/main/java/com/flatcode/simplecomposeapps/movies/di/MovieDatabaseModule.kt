@@ -22,7 +22,7 @@ object MovieDatabaseModule {
             context,
             MoviesRoomDatabase::class.java,
             "movies_db"
-        ).fallbackToDestructiveMigration(true).build()
+        ).build()
     }
 
     @Provides

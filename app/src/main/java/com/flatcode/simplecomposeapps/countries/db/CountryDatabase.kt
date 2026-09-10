@@ -30,6 +30,6 @@ abstract class CountryDatabase : RoomDatabase() {
 
         private fun makeDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext, CountryDatabase::class.java, "countries_db"
-        ).fallbackToDestructiveMigration(true).build()
+        ).build()
     }
 }
