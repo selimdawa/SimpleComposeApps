@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
-import com.flatcode.simplecomposeapps.movies.MovieDetailViewModel
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.viewmodel.MovieDetailViewModel
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND

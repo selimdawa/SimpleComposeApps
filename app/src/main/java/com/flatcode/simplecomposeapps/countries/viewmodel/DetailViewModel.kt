@@ -1,11 +1,11 @@
-package com.flatcode.simplecomposeapps.countries
+package com.flatcode.simplecomposeapps.countries.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simplecomposeapps.countries.db.CountryDAO
 import com.flatcode.simplecomposeapps.countries.model.Country
-import com.flatcode.simplecomposeapps.countries.service.CountryDAO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.countries.service
+package com.flatcode.simplecomposeapps.countries.db
 
 import android.content.Context
 import androidx.room.AutoMigration
@@ -29,7 +29,7 @@ abstract class CountryDatabase : RoomDatabase() {
         }
 
         private fun makeDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext, CountryDatabase::class.java, "countrydatabase"
-        ).build()
+            context.applicationContext, CountryDatabase::class.java, "countries_db"
+        ).fallbackToDestructiveMigration(true).build()
     }
 }

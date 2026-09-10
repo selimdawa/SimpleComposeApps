@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Entity
+@Entity(tableName = "Country")
 @Serializable
 data class Country(
     @ColumnInfo(name = "name") @SerialName("name") val countryName: String?,
@@ -14,8 +14,6 @@ data class Country(
     @ColumnInfo(name = "capital") @SerialName("capital") val countryCapital: String?,
     @ColumnInfo(name = "currency") @SerialName("currency") val countryCurrency: String?,
     @ColumnInfo(name = "language") @SerialName("language") val countryLanguage: String?,
-    @ColumnInfo(name = "flag") @SerialName("flag") val imageURL: String?
-) {
-    @PrimaryKey(autoGenerate = true)
-    var uuid: Int = 0
-}
+    @ColumnInfo(name = "flag") @SerialName("flag") val imageURL: String?,
+    @PrimaryKey(autoGenerate = true) var uuid: Int = 0
+)

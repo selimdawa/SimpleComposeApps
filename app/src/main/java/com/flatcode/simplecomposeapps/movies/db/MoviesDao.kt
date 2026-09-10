@@ -1,11 +1,11 @@
-package com.flatcode.simplecomposeapps.movies.data.room.dao
+package com.flatcode.simplecomposeapps.movies.db
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,4 +18,10 @@ interface MoviesDao {
 
     @Query("SELECT * FROM movies_table")
     fun getAllMovies(): Flow<List<MovieItemModel>>
+
+    @Query("SELECT * FROM movies_table")
+    suspend fun getMovies(): List<MovieItemModel>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM movies_table WHERE id = :id)")
+    suspend fun isMovieFavorite(id: Int): Boolean
 }

@@ -1,7 +1,6 @@
-package com.flatcode.simplecomposeapps.movies.data.room.repository
+package com.flatcode.simplecomposeapps.movies.db
 
-import com.flatcode.simplecomposeapps.movies.data.room.dao.MoviesDao
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -16,5 +15,9 @@ class MoviesRepositoryRealization @Inject constructor(private val moviesDao: Mov
 
     override suspend fun deleteMovie(movie: MovieItemModel) {
         moviesDao.deleteMovie(movie)
+    }
+
+    override suspend fun isMovieFavorite(id: Int): Boolean {
+        return moviesDao.isMovieFavorite(id)
     }
 }

@@ -1,6 +1,6 @@
-package com.flatcode.simplecomposeapps.movies.data.network
+package com.flatcode.simplecomposeapps.movies.network
 
-import com.flatcode.simplecomposeapps.movies.models.MoviesModel
+import com.flatcode.simplecomposeapps.movies.model.MoviesModel
 import com.flatcode.simplecomposeapps.utils.DATA
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

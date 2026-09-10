@@ -9,6 +9,7 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
@@ -26,7 +27,12 @@ object NetworkModule {
                     ignoreUnknownKeys = true
                     isLenient = true
                     encodeDefaults = true
-                })
+                }, contentType = ContentType.Application.Json)
+                json(Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    encodeDefaults = true
+                }, contentType = ContentType.Text.Plain)
             }
             install(Logging) {
                 level = LogLevel.ALL

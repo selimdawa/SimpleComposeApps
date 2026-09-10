@@ -1,11 +1,11 @@
-package com.flatcode.simplecomposeapps.movies
+package com.flatcode.simplecomposeapps.movies.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.movies.data.network.MovieRepository
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.network.MovieRepository
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

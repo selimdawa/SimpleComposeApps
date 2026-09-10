@@ -30,7 +30,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
-import com.flatcode.simplecomposeapps.countries.DetailViewModel
+import com.flatcode.simplecomposeapps.countries.viewmodel.DetailViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray

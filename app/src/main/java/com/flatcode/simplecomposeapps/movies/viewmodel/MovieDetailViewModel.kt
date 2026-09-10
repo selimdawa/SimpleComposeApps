@@ -1,11 +1,11 @@
-package com.flatcode.simplecomposeapps.movies
+package com.flatcode.simplecomposeapps.movies.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.movies.data.room.repository.MoviesRepository
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.db.MoviesRepository
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
-    private val repository: MoviesRepository,
-    private val saveShared: SaveShared
+    private val repository: MoviesRepository
 ) : ViewModel() {
 
     private val _isFavorite = MutableLiveData<Boolean>(false)
@@ -22,7 +21,7 @@ class MovieDetailViewModel @Inject constructor(
 
     fun checkFavoriteStatus(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _isFavorite.postValue(saveShared.getFavorite(movieId))
+            _isFavorite.postValue(repository.isMovieFavorite(movieId))
         }
     }
 
@@ -31,10 +30,8 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (currentStatus) {
                 repository.deleteMovie(movie)
-                saveShared.setFavorite(movie.id, false)
             } else {
                 repository.insertMovie(movie)
-                saveShared.setFavorite(movie.id, true)
             }
             _isFavorite.postValue(!currentStatus)
         }

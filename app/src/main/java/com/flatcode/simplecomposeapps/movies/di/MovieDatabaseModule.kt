@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.movies.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.movies.data.room.MoviesRoomDatabase
-import com.flatcode.simplecomposeapps.movies.data.room.dao.MoviesDao
+import com.flatcode.simplecomposeapps.movies.db.MoviesRoomDatabase
+import com.flatcode.simplecomposeapps.movies.db.MoviesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object MovieDatabaseModule {
             context,
             MoviesRoomDatabase::class.java,
             "movies_db"
-        ).build()
+        ).fallbackToDestructiveMigration(true).build()
     }
 
     @Provides

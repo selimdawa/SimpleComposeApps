@@ -1,8 +1,8 @@
 package com.flatcode.simplecomposeapps.countries.di
 
 import android.content.Context
-import com.flatcode.simplecomposeapps.countries.service.CountryDAO
-import com.flatcode.simplecomposeapps.countries.service.CountryDatabase
+import com.flatcode.simplecomposeapps.countries.db.CountryDAO
+import com.flatcode.simplecomposeapps.countries.db.CountryDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

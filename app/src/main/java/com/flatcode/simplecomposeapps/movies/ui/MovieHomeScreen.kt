@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.movies.MovieHomeViewModel
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.viewmodel.MovieHomeViewModel
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR

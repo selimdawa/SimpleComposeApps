@@ -10,7 +10,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -19,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.flatcode.simplecomposeapps.countries.DashboardViewModel
+import com.flatcode.simplecomposeapps.countries.viewmodel.DashboardViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
@@ -30,14 +29,9 @@ import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
 fun DashboardScreen(
-    onCountryClick: (Int) -> Unit,
-    viewModel: DashboardViewModel = hiltViewModel()
+    onCountryClick: (Int) -> Unit, viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val result by viewModel.countriesResult.observeAsState(Resource.Idle)
-
-    LaunchedEffect(Unit) {
-        viewModel.refreshData()
-    }
 
     Scaffold(
         topBar = {
@@ -57,6 +51,7 @@ fun DashboardScreen(
                         modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                     )
                 }
+
                 is Resource.Error -> {
                     Text(
                         text = result.message ?: Strings.ERROR_LOADING_COUNTRIES,
@@ -64,6 +59,7 @@ fun DashboardScreen(
                         color = COLOR_ERROR
                     )
                 }
+
                 is Resource.Success -> {
                     val countries = result.data ?: emptyList()
                     if (countries.isEmpty()) {
@@ -88,6 +84,7 @@ fun DashboardScreen(
                         }
                     }
                 }
+
                 else -> {}
             }
         }

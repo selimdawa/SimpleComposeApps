@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.movies.models
+package com.flatcode.simplecomposeapps.movies.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

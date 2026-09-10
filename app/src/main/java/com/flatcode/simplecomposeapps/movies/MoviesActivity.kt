@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.flatcode.simplecomposeapps.movies.models.MovieItemModel
+import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.movies.ui.MovieDetailScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieFavoriteScreen
 import com.flatcode.simplecomposeapps.movies.ui.MovieHomeScreen

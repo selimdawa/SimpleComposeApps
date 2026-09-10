@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.movies.di
 
-import com.flatcode.simplecomposeapps.movies.data.room.repository.MoviesRepository
-import com.flatcode.simplecomposeapps.movies.data.room.repository.MoviesRepositoryRealization
+import com.flatcode.simplecomposeapps.movies.db.MoviesRepository
+import com.flatcode.simplecomposeapps.movies.db.MoviesRepositoryRealization
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

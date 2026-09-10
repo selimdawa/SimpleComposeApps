@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.movies.models
+package com.flatcode.simplecomposeapps.movies.model
 
 import kotlinx.serialization.Serializable
 

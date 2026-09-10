@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "main_items")
 data class MainEntity(
     @PrimaryKey val title: String,
-    val imageType: String, // "IMAGE_VECTOR" or "RESOURCE_ID"
-    val imageValue: String, // Name of ImageVector or String value of Resource ID
+    val imageType: String,
+    val imageValue: String,
     val number: Int,
     val activityClassName: String
 )
