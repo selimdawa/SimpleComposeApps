@@ -76,7 +76,7 @@ fun MovieHomeScreen(
 
                 is Resource.Error -> {
                     Text(
-                        text = uiState?.message ?: "Error",
+                        text = DATA.FAILED_LOAD_DATA,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),

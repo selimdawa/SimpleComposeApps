@@ -16,12 +16,15 @@ interface MoviesDao {
     @Delete
     suspend fun deleteMovie(movie: MovieItemModel)
 
-    @Query("SELECT * FROM movies_table")
+    @Query("SELECT * FROM movies_table WHERE isFavorite = 1")
     fun getAllMovies(): Flow<List<MovieItemModel>>
 
     @Query("SELECT * FROM movies_table")
     suspend fun getMovies(): List<MovieItemModel>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM movies_table WHERE id = :id)")
+    @Query("SELECT * FROM movies_table WHERE id = :id")
+    suspend fun getMovieById(id: Int): MovieItemModel?
+
+    @Query("SELECT EXISTS(SELECT 1 FROM movies_table WHERE id = :id AND isFavorite = 1)")
     suspend fun isMovieFavorite(id: Int): Boolean
 }

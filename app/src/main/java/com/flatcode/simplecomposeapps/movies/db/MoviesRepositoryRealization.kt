@@ -17,6 +17,10 @@ class MoviesRepositoryRealization @Inject constructor(private val moviesDao: Mov
         moviesDao.deleteMovie(movie)
     }
 
+    override suspend fun getMovieById(id: Int): MovieItemModel? {
+        return moviesDao.getMovieById(id)
+    }
+
     override suspend fun isMovieFavorite(id: Int): Boolean {
         return moviesDao.isMovieFavorite(id)
     }

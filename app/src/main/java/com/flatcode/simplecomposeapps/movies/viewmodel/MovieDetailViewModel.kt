@@ -16,7 +16,7 @@ class MovieDetailViewModel @Inject constructor(
     private val repository: MoviesRepository
 ) : ViewModel() {
 
-    private val _isFavorite = MutableLiveData<Boolean>(false)
+    private val _isFavorite = MutableLiveData(false)
     val isFavorite: LiveData<Boolean> = _isFavorite
 
     fun checkFavoriteStatus(movieId: Int) {
@@ -28,11 +28,7 @@ class MovieDetailViewModel @Inject constructor(
     fun toggleFavorite(movie: MovieItemModel) {
         val currentStatus = _isFavorite.value ?: false
         viewModelScope.launch(Dispatchers.IO) {
-            if (currentStatus) {
-                repository.deleteMovie(movie)
-            } else {
-                repository.insertMovie(movie)
-            }
+            repository.insertMovie(movie.copy(isFavorite = !currentStatus))
             _isFavorite.postValue(!currentStatus)
         }
     }

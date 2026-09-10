@@ -39,7 +39,7 @@ fun MovieItem(movie: MovieItemModel, modifier: Modifier = Modifier) {
                 .background(image_profile)
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
+                model = movie.posterPath?.let { "https://image.tmdb.org/t/p/w500$it" },
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -53,7 +53,7 @@ fun MovieItem(movie: MovieItemModel, modifier: Modifier = Modifier) {
                     .background(MC_BG)
             ) {
                 Text(
-                    text = movie.title,
+                    text = movie.title ?: "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 5.dp),
@@ -68,7 +68,7 @@ fun MovieItem(movie: MovieItemModel, modifier: Modifier = Modifier) {
                 )
 
                 Text(
-                    text = movie.release_date,
+                    text = movie.releaseDate ?: "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 5.dp),
@@ -89,8 +89,8 @@ fun MovieItemPreview() {
         movie = MovieItemModel(
             id = 1,
             title = "Sample Movie Title",
-            poster_path = "/sample.jpg",
-            release_date = "2023-01-01",
+            posterPath = "/sample.jpg",
+            releaseDate = "2023-01-01",
             overview = "Sample overview"
         )
     )

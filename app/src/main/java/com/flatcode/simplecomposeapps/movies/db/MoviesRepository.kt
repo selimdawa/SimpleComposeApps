@@ -7,5 +7,6 @@ interface MoviesRepository {
     val allMovies: Flow<List<MovieItemModel>>
     suspend fun insertMovie(movie: MovieItemModel)
     suspend fun deleteMovie(movie: MovieItemModel)
+    suspend fun getMovieById(id: Int): MovieItemModel?
     suspend fun isMovieFavorite(id: Int): Boolean
 }

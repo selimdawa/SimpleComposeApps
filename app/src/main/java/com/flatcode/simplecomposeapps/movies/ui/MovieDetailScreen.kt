@@ -74,7 +74,7 @@ fun MovieDetailScreen(
                 colors = CardDefaults.cardColors(containerColor = Color.Transparent)
             ) {
                 AsyncImage(
-                    model = "${DATA.IMAGE_MOVIE}${movie.poster_path}",
+                    model = movie.posterPath?.let { "${DATA.IMAGE_MOVIE}$it" },
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,7 +90,7 @@ fun MovieDetailScreen(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = movie.title,
+                    text = movie.title ?: "",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     color = White,
@@ -106,7 +106,7 @@ fun MovieDetailScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = Strings.releaseDate(movie.release_date),
+                        text = Strings.releaseDate(movie.releaseDate ?: ""),
                         color = White,
                         fontSize = 18.sp,
                         modifier = Modifier.weight(1f)
@@ -125,7 +125,7 @@ fun MovieDetailScreen(
                 }
 
                 Text(
-                    text = movie.overview,
+                    text = movie.overview ?: "",
                     modifier = Modifier.padding(top = 16.dp),
                     color = Color.White,
                     fontSize = 16.sp,

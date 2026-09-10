@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import com.flatcode.simplecomposeapps.movies.MoviesActivity
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
@@ -58,8 +57,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        launchActivity<MoviesActivity>(finish = true)
-        //launchActivity<MainActivity>(finish = true)
+        launchActivity<MainActivity>(finish = true)
     }
 
     companion object {

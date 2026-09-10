@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 
-@Database(entities = [MovieItemModel::class], version = 1, exportSchema = true)
+@Database(entities = [MovieItemModel::class], version = 3, exportSchema = true)
 abstract class MoviesRoomDatabase : RoomDatabase() {
     abstract fun moviesDao(): MoviesDao
 }
