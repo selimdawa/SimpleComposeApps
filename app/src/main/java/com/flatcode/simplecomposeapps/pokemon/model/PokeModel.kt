@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.pokemon.data.model
+package com.flatcode.simplecomposeapps.pokemon.model
 
 import kotlinx.serialization.Serializable
 

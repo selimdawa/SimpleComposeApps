@@ -1,8 +1,8 @@
-package com.flatcode.simplecomposeapps.pokemon.data.database.entities
+package com.flatcode.simplecomposeapps.pokemon.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
+import com.flatcode.simplecomposeapps.pokemon.model.PokeItem
 
 @Entity(tableName = "pokemon_table")
 data class PokeEntity(

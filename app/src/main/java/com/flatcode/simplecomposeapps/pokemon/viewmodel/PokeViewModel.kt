@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.pokemon.data.PokeRepository
-import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
+import com.flatcode.simplecomposeapps.pokemon.network.PokeRepository
+import com.flatcode.simplecomposeapps.pokemon.model.PokeItem
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -1,7 +1,7 @@
-package com.flatcode.simplecomposeapps.pokemon.data.network
+package com.flatcode.simplecomposeapps.pokemon.network
 
-import com.flatcode.simplecomposeapps.pokemon.data.model.PokeModel
-import com.flatcode.simplecomposeapps.pokemon.data.model.PokeModelDetails
+import com.flatcode.simplecomposeapps.pokemon.model.PokeModel
+import com.flatcode.simplecomposeapps.pokemon.model.PokeModelDetails
 import com.flatcode.simplecomposeapps.utils.DATA
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

@@ -10,6 +10,7 @@ import com.flatcode.simplecomposeapps.countries.model.Country
 import com.flatcode.simplecomposeapps.countries.model.CountrySettings
 import com.flatcode.simplecomposeapps.countries.db.CountryDAO
 import com.flatcode.simplecomposeapps.countries.service.CountryService
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +67,7 @@ class DashboardViewModel @Inject constructor(
                     _countriesResult.value = Resource.Success(countries)
                     Toast.makeText(getApplication(), "Countries from Room (Cache)", Toast.LENGTH_SHORT).show()
                 } else {
-                    _countriesResult.value = Resource.Error(e.message ?: "An error occurred")
+                    _countriesResult.value = Resource.Error(Strings.FAILED_LOAD_DATA)
                 }
                 e.printStackTrace()
             }

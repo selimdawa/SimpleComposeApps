@@ -29,7 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
-import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItem
+import com.flatcode.simplecomposeapps.pokemon.model.PokeItem
 import com.flatcode.simplecomposeapps.ui.LoadingAnimation
 import com.flatcode.simplecomposeapps.ui.theme.Dark
 import com.flatcode.simplecomposeapps.ui.theme.MC_BG

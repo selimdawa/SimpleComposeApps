@@ -3,7 +3,7 @@ package com.flatcode.simplecomposeapps.rickAndMorty.data
 import com.flatcode.simplecomposeapps.rickAndMorty.model.Info
 import com.flatcode.simplecomposeapps.rickAndMorty.model.RickAndMortyResponse
 import com.flatcode.simplecomposeapps.rickAndMorty.network.RickAndMortyApi
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -26,7 +26,7 @@ class RickAndMortyRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
-                emit(Resource.Error(DATA.FAILED_LOAD_DATA))
+                emit(Resource.Error(Strings.FAILED_LOAD_DATA))
             }
         }
     }.flowOn(Dispatchers.IO)
@@ -42,7 +42,7 @@ class RickAndMortyRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
-                emit(Resource.Error(DATA.FAILED_LOAD_DATA))
+                emit(Resource.Error(Strings.FAILED_LOAD_DATA))
             }
         }
     }.flowOn(Dispatchers.IO)
@@ -58,7 +58,7 @@ class RickAndMortyRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 emit(Resource.Success(RickAndMortyResponse(Info(cached.size, 1, null, null), cached)))
             } else {
-                emit(Resource.Error(DATA.FAILED_LOAD_DATA))
+                emit(Resource.Error(Strings.FAILED_LOAD_DATA))
             }
         }
     }.flowOn(Dispatchers.IO)

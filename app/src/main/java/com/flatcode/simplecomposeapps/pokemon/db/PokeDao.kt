@@ -1,11 +1,9 @@
-package com.flatcode.simplecomposeapps.pokemon.data.database.dao
+package com.flatcode.simplecomposeapps.pokemon.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeDetailEntity
-import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

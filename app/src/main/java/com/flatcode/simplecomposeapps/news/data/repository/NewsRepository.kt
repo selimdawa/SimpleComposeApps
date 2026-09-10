@@ -2,6 +2,7 @@ package com.flatcode.simplecomposeapps.news.data.repository
 
 import com.flatcode.simplecomposeapps.news.data.local.NewsDao
 import com.flatcode.simplecomposeapps.news.service.NewsAPI
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,16 +26,16 @@ class NewsRepository @Inject constructor(
             }
 
             Resource.Success(articles)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             if (category != null && query == null) {
                 val cachedNews = newsDao.getNewsByCategory(category)
                 if (cachedNews.isNotEmpty()) {
                     Resource.Success(cachedNews)
                 } else {
-                    Resource.Error(e.message ?: "An error occurred and no cached data found")
+                    Resource.Error(Strings.FAILED_LOAD_DATA)
                 }
             } else {
-                Resource.Error(e.message ?: "An error occurred")
+                Resource.Error(Strings.FAILED_LOAD_DATA)
             }
         }
     }

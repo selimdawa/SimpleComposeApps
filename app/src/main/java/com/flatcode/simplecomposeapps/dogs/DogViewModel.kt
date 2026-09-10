@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.dogs.data.DogRepository
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ class DogViewModel @Inject constructor(
             _errorMessage.value = null
         } else {
             _photos.value = emptyList()
-            _errorMessage.value = DATA.FAILED_LOAD_DATA
+            _errorMessage.value = Strings.FAILED_LOAD_DATA
         }
     }
 }

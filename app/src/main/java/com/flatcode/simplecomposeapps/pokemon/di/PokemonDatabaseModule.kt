@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.pokemon.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.pokemon.data.database.PokeDatabase
-import com.flatcode.simplecomposeapps.pokemon.data.database.dao.PokeDao
+import com.flatcode.simplecomposeapps.pokemon.db.PokeDatabase
+import com.flatcode.simplecomposeapps.pokemon.db.PokeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

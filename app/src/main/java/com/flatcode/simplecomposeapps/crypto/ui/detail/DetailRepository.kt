@@ -4,7 +4,7 @@ import com.flatcode.simplecomposeapps.crypto.db.dao.CoinDetailDao
 import com.flatcode.simplecomposeapps.crypto.db.entity.CoinDetailEntity
 import com.flatcode.simplecomposeapps.crypto.model.detail.CoinDetail
 import com.flatcode.simplecomposeapps.crypto.network.CryptoApi
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import javax.inject.Inject
 
@@ -48,7 +48,7 @@ class DetailRepository @Inject constructor(
                 Resource.Error("Coin details not found for id: $id")
             }
         } catch (_: Exception) {
-            Resource.Error(DATA.FAILED_LOAD_DATA)
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 }

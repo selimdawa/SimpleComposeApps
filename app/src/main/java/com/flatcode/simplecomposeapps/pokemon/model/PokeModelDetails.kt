@@ -1,6 +1,5 @@
-package com.flatcode.simplecomposeapps.pokemon.data.model
+package com.flatcode.simplecomposeapps.pokemon.model
 
-import com.flatcode.simplecomposeapps.pokemon.domain.model.PokeItemDetails
 import kotlinx.serialization.Serializable
 
 @Serializable

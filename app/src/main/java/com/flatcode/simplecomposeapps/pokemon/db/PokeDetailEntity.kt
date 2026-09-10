@@ -1,9 +1,12 @@
-package com.flatcode.simplecomposeapps.pokemon.domain.model
+package com.flatcode.simplecomposeapps.pokemon.db
 
-import com.flatcode.simplecomposeapps.pokemon.data.database.entities.PokeDetailEntity
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.flatcode.simplecomposeapps.pokemon.model.PokeItemDetails
 
-data class PokeItemDetails(
-    val id: Int,
+@Entity(tableName = "pokemon_details")
+data class PokeDetailEntity(
+    @PrimaryKey val id: Int,
     val name: String,
     val type1: String,
     val type2: String?,
@@ -17,6 +20,6 @@ data class PokeItemDetails(
     val weight: Int
 )
 
-fun PokeItemDetails.toDatabase() = PokeDetailEntity(
+fun PokeDetailEntity.toDomain() = PokeItemDetails(
     id, name, type1, type2, hp, attack, defense, specialAttack, specialDefense, speed, height, weight
 )

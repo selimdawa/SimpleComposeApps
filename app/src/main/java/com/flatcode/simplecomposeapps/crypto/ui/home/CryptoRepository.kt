@@ -7,7 +7,7 @@ import com.flatcode.simplecomposeapps.crypto.model.home.Data
 import com.flatcode.simplecomposeapps.crypto.model.home.Quote
 import com.flatcode.simplecomposeapps.crypto.model.home.Usd
 import com.flatcode.simplecomposeapps.crypto.network.CryptoApi
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import timber.log.Timber
 import javax.inject.Inject
@@ -50,7 +50,7 @@ class CryptoRepository @Inject constructor(
                 }
                 Resource.Success(CryptoResponse(data = cachedData, status = null))
             } else {
-                Resource.Error(DATA.FAILED_LOAD_DATA)
+                Resource.Error(Strings.FAILED_LOAD_DATA)
             }
         }
     }

@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
@@ -166,7 +167,7 @@ fun NewsScreen(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (errorMessage != null) {
                     Text(
-                        text = DATA.FAILED_LOAD_DATA,
+                        text = Strings.FAILED_LOAD_DATA,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(20.dp),

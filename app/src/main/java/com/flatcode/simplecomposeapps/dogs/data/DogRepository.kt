@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.dogs.data
 
 import com.flatcode.simplecomposeapps.dogs.service.ApiService
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,7 +31,7 @@ class DogRepository @Inject constructor(
             dogDao.insertDogs(entities)
             Resource.Success(entities.map { it.imageUrl })
         } catch (_: Exception) {
-            Resource.Error(DATA.FAILED_LOAD_DATA)
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 

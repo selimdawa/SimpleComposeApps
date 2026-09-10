@@ -1,7 +1,7 @@
 package com.flatcode.simplecomposeapps.blogger.data.repository
 
 import com.flatcode.simplecomposeapps.blogger.data.network.BloggerApi
-import com.flatcode.simplecomposeapps.blogger.model.Post
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,8 +16,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.getPosts(pageToken = pageToken)
             Resource.Success(response)
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 
@@ -25,8 +25,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.searchPosts(query = query, pageToken = pageToken)
             Resource.Success(response)
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 
@@ -34,8 +34,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.getPages()
             Resource.Success(response.items ?: emptyList())
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 
@@ -43,8 +43,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.getPostDetails(postId)
             Resource.Success(response)
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 
@@ -52,8 +52,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.getPageDetails(pageId)
             Resource.Success(response)
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 
@@ -61,8 +61,8 @@ class BloggerRepository @Inject constructor(
         try {
             val response = api.getComments(postId)
             Resource.Success(response.items ?: emptyList())
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 }

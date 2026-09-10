@@ -5,6 +5,7 @@ import com.flatcode.simplecomposeapps.dictionary.data.local.WordEntity
 import com.flatcode.simplecomposeapps.dictionary.service.DictionaryAPI
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -30,8 +31,8 @@ class DictionaryRepository @Inject constructor(
             } else {
                 Resource.Error("No definition found")
             }
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+        } catch (_: Exception) {
+            Resource.Error(Strings.FAILED_LOAD_DATA)
         }
     }
 }

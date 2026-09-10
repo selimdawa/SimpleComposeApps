@@ -2,7 +2,7 @@ package com.flatcode.simplecomposeapps.movies.network
 
 import com.flatcode.simplecomposeapps.movies.db.MoviesDao
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,7 +27,7 @@ class MovieRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 Resource.Success(cached)
             } else {
-                Resource.Error(DATA.FAILED_LOAD_DATA)
+                Resource.Error(Strings.FAILED_LOAD_DATA)
             }
         }
     }

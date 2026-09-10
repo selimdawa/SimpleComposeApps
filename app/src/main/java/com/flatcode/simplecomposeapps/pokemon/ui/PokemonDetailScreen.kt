@@ -69,31 +69,8 @@ fun PokemonDetailScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            when (detailsResult) {
-                is Resource.Loading -> {
-                    LoadingAnimation(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .align(Alignment.Center)
-                    )
-                }
-
-                is Resource.Error -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = DATA.FAILED_LOAD_DATA,
-                            color = COLOR_ERROR,
-                            fontSize = 35.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(20.dp)
-                        )
-                    }
-                }
-
-                is Resource.Success -> {
+            when {
+                detailsResult.data != null -> {
                     detailsResult.data?.let { item ->
                         val errorColor = COLOR_ERROR
                         val onBgColor = COLOR_ON_BACKGROUND
@@ -194,7 +171,28 @@ fun PokemonDetailScreen(
                     }
                 }
 
-                else -> {}
+                detailsResult is Resource.Loading -> {
+                    LoadingAnimation(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+
+                detailsResult is Resource.Error -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = Strings.FAILED_LOAD_DATA,
+                            color = COLOR_ERROR,
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(20.dp)
+                        )
+                    }
+                }
             }
         }
     }

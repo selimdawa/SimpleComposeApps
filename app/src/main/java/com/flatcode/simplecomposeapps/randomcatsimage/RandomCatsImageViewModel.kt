@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageDao
 import com.flatcode.simplecomposeapps.randomcatsimage.data.CatImageEntity
 import com.flatcode.simplecomposeapps.randomcatsimage.network.CatImageApi
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -80,7 +80,7 @@ class RandomCatsImageViewModel @Inject constructor(
                 _errorMessage.value = null
             } else {
                 _imageUrl.value = ""
-                _errorMessage.value = DATA.FAILED_LOAD_DATA
+                _errorMessage.value = Strings.FAILED_LOAD_DATA
             }
         }
     }

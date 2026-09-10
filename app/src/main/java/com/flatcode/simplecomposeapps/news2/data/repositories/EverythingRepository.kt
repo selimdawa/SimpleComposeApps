@@ -3,7 +3,7 @@ package com.flatcode.simplecomposeapps.news2.data.repositories
 import com.flatcode.simplecomposeapps.news2.data.local.NewsDao
 import com.flatcode.simplecomposeapps.news2.data.remote.NewsApiServices
 import com.flatcode.simplecomposeapps.news2.models.NewsResponse
-import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -26,7 +26,7 @@ class EverythingRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 emit(Resource.Success(NewsResponse("ok", cached.size, cached)))
             } else {
-                emit(Resource.Error(DATA.FAILED_LOAD_DATA))
+                emit(Resource.Error(Strings.FAILED_LOAD_DATA))
             }
         }
     }.flowOn(Dispatchers.IO)
@@ -42,7 +42,7 @@ class EverythingRepository @Inject constructor(
             if (cached.isNotEmpty()) {
                 emit(Resource.Success(NewsResponse("ok", cached.size, cached)))
             } else {
-                emit(Resource.Error(DATA.FAILED_LOAD_DATA))
+                emit(Resource.Error(Strings.FAILED_LOAD_DATA))
             }
         }
     }.flowOn(Dispatchers.IO)

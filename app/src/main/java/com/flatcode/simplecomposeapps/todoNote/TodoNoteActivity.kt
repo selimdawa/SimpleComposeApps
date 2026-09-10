@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -94,7 +95,7 @@ fun TodoBottomNavigation(navController: NavHostController) {
                 )
             },
                 label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.route == item.route::class.qualifiedName } == true,
+                selected = currentDestination?.hierarchy?.any { it.hasRoute(item.route::class) } == true,
                 onClick = {
                     navController.navigate(item.route) {
                         popUpTo(DATA.TODO_NAV[0].route) { saveState = true }

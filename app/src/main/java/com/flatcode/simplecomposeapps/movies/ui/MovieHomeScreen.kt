@@ -23,6 +23,7 @@ import com.flatcode.simplecomposeapps.movies.viewmodel.MovieHomeViewModel
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ERROR
 import com.flatcode.simplecomposeapps.ui.theme.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.MC_TRACK
@@ -76,7 +77,7 @@ fun MovieHomeScreen(
 
                 is Resource.Error -> {
                     Text(
-                        text = DATA.FAILED_LOAD_DATA,
+                        text = Strings.FAILED_LOAD_DATA,
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(16.dp),
