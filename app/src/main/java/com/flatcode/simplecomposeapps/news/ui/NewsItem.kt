@@ -63,7 +63,7 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = headline.title.trim(),
+                        text = (headline.title ?: DATA.EMPTY).trim(),
                         color = Color.White,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,

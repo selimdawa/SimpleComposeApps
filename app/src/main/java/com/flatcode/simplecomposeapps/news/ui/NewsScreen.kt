@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,10 +31,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
@@ -50,6 +53,8 @@ fun NewsScreen(
     viewModel: NewsViewModel, onNewsClick: (NewsHeadlines) -> Unit
 ) {
     val headlines by viewModel.headlines.observeAsState(emptyList())
+    val isLoading by viewModel.isLoading.observeAsState(false)
+    val errorMessage by viewModel.errorMessage.observeAsState()
     val selectedCategory by viewModel.selectedCategory.observeAsState("general")
 
     var searchQuery by remember { mutableStateOf("") }
@@ -152,13 +157,32 @@ fun NewsScreen(
                 )
             }
 
-            Box(modifier = Modifier.weight(1f)) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 16.dp)
-                ) {
-                    items(headlines) { headline ->
-                        NewsItem(headline = headline, onClick = { onNewsClick(headline) })
+            if (isLoading) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth(), color = MC_BG
+                )
+            }
+
+            Box(modifier = Modifier.fillMaxSize()) {
+                if (errorMessage != null) {
+                    Text(
+                        text = DATA.FAILED_LOAD_DATA,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(20.dp),
+                        color = COLOR_ERROR,
+                        fontSize = 35.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                } else if (!isLoading) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = 16.dp)
+                    ) {
+                        items(headlines) { headline ->
+                            NewsItem(headline = headline, onClick = { onNewsClick(headline) })
+                        }
                     }
                 }
             }

@@ -55,7 +55,7 @@ fun NewsAppDetailsScreen(
                     .padding(10.dp)
             ) {
                 Text(
-                    text = headline.title,
+                    text = headline.title ?: DATA.EMPTY,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold,
@@ -81,7 +81,7 @@ fun NewsAppDetailsScreen(
                         )
 
                         Text(
-                            text = headline.author,
+                            text = headline.author ?: DATA.EMPTY,
                             color = Color.White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -90,7 +90,7 @@ fun NewsAppDetailsScreen(
                         )
 
                         Text(
-                            text = headline.publishedAt,
+                            text = headline.publishedAt ?: DATA.EMPTY,
                             color = Color.White,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
@@ -100,7 +100,7 @@ fun NewsAppDetailsScreen(
                 }
 
                 Text(
-                    text = headline.description,
+                    text = headline.description ?: DATA.EMPTY,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
@@ -113,7 +113,7 @@ fun NewsAppDetailsScreen(
                 )
 
                 Text(
-                    text = headline.content,
+                    text = headline.content ?: DATA.EMPTY,
                     color = COLOR_ERROR,
                     fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
