@@ -1,8 +1,7 @@
-package com.flatcode.simplecomposeapps.todoNote.util
+package com.flatcode.simplecomposeapps.todoNote.utils
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.encodeToString
 
 class Converters {
     @TypeConverter

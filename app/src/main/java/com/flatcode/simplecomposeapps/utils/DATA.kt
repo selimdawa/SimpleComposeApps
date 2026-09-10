@@ -1,4 +1,5 @@
 @file:Suppress("SpellCheckingInspection")
+
 package com.flatcode.simplecomposeapps.utils
 
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -34,251 +35,14 @@ import com.flatcode.simplecomposeapps.wordpress.activity.WordpressActivity
 
 object DATA {
 
+    // Data Classes
     data class NavItem(
         val route: Any, val label: String, val icon: ImageVector
     )
 
-    val NEWS_NAV = listOf(
-        NavItem(News2Activity.Everything, Strings.EVERYTHING, AppIcons.MultiDelete),
-        NavItem(News2Activity.TopArticles, Strings.TOP_ARTICLES, AppIcons.News)
-    )
-
-    val MEALS_NAV = listOf(
-        NavItem(MealsActivity.Home, Strings.HOME, AppIcons.Home),
-        NavItem(MealsActivity.Favorites, Strings.FAVORITES, AppIcons.Favorite),
-        NavItem(MealsActivity.Categories, Strings.CATEGORIES, AppIcons.Category)
-    )
-
-    val RICK_NAV = listOf(
-        NavItem(RickAndMortyActivity.Character, Strings.CHARACTER, AppIcons.RickAndMorty),
-        NavItem(RickAndMortyActivity.Location, Strings.LOCATION, AppIcons.Location),
-        NavItem(RickAndMortyActivity.Episode, Strings.EPISODE, AppIcons.EventNote)
-    )
-
-    val TODO_NAV = listOf(
-        NavItem(TodoNoteActivity.Tasks, Strings.TASKS, AppIcons.TodoCheck),
-        NavItem(TodoNoteActivity.Notes, Strings.NOTES, AppIcons.TodoNote)
-    )
-
-    val WEB_NAV = listOf(
-        NavItem(WebAppActivity.Home, Strings.HOME, AppIcons.Home),
-        NavItem(WebAppActivity.History, Strings.HISTORY, AppIcons.History),
-        NavItem(WebAppActivity.Bookmarks, Strings.BOOKMARKS, AppIcons.Bookmark)
-    )
-
-    @Suppress("SpellCheckingInspection")
-    val BREEDS_LIST = listOf(
-        "Affenpinscher",
-        "African",
-        "Airedale",
-        "Akita",
-        "Appenzeller",
-        "Australian Shepherd",
-        "Basenji",
-        "Beagle",
-        "Bluetick",
-        "Borzoi",
-        "Bouvier",
-        "Boxer",
-        "Brabancon",
-        "Briard",
-        "Buhund Norwegian",
-        "Bulldog Boston",
-        "Bulldog English",
-        "Bulldog French",
-        "Bullterrier Staffordshire",
-        "Cattledog Australian",
-        "Chihuahua",
-        "Chow",
-        "Clumber",
-        "Cockapoo",
-        "Collie Border",
-        "Coonhound",
-        "Corgi Cardigan",
-        "Cotondetulear",
-        "Dachshund",
-        "Dalmatian",
-        "Dane Great",
-        "Deerhound Scottish",
-        "Dhole",
-        "Dingo",
-        "Doberman",
-        "Elkhound Norwegian",
-        "Entlebucher",
-        "Eskimo",
-        "Finnish Lapphund",
-        "Frise Bichon",
-        "Germanshepherd",
-        "Golden",
-        "Greyhound Italian",
-        "Groenendael",
-        "Havanese",
-        "Hound Afghan",
-        "Hound Basset",
-        "Hound Blood",
-        "Hound English",
-        "Hound Ibizan",
-        "Hound Plott",
-        "Hound Walker",
-        "Husky",
-        "Keeshond",
-        "Kelpie",
-        "Komondor",
-        "Kuvasz",
-        "Labradoodle",
-        "Labrador",
-        "Leonberg",
-        "Lhasa",
-        "Malamute",
-        "Malinois",
-        "Maltese",
-        "Mastiff Bull",
-        "Mastiff English",
-        "Mastiff Tibetan",
-        "Mexicanhairless",
-        "Mix",
-        "Mountain Bernese",
-        "Mountain Swiss",
-        "Newfoundland",
-        "Otterhound",
-        "Ovcharka Caucasian",
-        "Papillon",
-        "Pekinese",
-        "Pembroke",
-        "Pinscher Miniature",
-        "Pitbull",
-        "Pointer German",
-        "Pointer Germanlonghair",
-        "Pomeranian",
-        "Poodle Medium",
-        "Poodle Miniature",
-        "Poodle Standard",
-        "Poodle Toy",
-        "Pug",
-        "Puggle",
-        "Pyrenees",
-        "Redbone",
-        "Retriever Chesapeake",
-        "Retriever Curly",
-        "Retriever Flatcoated",
-        "Retriever Golden",
-        "Ridgeback Rhodesian",
-        "Rottweiler",
-        "Saluki",
-        "Samoyed",
-        "Schipperke",
-        "Schnauzer Giant",
-        "Schnauzer Miniature",
-        "Segugio Italian",
-        "Setter English",
-        "Setter Gordon",
-        "Setter Irish",
-        "Sharpei",
-        "Sheepdog English",
-        "Sheepdog Shetland",
-        "Shiba",
-        "Shihtzu",
-        "Spaniel Blenheim",
-        "Spaniel Brittany",
-        "Spaniel Cocker",
-        "Spaniel Irish",
-        "Spaniel Japanese",
-        "Spaniel Sussex",
-        "Spaniel Welsh",
-        "Springer English",
-        "Stbernard",
-        "Terrier America",
-        "Terrier Australia",
-        "Terrier Bedlington",
-        "Terrier Borde",
-        "Terrier Cairn",
-        "Terrier Dandi",
-        "Terrier Fox",
-        "Terrier Irish",
-        "Terrier Kerryblue",
-        "Terrier Lakeland",
-        "Terrier Norfolk",
-        "Terrier Norwich",
-        "Terrier Patterdale",
-        "Terrier Russell",
-        "Terrier Scottish",
-        "Terrier Sealyham",
-        "Terrier Silky",
-        "Terrier Tibetan",
-        "Terrier Toy",
-        "Terrier Welsh",
-        "Terrier Westhighland",
-        "Terrier Wheaten",
-        "Terrier Yorkshire",
-        "Tervuren",
-        "Vizsla",
-        "Waterdog Spanis",
-        "Weimaraner",
-        "Whippet",
-        "Wolfhound Irish"
-    )
-
-    val MULTI_DELETE_VALUES = listOf(
-        Strings.ONE,
-        Strings.TWO,
-        Strings.THREE,
-        Strings.FOUR,
-        Strings.FIVE,
-        Strings.SIX,
-        Strings.SEVEN,
-        Strings.EIGHT,
-        Strings.NINE,
-        Strings.TEN,
-        Strings.ELEVEN,
-        Strings.TWELVE,
-        Strings.THIRTEEN,
-        Strings.FOURTEEN,
-        Strings.FIFTEEN,
-        Strings.SIXTEEN,
-        Strings.SEVENTEEN,
-        Strings.EIGHTEEN,
-        Strings.NINETEEN,
-        Strings.TWENTY
-    )
-
-    val JOKE_CATEGORIES =
-        listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
-
-    val NEWS_CATEGORIES =
-        listOf("general", "business", "entertainment", "health", "science", "sports", "technology")
-
-    val WEATHER_TABS = listOf(Strings.HOURS, Strings.DAYS)
-
-    val MAIN_INFO_DATA = listOf(
-        MainInfo(STOP_WATCH, 1, 1, 1, 1),
-        MainInfo(CANDY_CRUSH, 1, 1, 1, 1),
-        MainInfo(MULTI_DELETE, 1, 1, 1, 1),
-        MainInfo(RANDOM_IMAGE, 1, 1, 1, 1),
-        MainInfo(BLOGGER, 1, 1, 0, 0),
-        MainInfo(JOKE, 1, 1, 1, 1),
-        MainInfo(NEWS, 1, 1, 1, 1),
-        MainInfo(PDF_READER, 1, 1, 1, 1),
-        MainInfo(VIDEO_PLAYER, 1, 1, 1, 1),
-        MainInfo(WEB, 1, 1, 1, 1),
-        MainInfo(WORDPRESS, 1, 1, 1, 1),
-        MainInfo(DOGS, 1, 1, 1, 1),
-        MainInfo(COUNTRIES, 1, 1, 1, 1),
-        MainInfo(CALCULATOR, 1, 1, 1, 1),
-        MainInfo(CRYPTO, 1, 1, 1, 1),
-        MainInfo(DICTIONARY, 1, 1, 1, 1),
-        MainInfo(MEALS, 1, 1, 1, 1),
-        MainInfo(POP, 1, 1, 1, 1),
-        MainInfo(MOVIE, 1, 1, 1, 1),
-        MainInfo(NEWS_2, 1, 1, 1, 1),
-        MainInfo(RICK_AND_MORTY, 1, 1, 1, 1),
-        MainInfo(WEATHER, 1, 1, 1, 1),
-        MainInfo(POKE, 1, 1, 1, 1),
-        MainInfo(TODO_NOTE, 1, 1, 1, 1),
-        MainInfo(STOCK_MARKET, 1, 1, 1, 1)
-    )
-
+    // Main App Data
     private val counts = intArrayOf(
-        1, 1, 1, 1, 4, 1, 2, 2, 3, 2, 3, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1
+        1, 1, 1, 1, 1, 1, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1
     )
 
     val MAIN_DATA = listOf(
@@ -309,6 +73,111 @@ object DATA {
         Main(AppIcons.StockMarket, STOCK_MARKET, counts[24], StockMarketActivity::class.java)
     )
 
+    val MAIN_INFO_DATA = listOf(
+        MainInfo(STOP_WATCH, 1, 1, 1, 1),
+        MainInfo(CANDY_CRUSH, 1, 1, 1, 1),
+        MainInfo(MULTI_DELETE, 1, 1, 1, 1),
+        MainInfo(RANDOM_IMAGE, 1, 1, 1, 1),
+        MainInfo(BLOGGER, 1, 1, 0, 0),
+        MainInfo(JOKE, 1, 1, 1, 1),
+        MainInfo(NEWS, 1, 1, 1, 1),
+        MainInfo(PDF_READER, 1, 1, 1, 1),
+        MainInfo(VIDEO_PLAYER, 1, 1, 1, 1),
+        MainInfo(WEB, 1, 1, 1, 1),
+        MainInfo(WORDPRESS, 1, 1, 1, 1),
+        MainInfo(DOGS, 1, 1, 1, 1),
+        MainInfo(COUNTRIES, 1, 1, 1, 1),
+        MainInfo(CALCULATOR, 1, 1, 1, 1),
+        MainInfo(CRYPTO, 1, 1, 1, 1),
+        MainInfo(DICTIONARY, 1, 1, 1, 1),
+        MainInfo(MEALS, 1, 1, 1, 1),
+        MainInfo(POP, 1, 1, 1, 1),
+        MainInfo(MOVIE, 1, 1, 1, 1),
+        MainInfo(NEWS_2, 1, 1, 1, 1),
+        MainInfo(RICK_AND_MORTY, 1, 1, 1, 1),
+        MainInfo(WEATHER, 1, 1, 1, 1),
+        MainInfo(POKE, 1, 1, 1, 1),
+        MainInfo(TODO_NOTE, 1, 1, 1, 1),
+        MainInfo(STOCK_MARKET, 1, 1, 1, 1)
+    )
+
+    // Navigation Lists
+    val NEWS_NAV = listOf(
+        NavItem(News2Activity.Everything, Strings.EVERYTHING, AppIcons.MultiDelete),
+        NavItem(News2Activity.TopArticles, Strings.TOP_ARTICLES, AppIcons.News)
+    )
+
+    val MEALS_NAV = listOf(
+        NavItem(MealsActivity.Home, Strings.HOME, AppIcons.Home),
+        NavItem(MealsActivity.Favorites, Strings.FAVORITES, AppIcons.Favorite),
+        NavItem(MealsActivity.Categories, Strings.CATEGORIES, AppIcons.Category)
+    )
+
+    val RICK_NAV = listOf(
+        NavItem(RickAndMortyActivity.Character, Strings.CHARACTER, AppIcons.RickAndMorty),
+        NavItem(RickAndMortyActivity.Location, Strings.LOCATION, AppIcons.Location),
+        NavItem(RickAndMortyActivity.Episode, Strings.EPISODE, AppIcons.EventNote)
+    )
+
+    val TODO_NAV = listOf(
+        NavItem(TodoNoteActivity.Tasks, Strings.TASKS, AppIcons.TodoCheck),
+        NavItem(TodoNoteActivity.Notes, Strings.NOTES, AppIcons.TodoNote)
+    )
+
+    val WEB_NAV = listOf(
+        NavItem(WebAppActivity.Home, Strings.HOME, AppIcons.Home),
+        NavItem(WebAppActivity.History, Strings.HISTORY, AppIcons.History),
+        NavItem(WebAppActivity.Bookmarks, Strings.BOOKMARKS, AppIcons.Bookmark)
+    )
+
+    // Category & Utility Lists
+    val JOKE_CATEGORIES =
+        listOf("Any", Strings.PROGRAMMING, "Dark", "Spooky", "Misc", "Pun", "Christmas")
+
+    val NEWS_CATEGORIES =
+        listOf("general", "business", "entertainment", "health", "science", "sports", "technology")
+
+    val WEATHER_TABS = listOf(Strings.HOURS, Strings.DAYS)
+
+    val MULTI_DELETE_VALUES = listOf(
+        Strings.ONE, Strings.TWO, Strings.THREE, Strings.FOUR, Strings.FIVE,
+        Strings.SIX, Strings.SEVEN, Strings.EIGHT, Strings.NINE, Strings.TEN,
+        Strings.ELEVEN, Strings.TWELVE, Strings.THIRTEEN, Strings.FOURTEEN, Strings.FIFTEEN,
+        Strings.SIXTEEN, Strings.SEVENTEEN, Strings.EIGHTEEN, Strings.NINETEEN, Strings.TWENTY
+    )
+
+    @Suppress("SpellCheckingInspection")
+    val BREEDS_LIST = listOf(
+        "Affenpinscher", "African", "Airedale", "Akita", "Appenzeller", "Australian Shepherd",
+        "Basenji", "Beagle", "Bluetick", "Borzoi", "Bouvier", "Boxer", "Brabancon", "Briard",
+        "Buhund Norwegian", "Bulldog Boston", "Bulldog English", "Bulldog French",
+        "Bullterrier Staffordshire", "Cattledog Australian", "Chihuahua", "Chow", "Clumber",
+        "Cockapoo", "Collie Border", "Coonhound", "Corgi Cardigan", "Cotondetulear", "Dachshund",
+        "Dalmatian", "Dane Great", "Deerhound Scottish", "Dhole", "Dingo", "Doberman",
+        "Elkhound Norwegian", "Entlebucher", "Eskimo", "Finnish Lapphund", "Frise Bichon",
+        "Germanshepherd", "Golden", "Greyhound Italian", "Groenendael", "Havanese", "Hound Afghan",
+        "Hound Basset", "Hound Blood", "Hound English", "Hound Ibizan", "Hound Plott",
+        "Hound Walker", "Husky", "Keeshond", "Kelpie", "Komondor", "Kuvasz", "Labradoodle",
+        "Labrador", "Leonberg", "Lhasa", "Malamute", "Malinois", "Maltese", "Mastiff Bull",
+        "Mastiff English", "Mastiff Tibetan", "Mexicanhairless", "Mix", "Mountain Bernese",
+        "Mountain Swiss", "Newfoundland", "Otterhound", "Ovcharka Caucasian", "Papillon",
+        "Pekinese", "Pembroke", "Pinscher Miniature", "Pitbull", "Pointer German",
+        "Pointer Germanlonghair", "Pomeranian", "Poodle Medium", "Poodle Miniature",
+        "Poodle Standard", "Poodle Toy", "Pug", "Puggle", "Pyrenees", "Redbone",
+        "Retriever Chesapeake", "Retriever Curly", "Retriever Flatcoated", "Retriever Golden",
+        "Ridgeback Rhodesian", "Rottweiler", "Saluki", "Samoyed", "Schipperke", "Schnauzer Giant",
+        "Schnauzer Miniature", "Segugio Italian", "Setter English", "Setter Gordon", "Setter Irish",
+        "Sharpei", "Sheepdog English", "Sheepdog Shetland", "Shiba", "Shihtzu", "Spaniel Blenheim",
+        "Spaniel Brittany", "Spaniel Cocker", "Spaniel Irish", "Spaniel Japanese", "Spaniel Sussex",
+        "Spaniel Welsh", "Springer English", "Stbernard", "Terrier America", "Terrier Australia",
+        "Terrier Bedlington", "Terrier Borde", "Terrier Cairn", "Terrier Dandi", "Terrier Fox",
+        "Terrier Irish", "Terrier Kerryblue", "Terrier Lakeland", "Terrier Norfolk",
+        "Terrier Norwich", "Terrier Patterdale", "Terrier Russell", "Terrier Scottish",
+        "Terrier Sealyham", "Terrier Silky", "Terrier Tibetan", "Terrier Toy", "Terrier Welsh",
+        "Terrier Westhighland", "Terrier Wheaten", "Terrier Yorkshire", "Tervuren", "Vizsla",
+        "Waterdog Spanis", "Weimaraner", "Whippet", "Wolfhound Irish"
+    )
+
     val ICON_PATH_DATA = listOf(
         Triple("M36.06,28.92L36.06,32.18", 0xFFE7E7E7, 0xFFCCCCCf),
         Triple("M39.45,29.88L37.82,32.71", 0xFFCACACA, 0xFFC8C8CC),
@@ -324,13 +193,17 @@ object DATA {
         Triple("M29.85,39.4L32.67,37.77", 0xFF7A7A7A, 0xFF9D9DA0)
     )
 
-    //Database
+    // General Constants
     const val EMPTY = ""
     const val DATA = "data"
     const val UNKNOWN = "Unknown"
-    const val FAILED_LOAD_DATA = "Failed to load data"
+    const val ZERO_TIME = "00:00:00"
 
-    //Main
+    // Result Codes
+    const val ADD_RESULT_OK = 1
+    const val EDIT_RESULT_OK = 2
+
+    // App Names
     const val STOP_WATCH = "Stop Watch"
     const val CANDY_CRUSH = "Candy Crush Game"
     const val MULTI_DELETE = "Multiple Delete"
@@ -357,42 +230,59 @@ object DATA {
     const val TODO_NOTE = "TODO-Note"
     const val STOCK_MARKET = "Stock Market"
 
-    //Stock Market
-    const val API_KEY_STOCK = "CY75KFHR7APO4MSF"
-    const val BASE_URL_STOCK = "https://alphavantage.co/"
-
-    const val ADD_RESULT_OK = 1
-    const val EDIT_RESULT_OK = 2
-
-    //Class Name
+    // Feature Details
     const val COUNTRY_DETAILS = "Country Details"
     const val CRYPTO_DETAILS = "Crypto Details"
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
+
+    // Tech Labels
     const val DAGGER_HILT = "Dagger-Hilt :"
     const val NAVIGATION = "Navigation :"
     const val ROOM = "Room :"
     const val COROUTINES = "Coroutines :"
-    const val ZERO_TIME = "00:00:00"
 
-    //Blogger
-    const val BLOGGER_API = "AIzaSyDAq5n9ShBngyuSoWrFBnuena94qPm2Gk0" // API your blogger
-    const val BLOG_ID = "5758825298436553050" // ID for your blogger
-    const val MAX_POST_RESULTS = "10" // Max post display
+    // API Keys & Base URLs
+    const val BLOGGER_API = "AIzaSyDAq5n9ShBngyuSoWrFBnuena94qPm2Gk0"
+    const val BLOG_ID = "5758825298436553050"
+    const val BLOGGER_BASE_URL = "https://www.googleapis.com/blogger/v3/blogs/"
 
-    //Web App
-    var myFacebook = "https://www.facebook.com" // FB here
-    var myTwitter = "https://www.twitter.com" // Twitter here
-    var myInstagram = "https://www.instagram.com" // Instagram here
-    var mySite = "https://www.google.com" // WebSite here
-    var myMobileNumber = "+963994683386" // Mobile Number here
-    var myEmail = "selimdawa@gmail.com" // Email here
+    const val NEWS_API = "07f40de92d3644908496e8f9677ee838"
+    const val API_NEWS = "45df755913c947ea82988b1dad81c6e7"
+    const val BASE_URL_NEWS = "https://newsapi.org/v2/"
 
-    //API & Url
+    const val API_KEY_STOCK = "CY75KFHR7APO4MSF"
+    const val BASE_URL_STOCK = "https://alphavantage.co/"
+
+    const val DICTIONARY_API_KEY = "a13b6fd3-80c2-44de-a1a4-d40b14184662"
+    const val DICTIONARY_BASIC_URL = "https://www.dictionaryapi.com/api/v3/references/learners/json/"
+
+    const val API_KEY_CRYPTO = "e15a2a51-07b1-4d7c-bbff-ae29b8df3b29"
+    const val BASE_URL_CRYPTO = "https://pro-api.coinmarketcap.com/"
+    const val IMAGE_CRYPTO = "https://s2.coinmarketcap.com/static/img/coins/128x128/"
+    const val LATEST_CRYPTO = "v1/cryptocurrency/listings/latest"
+    const val INFO_CRYPTO = "v2/cryptocurrency/info"
+
+    const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
+
+    const val BASE_URL_COUNTRY = "https://raw.githubusercontent.com/"
+    const val COUNTRIES_ENDPOINT = "atilsamancioglu/IA19-DataSetCountries/master/countrydataset.json"
+
+    const val BASE_URL_DOGS = "https://dog.ceo/api/breed/"
+    const val BASE_URL_MEALS = "https://www.themealdb.com/api/json/v1/1/"
+
+    const val BASE_URL_MOVIES = "https://api.themoviedb.org/"
+    const val POPULAR_MOVIES = "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
+    const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
+
+    const val BASE_URL_POKE = "https://pokeapi.co/api/v2/"
+    const val RAW_URL_POKE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
+
+    const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
     var API_RANDOM_IMAGE = "https://api.thecatapi.com/v1/images/search"
-    var NEWS_API = "07f40de92d3644908496e8f9677ee838"
     var JOKE_URL = "https://v2.jokeapi.dev/joke/"
+    const val FILE_POP = "funko_pops.json"
 
-    //Calculator
+    // Calculator Constants
     const val ZERO = "0"
     const val ONE = "1"
     const val TWO = "2"
@@ -412,59 +302,13 @@ object DATA {
     const val CLEAR = "C"
     const val EQUALS = "="
 
-    //Dictionary
-    const val DICTIONARY_API_KEY = "a13b6fd3-80c2-44de-a1a4-d40b14184662"
-    const val DICTIONARY_BASIC_URL =
-        "https://www.dictionaryapi.com/api/v3/references/learners/json/"
-
-    //Crypto
-    const val BASE_URL_CRYPTO = "https://pro-api.coinmarketcap.com/"
-    const val API_KEY_CRYPTO = "e15a2a51-07b1-4d7c-bbff-ae29b8df3b29"
-    const val LIMIT_CRYPTO = "10"
-    const val IMAGE_CRYPTO = "https://s2.coinmarketcap.com/static/img/coins/128x128/"
-
-    @Suppress("UNUSED_VARIABLE", "unused")
-    const val LATEST_CRYPTO = "v1/cryptocurrency/listings/latest"
-    const val INFO_CRYPTO = "v2/cryptocurrency/info"
-
-    //Rick & Morty
-    const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
-
-    //Country
-    const val COUNTRIES_ENDPOINT: String =
-        "atilsamancioglu/IA19-DataSetCountries/master/countrydataset.json"
-    const val BASE_URL_COUNTRY = "https://raw.githubusercontent.com/"
-
-    //Dogs
-    const val BASE_URL_DOGS = "https://dog.ceo/api/breed/"
-
-    //Meals
-    const val BASE_URL_MEALS = "https://www.themealdb.com/api/json/v1/1/"
-
-    //Movies
-    const val BASE_URL_MOVIES = "https://api.themoviedb.org/"
-    const val POPULAR_MOVIES =
-        "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
-    const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
-
-    //News
-    const val BASE_URL_NEWS = "https://newsapi.org/v2/"
-    const val API_NEWS = "45df755913c947ea82988b1dad81c6e7"
-
-    //Pokémon
-    const val BASE_URL_POKE = "https://pokeapi.co/api/v2/"
-    const val RAW_URL_POKE =
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
-
-    //Pop
-    const val FILE_POP = "funko_pops.json"
-
-    //Weather
-    const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
-
-
-    // Formats
-    fun symbolBrackets(s: String) = "($s)"
+    // Social & Web Links
+    var myFacebook = "https://www.facebook.com"
+    var myTwitter = "https://www.twitter.com"
+    var myInstagram = "https://www.instagram.com"
+    var mySite = "https://www.google.com"
+    var myMobileNumber = "+963994683386"
+    var myEmail = "selimdawa@gmail.com"
 
     // Theme Attributes
     const val COLOR_ERROR = "colorError"
@@ -473,8 +317,9 @@ object DATA {
     const val MC_TICK = "mc_tick"
     const val MC_BG = "mc_bg"
 
-    // Blogger API
-    const val BLOGGER_BASE_URL = "https://www.googleapis.com/blogger/v3/blogs/"
+    // JSON Keys & Params
+    const val MAX_POST_RESULTS = "10"
+    const val LIMIT_CRYPTO = "10"
     const val POSTS = "posts"
     const val PAGES = "pages"
     const val SEARCH = "search"
@@ -483,15 +328,15 @@ object DATA {
     const val PAGE_TOKEN = "pageToken"
     const val Q = "q"
     const val KEY = "key"
-
-    // JSON Keys & API Params
     const val CONDITION = "condition"
     const val TEXT = "text"
     const val ICON = "icon"
     const val TEMP_C = "temp_c"
     const val TIME = "time"
-
     const val IMAGE_NAME = "imageName"
     const val TITLE = "title"
     const val SERIES = "series"
+
+    // Utility Functions
+    fun symbolBrackets(s: String) = "($s)"
 }
