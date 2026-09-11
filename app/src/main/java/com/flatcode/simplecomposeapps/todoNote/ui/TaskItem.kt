@@ -52,7 +52,7 @@ fun TaskItem(
                 .weight(1f)
                 .padding(horizontal = 3.dp),
             fontSize = 20.sp,
-            color = if (task.important) COLOR_ERROR else COLOR_ON_BACKGROUND,
+            color = COLOR_ERROR,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textDecoration = if (task.completed) TextDecoration.LineThrough else null

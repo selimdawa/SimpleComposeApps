@@ -88,9 +88,10 @@ object Strings {
 
     // TODO - Tasks
     const val TASKS = "Tasks"
-    const val MSG_TASK_ADDED = "Task Added"
-    const val MSG_TASK_UPDATED = "Task updated"
-    const val MSG_TASK_DELETED = "Task deleted"
+    const val MSG_TASK_ADDED = "Task Added."
+    const val MSG_TASK_UPDATED = "Task updated."
+    const val MSG_TASK_DELETED = "Task deleted."
+    const val MSG_COMPLETED_TASKS_DELETED = "Completed tasks deleted."
     const val TITLE_NEW_TASK = "New Task"
     const val TITLE_EDIT_TASK = "Edit Task"
     const val ADD_TASK = "Add Task"
@@ -98,7 +99,6 @@ object Strings {
     const val SORT_BY_DATE = "Sort by date created"
     const val HIDE_COMPLETED = "Hide completed"
     const val DELETE_COMPLETED_TASKS = "Delete completed tasks"
-    fun dateCreated(date: String) = "Date created: $date"
 
     // TODO - Notes
     const val NOTES = "Notes"

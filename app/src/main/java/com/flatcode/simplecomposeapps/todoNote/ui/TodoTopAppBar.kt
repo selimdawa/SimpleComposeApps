@@ -29,7 +29,6 @@ import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -179,7 +178,7 @@ fun TodoTopAppBar(
                                 moreMenuExpanded = false
                             },
                             modifier = Modifier.background(COLOR_ON_BACKGROUND),
-                            colors = MenuDefaults.itemColors(textColor = Gray)
+                            colors = MenuDefaults.itemColors(textColor = COLOR_ERROR)
                         )
                     }
                 }

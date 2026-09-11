@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 
 @Composable
@@ -25,38 +25,29 @@ fun TodoDeleteDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                ),
-                color = COLOR_ON_BACKGROUND
+                text = title, style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold, fontSize = 20.sp
+                ), color = White
             )
         },
         text = {
             Text(
-                text = message,
-                style = MaterialTheme.typography.bodyMedium.copy(
+                text = message, style = MaterialTheme.typography.bodyMedium.copy(
                     fontSize = 16.sp
-                ),
-                color = COLOR_ON_BACKGROUND
+                ), color = White
             )
         },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(
-                    text = Strings.DIALOG_BTN_YES,
-                    color = COLOR_ON_BACKGROUND,
-                    fontSize = 16.sp
+                    text = Strings.DIALOG_BTN_YES, color = White, fontSize = 16.sp
                 )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = Strings.DIALOG_BTN_NO,
-                    color = COLOR_ON_BACKGROUND,
-                    fontSize = 16.sp
+                    text = Strings.DIALOG_BTN_NO, color = White, fontSize = 16.sp
                 )
             }
         },

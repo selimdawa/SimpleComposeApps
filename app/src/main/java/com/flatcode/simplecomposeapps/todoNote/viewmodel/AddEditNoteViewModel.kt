@@ -1,17 +1,19 @@
 package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.NoteDao
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-import com.flatcode.simplecomposeapps.utils.DATA
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
@@ -19,10 +21,25 @@ class AddEditNoteViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    val note = state.get<Notes>("note")
+    val noteId = state.get<Int>("noteId") ?: -1
+    val isEditMode = noteId != -1
+    var note by mutableStateOf<Notes?>(null)
+        private set
 
-    val noteTitle = state.getLiveData("noteTitle", note?.title ?: "")
-    val noteContent = state.getLiveData("noteContent", note?.content ?: "")
+    val noteTitle = state.getLiveData("noteTitle", "")
+    val noteContent = state.getLiveData("noteContent", "")
+
+    init {
+        if (noteId != -1) {
+            viewModelScope.launch {
+                note = noteDao.getNoteById(noteId)
+                note?.let {
+                    noteTitle.value = it.title
+                    noteContent.value = it.content
+                }
+            }
+        }
+    }
 
     private val _addEditNoteEvent = MutableSharedFlow<AddEditNoteEvent>()
     val addEditNoteEvent: SharedFlow<AddEditNoteEvent> = _addEditNoteEvent
@@ -32,8 +49,9 @@ class AddEditNoteViewModel @Inject constructor(
         val content = noteContent.value ?: ""
         if (title.isBlank()) return
 
-        if (note != null) {
-            val updatedNote = note.copy(title = title, content = content)
+        val currentNote = note
+        if (currentNote != null) {
+            val updatedNote = currentNote.copy(title = title, content = content)
             updateNote(updatedNote)
         } else {
             val newNote = Notes(title = title, content = content)

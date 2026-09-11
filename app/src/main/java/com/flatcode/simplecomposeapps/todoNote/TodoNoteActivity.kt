@@ -32,11 +32,11 @@ import com.flatcode.simplecomposeapps.todoNote.ui.AddEditNoteScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.AddEditTaskScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.NotesScreen
 import com.flatcode.simplecomposeapps.todoNote.ui.TasksScreen
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
-import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
@@ -50,10 +50,10 @@ class TodoNoteActivity : ComponentActivity() {
     object Notes
 
     @Serializable
-    object AddEditTask
+    data class AddEditTask(val taskId: Int = -1)
 
     @Serializable
-    object AddEditNote
+    data class AddEditNote(val noteId: Int = -1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -93,23 +93,23 @@ fun TodoBottomNavigation(navController: NavHostController) {
                 Icon(
                     item.icon, contentDescription = item.label, modifier = Modifier.size(24.dp)
                 )
-            },
-                label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.hasRoute(item.route::class) } == true,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(DATA.TODO_NAV[0].route) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MC_TRACK,
-                    unselectedIconColor = Gray,
-                    selectedTextColor = MC_TRACK,
-                    unselectedTextColor = Gray,
-                    indicatorColor = Color.Transparent
-                )
+            }, label = { Text(item.label) }, selected = currentDestination?.hierarchy?.any {
+                it.hasRoute(item.route::class) || (item.route == TodoNoteActivity.Tasks && it.hasRoute(
+                    TodoNoteActivity.AddEditTask::class
+                )) || (item.route == TodoNoteActivity.Notes && it.hasRoute(TodoNoteActivity.AddEditNote::class))
+            } == true, onClick = {
+                navController.navigate(item.route) {
+                    popUpTo(DATA.TODO_NAV[0].route) { saveState = true }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }, colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = MC_TRACK,
+                unselectedIconColor = Gray,
+                selectedTextColor = MC_TRACK,
+                unselectedTextColor = Gray,
+                indicatorColor = Color.Transparent
+            )
             )
         }
     }
@@ -128,30 +128,18 @@ fun TodoNavHost(
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
         composable<TodoNoteActivity.Tasks> {
-            TasksScreen(
-                navController = navController,
-                onBack = onBack,
-                onAddTask = {
-                    navController.currentBackStackEntry?.savedStateHandle?.set("task", null)
-                    navController.navigate(TodoNoteActivity.AddEditTask)
-                },
-                onEditTask = { task ->
-                    navController.currentBackStackEntry?.savedStateHandle?.set("task", task)
-                    navController.navigate(TodoNoteActivity.AddEditTask)
-                })
+            TasksScreen(navController = navController, onBack = onBack, onAddTask = {
+                navController.navigate(TodoNoteActivity.AddEditTask())
+            }, onEditTask = { task ->
+                navController.navigate(TodoNoteActivity.AddEditTask(task.id))
+            })
         }
         composable<TodoNoteActivity.Notes> {
-            NotesScreen(
-                navController = navController,
-                onBack = onBack,
-                onAddNote = {
-                    navController.currentBackStackEntry?.savedStateHandle?.set("note", null)
-                    navController.navigate(TodoNoteActivity.AddEditNote)
-                },
-                onEditNote = { note ->
-                    navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
-                    navController.navigate(TodoNoteActivity.AddEditNote)
-                })
+            NotesScreen(navController = navController, onBack = onBack, onAddNote = {
+                navController.navigate(TodoNoteActivity.AddEditNote())
+            }, onEditNote = { note ->
+                navController.navigate(TodoNoteActivity.AddEditNote(note.id))
+            })
         }
         composable<TodoNoteActivity.AddEditTask> {
             AddEditTaskScreen(

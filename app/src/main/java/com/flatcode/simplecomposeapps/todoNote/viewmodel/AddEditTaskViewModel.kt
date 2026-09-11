@@ -1,28 +1,44 @@
 package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.Task
 import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
+import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-import com.flatcode.simplecomposeapps.utils.DATA
-
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
-    private val taskDao: TaskDao,
-    state: SavedStateHandle
+    private val taskDao: TaskDao, state: SavedStateHandle
 ) : ViewModel() {
 
-    val task = state.get<Task>("task")
+    val taskId = state.get<Int>("taskId") ?: -1
+    val isEditMode = taskId != -1
+    var task by mutableStateOf<Task?>(null)
+        private set
 
-    val taskName = state.getLiveData("taskName", task?.name ?: "")
-    val taskImportant = state.getLiveData("taskImportant", task?.important ?: false)
+    val taskName = state.getLiveData("taskName", "")
+    val taskImportant = state.getLiveData("taskImportant", false)
+
+    init {
+        if (taskId != -1) {
+            viewModelScope.launch {
+                task = taskDao.getTaskById(taskId)
+                task?.let {
+                    taskName.value = it.name
+                    taskImportant.value = it.important
+                }
+            }
+        }
+    }
 
     private val _addEditTaskEvent = MutableSharedFlow<AddEditTaskEvent>()
     val addEditTaskEvent: SharedFlow<AddEditTaskEvent> = _addEditTaskEvent
@@ -34,8 +50,9 @@ class AddEditTaskViewModel @Inject constructor(
             return
         }
 
-        if (task != null) {
-            val updatedTask = task.copy(name = name, important = important)
+        val currentTask = task
+        if (currentTask != null) {
+            val updatedTask = currentTask.copy(name = name, important = important)
             updateTask(updatedTask)
         } else {
             val newTask = Task(name = name, important = important)

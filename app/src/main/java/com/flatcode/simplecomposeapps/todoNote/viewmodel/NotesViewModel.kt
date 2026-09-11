@@ -56,11 +56,11 @@ class NotesViewModel @Inject constructor(
 
     fun onNoteSwiped(note: Notes) = viewModelScope.launch {
         noteDao.delete(note)
-        notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(note))
+        notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(listOf(note)))
     }
 
-    fun onUndoDeleteClick(note: Notes) = viewModelScope.launch {
-        noteDao.insert(note)
+    fun onUndoDeleteClick(notes: List<Notes>) = viewModelScope.launch {
+        noteDao.insertAll(notes)
     }
 
     fun onAddNewNoteClick() = viewModelScope.launch {
@@ -72,7 +72,11 @@ class NotesViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllClick() = viewModelScope.launch {
+        val allNotes = noteDao.getAllNotesList()
         noteDao.deleteAllNotes()
+        if (allNotes.isNotEmpty()) {
+            notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(allNotes))
+        }
     }
 
     fun onAddEditNoteResult(result: Int) = viewModelScope.launch {
@@ -85,7 +89,7 @@ class NotesViewModel @Inject constructor(
     sealed class NotesEvent {
         data object NavigateToAddNoteScreen : NotesEvent()
         data class NavigateToEditNoteScreen(val note: Notes) : NotesEvent()
-        data class ShowUndoDeleteNoteMessage(val note: Notes) : NotesEvent()
+        data class ShowUndoDeleteNoteMessage(val notes: List<Notes>) : NotesEvent()
         data class ShowNoteSavedConfirmationMessage(val msg: String) : NotesEvent()
         data object ShowDeleteAllConfirmationDialog : NotesEvent()
     }

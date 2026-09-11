@@ -23,8 +23,14 @@ interface TaskDao {
             SortOrder.BY_NAME -> getTasksSortedByName(query, hideCompleted)
         }
 
+    @Query("SELECT * FROM task_table WHERE id = :id")
+    suspend fun getTaskById(id: Int): Task?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: Task)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(tasks: List<Task>)
 
     @Update
     suspend fun update(task: Task)
@@ -34,4 +40,7 @@ interface TaskDao {
 
     @Query("DELETE FROM task_table WHERE completed = 1")
     suspend fun deleteCompletedTasks()
+
+    @Query("SELECT * FROM task_table WHERE completed = 1")
+    suspend fun getCompletedTasksList(): List<Task>
 }

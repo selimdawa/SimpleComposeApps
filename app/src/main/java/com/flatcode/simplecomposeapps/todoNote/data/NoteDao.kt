@@ -13,6 +13,12 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: Notes)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(notes: List<Notes>)
+
+    @Query("SELECT * FROM notes_table WHERE id = :id")
+    suspend fun getNoteById(id: Int): Notes?
+
     @Update
     suspend fun update(note: Notes)
 
@@ -33,6 +39,9 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes_table WHERE title LIKE '%' || :query || '%' ORDER BY date DESC")
     fun getNotesSortedByCreatedDate(query: String): Flow<List<Notes>>
+
+    @Query("SELECT * FROM notes_table")
+    suspend fun getAllNotesList(): List<Notes>
 
     @Query("DELETE FROM notes_table")
     suspend fun deleteAllNotes()

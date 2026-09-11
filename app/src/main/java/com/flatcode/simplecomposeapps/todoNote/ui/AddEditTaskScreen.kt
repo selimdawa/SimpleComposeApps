@@ -1,13 +1,20 @@
 package com.flatcode.simplecomposeapps.todoNote.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -26,10 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.todoNote.viewmodel.AddEditTaskViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 
 @Composable
 fun AddEditTaskScreen(
@@ -48,25 +56,34 @@ fun AddEditTaskScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
-        AddEditTopAppBar(
-            title = if (viewModel.task != null) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
-            onBack = { onBack(null) })
-    }, floatingActionButton = {
-        FloatingActionButton(
-            onClick = { viewModel.onSaveClick() },
-            containerColor = COLOR_ON_BACKGROUND,
-            contentColor = COLOR_ERROR,
-            modifier = Modifier.padding(25.dp)
-        ) {
-            Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
-        }
-    }, containerColor = COLOR_ON_BACKGROUND
+            AddEditTopAppBar(
+                title = if (viewModel.isEditMode) Strings.TITLE_EDIT_TASK else Strings.TITLE_NEW_TASK,
+                onBack = { onBack(null) })
+        }, floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onSaveClick() },
+                containerColor = COLOR_ON_BACKGROUND,
+                contentColor = Color.White,
+                shape = CircleShape,
+                elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp),
+                modifier = Modifier.padding(25.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .background(MC_TRACK, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(imageVector = AppIcons.Check, contentDescription = Strings.ADD_TASK)
+                }
+            }
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(15.dp)
+                .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         ) {
             OutlinedTextField(
                 value = taskName,
@@ -108,12 +125,23 @@ fun AddEditTaskScreen(
             }
 
             viewModel.task?.let { task ->
-                Text(
-                    text = Strings.dateCreated(task.createdDateFormatted),
-                    color = COLOR_ERROR,
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(15.dp)
-                )
+                Row(
+                    modifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = AppIcons.DateRange,
+                        contentDescription = null,
+                        tint = COLOR_ERROR
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = "Created: ${task.createdDateFormatted}",
+                        color = COLOR_ERROR,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

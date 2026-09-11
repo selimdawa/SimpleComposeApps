@@ -63,11 +63,11 @@ class TasksViewModel @Inject constructor(
 
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
         taskDao.delete(task)
-        taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(task))
+        taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(listOf(task)))
     }
 
-    fun onUndoDeleteClick(task: Task) = viewModelScope.launch {
-        taskDao.insert(task)
+    fun onUndoDeleteClick(tasks: List<Task>) = viewModelScope.launch {
+        taskDao.insertAll(tasks)
     }
 
     fun onAddNewTaskClick() = viewModelScope.launch {
@@ -79,7 +79,11 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllCompletedClick() = viewModelScope.launch {
+        val completedTasks = taskDao.getCompletedTasksList()
         taskDao.deleteCompletedTasks()
+        if (completedTasks.isNotEmpty()) {
+            taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(completedTasks))
+        }
     }
 
     fun onAddEditResult(result: Int) = viewModelScope.launch {
@@ -92,7 +96,7 @@ class TasksViewModel @Inject constructor(
     sealed class TasksEvent {
         data object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
-        data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
+        data class ShowUndoDeleteTaskMessage(val tasks: List<Task>) : TasksEvent()
         data class ShowTaskSavedConfirmationMessage(val msg: String) : TasksEvent()
         data object NavigateToDeleteAllCompletedTasksScreen : TasksEvent()
     }

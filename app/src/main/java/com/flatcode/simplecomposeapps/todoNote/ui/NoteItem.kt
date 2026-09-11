@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.asapCondensed
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 
 @Composable
 fun NoteItem(
@@ -48,7 +48,7 @@ fun NoteItem(
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = COLOR_ON_BACKGROUND,
+                color = White,
                 fontFamily = asapCondensed
             )
 
@@ -61,7 +61,7 @@ fun NoteItem(
                 minLines = 5,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
-                color = COLOR_ON_BACKGROUND,
+                color = White,
                 fontFamily = asapCondensed
             )
 
@@ -72,7 +72,7 @@ fun NoteItem(
                     imageVector = AppIcons.EventNote,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp),
-                    tint = COLOR_ON_BACKGROUND
+                    tint = White
                 )
 
                 Text(
@@ -81,7 +81,7 @@ fun NoteItem(
                         .padding(5.dp)
                         .weight(1f),
                     fontSize = 12.sp,
-                    color = COLOR_ON_BACKGROUND,
+                    color = White,
                     fontFamily = asapCondensed
                 )
 
@@ -91,7 +91,7 @@ fun NoteItem(
                     Icon(
                         imageVector = AppIcons.DeleteCal,
                         contentDescription = "Delete",
-                        tint = COLOR_ON_BACKGROUND,
+                        tint = White,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -106,7 +106,7 @@ fun NoteItemPreview() {
     NoteItem(
         note = Notes(
             title = "Sample Note Title",
-            content = "This is a sample content for the note that can be up to five lines long before it gets elipsized.",
+            content = "This is a sample content for the note that can be up to five lines long before it gets ellipsized.",
             date = System.currentTimeMillis()
         )
     )
