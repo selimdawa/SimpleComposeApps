@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.web.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -52,11 +53,13 @@ fun WebItem(
         verticalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = cardModifier.clickable(
-                interactionSource = remember { MutableInteractionSource() }, indication = null
-            ) { onClick() },
+            modifier = cardModifier
+                .background(MC_BG, RoundedCornerShape(cornerRadius))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() }, indication = null
+                ) { onClick() },
             shape = RoundedCornerShape(cornerRadius),
-            colors = CardDefaults.cardColors(containerColor = MC_BG)
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

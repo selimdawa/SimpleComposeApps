@@ -1,5 +1,7 @@
 package com.flatcode.simplecomposeapps.news.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,34 +70,36 @@ fun NewsAppDetailsScreen(
                         .padding(vertical = 10.dp),
                     shape = RoundedCornerShape(6.dp),
                     elevation = CardDefaults.cardElevation(0.dp),
-                    colors = CardDefaults.cardColors(containerColor = MC_BG)
+                    colors = CardDefaults.cardColors(containerColor = Color.Transparent)
                 ) {
-                    Column {
-                        AsyncImage(
-                            model = headline.urlToImage,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(2f / 1.4f),
-                            contentScale = ContentScale.Crop
-                        )
+                    Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+                        Column {
+                            AsyncImage(
+                                model = headline.urlToImage,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(2f / 1.4f),
+                                contentScale = ContentScale.Crop
+                            )
 
-                        Text(
-                            text = headline.author ?: DATA.EMPTY,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+                            Text(
+                                text = headline.author ?: DATA.EMPTY,
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
 
-                        )
+                            )
 
-                        Text(
-                            text = headline.publishedAt ?: DATA.EMPTY,
-                            color = Color.White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
-                        )
+                            Text(
+                                text = headline.publishedAt ?: DATA.EMPTY,
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+                            )
+                        }
                     }
                 }
 

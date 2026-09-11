@@ -1,6 +1,7 @@
 package com.flatcode.simplecomposeapps.candycrushgame.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -104,10 +105,11 @@ fun ScoreCard(score: Int) {
         modifier = Modifier
             .fillMaxWidth()
             .height(70.dp)
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .background(MC_BG, RoundedCornerShape(6.dp)),
         shape = RoundedCornerShape(6.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MC_BG
+            containerColor = Color.Transparent
         )
     ) {
         Row(

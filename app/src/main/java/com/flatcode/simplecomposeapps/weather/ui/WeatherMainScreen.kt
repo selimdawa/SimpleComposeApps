@@ -94,7 +94,10 @@ fun WeatherMainScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(), containerColor = MC_BG
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MC_BG),
+        containerColor = Color.Transparent
     ) { innerPadding ->
         Column(
             modifier = Modifier

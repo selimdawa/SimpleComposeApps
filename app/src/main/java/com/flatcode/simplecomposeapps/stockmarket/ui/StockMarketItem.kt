@@ -1,5 +1,7 @@
 package com.flatcode.simplecomposeapps.stockmarket.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,14 +56,19 @@ fun StockMarketItem(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Surface(
-                        color = MC_BG, shape = MaterialTheme.shapes.small
+                        color = Color.Transparent,
+                        shape = MaterialTheme.shapes.small
                     ) {
-                        Text(
-                            text = company.exchange,
-                            style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
-                            color = White
-                        )
+                        Box(
+                            modifier = Modifier.background(MC_BG, MaterialTheme.shapes.small)
+                                .padding(horizontal = 8.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                text = company.exchange,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = White
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))

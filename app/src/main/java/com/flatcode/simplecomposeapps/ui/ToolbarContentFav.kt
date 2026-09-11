@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -40,39 +41,41 @@ fun ToolbarContentFav(
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp)
-        ) {
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
             Box(
                 modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 10.dp)
-                    .size(30.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        enabled = onFavoriteClick != null
-                    ) { onFavoriteClick?.invoke() }) {
-                Icon(
-                    imageVector = AppIcons.Favorite,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.fillMaxSize()
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 10.dp)
+                        .size(30.dp)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            enabled = onFavoriteClick != null
+                        ) { onFavoriteClick?.invoke() }) {
+                    Icon(
+                        imageVector = AppIcons.Favorite,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                Text(
+                    text = title,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
             }
-
-            Text(
-                text = title,
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.White,
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
         }
     }
 }

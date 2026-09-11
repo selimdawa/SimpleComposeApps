@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
-import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 
 @Composable
 fun MealItem(
@@ -37,8 +37,7 @@ fun MealItem(
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(6.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = MC_TRACK)
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -55,7 +54,10 @@ fun MealItem(
                 )
                 Text(
                     text = item.strMeal ?: "",
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MC_BG)
+                        .padding(horizontal = 10.dp, vertical = 10.dp),
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,

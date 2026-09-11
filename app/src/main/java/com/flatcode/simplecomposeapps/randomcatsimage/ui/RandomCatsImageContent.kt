@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.randomcatsimage.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -135,8 +136,10 @@ fun RandomCatsImageContent(
         ) {
             Card(
                 onClick = { if (imageUrl.isNotEmpty()) onDownload(imageUrl) },
-                modifier = Modifier.weight(1f),
-                colors = CardDefaults.cardColors(containerColor = MC_BG),
+                modifier = Modifier
+                    .weight(1f)
+                    .background(MC_BG, RoundedCornerShape(10.dp)),
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
@@ -160,8 +163,10 @@ fun RandomCatsImageContent(
                     isFullScreen = !isFullScreen
                     offsetX = 0f
                 },
-                modifier = Modifier.weight(1f),
-                colors = CardDefaults.cardColors(containerColor = MC_BG),
+                modifier = Modifier
+                    .weight(1f)
+                    .background(MC_BG, RoundedCornerShape(10.dp)),
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
@@ -182,8 +187,10 @@ fun RandomCatsImageContent(
 
             Card(
                 onClick = { viewModel.getImage() },
-                modifier = Modifier.weight(1f),
-                colors = CardDefaults.cardColors(containerColor = MC_BG),
+                modifier = Modifier
+                    .weight(1f)
+                    .background(MC_BG, RoundedCornerShape(10.dp)),
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                 shape = RoundedCornerShape(10.dp),
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {

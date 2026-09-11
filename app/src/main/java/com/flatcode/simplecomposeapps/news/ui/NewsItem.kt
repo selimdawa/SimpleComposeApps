@@ -1,7 +1,9 @@
 package com.flatcode.simplecomposeapps.news.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -39,49 +41,51 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             elevation = CardDefaults.cardElevation(6.dp),
-            colors = CardDefaults.cardColors(containerColor = MC_BG)
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min)
-            ) {
-                AsyncImage(
-                    model = headline.urlToImage,
-                    contentDescription = null,
+            Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+                Row(
                     modifier = Modifier
-                        .weight(0.5f)
-                        .aspectRatio(2f / 1.4f),
-                    contentScale = ContentScale.Crop
-                )
-
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .padding(horizontal = 10.dp, vertical = 5.dp),
-                    verticalArrangement = Arrangement.SpaceBetween
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min)
                 ) {
-                    Text(
-                        text = (headline.title ?: DATA.EMPTY).trim(),
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.fillMaxWidth(),
-                        lineHeight = 18.sp
+                    AsyncImage(
+                        model = headline.urlToImage,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .aspectRatio(2f / 1.4f),
+                        contentScale = ContentScale.Crop
                     )
 
-                    Text(
-                        text = headline.source?.name ?: DATA.EMPTY,
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .padding(horizontal = 10.dp, vertical = 5.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = (headline.title ?: DATA.EMPTY).trim(),
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.fillMaxWidth(),
+                            lineHeight = 18.sp
+                        )
+
+                        Text(
+                            text = headline.source?.name ?: DATA.EMPTY,
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
             }
         }

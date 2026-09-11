@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -28,7 +28,6 @@ import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.web.activity.WebViewActivity
-import com.flatcode.simplecomposeapps.web.viewmodel.WebAppUiState
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 
 val CardTextSize = 18.sp
@@ -39,7 +38,7 @@ val SocialSize = 70.dp
 fun WebMainScreen(
     viewModel: WebAppViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.observeAsState(WebAppUiState())
+    val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
     Column(

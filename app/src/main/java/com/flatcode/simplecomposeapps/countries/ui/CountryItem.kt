@@ -49,75 +49,78 @@ fun CountryItem(
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Max)
-        ) {
-            Box(
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+            Row(
                 modifier = Modifier
-                    .width(140.dp)
-                    .aspectRatio(2f)
-                    .background(image_profile)
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Max)
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current).data(item.imageURL)
-                        .transformations(SimpleBlurTransformation(50f)).build(),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                SubcomposeAsyncImage(
-                    model = item.imageURL,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit,
-                    loading = {
-                        Box(
-                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(30.dp),
-                                color = MC_TRACK,
-                                strokeWidth = 2.dp
+                Box(
+                    modifier = Modifier
+                        .width(140.dp)
+                        .aspectRatio(2f)
+                        .background(image_profile)
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current).data(item.imageURL)
+                            .transformations(SimpleBlurTransformation(50f)).build(),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                    SubcomposeAsyncImage(
+                        model = item.imageURL,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit,
+                        loading = {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(30.dp),
+                                    color = MC_TRACK,
+                                    strokeWidth = 2.dp
+                                )
+                            }
+                        },
+                        error = {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(image_profile)
                             )
-                        }
-                    },
-                    error = {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(image_profile)
-                        )
-                    })
-            }
+                        })
+                }
 
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = item.countryName ?: "",
-                    color = Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp, start = 10.dp, end = 10.dp)
-                )
-                Text(
-                    text = item.countryRegion ?: "",
-                    color = Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 10.dp, start = 10.dp, end = 10.dp)
-                )
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = item.countryName ?: "",
+                        color = Color.White,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                    )
+                    Text(
+                        text = item.countryRegion ?: "",
+                        color = Color.White,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 10.dp, start = 10.dp, end = 10.dp)
+                    )
+                }
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.flatcode.simplecomposeapps.weather.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -204,49 +206,51 @@ fun SearchDialog(
         Card(
             shape = RoundedCornerShape(24.dp),
             elevation = CardDefaults.cardElevation(0.dp),
-            colors = CardDefaults.cardColors(containerColor = MC_BG)
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = Strings.CITY_NAME_HINT,
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.Medium, color = Color.White, fontSize = 18.sp
-                    )
-                )
-                OutlinedTextField(
-                    value = cityName,
-                    onValueChange = { cityName = it },
-                    label = { Text(Strings.SEARCH_HINT, color = Color.White) },
+            Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+                Column(
                     modifier = Modifier
+                        .padding(20.dp)
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color.White,
-                        unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = onDismiss) {
-                        Text(text = Strings.CANCEL, color = Color.White)
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    TextButton(onClick = {
-                        onSearch(cityName)
-                        onDismiss()
-                    }) {
-                        Text(text = Strings.OK, color = Color.White)
+                    Text(
+                        text = Strings.CITY_NAME_HINT,
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Medium, color = Color.White, fontSize = 18.sp
+                        )
+                    )
+                    OutlinedTextField(
+                        value = cityName,
+                        onValueChange = { cityName = it },
+                        label = { Text(Strings.SEARCH_HINT, color = Color.White) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.White,
+                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White
+                        )
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = onDismiss) {
+                            Text(text = Strings.CANCEL, color = Color.White)
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        TextButton(onClick = {
+                            onSearch(cityName)
+                            onDismiss()
+                        }) {
+                            Text(text = Strings.OK, color = Color.White)
+                        }
                     }
                 }
             }

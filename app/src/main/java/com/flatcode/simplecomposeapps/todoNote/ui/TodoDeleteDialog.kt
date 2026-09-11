@@ -1,15 +1,18 @@
 package com.flatcode.simplecomposeapps.todoNote.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 
 @Composable
 fun TodoDeleteDialog(
@@ -57,7 +60,8 @@ fun TodoDeleteDialog(
                 )
             }
         },
-        containerColor = MC_BG,
+        modifier = Modifier.background(MC_BG, MaterialTheme.shapes.medium),
+        containerColor = Color.Transparent,
         shape = MaterialTheme.shapes.medium
     )
 }

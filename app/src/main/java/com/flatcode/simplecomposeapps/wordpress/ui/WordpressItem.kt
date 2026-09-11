@@ -1,7 +1,9 @@
 package com.flatcode.simplecomposeapps.wordpress.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,37 +36,40 @@ fun WordpressItem(post: Post, onClick: () -> Unit) {
             ) { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(3.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        val titleText = post.title?.rendered?.takeIf { it.isNotBlank() } ?: post.wpTitle ?: ""
-        val excerptText = post.excerpt?.rendered?.takeIf { it.isNotBlank() } ?: post.wpExcerpt ?: ""
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+            val titleText = post.title?.rendered?.takeIf { it.isNotBlank() } ?: post.wpTitle ?: ""
+            val excerptText =
+                post.excerpt?.rendered?.takeIf { it.isNotBlank() } ?: post.wpExcerpt ?: ""
 
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            val parsedTitle = Jsoup.parse(titleText).text()
-            if (parsedTitle.isNotBlank()) {
-                Text(
-                    text = parsedTitle,
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                val parsedTitle = Jsoup.parse(titleText).text()
+                if (parsedTitle.isNotBlank()) {
+                    Text(
+                        text = parsedTitle,
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
 
-            val parsedExcerpt = Jsoup.parse(excerptText).text()
-            if (parsedExcerpt.isNotBlank()) {
-                Text(
-                    text = parsedExcerpt,
-                    color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 14.sp,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    lineHeight = 20.sp
-                )
+                val parsedExcerpt = Jsoup.parse(excerptText).text()
+                if (parsedExcerpt.isNotBlank()) {
+                    Text(
+                        text = parsedExcerpt,
+                        color = Color.White.copy(alpha = 0.7f),
+                        fontSize = 14.sp,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        lineHeight = 20.sp
+                    )
+                }
             }
         }
     }

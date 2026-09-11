@@ -1,6 +1,8 @@
 package com.flatcode.simplecomposeapps.main.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,30 +41,32 @@ fun MainAboutDialog(
                 .width(250.dp)
                 .wrapContentHeight(),
             shape = RoundedCornerShape(30.dp),
-            colors = CardDefaults.cardColors(containerColor = MC_BG),
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
             elevation = CardDefaults.cardElevation(3.dp)
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = Strings.APP_FEATURES_MVVM,
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp),
-                    textAlign = TextAlign.Center
-                )
-
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(
-                        start = 5.dp, end = 5.dp, bottom = 10.dp
-                    ), verticalArrangement = Arrangement.spacedBy(0.dp)
+            Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(infoItems) { item ->
-                        MainInfoItem(item = item)
+                    Text(
+                        text = Strings.APP_FEATURES_MVVM,
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
+                        textAlign = TextAlign.Center
+                    )
+
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(
+                            start = 5.dp, end = 5.dp, bottom = 10.dp
+                        ), verticalArrangement = Arrangement.spacedBy(0.dp)
+                    ) {
+                        items(infoItems) { item ->
+                            MainInfoItem(item = item)
+                        }
                     }
                 }
             }

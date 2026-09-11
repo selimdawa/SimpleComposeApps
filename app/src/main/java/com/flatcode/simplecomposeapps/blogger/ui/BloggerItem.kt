@@ -1,6 +1,8 @@
 package com.flatcode.simplecomposeapps.blogger.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -62,45 +65,47 @@ fun BloggerItem(post: Post, onClick: () -> Unit) {
             .clickable { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            Text(
-                text = post.title ?: DATA.EMPTY,
-                color = White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = Strings.publishInfo(post.authorName ?: DATA.EMPTY, formattedDate),
-                color = White,
-                fontSize = 14.sp
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
-                if (imageUrl.isNotEmpty()) {
-                    Card(
-                        modifier = Modifier.size(100.dp), shape = RoundedCornerShape(10.dp)
-                    ) {
-                        AsyncImage(
-                            model = imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                }
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+            Column(
+                modifier = Modifier.padding(10.dp)
+            ) {
                 Text(
-                    text = description,
+                    text = post.title ?: DATA.EMPTY,
                     color = White,
-                    fontSize = 14.sp,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f)
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
                 )
+                Text(
+                    text = Strings.publishInfo(post.authorName ?: DATA.EMPTY, formattedDate),
+                    color = White,
+                    fontSize = 14.sp
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    if (imageUrl.isNotEmpty()) {
+                        Card(
+                            modifier = Modifier.size(100.dp), shape = RoundedCornerShape(10.dp)
+                        ) {
+                            AsyncImage(
+                                model = imageUrl,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+                    Text(
+                        text = description,
+                        color = White,
+                        fontSize = 14.sp,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         }
     }

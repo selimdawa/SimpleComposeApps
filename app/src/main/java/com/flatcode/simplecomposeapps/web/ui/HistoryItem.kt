@@ -1,6 +1,8 @@
 package com.flatcode.simplecomposeapps.web.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,38 +49,40 @@ fun HistoryItem(
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         elevation = CardDefaults.cardElevation(0.dp),
         onClick = onClick
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = item.title,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 16.sp,
-                    color = White
-                )
-                Text(
-                    text = item.url,
-                    fontSize = 12.sp,
-                    color = White.copy(alpha = 0.7f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = date, fontSize = 10.sp, color = White.copy(alpha = 0.5f)
-                )
-            }
-            IconButton(onClick = onDelete) {
-                Icon(AppIcons.DeleteCal, contentDescription = "Remove", tint = White)
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = item.title,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 16.sp,
+                        color = White
+                    )
+                    Text(
+                        text = item.url,
+                        fontSize = 12.sp,
+                        color = White.copy(alpha = 0.7f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = date, fontSize = 10.sp, color = White.copy(alpha = 0.5f)
+                    )
+                }
+                IconButton(onClick = onDelete) {
+                    Icon(AppIcons.DeleteCal, contentDescription = "Remove", tint = White)
+                }
             }
         }
     }

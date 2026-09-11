@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -48,95 +49,97 @@ fun ToolbarContent(
             .padding(10.dp),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(containerColor = MC_BG)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp)
-        ) {
-            val finalNavigationIcon: @Composable (() -> Unit)? = navigationIcon ?: if (hasBack) {
-                {
+        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                val finalNavigationIcon: @Composable (() -> Unit)? = navigationIcon ?: if (hasBack) {
+                    {
+                        Box(
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                    enabled = onBackClick != null
+                                ) { onBackClick?.invoke() }) {
+                            Icon(
+                                imageVector = AppIcons.Back,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
+                } else null
+
+                if (finalNavigationIcon != null) {
                     Box(
                         modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 10.dp)
+                    ) {
+                        finalNavigationIcon()
+                    }
+                } else if (leftIcon != null) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 10.dp)
                             .size(30.dp)
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
-                                enabled = onBackClick != null
-                            ) { onBackClick?.invoke() }) {
+                                enabled = onLeftClick != null
+                            ) { onLeftClick?.invoke() }) {
                         Icon(
-                            imageVector = AppIcons.Back,
+                            imageVector = leftIcon,
                             contentDescription = null,
                             tint = Color.White,
                             modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
-            } else null
 
-            if (finalNavigationIcon != null) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 10.dp)
-                ) {
-                    finalNavigationIcon()
-                }
-            } else if (leftIcon != null) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 10.dp)
-                        .size(30.dp)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            enabled = onLeftClick != null
-                        ) { onLeftClick?.invoke() }) {
-                    Icon(
-                        imageVector = leftIcon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-            }
+                Text(
+                    text = title,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White,
+                    fontSize = 21.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
 
-            Text(
-                text = title,
-                modifier = Modifier.align(Alignment.Center),
-                color = Color.White,
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-
-            if (actions != null) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 10.dp)
-                ) {
-                    actions()
-                }
-            } else if (rightIcon != null) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 15.dp)
-                        .size(30.dp)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            enabled = onRightClick != null
-                        ) { onRightClick?.invoke() }) {
-                    Icon(
-                        imageVector = rightIcon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                if (actions != null) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 10.dp)
+                    ) {
+                        actions()
+                    }
+                } else if (rightIcon != null) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 15.dp)
+                            .size(30.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                enabled = onRightClick != null
+                            ) { onRightClick?.invoke() }) {
+                        Icon(
+                            imageVector = rightIcon,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
             }
         }

@@ -8,18 +8,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.web.viewmodel.WebAppUiState
 import com.flatcode.simplecomposeapps.web.viewmodel.WebAppViewModel
 
 @Composable
 fun WebBookmarksScreen(
     viewModel: WebAppViewModel, onNavigateToUrl: (String) -> Unit
 ) {
-    val uiState by viewModel.uiState.observeAsState(WebAppUiState())
+    val uiState by viewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier

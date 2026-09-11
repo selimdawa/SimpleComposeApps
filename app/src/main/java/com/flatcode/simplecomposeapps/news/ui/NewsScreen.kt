@@ -1,5 +1,6 @@
 package com.flatcode.simplecomposeapps.news.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -41,13 +42,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
 import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
-import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun NewsScreen(
@@ -83,19 +84,29 @@ fun NewsScreen(
                 items(categories) { category ->
                     val isSelected = category == selectedCategory
                     Surface(
-                        color = if (isSelected) MC_BG else COLOR_ERROR,
-                        shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) { viewModel.loadNews(category) }) {
-                        Text(
-                            text = category.replaceFirstChar { it.uppercase() },
-                            color = if (isSelected) COLOR_ERROR else COLOR_ON_BACKGROUND,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        )
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) { viewModel.loadNews(category) },
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .then(
+                                    if (isSelected) Modifier.background(MC_BG) else Modifier.background(
+                                        COLOR_ERROR
+                                    )
+                                )
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        ) {
+                            Text(
+                                text = category.replaceFirstChar { it.uppercase() },
+                                color = if (isSelected) COLOR_ERROR else COLOR_ON_BACKGROUND,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            )
+                        }
                     }
                 }
             }
@@ -106,61 +117,67 @@ fun NewsScreen(
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 shape = RoundedCornerShape(6.dp),
                 elevation = CardDefaults.cardElevation(0.dp),
-                colors = CardDefaults.cardColors(containerColor = MC_BG)
+                colors = CardDefaults.cardColors(containerColor = Color.Transparent)
             ) {
-                TextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = {
-                        Text(
-                            "Search News...",
-                            color = Color.White.copy(alpha = 0.7f),
-                            fontSize = 14.sp
-                        )
-                    },
-                    singleLine = true,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = AppIcons.Search,
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                    },
-                    trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
-                            IconButton(onClick = {
-                                searchQuery = ""
-                                viewModel.loadNews(selectedCategory)
-                            }) {
-                                Icon(
-                                    imageVector = AppIcons.Close,
-                                    contentDescription = null,
-                                    tint = Color.White
-                                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MC_BG)
+                ) {
+                    TextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = {
+                            Text(
+                                "Search News...",
+                                color = Color.White.copy(alpha = 0.7f),
+                                fontSize = 14.sp
+                            )
+                        },
+                        singleLine = true,
+                        leadingIcon = {
+                            Icon(
+                                imageVector = AppIcons.Search,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        },
+                        trailingIcon = {
+                            if (searchQuery.isNotEmpty()) {
+                                IconButton(onClick = {
+                                    searchQuery = ""
+                                    viewModel.loadNews(selectedCategory)
+                                }) {
+                                    Icon(
+                                        imageVector = AppIcons.Close,
+                                        contentDescription = null,
+                                        tint = Color.White
+                                    )
+                                }
                             }
-                        }
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(onSearch = {
-                        viewModel.searchNews(searchQuery)
-                    })
-                )
+                        },
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            cursorColor = Color.White,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White
+                        ),
+                        modifier = Modifier.fillMaxWidth(),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardActions = KeyboardActions(onSearch = {
+                            viewModel.searchNews(searchQuery)
+                        })
+                    )
+                }
             }
 
             if (isLoading) {
                 LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth(), color = MC_BG
+                    modifier = Modifier.fillMaxWidth(), color = COLOR_ERROR
                 )
             }
 
