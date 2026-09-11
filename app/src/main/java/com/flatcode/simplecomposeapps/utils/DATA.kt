@@ -244,9 +244,9 @@ object DATA {
     const val COROUTINES = "Coroutines :"
 
     // API Keys & Base URLs
-    const val BLOGGER_API = "AIzaSyDAq5n9ShBngyuSoWrFBnuena94qPm2Gk0"
-    const val BLOG_ID = "5758825298436553050"
-    const val BLOGGER_BASE_URL = "https://www.googleapis.com/blogger/v3/blogs/"
+    const val BLOG_ID = "2399953" // ID for your blogger (Blogger Buzz Official)
+    const val FEED_URL = "https://www.blogger.com/feeds/$BLOG_ID/posts/default"
+    const val PAGES_FEED_URL = "https://www.blogger.com/feeds/$BLOG_ID/pages/default"
 
     const val NEWS_API = "07f40de92d3644908496e8f9677ee838"
     const val API_NEWS = "45df755913c947ea82988b1dad81c6e7"
