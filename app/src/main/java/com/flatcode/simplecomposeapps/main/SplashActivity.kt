@@ -30,9 +30,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
+import com.flatcode.simplecomposeapps.blogger.activity.BloggerAppActivity
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.utils.launchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -57,7 +58,7 @@ class SplashActivity : ComponentActivity() {
     }
 
     private fun launch() {
-        launchActivity<MainActivity>(finish = true)
+        launchActivity<BloggerAppActivity>(finish = true)
     }
 
     companion object {
@@ -103,7 +104,7 @@ fun SplashScreen() {
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .background(
-                        color = MC_TRACK, shape = RoundedCornerShape(10.dp)
+                        brush = MC_BG, shape = RoundedCornerShape(10.dp)
                     )
                     .padding(
                         horizontal = 30.dp, vertical = 10.dp

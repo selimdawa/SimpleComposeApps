@@ -97,14 +97,8 @@ fun NotesScreen(
                 }
 
                 is NotesViewModel.NotesEvent.ShowNoteSavedConfirmationMessage -> {
-                    if (event.msg == Strings.MSG_NOTE_ADDED) {
-                        toastMessage = event.msg
-                        showCenteredToast = true
-                    } else {
-                        barMessage = event.msg
-                        isUndoOperation = false
-                        showUndoBar = true
-                    }
+                    toastMessage = event.msg
+                    showCenteredToast = true
                 }
 
                 is NotesViewModel.NotesEvent.ShowDeleteAllConfirmationDialog -> {
@@ -188,7 +182,7 @@ fun NotesScreen(
             }
         }
 
-        TodoUndoBar(
+        TodoToast(
             isVisible = showUndoBar,
             message = barMessage,
             onUndo = if (isUndoOperation) {
@@ -202,9 +196,10 @@ fun NotesScreen(
                 .padding(bottom = 20.dp)
         )
 
-        CenteredToast(
+        TodoToast(
             isVisible = showCenteredToast,
             message = toastMessage,
+            isCentered = true,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 20.dp)

@@ -25,6 +25,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +39,7 @@ import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.drop
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -100,14 +102,8 @@ fun TasksScreen(
                 }
 
                 is TasksViewModel.TasksEvent.ShowTaskSavedConfirmationMessage -> {
-                    if (event.msg == Strings.MSG_TASK_ADDED) {
-                        toastMessage = event.msg
-                        showCenteredToast = true
-                    } else {
-                        barMessage = event.msg
-                        isUndoOperation = false
-                        showUndoBar = true
-                    }
+                    toastMessage = event.msg
+                    showCenteredToast = true
                 }
 
                 is TasksViewModel.TasksEvent.NavigateToDeleteAllCompletedTasksScreen -> {
@@ -179,10 +175,14 @@ fun TasksScreen(
                         items(tasks!!, key = { it.id }) { task ->
                             val dismissState = rememberSwipeToDismissBoxState()
 
-                            LaunchedEffect(dismissState.currentValue) {
-                                if (dismissState.currentValue != SwipeToDismissBoxValue.Settled) {
-                                    viewModel.onTaskSwiped(task)
-                                }
+                            LaunchedEffect(task) {
+                                snapshotFlow { dismissState.currentValue }
+                                    .drop(1)
+                                    .collect { value ->
+                                        if (value != SwipeToDismissBoxValue.Settled) {
+                                            viewModel.onTaskSwiped(task)
+                                        }
+                                    }
                             }
 
                             LaunchedEffect(task) {
@@ -192,26 +192,12 @@ fun TasksScreen(
                             }
 
                             SwipeToDismissBox(state = dismissState, backgroundContent = {
-                                val color = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.StartToEnd -> Color.Transparent
-                                    SwipeToDismissBoxValue.EndToStart -> Color.Transparent
-                                    else -> Color.Transparent
-                                }
                                 Box(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .background(color)
-                                        .padding(horizontal = 20.dp),
-                                    contentAlignment = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) Alignment.CenterStart else Alignment.CenterEnd
-                                ) {
-                                    if (dismissState.targetValue != SwipeToDismissBoxValue.Settled) {
-                                        Icon(
-                                            imageVector = AppIcons.Delete,
-                                            contentDescription = "Delete",
-                                            tint = Color.White
-                                        )
-                                    }
-                                }
+                                        .background(Color.Transparent)
+                                        .padding(horizontal = 20.dp)
+                                )
                             }, content = {
                                 TaskItem(
                                     task = task,
@@ -224,7 +210,7 @@ fun TasksScreen(
             }
         }
 
-        TodoUndoBar(
+        TodoToast(
             isVisible = showUndoBar,
             message = barMessage,
             onUndo = if (isUndoOperation) {
@@ -238,9 +224,10 @@ fun TasksScreen(
                 .padding(bottom = 20.dp)
         )
 
-        CenteredToast(
+        TodoToast(
             isVisible = showCenteredToast,
             message = toastMessage,
+            isCentered = true,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 20.dp)
