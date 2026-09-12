@@ -3,14 +3,14 @@ package com.flatcode.simplecomposeapps.wordpress.utils
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
-fun WebView.loadWordPressContent(content: String?) {
+fun WebView.loadWordPressContent(content: String?, textColor: String = "white") {
     val htmlContent = """
         <html>
         <head>
             <style>
                 body {
                     background-color: transparent;
-                    color: white;
+                    color: $textColor;
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
                     line-height: 1.6;
                 }

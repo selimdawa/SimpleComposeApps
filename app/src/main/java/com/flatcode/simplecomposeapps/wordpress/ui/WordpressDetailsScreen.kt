@@ -36,12 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil3.compose.AsyncImage
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.utils.loadWordPressContent
@@ -59,6 +61,11 @@ fun WordpressDetailsScreen(
 ) {
     val scrollState = rememberScrollState()
     var mediaUrl by remember { mutableStateOf(featuredMediaUrl) }
+    val errorColor = COLOR_ERROR
+    val errorColorHex = remember(errorColor) {
+        val argb = errorColor.toArgb()
+        String.format("#%06X", 0xFFFFFF and argb)
+    }
 
     LaunchedEffect(featuredMediaId) {
         if (featuredMediaId != -1 && mediaUrl == null) {
@@ -113,7 +120,7 @@ fun WordpressDetailsScreen(
                 ) {
                     Text(
                         text = title,
-                        color = Color.White,
+                        color = COLOR_ERROR,
                         fontSize = 26.sp,
                         fontWeight = FontWeight.ExtraBold,
                         lineHeight = 34.sp
@@ -124,10 +131,14 @@ fun WordpressDetailsScreen(
                     AndroidView(
                         factory = { context ->
                             WebView(context).apply {
-                                loadWordPressContent(content)
+                                loadWordPressContent(content, errorColorHex)
                                 setBackgroundColor(0)
                             }
-                        }, modifier = Modifier
+                        },
+                        update = { webView ->
+                            webView.loadWordPressContent(content, errorColorHex)
+                        },
+                        modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 400.dp)
                     )
