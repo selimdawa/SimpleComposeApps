@@ -135,9 +135,9 @@ object Strings {
 
     // Blogger
     const val POST_DETAILS = "Post Details"
-    const val BLOGGER_PAGES = "Tip Top Pages"
+    const val BLOGGER_PAGES = "Blogger Pages"
     const val PAGE_DETAILS = "Page Details"
-    const val BLOGGER_NAME = "Tip Top Blogger"
+    const val BLOGGER_NAME = "Blogger Buzz"
     const val LOAD_MORE = "Load More"
     const val LABELS = "Labels"
     const val COMMENTS = "Comments"

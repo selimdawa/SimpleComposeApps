@@ -1,21 +1,16 @@
 package com.flatcode.simplecomposeapps.blogger.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,13 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
-import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.White
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BloggerPagesScreen(
     viewModel: BloggerViewModel, onBack: () -> Unit, onPageClick: (String) -> Unit
@@ -45,25 +37,12 @@ fun BloggerPagesScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = Strings.BLOGGER_PAGES,
-                            color = White,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    }
-                }, navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = AppIcons.Back,
-                            contentDescription = null,
-                            tint = White
-                        )
-                    }
-                }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
-            )
+            Column(modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())) {
+                BloggerNameToolbar(
+                    title = Strings.BLOGGER_PAGES,
+                    onBack = onBack
+                )
+            }
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
@@ -72,10 +51,9 @@ fun BloggerPagesScreen(
                 .padding(paddingValues)
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(vertical = 8.dp)
+                modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 8.dp)
             ) {
                 items(pages) { page ->
-                    // Converting Page to Post for BloggerItem to reuse the Composable
                     val post = Post(
                         author = page.author,
                         content = page.content,
@@ -91,9 +69,8 @@ fun BloggerPagesScreen(
             }
 
             if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MC_TRACK
+                CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
         }

@@ -23,6 +23,8 @@ class BloggerViewModel @Inject constructor(
     private val _posts = MutableLiveData<List<Post>>(emptyList())
     val posts: LiveData<List<Post>> = _posts
 
+    private var allPosts = listOf<Post>()
+
     private val _pages = MutableLiveData<List<Page>>(emptyList())
     val pages: LiveData<List<Page>> = _pages
 
@@ -47,7 +49,8 @@ class BloggerViewModel @Inject constructor(
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
             _posts.value = emptyList()
-            _nextPageToken.value = DATA.EMPTY
+            allPosts = emptyList()
+            _nextPageToken.value = "1"
             currentQuery = DATA.EMPTY
         }
 
@@ -63,11 +66,22 @@ class BloggerViewModel @Inject constructor(
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
             _posts.value = emptyList()
-            _nextPageToken.value = DATA.EMPTY
+            allPosts = emptyList()
+            _nextPageToken.value = "1"
             currentQuery = query
         }
 
         fetchPosts(isSearch = true)
+    }
+
+    fun filterPosts(query: String) {
+        if (query.isEmpty()) {
+            _posts.value = allPosts
+        } else {
+            _posts.value = allPosts.filter {
+                it.title?.contains(query, ignoreCase = true) == true
+            }
+        }
     }
 
     private fun fetchPosts(isSearch: Boolean) {
@@ -76,11 +90,11 @@ class BloggerViewModel @Inject constructor(
             val result = if (isSearch) {
                 repository.searchPosts(
                     query = currentQuery,
-                    pageToken = if (_nextPageToken.value == DATA.EMPTY) null else _nextPageToken.value
+                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value!!
                 )
             } else {
                 repository.getPosts(
-                    pageToken = if (_nextPageToken.value == DATA.EMPTY) null else _nextPageToken.value
+                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value!!
                 )
             }
 
@@ -88,12 +102,11 @@ class BloggerViewModel @Inject constructor(
                 is Resource.Success -> {
                     val response = result.data
                     _nextPageToken.value = response?.nextPageToken ?: "end"
-                    val currentList = _posts.value ?: emptyList()
                     val newList = response?.items ?: emptyList()
-                    _posts.value = currentList + newList
+                    allPosts = allPosts + newList
+                    _posts.value = allPosts
                 }
                 is Resource.Error -> {
-                    // Handle error
                 }
                 else -> {}
             }
@@ -163,12 +176,10 @@ class BloggerViewModel @Inject constructor(
             val result = repository.getComments(postId)
             if (result is Resource.Success) {
                 _comments.value = result.data?.map { item ->
-                    val author = item.author
-                    val image = author?.image?.url
                     Comment(
                         id = item.id ?: DATA.EMPTY,
-                        name = author?.displayName ?: DATA.EMPTY,
-                        profileImage = "https:$image",
+                        name = item.author?.displayName ?: DATA.EMPTY,
+                        profileImage = "https://www.blogger.com/img/blogger-logotype-color-black-caps.png",
                         published = item.published ?: DATA.EMPTY,
                         comment = item.content ?: DATA.EMPTY
                     )

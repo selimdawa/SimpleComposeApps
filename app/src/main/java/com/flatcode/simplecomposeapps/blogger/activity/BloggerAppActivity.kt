@@ -41,13 +41,13 @@ class BloggerAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            BloggerNavHost(viewModel = viewModel, onFinish = { finish() })
+            BloggerNavHost(viewModel = viewModel)
         }
     }
 }
 
 @Composable
-fun BloggerNavHost(viewModel: BloggerViewModel, onFinish: () -> Unit) {
+fun BloggerNavHost(viewModel: BloggerViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -60,7 +60,6 @@ fun BloggerNavHost(viewModel: BloggerViewModel, onFinish: () -> Unit) {
         composable<BloggerAppActivity.Home> {
             BloggerScreen(
                 viewModel = viewModel,
-                onBack = onFinish,
                 onPagesClick = { navController.navigate(BloggerAppActivity.Pages) },
                 onPostClick = { postId -> navController.navigate(BloggerAppActivity.PostDetails(postId)) }
             )

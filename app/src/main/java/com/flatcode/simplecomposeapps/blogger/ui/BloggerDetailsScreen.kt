@@ -5,24 +5,20 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,21 +26,20 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
-import com.flatcode.simplecomposeapps.ui.theme.AppIcons
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BloggerDetailsScreen(
     viewModel: BloggerViewModel, id: String, isPage: Boolean = false, onBack: () -> Unit
@@ -54,6 +49,10 @@ fun BloggerDetailsScreen(
     val comments by viewModel.comments.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(false)
     val scrollState = rememberScrollState()
+    val errorColor = COLOR_ERROR
+    val errorHex = remember(errorColor) {
+        String.format("#%06X", 0xFFFFFF and errorColor.toArgb())
+    }
 
     val inputDateFormat = remember { SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH) }
     val outputDateFormat = remember { SimpleDateFormat("dd/MM/yyyy K:mm a", Locale.ENGLISH) }
@@ -68,25 +67,12 @@ fun BloggerDetailsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = if (isPage) Strings.PAGE_DETAILS else Strings.POST_DETAILS,
-                        color = White,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
-            }, navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = AppIcons.Back,
-                        contentDescription = null,
-                        tint = White
-                    )
-                }
-            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MC_TRACK)
-            )
+            Column(modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues())) {
+                BloggerNameToolbar(
+                    title = if (isPage) Strings.PAGE_DETAILS else Strings.POST_DETAILS,
+                    onBack = onBack
+                )
+            }
         }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         Box(
@@ -103,8 +89,8 @@ fun BloggerDetailsScreen(
                 ) {
                     Text(
                         text = item.title ?: DATA.EMPTY,
-                        color = White,
-                        fontSize = 24.sp,
+                        color = COLOR_ERROR,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
 
@@ -118,36 +104,48 @@ fun BloggerDetailsScreen(
 
                     Text(
                         text = Strings.publishInfo(item.authorName ?: DATA.EMPTY, formattedDate),
-                        color = White.copy(alpha = 0.7f),
+                        color = COLOR_ERROR,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
 
                     AndroidView(
                         factory = { context ->
-                            WebView(context).apply {
-                                webViewClient = WebViewClient()
-                                settings.javaScriptEnabled = false
-                                setBackgroundColor(0) // Transparent
-                            }
-                        },
-                        update = { webView ->
-                            webView.loadDataWithBaseURL(
-                                null, item.content ?: "", "text/html", "UTF-8", null
-                            )
-                        },
-                        modifier = Modifier
+                        WebView(context).apply {
+                            webViewClient = WebViewClient()
+                            settings.javaScriptEnabled = false
+                            setBackgroundColor(0)
+                        }
+                    }, update = { webView ->
+                        val customHtml = """
+                            <html>
+                            <head>
+                            <style>
+                            body { color: $errorHex; background-color: transparent; }
+                            img { max-width: 100%; height: auto; }
+                            </style>
+                            </head>
+                            <body>
+                            ${item.content ?: ""}
+                            </body>
+                            </html>
+                        """.trimIndent()
+                        webView.loadDataWithBaseURL(
+                            null, customHtml, "text/html", "UTF-8", null
+                        )
+                    }, modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 200.dp) // Height might need to be dynamic
+                            .heightIn(min = 200.dp)
                     )
 
                     if (labels.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = Strings.LABELS,
-                            color = White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+                            color = COLOR_ERROR,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
                         LazyRow(
                             modifier = Modifier
@@ -164,9 +162,10 @@ fun BloggerDetailsScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = Strings.COMMENTS,
-                            color = White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+                            color = COLOR_ERROR,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
                         comments.forEach { comment ->
                             BloggerCommentItem(comment = comment)
@@ -176,9 +175,8 @@ fun BloggerDetailsScreen(
             }
 
             if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MC_TRACK
+                CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
         }

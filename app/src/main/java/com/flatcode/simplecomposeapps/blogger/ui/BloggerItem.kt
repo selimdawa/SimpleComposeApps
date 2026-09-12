@@ -2,16 +2,14 @@ package com.flatcode.simplecomposeapps.blogger.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.blogger.model.Post
-import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import org.jsoup.Jsoup
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -58,36 +56,53 @@ fun BloggerItem(post: Post, onClick: () -> Unit) {
         }
     }
 
+    val interactionSource = remember { MutableInteractionSource() }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 5.dp)
-            .clickable { onClick() },
+            .padding(horizontal = 10.dp)
+            .padding(bottom = 10.dp)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) { onClick() },
         shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
+        elevation = CardDefaults.cardElevation(0.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
-        Box(modifier = Modifier.fillMaxWidth().background(MC_BG)) {
-            Column(
-                modifier = Modifier.padding(10.dp)
-            ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MC_BG)
+        ) {
+            Column {
                 Text(
                     text = post.title ?: DATA.EMPTY,
                     color = White,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .padding(top = 5.dp, bottom = 5.dp)
                 )
                 Text(
                     text = Strings.publishInfo(post.authorName ?: DATA.EMPTY, formattedDate),
                     color = White,
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                        .padding(bottom = 8.dp)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    if (imageUrl.isNotEmpty()) {
-                        Card(
-                            modifier = Modifier.size(100.dp), shape = RoundedCornerShape(10.dp)
-                        ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Card(
+                        modifier = Modifier.size(80.dp), shape = RoundedCornerShape(
+                            topStart = 0.dp, topEnd = 10.dp, bottomEnd = 0.dp, bottomStart = 0.dp
+                        ), colors = CardDefaults.cardColors(containerColor = Color(0xFFE0E0E0))
+                    ) {
+                        if (imageUrl.isNotEmpty()) {
                             AsyncImage(
                                 model = imageUrl,
                                 contentDescription = null,
@@ -95,15 +110,17 @@ fun BloggerItem(post: Post, onClick: () -> Unit) {
                                 contentScale = ContentScale.Crop
                             )
                         }
-                        Spacer(modifier = Modifier.width(10.dp))
                     }
+
                     Text(
                         text = description,
                         color = White,
                         fontSize = 14.sp,
                         maxLines = 4,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 10.dp, top = 5.dp, end = 15.dp, bottom = 5.dp)
                     )
                 }
             }
