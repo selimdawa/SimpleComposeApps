@@ -45,6 +45,28 @@ class BloggerViewModel @Inject constructor(
 
     private var currentQuery = DATA.EMPTY
 
+    init {
+        observeCachedData()
+    }
+
+    private fun observeCachedData() {
+        viewModelScope.launch {
+            repository.getCachedPosts().collect { list ->
+                if (list.isNotEmpty() || _posts.value?.isEmpty() == true) {
+                    _posts.value = list
+                    allPosts = list
+                }
+            }
+        }
+        viewModelScope.launch {
+            repository.getCachedPages().collect { list ->
+                if (list.isNotEmpty() || _pages.value?.isEmpty() == true) {
+                    _pages.value = list
+                }
+            }
+        }
+    }
+
     fun loadPosts(isLoadMore: Boolean = false) {
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
@@ -105,6 +127,7 @@ class BloggerViewModel @Inject constructor(
                     val newList = response?.items ?: emptyList()
                     allPosts = allPosts + newList
                     _posts.value = allPosts
+                    repository.insertPosts(allPosts)
                 }
                 is Resource.Error -> {
                 }
@@ -119,7 +142,8 @@ class BloggerViewModel @Inject constructor(
         viewModelScope.launch {
             val result = repository.getPages()
             if (result is Resource.Success) {
-                _pages.value = result.data ?: emptyList()
+                val data = result.data ?: emptyList()
+                repository.insertPages(data)
             }
             _isLoading.value = false
         }
@@ -173,9 +197,17 @@ class BloggerViewModel @Inject constructor(
 
     private fun loadComments(postId: String) {
         viewModelScope.launch {
+            repository.getCachedComments(postId).collect { cached ->
+                if (cached.isNotEmpty()) {
+                    _comments.value = cached
+                }
+            }
+        }
+
+        viewModelScope.launch {
             val result = repository.getComments(postId)
             if (result is Resource.Success) {
-                _comments.value = result.data?.map { item ->
+                val commentsList = result.data?.map { item ->
                     Comment(
                         id = item.id ?: DATA.EMPTY,
                         name = item.author?.displayName ?: DATA.EMPTY,
@@ -184,6 +216,8 @@ class BloggerViewModel @Inject constructor(
                         comment = item.content ?: DATA.EMPTY
                     )
                 } ?: emptyList()
+                _comments.value = commentsList
+                repository.insertComments(postId, commentsList)
             }
             _isLoading.value = false
         }

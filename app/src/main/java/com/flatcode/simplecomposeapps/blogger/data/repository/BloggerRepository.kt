@@ -1,15 +1,22 @@
 package com.flatcode.simplecomposeapps.blogger.data.repository
 
+import com.flatcode.simplecomposeapps.blogger.data.BloggerDao
+import com.flatcode.simplecomposeapps.blogger.data.BloggerPostEntity
+import com.flatcode.simplecomposeapps.blogger.data.BloggerPageEntity
+import com.flatcode.simplecomposeapps.blogger.data.BloggerCommentEntity
 import com.flatcode.simplecomposeapps.blogger.data.network.BloggerApi
 import com.flatcode.simplecomposeapps.blogger.model.Author
 import com.flatcode.simplecomposeapps.blogger.model.BloggerResponse
 import com.flatcode.simplecomposeapps.blogger.model.CommentItem
 import com.flatcode.simplecomposeapps.blogger.model.Page
 import com.flatcode.simplecomposeapps.blogger.model.Post
+import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -19,8 +26,101 @@ import javax.inject.Singleton
 
 @Singleton
 class BloggerRepository @Inject constructor(
-    private val api: BloggerApi
+    private val api: BloggerApi,
+    private val dao: BloggerDao
 ) {
+    fun getCachedPosts(): Flow<List<Post>> = dao.getAllPosts().map { entities ->
+        entities.map { mapFromEntity(it) }
+    }
+
+    fun getCachedPages(): Flow<List<Page>> = dao.getAllPages().map { entities ->
+        entities.map { entity ->
+            Page(
+                author = entity.author,
+                content = entity.content,
+                id = entity.id,
+                published = entity.published,
+                selfLink = entity.selfLink,
+                title = entity.title,
+                updated = entity.updated,
+                url = entity.url
+            )
+        }
+    }
+
+    fun getCachedComments(postId: String): Flow<List<Comment>> = dao.getCommentsForPost(postId).map { entities ->
+        entities.map { entity ->
+            Comment(
+                id = entity.id,
+                name = entity.name,
+                profileImage = entity.profileImage,
+                published = entity.published,
+                comment = entity.comment
+            )
+        }
+    }
+
+    suspend fun insertPosts(posts: List<Post>) {
+        val entities = posts.map { post ->
+            BloggerPostEntity(
+                id = post.id ?: "",
+                author = post.author,
+                content = post.content,
+                published = post.published,
+                selfLink = post.selfLink,
+                title = post.title,
+                updated = post.updated,
+                url = post.url,
+                labels = post.labels
+            )
+        }
+        dao.insertPosts(entities)
+    }
+
+    suspend fun insertPages(pages: List<Page>) {
+        val entities = pages.map { page ->
+            BloggerPageEntity(
+                id = page.id ?: "",
+                author = page.author,
+                content = page.content,
+                published = page.published,
+                selfLink = page.selfLink,
+                title = page.title,
+                updated = page.updated,
+                url = page.url
+            )
+        }
+        dao.insertPages(entities)
+    }
+
+    suspend fun insertComments(postId: String, comments: List<Comment>) {
+        val entities = comments.map { comment ->
+            BloggerCommentEntity(
+                id = comment.id ?: "",
+                postId = postId,
+                name = comment.name,
+                profileImage = comment.profileImage,
+                published = comment.published,
+                comment = comment.comment
+            )
+        }
+        dao.insertComments(entities)
+    }
+
+    private fun mapFromEntity(entity: BloggerPostEntity): Post {
+        return Post(
+            author = entity.author,
+            content = entity.content,
+            id = entity.id,
+            published = entity.published,
+            selfLink = entity.selfLink,
+            title = entity.title,
+            updated = entity.updated,
+            url = entity.url,
+            labels = entity.labels
+        )
+    }
+
     suspend fun getPosts(startIndex: String = "1") = withContext(Dispatchers.IO) {
         try {
             val response = api.getPosts(startIndex = startIndex)
