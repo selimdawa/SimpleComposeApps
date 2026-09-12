@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +35,7 @@ import coil3.request.transformations
 import com.flatcode.simplecomposeapps.countries.model.Country
 import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 
@@ -80,7 +80,7 @@ fun CountryItem(
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center
                             ) {
-                                CircularProgressIndicator(
+                                CustomProgressBar(
                                     modifier = Modifier.size(30.dp),
                                     color = MC_TRACK,
                                     strokeWidth = 2.dp

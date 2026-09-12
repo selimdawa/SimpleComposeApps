@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.meals.viewmodel.MealsHomeViewModel
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -45,7 +45,7 @@ fun CategoriesMealsScreen(
     ) {
         when (categoriesResult) {
             is Resource.Loading -> {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
             }

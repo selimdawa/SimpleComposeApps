@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
@@ -49,7 +49,7 @@ fun WordpressFavoritesScreen(
             }
 
             if (isLoading && posts.isEmpty()) {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.Center),
                     color = MC_TRACK
                 )

@@ -7,10 +7,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,13 +29,14 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import coil3.request.transformations
 import com.flatcode.simplecomposeapps.countries.viewmodel.DetailViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.ui.theme.Gray
-import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 
 @Composable
@@ -85,12 +84,11 @@ fun CountryDetailScreen(
                         contentScale = ContentScale.Fit,
                         loading = {
                             Box(modifier = Modifier.fillMaxSize()) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .align(Alignment.Center),
-                                    color = MC_TRACK,
-                                    strokeWidth = 3.dp
+                                CustomProgressBar(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    size = 40.dp,
+                                    strokeWidth = 3.dp,
+                                    color = MC_TRACK
                                 )
                             }
                         })

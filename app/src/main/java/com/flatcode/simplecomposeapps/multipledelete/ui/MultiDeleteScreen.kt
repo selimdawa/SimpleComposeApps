@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -26,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -60,10 +60,10 @@ fun MultiDeleteScreen(viewModel: MultiDeleteViewModel) {
                 .padding(paddingValues)
         ) {
             if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(50.dp)
-                        .align(Alignment.Center), color = MC_TRACK
+                CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center),
+                    size = 50.dp,
+                    color = MC_TRACK
                 )
             } else if (items.isEmpty()) {
                 Column(

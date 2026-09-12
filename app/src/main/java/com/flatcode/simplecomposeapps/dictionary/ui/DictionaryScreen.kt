@@ -21,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -46,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.dictionary.DictionaryViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -153,7 +153,7 @@ fun DictionaryScreen(
                 enabled = uiState !is Resource.Loading<*>
             ) {
                 if (uiState is Resource.Loading) {
-                    CircularProgressIndicator(color = MC_TRACK, modifier = Modifier.size(24.dp))
+                    CustomProgressBar(color = MC_TRACK, size = 24.dp, strokeWidth = 2.dp)
                 } else {
                     Text(
                         text = Strings.BUTTON_FIND, fontSize = 18.sp, fontWeight = FontWeight.Bold

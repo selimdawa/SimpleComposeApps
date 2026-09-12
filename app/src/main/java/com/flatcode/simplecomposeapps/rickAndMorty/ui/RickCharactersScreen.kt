@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.rickAndMorty.viewmodel.RickCharactersViewModel
 import com.flatcode.simplecomposeapps.utils.Resource
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -49,7 +49,7 @@ fun RickCharactersScreen(
     ) {
         when (state) {
             is Resource.Loading -> {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.Center), color = MC_TRACK
                 )
             }
@@ -82,7 +82,7 @@ fun RickCharactersScreen(
                                     .padding(16.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                CircularProgressIndicator(color = MC_TRACK)
+                                CustomProgressBar(color = MC_TRACK)
                             }
                         }
                     }

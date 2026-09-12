@@ -3,7 +3,6 @@ package com.flatcode.simplecomposeapps.randomcatsimage.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.randomcatsimage.RandomCatsImageViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
@@ -59,7 +59,7 @@ fun RandomCatsImageScreen(
                 )
 
                 if (isLoading) {
-                    CircularProgressIndicator(color = MC_TRACK)
+                    CustomProgressBar(color = MC_TRACK)
                 }
             }
         }

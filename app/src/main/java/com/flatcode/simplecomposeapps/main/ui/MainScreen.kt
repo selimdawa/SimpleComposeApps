@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.Scaffold
@@ -29,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.flatcode.simplecomposeapps.main.MainViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
@@ -82,10 +82,9 @@ fun MainScreen(
                 .padding(paddingValues)
         ) {
             if (isLoading || items == null) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(50.dp)
-                        .align(Alignment.Center),
+                CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center),
+                    size = 50.dp,
                     color = MC_TRACK
                 )
             } else if (items!!.isEmpty()) {

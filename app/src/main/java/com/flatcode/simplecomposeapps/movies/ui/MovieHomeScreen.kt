@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.flatcode.simplecomposeapps.movies.viewmodel.MovieHomeViewModel
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
 import com.flatcode.simplecomposeapps.utils.Resource
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -53,7 +53,7 @@ fun MovieHomeScreen(
         ) {
             when (uiState) {
                 is Resource.Loading -> {
-                    CircularProgressIndicator(
+                    CustomProgressBar(
                         modifier = Modifier.align(Alignment.Center),
                         color = MC_TRACK
                     )

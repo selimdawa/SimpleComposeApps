@@ -17,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.model.Meal
@@ -78,7 +78,7 @@ fun HomeMealsScreen(
         // Random Meal
         when (randomMealResult) {
             is Resource.Loading -> {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
@@ -136,7 +136,7 @@ fun HomeMealsScreen(
 
         when (popularItemsResult) {
             is Resource.Loading -> {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
@@ -235,7 +235,7 @@ fun HomeMealsScreen(
 
         when (categoriesResult) {
             is Resource.Loading -> {
-                CircularProgressIndicator(
+                CustomProgressBar(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
