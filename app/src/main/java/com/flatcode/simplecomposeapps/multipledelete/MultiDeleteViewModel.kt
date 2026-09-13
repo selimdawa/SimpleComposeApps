@@ -5,19 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
-import android.content.SharedPreferences
-import androidx.core.content.edit
-import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteDao
-import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteEntity
-import com.flatcode.simplecomposeapps.multipledelete.di.MultiDeletePrefs
+import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MultiDeleteViewModel @Inject constructor(
-    private val multiDeleteDao: MultiDeleteDao,
-    @MultiDeletePrefs private val sharedPreferences: SharedPreferences
+    private val repository: MultiDeleteRepository
 ) : ViewModel() {
 
     private val _items = MutableLiveData<List<String>>(emptyList())
@@ -38,7 +33,7 @@ class MultiDeleteViewModel @Inject constructor(
 
     private fun observeItems() {
         viewModelScope.launch {
-            multiDeleteDao.getAllItems().collectLatest { entities ->
+            repository.getAllItems().collectLatest { entities ->
                 _items.postValue(entities.map { it.text })
                 _isLoading.postValue(false)
             }
@@ -47,18 +42,13 @@ class MultiDeleteViewModel @Inject constructor(
 
     fun setItems(initialItems: List<String>) {
         viewModelScope.launch {
-            val isFirstTime = sharedPreferences.getBoolean("is_first_time", true)
-            if (isFirstTime) {
-                multiDeleteDao.insertAll(initialItems.map { MultiDeleteEntity(it) })
-                sharedPreferences.edit { putBoolean("is_first_time", false) }
-            }
+            repository.insertInitialItems(initialItems)
         }
     }
 
     fun restoreItems(initialItems: List<String>) {
         viewModelScope.launch {
-            multiDeleteDao.deleteAll()
-            multiDeleteDao.insertAll(initialItems.map { MultiDeleteEntity(it) })
+            repository.restoreItems(initialItems)
         }
     }
 
@@ -102,7 +92,7 @@ class MultiDeleteViewModel @Inject constructor(
     fun deleteSelected() {
         viewModelScope.launch {
             val selected = _selectedItems.value?.toList() ?: emptyList()
-            multiDeleteDao.deleteByTexts(selected)
+            repository.deleteByTexts(selected)
             exitSelectionMode()
         }
     }

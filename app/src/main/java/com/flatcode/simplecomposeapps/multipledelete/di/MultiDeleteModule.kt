@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteDao
 import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteDatabase
+import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,5 +42,14 @@ object MultiDeleteModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("multi_delete_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMultiDeleteRepository(
+        dao: MultiDeleteDao,
+        @MultiDeletePrefs prefs: SharedPreferences
+    ): MultiDeleteRepository {
+        return MultiDeleteRepository(dao, prefs)
     }
 }
