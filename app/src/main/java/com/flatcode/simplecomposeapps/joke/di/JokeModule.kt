@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.joke.data.JokeDao
 import com.flatcode.simplecomposeapps.joke.data.JokeDatabase
+import com.flatcode.simplecomposeapps.joke.data.JokeRepository
+import com.flatcode.simplecomposeapps.joke.network.JokeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,11 @@ object JokeModule {
     @Singleton
     fun provideJokeDao(database: JokeDatabase): JokeDao {
         return database.jokeDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideJokeRepository(api: JokeApi, jokeDao: JokeDao): JokeRepository {
+        return JokeRepository(api, jokeDao)
     }
 }
