@@ -12,12 +12,18 @@ interface BloggerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPosts(posts: List<BloggerPostEntity>)
 
+    @Query("SELECT * FROM blogger_posts WHERE id = :id")
+    fun getPostById(id: String): Flow<BloggerPostEntity?>
+
     // Pages
     @Query("SELECT * FROM blogger_pages")
     fun getAllPages(): Flow<List<BloggerPageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPages(pages: List<BloggerPageEntity>)
+
+    @Query("SELECT * FROM blogger_pages WHERE id = :id")
+    fun getPageById(id: String): Flow<BloggerPageEntity?>
 
     // Comments
     @Query("SELECT * FROM blogger_comments WHERE postId = :postId")

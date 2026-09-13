@@ -33,19 +33,18 @@ class BloggerRepository @Inject constructor(
         entities.map { mapFromEntity(it) }
     }
 
+    fun getCachedPost(postId: String): Flow<Post?> = dao.getPostById(postId).map { entity ->
+        entity?.let { mapFromEntity(it) }
+    }
+
     fun getCachedPages(): Flow<List<Page>> = dao.getAllPages().map { entities ->
         entities.map { entity ->
-            Page(
-                author = entity.author,
-                content = entity.content,
-                id = entity.id,
-                published = entity.published,
-                selfLink = entity.selfLink,
-                title = entity.title,
-                updated = entity.updated,
-                url = entity.url
-            )
+            mapPageFromEntity(entity)
         }
+    }
+
+    fun getCachedPage(pageId: String): Flow<Page?> = dao.getPageById(pageId).map { entity ->
+        entity?.let { mapPageFromEntity(it) }
     }
 
     fun getCachedComments(postId: String): Flow<List<Comment>> = dao.getCommentsForPost(postId).map { entities ->
@@ -94,6 +93,7 @@ class BloggerRepository @Inject constructor(
     }
 
     suspend fun insertComments(postId: String, comments: List<Comment>) {
+        dao.deleteCommentsForPost(postId)
         val entities = comments.map { comment ->
             BloggerCommentEntity(
                 id = comment.id ?: "",
@@ -118,6 +118,19 @@ class BloggerRepository @Inject constructor(
             updated = entity.updated,
             url = entity.url,
             labels = entity.labels
+        )
+    }
+
+    private fun mapPageFromEntity(entity: BloggerPageEntity): Page {
+        return Page(
+            author = entity.author,
+            content = entity.content,
+            id = entity.id,
+            published = entity.published,
+            selfLink = entity.selfLink,
+            title = entity.title,
+            updated = entity.updated,
+            url = entity.url
         )
     }
 

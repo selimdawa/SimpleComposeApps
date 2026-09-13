@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,10 +19,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flatcode.simplecomposeapps.blogger.model.Post
 import com.flatcode.simplecomposeapps.blogger.viewmodel.BloggerViewModel
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 
 @Composable
@@ -30,6 +33,7 @@ fun BloggerPagesScreen(
 ) {
     val pages by viewModel.pages.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(false)
+    val error by viewModel.error.observeAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadPages()
@@ -68,8 +72,17 @@ fun BloggerPagesScreen(
                 }
             }
 
-            if (isLoading) {
+            if (isLoading && pages.isEmpty()) {
                 CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            if (pages.isEmpty() && !isLoading && error != null) {
+                Text(
+                    text = Strings.FAILED_LOAD_DATA,
+                    color = DATA.COLOR_ERROR,
+                    fontSize = 18.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }

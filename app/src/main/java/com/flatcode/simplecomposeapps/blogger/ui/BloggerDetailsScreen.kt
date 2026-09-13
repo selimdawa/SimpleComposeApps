@@ -48,6 +48,7 @@ fun BloggerDetailsScreen(
     val labels by viewModel.labels.observeAsState(emptyList())
     val comments by viewModel.comments.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(false)
+    val error by viewModel.error.observeAsState()
     val scrollState = rememberScrollState()
     val errorColor = COLOR_ERROR
     val errorHex = remember(errorColor) {
@@ -174,8 +175,17 @@ fun BloggerDetailsScreen(
                 }
             }
 
-            if (isLoading) {
+            if (isLoading && details == null) {
                 CustomProgressBar(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            if (details == null && !isLoading && error != null) {
+                Text(
+                    text = Strings.FAILED_LOAD_DATA,
+                    color = COLOR_ERROR,
+                    fontSize = 18.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }

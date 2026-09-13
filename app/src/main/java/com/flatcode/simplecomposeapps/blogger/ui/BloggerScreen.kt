@@ -47,6 +47,7 @@ fun BloggerScreen(
 ) {
     val posts by viewModel.posts.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(false)
+    val error by viewModel.error.observeAsState()
     val hasMore = viewModel.hasMore
 
     var isSearchMode by remember { mutableStateOf(false) }
@@ -172,6 +173,15 @@ fun BloggerScreen(
             if (posts.isEmpty() && !isLoading && searchQuery.isNotEmpty()) {
                 Text(
                     text = Strings.NO_DATA_FOUND,
+                    color = COLOR_ERROR,
+                    fontSize = 18.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            if (posts.isEmpty() && !isLoading && error != null) {
+                Text(
+                    text = Strings.FAILED_LOAD_DATA,
                     color = COLOR_ERROR,
                     fontSize = 18.sp,
                     modifier = Modifier.align(Alignment.Center)

@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.blogger.repository.BloggerRepository
 import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.blogger.model.Label
 import com.flatcode.simplecomposeapps.blogger.model.Page
 import com.flatcode.simplecomposeapps.blogger.model.Post
+import com.flatcode.simplecomposeapps.blogger.repository.BloggerRepository
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +32,9 @@ class BloggerViewModel @Inject constructor(
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> = _error
+
     private val _nextPageToken = MutableLiveData(DATA.EMPTY)
     val hasMore: Boolean get() = _nextPageToken.value != "end"
 
@@ -44,6 +48,8 @@ class BloggerViewModel @Inject constructor(
     val comments: LiveData<List<Comment>> = _comments
 
     private var currentQuery = DATA.EMPTY
+
+    private var detailsJob: Job? = null
 
     init {
         observeCachedData()
@@ -70,8 +76,6 @@ class BloggerViewModel @Inject constructor(
     fun loadPosts(isLoadMore: Boolean = false) {
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
-            _posts.value = emptyList()
-            allPosts = emptyList()
             _nextPageToken.value = "1"
             currentQuery = DATA.EMPTY
         }
@@ -87,8 +91,6 @@ class BloggerViewModel @Inject constructor(
 
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
-            _posts.value = emptyList()
-            allPosts = emptyList()
             _nextPageToken.value = "1"
             currentQuery = query
         }
@@ -108,6 +110,8 @@ class BloggerViewModel @Inject constructor(
 
     private fun fetchPosts(isSearch: Boolean) {
         _isLoading.value = true
+        _error.value = null
+        val isFirstPage = _nextPageToken.value == "1" || _nextPageToken.value == DATA.EMPTY
         viewModelScope.launch {
             val result = if (isSearch) {
                 repository.searchPosts(
@@ -125,12 +129,15 @@ class BloggerViewModel @Inject constructor(
                     val response = result.data
                     _nextPageToken.value = response?.nextPageToken ?: "end"
                     val newList = response?.items ?: emptyList()
-                    allPosts = allPosts + newList
+                    allPosts = if (isFirstPage) newList else allPosts + newList
                     _posts.value = allPosts
                     repository.insertPosts(allPosts)
                 }
+
                 is Resource.Error -> {
+                    _error.value = result.message
                 }
+
                 else -> {}
             }
             _isLoading.value = false
@@ -139,56 +146,88 @@ class BloggerViewModel @Inject constructor(
 
     fun loadPages() {
         _isLoading.value = true
+        _error.value = null
         viewModelScope.launch {
             val result = repository.getPages()
             if (result is Resource.Success) {
                 val data = result.data ?: emptyList()
                 repository.insertPages(data)
+            } else if (result is Resource.Error) {
+                _error.value = result.message
             }
             _isLoading.value = false
         }
     }
 
     fun loadPostDetails(postId: String) {
+        detailsJob?.cancel()
         _isLoading.value = true
+        _error.value = null
         _details.value = null
         _labels.value = emptyList()
         _comments.value = emptyList()
+
+        detailsJob = viewModelScope.launch {
+            repository.getCachedPost(postId).collect { post ->
+                if (post != null) {
+                    _details.value = post
+                    _labels.value = post.labels?.map { Label(it) } ?: emptyList()
+                }
+            }
+        }
 
         viewModelScope.launch {
             val result = repository.getPostDetails(postId)
             if (result is Resource.Success) {
                 val post = result.data
-                _details.value = post
-                _labels.value = post?.labels?.map { Label(it) } ?: emptyList()
+                if (post != null) {
+                    repository.insertPosts(listOf(post))
+                }
                 loadComments(postId)
             } else {
+                if (result is Resource.Error) {
+                    _error.value = result.message
+                }
                 _isLoading.value = false
             }
         }
     }
 
     fun loadPageDetails(pageId: String) {
+        detailsJob?.cancel()
         _isLoading.value = true
+        _error.value = null
         _details.value = null
         _labels.value = emptyList()
         _comments.value = emptyList()
+
+        detailsJob = viewModelScope.launch {
+            repository.getCachedPage(pageId).collect { page ->
+                if (page != null) {
+                    _details.value = Post(
+                        author = page.author,
+                        content = page.content,
+                        id = page.id,
+                        published = page.published,
+                        selfLink = page.selfLink,
+                        title = page.title,
+                        updated = page.updated,
+                        url = page.url
+                    )
+                }
+            }
+        }
 
         viewModelScope.launch {
             val result = repository.getPageDetails(pageId)
             if (result is Resource.Success) {
                 val page = result.data
-                _details.value = page?.let {
-                    Post(
-                        author = it.author,
-                        content = it.content,
-                        id = it.id,
-                        published = it.published,
-                        selfLink = it.selfLink,
-                        title = it.title,
-                        updated = it.updated,
-                        url = it.url
-                    )
+                if (page != null) {
+                    repository.insertPages(listOf(page))
+                }
+            } else {
+                if (result is Resource.Error) {
+                    _error.value = result.message
                 }
             }
             _isLoading.value = false
@@ -218,6 +257,8 @@ class BloggerViewModel @Inject constructor(
                 } ?: emptyList()
                 _comments.value = commentsList
                 repository.insertComments(postId, commentsList)
+            } else if (result is Resource.Error) {
+                _error.value = result.message
             }
             _isLoading.value = false
         }
