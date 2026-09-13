@@ -27,7 +27,8 @@ import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 @Composable
 fun PlayerScreen(
     videos: List<VideoEntity>,
-    initialPosition: Int
+    initialPosition: Int,
+    onSavePosition: (String, Long) -> Unit
 ) {
     val context = LocalContext.current
     
@@ -63,10 +64,15 @@ fun PlayerScreen(
         
         exoPlayer.setMediaSource(mediaSource)
         exoPlayer.prepare()
+        exoPlayer.seekTo(video.lastPosition)
     }
 
     DisposableEffect(Unit) {
         onDispose {
+            val video = videos.getOrNull(exoPlayer.currentMediaItemIndex)
+            if (video != null) {
+                onSavePosition(video.videoId, exoPlayer.currentPosition)
+            }
             exoPlayer.release()
         }
     }

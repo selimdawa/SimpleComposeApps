@@ -7,6 +7,7 @@ import com.flatcode.simplecomposeapps.utils.formatDuration
 import com.flatcode.simplecomposeapps.utils.formatSize
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoFiles
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
@@ -14,6 +15,18 @@ class VideoRepository(
     private val context: Context,
     private val videoDao: VideoDao
 ) {
+
+    fun getAllVideos(): Flow<List<VideoEntity>> = videoDao.getAllVideos()
+    fun getAllFolders(): Flow<List<FolderEntity>> = videoDao.getAllFolders()
+    fun getSettings(): Flow<VideoSettingsEntity?> = videoDao.getSettings()
+
+    suspend fun saveSettings(settings: VideoSettingsEntity) {
+        videoDao.saveSettings(settings)
+    }
+
+    suspend fun updatePosition(videoId: String, position: Long) {
+        videoDao.updatePosition(videoId, position)
+    }
 
     suspend fun syncWithRoom() = withContext(Dispatchers.IO) {
         val mediaStoreVideos = getVideosFromMediaStore()

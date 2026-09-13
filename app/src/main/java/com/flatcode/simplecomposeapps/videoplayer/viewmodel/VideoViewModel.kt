@@ -11,9 +11,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.videoplayer.data.FolderEntity
-import com.flatcode.simplecomposeapps.videoplayer.data.VideoDao
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoRepository
+import com.flatcode.simplecomposeapps.videoplayer.data.VideoSettingsEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -31,7 +31,6 @@ data class VideoUiState(
 @HiltViewModel
 class VideoViewModel @Inject constructor(
     application: Application,
-    private val videoDao: VideoDao,
     private val repository: VideoRepository
 ) : AndroidViewModel(application) {
 
@@ -55,7 +54,7 @@ class VideoViewModel @Inject constructor(
     private fun observeData() {
         viewModelScope.launch {
             combine(
-                videoDao.getAllVideos(), videoDao.getAllFolders(), videoDao.getSettings()
+                repository.getAllVideos(), repository.getAllFolders(), repository.getSettings()
             ) { videos, folders, settings ->
                 Triple(videos, folders, settings)
             }.collect { (videos, folders, settings) ->
@@ -82,6 +81,18 @@ class VideoViewModel @Inject constructor(
             repository.syncWithRoom()
             val updatedState = _uiState.value ?: VideoUiState()
             _uiState.value = updatedState.copy(isLoading = false, isRefreshing = false)
+        }
+    }
+
+    fun updatePosition(videoId: String, position: Long) {
+        viewModelScope.launch {
+            repository.updatePosition(videoId, position)
+        }
+    }
+
+    fun saveSettings(videoId: String, position: Long) {
+        viewModelScope.launch {
+            repository.saveSettings(VideoSettingsEntity(lastVideoId = videoId, lastPosition = position))
         }
     }
 

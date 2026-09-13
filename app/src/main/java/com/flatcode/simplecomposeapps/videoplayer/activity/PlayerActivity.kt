@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.videoplayer.data.VideoEntity
 import com.flatcode.simplecomposeapps.videoplayer.model.VideoData
 import com.flatcode.simplecomposeapps.videoplayer.ui.PlayerScreen
+import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlayerActivity : ComponentActivity() {
+    private val viewModel: VideoViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val position = intent.getIntExtra("position", -1)
@@ -30,7 +34,11 @@ class PlayerActivity : ComponentActivity() {
         setContent {
             PlayerScreen(
                 videos = myFiles,
-                initialPosition = position
+                initialPosition = position,
+                onSavePosition = { videoId, pos ->
+                    viewModel.updatePosition(videoId, pos)
+                    viewModel.saveSettings(videoId, pos)
+                }
             )
         }
     }
