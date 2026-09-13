@@ -3,7 +3,10 @@ package com.flatcode.simplecomposeapps.weather.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
+import com.flatcode.simplecomposeapps.weather.db.WeatherDao
 import com.flatcode.simplecomposeapps.weather.db.WeatherDatabase
+import com.flatcode.simplecomposeapps.weather.model.WeatherRepository
+import com.flatcode.simplecomposeapps.weather.network.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +21,7 @@ annotation class WeatherPrefs
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object WeatherModule {
 
     @Provides
     @Singleton
@@ -33,4 +36,12 @@ object AppModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences("weather_prefs", Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideWeatherRepository(
+        dao: WeatherDao,
+        api: WeatherApi,
+        @WeatherPrefs prefs: SharedPreferences
+    ): WeatherRepository = WeatherRepository(dao, api, prefs)
 }
