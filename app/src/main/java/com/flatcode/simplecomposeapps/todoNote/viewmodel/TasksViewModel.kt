@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.todoNote.data.PreferencesManager
 import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
 import com.flatcode.simplecomposeapps.todoNote.data.Task
-import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
+import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,13 +22,12 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TasksViewModel @Inject constructor(
-    private val taskDao: TaskDao,
-    private val preferencesManager: PreferencesManager,
+    private val repository: TodoRepository,
     state: SavedStateHandle
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("searchQuery", "")
-    val preferencesFlow = preferencesManager.preferencesFlow
+    val preferencesFlow = repository.tasksPreferencesFlow
 
     private val taskEventChannel = Channel<TasksEvent>()
     val tasksEvent = taskEventChannel.receiveAsFlow()
@@ -40,17 +38,17 @@ class TasksViewModel @Inject constructor(
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
-        taskDao.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
+        repository.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
     }
 
     val tasks = tasksFlow.asLiveData()
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        preferencesManager.updateSortOrder(sortOrder)
+        repository.updateSortOrderTasks(sortOrder)
     }
 
     fun onHideCompletedClick(hideCompleted: Boolean) = viewModelScope.launch {
-        preferencesManager.updateHideCompleted(hideCompleted)
+        repository.updateHideCompleted(hideCompleted)
     }
 
     fun onTaskSelected(task: Task) = viewModelScope.launch {
@@ -58,16 +56,16 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
-        taskDao.update(task.copy(completed = isChecked))
+        repository.updateTask(task.copy(completed = isChecked))
     }
 
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
-        taskDao.delete(task)
+        repository.deleteTask(task)
         taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(listOf(task)))
     }
 
     fun onUndoDeleteClick(tasks: List<Task>) = viewModelScope.launch {
-        taskDao.insertAll(tasks)
+        repository.insertTasks(tasks)
     }
 
     fun onAddNewTaskClick() = viewModelScope.launch {
@@ -79,8 +77,8 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllCompletedClick() = viewModelScope.launch {
-        val completedTasks = taskDao.getCompletedTasksList()
-        taskDao.deleteCompletedTasks()
+        val completedTasks = repository.getCompletedTasksList()
+        repository.deleteCompletedTasks()
         if (completedTasks.isNotEmpty()) {
             taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(completedTasks))
         }

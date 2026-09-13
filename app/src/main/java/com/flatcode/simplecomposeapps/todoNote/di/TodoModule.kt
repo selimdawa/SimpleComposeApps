@@ -2,8 +2,12 @@ package com.flatcode.simplecomposeapps.todoNote.di
 
 import android.content.Context
 import androidx.room.Room
+import com.flatcode.simplecomposeapps.todoNote.data.NoteDao
 import com.flatcode.simplecomposeapps.todoNote.data.NoteDatabase
+import com.flatcode.simplecomposeapps.todoNote.data.PreferencesManager
+import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
 import com.flatcode.simplecomposeapps.todoNote.data.TaskDatabase
+import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object TodoModule {
 
     @Provides
     @Singleton
@@ -46,6 +50,16 @@ object AppModule {
 
     @Provides
     fun provideTaskDao(database: TaskDatabase) = database.taskDao()
+
+    @Provides
+    @Singleton
+    fun provideTodoRepository(
+        noteDao: NoteDao,
+        taskDao: TaskDao,
+        preferencesManager: PreferencesManager
+    ): TodoRepository {
+        return TodoRepository(noteDao, taskDao, preferencesManager)
+    }
 
     @ApplicationScope
     @Provides

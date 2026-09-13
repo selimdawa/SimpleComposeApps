@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.todoNote.data.NoteDao
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
-import com.flatcode.simplecomposeapps.todoNote.data.PreferencesManager
 import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
+import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +22,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class NotesViewModel @Inject constructor(
-    private val noteDao: NoteDao,
-    private val preferencesManager: PreferencesManager,
+    private val repository: TodoRepository,
     state: SavedStateHandle
 ) : ViewModel() {
 
@@ -33,7 +31,7 @@ class NotesViewModel @Inject constructor(
     private val notesEventChannel = Channel<NotesEvent>()
     val notesEvent = notesEventChannel.receiveAsFlow()
 
-    val preferencesFlow = preferencesManager.notesPreferencesFlow
+    val preferencesFlow = repository.notesPreferencesFlow
 
     private val notesFlow = combine(
         searchQuery.asFlow(),
@@ -41,13 +39,13 @@ class NotesViewModel @Inject constructor(
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
-        noteDao.getNotes(query, filterPreferences.sortOrder)
+        repository.getNotes(query, filterPreferences.sortOrder)
     }
 
     val notes = notesFlow.asLiveData()
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        preferencesManager.updateSortOrderNotes(sortOrder)
+        repository.updateSortOrderNotes(sortOrder)
     }
 
     fun onNoteSelected(note: Notes) = viewModelScope.launch {
@@ -55,12 +53,12 @@ class NotesViewModel @Inject constructor(
     }
 
     fun onNoteSwiped(note: Notes) = viewModelScope.launch {
-        noteDao.delete(note)
+        repository.deleteNote(note)
         notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(listOf(note)))
     }
 
     fun onUndoDeleteClick(notes: List<Notes>) = viewModelScope.launch {
-        noteDao.insertAll(notes)
+        repository.insertNotes(notes)
     }
 
     fun onAddNewNoteClick() = viewModelScope.launch {
@@ -72,8 +70,8 @@ class NotesViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllClick() = viewModelScope.launch {
-        val allNotes = noteDao.getAllNotesList()
-        noteDao.deleteAllNotes()
+        val allNotes = repository.getAllNotesList()
+        repository.deleteAllNotes()
         if (allNotes.isNotEmpty()) {
             notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(allNotes))
         }

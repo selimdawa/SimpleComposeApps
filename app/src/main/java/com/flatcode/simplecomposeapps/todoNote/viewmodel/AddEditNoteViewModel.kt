@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.todoNote.data.NoteDao
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
+import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
-    private val noteDao: NoteDao,
+    private val repository: TodoRepository,
     state: SavedStateHandle
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class AddEditNoteViewModel @Inject constructor(
     init {
         if (noteId != -1) {
             viewModelScope.launch {
-                note = noteDao.getNoteById(noteId)
+                note = repository.getNoteById(noteId)
                 note?.let {
                     noteTitle.value = it.title
                     noteContent.value = it.content
@@ -60,12 +60,12 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     private fun createNote(note: Notes) = viewModelScope.launch {
-        noteDao.insert(note)
+        repository.insertNote(note)
         _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateNote(note: Notes) = viewModelScope.launch {
-        noteDao.update(note)
+        repository.updateNote(note)
         _addEditNoteEvent.emit(AddEditNoteEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 

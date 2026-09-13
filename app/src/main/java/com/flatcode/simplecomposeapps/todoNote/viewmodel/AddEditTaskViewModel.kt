@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.Task
-import com.flatcode.simplecomposeapps.todoNote.data.TaskDao
+import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
-    private val taskDao: TaskDao, state: SavedStateHandle
+    private val repository: TodoRepository, state: SavedStateHandle
 ) : ViewModel() {
 
     val taskId = state.get<Int>("taskId") ?: -1
@@ -31,7 +31,7 @@ class AddEditTaskViewModel @Inject constructor(
     init {
         if (taskId != -1) {
             viewModelScope.launch {
-                task = taskDao.getTaskById(taskId)
+                task = repository.getTaskById(taskId)
                 task?.let {
                     taskName.value = it.name
                     taskImportant.value = it.important
@@ -61,12 +61,12 @@ class AddEditTaskViewModel @Inject constructor(
     }
 
     private fun createTask(task: Task) = viewModelScope.launch {
-        taskDao.insert(task)
+        repository.insertTask(task)
         _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.ADD_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
-        taskDao.update(task)
+        repository.updateTask(task)
         _addEditTaskEvent.emit(AddEditTaskEvent.NavigateBackWithResult(DATA.EDIT_RESULT_OK))
     }
 
