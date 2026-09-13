@@ -15,20 +15,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
-import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfUiState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.pdfreader.viewmodel.PdfViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
@@ -42,7 +41,7 @@ fun PdfReaderScreen(
     onPrint: () -> Unit,
     onFullscreen: () -> Unit
 ) {
-    val uiState by viewModel.uiState.observeAsState(PdfUiState())
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = {
@@ -136,48 +135,46 @@ fun PdfReaderScreen(
                     uiState.uri != null -> {
                         AndroidView(
                             factory = { context ->
-                                PDFView(context, null).apply {
-                                    setBackgroundColor(image_profile.toArgb())
-                                }
-                            },
-                            update = { pdfView ->
-                                // Use a tag to avoid reloading the same URI
-                                if (pdfView.tag != uiState.uri) {
-                                    pdfView.tag = uiState.uri
-                                    val configurator =
-                                        if (uiState.uri?.scheme?.startsWith("http") == true) {
-                                            uiState.pdfData?.let { pdfView.fromBytes(it) }
-                                        } else {
-                                            pdfView.fromUri(uiState.uri)
-                                        }
-
-                                    configurator?.apply {
-                                        defaultPage(uiState.currentPage)
-                                        onPageChange { page, pageCount ->
-                                            viewModel.onPageChange(page, pageCount)
-                                        }
-                                        enableAnnotationRendering(true)
-                                        onTap { _ ->
-                                            viewModel.toggleBottomBar()
-                                            true
-                                        }
-                                        scrollHandle(DefaultScrollHandle(pdfView.context))
-                                        spacing(10)
-                                        enableSwipe(true)
-                                        swipeHorizontal(false)
-                                        pageSnap(false) // Continuous scroll
-                                        pageFling(true) // Momentum scroll
-                                        autoSpacing(false)
-                                        fitEachPage(false) // Normal continuous look
-                                        pageFitPolicy(FitPolicy.WIDTH)
-                                        enableDoubletap(true)
-                                        enableAntialiasing(true)
-                                        onError { t -> viewModel.onError(t) }
-                                        load()
+                            PDFView(context, null).apply {
+                                setBackgroundColor(image_profile.toArgb())
+                            }
+                        }, update = { pdfView ->
+                            // Use a tag to avoid reloading the same URI
+                            if (pdfView.tag != uiState.uri) {
+                                pdfView.tag = uiState.uri
+                                val configurator =
+                                    if (uiState.uri?.scheme?.startsWith("http") == true) {
+                                        uiState.pdfData?.let { pdfView.fromBytes(it) }
+                                    } else {
+                                        pdfView.fromUri(uiState.uri)
                                     }
+
+                                configurator?.apply {
+                                    defaultPage(uiState.currentPage)
+                                    onPageChange { page, pageCount ->
+                                        viewModel.onPageChange(page, pageCount)
+                                    }
+                                    enableAnnotationRendering(true)
+                                    onTap { _ ->
+                                        viewModel.toggleBottomBar()
+                                        true
+                                    }
+                                    scrollHandle(DefaultScrollHandle(pdfView.context))
+                                    spacing(10)
+                                    enableSwipe(true)
+                                    swipeHorizontal(false)
+                                    pageSnap(false) // Continuous scroll
+                                    pageFling(true) // Momentum scroll
+                                    autoSpacing(false)
+                                    fitEachPage(false) // Normal continuous look
+                                    pageFitPolicy(FitPolicy.WIDTH)
+                                    enableDoubletap(true)
+                                    enableAntialiasing(true)
+                                    onError { t -> viewModel.onError(t) }
+                                    load()
                                 }
-                            },
-                            modifier = Modifier.fillMaxSize()
+                            }
+                        }, modifier = Modifier.fillMaxSize()
                         )
                     }
 

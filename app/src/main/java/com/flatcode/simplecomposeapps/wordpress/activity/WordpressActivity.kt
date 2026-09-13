@@ -9,17 +9,16 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import com.flatcode.simplecomposeapps.wordpress.model.Post
 import com.flatcode.simplecomposeapps.wordpress.model.Rendered
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressDetailsScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressFavoritesScreen
 import com.flatcode.simplecomposeapps.wordpress.ui.WordpressScreen
-import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
-import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressUiState
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -53,7 +52,7 @@ fun WordpressNavHost(viewModel: WordpressViewModel, api: WordPressApi) {
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }) {
         composable("main") {
-            val uiState by viewModel.uiState.observeAsState(WordpressUiState())
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             WordpressScreen(viewModel = viewModel, onPostClick = { index ->
                 val post = uiState.posts[index]
                 viewModel.selectPost(post)
@@ -63,7 +62,7 @@ fun WordpressNavHost(viewModel: WordpressViewModel, api: WordPressApi) {
             })
         }
         composable("favorites") {
-            val uiState by viewModel.uiState.observeAsState(WordpressUiState())
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             WordpressFavoritesScreen(
                 posts = uiState.favoritePosts,
                 isLoading = uiState.isLoading,
@@ -82,7 +81,7 @@ fun WordpressNavHost(viewModel: WordpressViewModel, api: WordPressApi) {
                 })
         }
         composable("details") {
-            val uiState by viewModel.uiState.observeAsState(WordpressUiState())
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val post = uiState.selectedPost
             if (post != null) {
                 WordpressDetailsScreen(

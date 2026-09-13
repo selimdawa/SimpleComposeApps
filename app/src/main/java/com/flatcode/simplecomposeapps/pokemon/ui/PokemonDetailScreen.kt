@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,7 +50,7 @@ import com.flatcode.simplecomposeapps.utils.Resource
 fun PokemonDetailScreen(
     pokeId: Int, onBack: () -> Unit, viewModel: PokemonDetailsViewModel = hiltViewModel()
 ) {
-    val detailsResult by viewModel.details.observeAsState(Resource.Idle)
+    val detailsResult by viewModel.details.collectAsStateWithLifecycle()
 
     LaunchedEffect(pokeId) {
         viewModel.getPokemonDetails(pokeId)

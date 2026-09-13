@@ -1,7 +1,5 @@
 package com.flatcode.simplecomposeapps.blogger.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.blogger.model.Comment
@@ -13,7 +11,11 @@ import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,31 +23,31 @@ class BloggerViewModel @Inject constructor(
     private val repository: BloggerRepository
 ) : ViewModel() {
 
-    private val _posts = MutableLiveData<List<Post>>(emptyList())
-    val posts: LiveData<List<Post>> = _posts
+    private val _posts = MutableStateFlow<List<Post>>(emptyList())
+    val posts: StateFlow<List<Post>> = _posts.asStateFlow()
 
     private var allPosts = listOf<Post>()
 
-    private val _pages = MutableLiveData<List<Page>>(emptyList())
-    val pages: LiveData<List<Page>> = _pages
+    private val _pages = MutableStateFlow<List<Page>>(emptyList())
+    val pages: StateFlow<List<Page>> = _pages.asStateFlow()
 
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    private val _error = MutableLiveData<String?>(null)
-    val error: LiveData<String?> = _error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error.asStateFlow()
 
-    private val _nextPageToken = MutableLiveData(DATA.EMPTY)
+    private val _nextPageToken = MutableStateFlow(DATA.EMPTY)
     val hasMore: Boolean get() = _nextPageToken.value != "end"
 
-    private val _details = MutableLiveData<Post?>(null)
-    val details: LiveData<Post?> = _details
+    private val _details = MutableStateFlow<Post?>(null)
+    val details: StateFlow<Post?> = _details.asStateFlow()
 
-    private val _labels = MutableLiveData<List<Label>>(emptyList())
-    val labels: LiveData<List<Label>> = _labels
+    private val _labels = MutableStateFlow<List<Label>>(emptyList())
+    val labels: StateFlow<List<Label>> = _labels.asStateFlow()
 
-    private val _comments = MutableLiveData<List<Comment>>(emptyList())
-    val comments: LiveData<List<Comment>> = _comments
+    private val _comments = MutableStateFlow<List<Comment>>(emptyList())
+    val comments: StateFlow<List<Comment>> = _comments.asStateFlow()
 
     private var currentQuery = DATA.EMPTY
 
@@ -56,9 +58,10 @@ class BloggerViewModel @Inject constructor(
     }
 
     private fun observeCachedData() {
+        Timber.d("Observing cached data for posts and pages")
         viewModelScope.launch {
             repository.getCachedPosts().collect { list ->
-                if (list.isNotEmpty() || _posts.value?.isEmpty() == true) {
+                if (list.isNotEmpty() || _posts.value.isEmpty()) {
                     _posts.value = list
                     allPosts = list
                 }
@@ -66,7 +69,7 @@ class BloggerViewModel @Inject constructor(
         }
         viewModelScope.launch {
             repository.getCachedPages().collect { list ->
-                if (list.isNotEmpty() || _pages.value?.isEmpty() == true) {
+                if (list.isNotEmpty() || _pages.value.isEmpty()) {
                     _pages.value = list
                 }
             }
@@ -74,6 +77,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     fun loadPosts(isLoadMore: Boolean = false) {
+        Timber.d("Loading posts, isLoadMore: %b", isLoadMore)
         if (isLoadMore && _nextPageToken.value == "end") return
         if (!isLoadMore) {
             _nextPageToken.value = "1"
@@ -84,6 +88,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     fun searchPosts(query: String, isLoadMore: Boolean = false) {
+        Timber.d("Searching posts, query: %s, isLoadMore: %b", query, isLoadMore)
         if (query.isEmpty()) {
             loadPosts()
             return
@@ -99,6 +104,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     fun filterPosts(query: String) {
+        Timber.d("Filtering posts, query: %s", query)
         if (query.isEmpty()) {
             _posts.value = allPosts
         } else {
@@ -116,11 +122,11 @@ class BloggerViewModel @Inject constructor(
             val result = if (isSearch) {
                 repository.searchPosts(
                     query = currentQuery,
-                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value!!
+                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value
                 )
             } else {
                 repository.getPosts(
-                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value!!
+                    startIndex = if (_nextPageToken.value == DATA.EMPTY) "1" else _nextPageToken.value
                 )
             }
 
@@ -132,10 +138,12 @@ class BloggerViewModel @Inject constructor(
                     allPosts = if (isFirstPage) newList else allPosts + newList
                     _posts.value = allPosts
                     repository.insertPosts(allPosts)
+                    Timber.d("Fetched %d posts successfully", newList.size)
                 }
 
                 is Resource.Error -> {
                     _error.value = result.message
+                    Timber.e("Error fetching posts: %s", result.message)
                 }
 
                 else -> {}
@@ -145,6 +153,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     fun loadPages() {
+        Timber.d("Loading pages")
         _isLoading.value = true
         _error.value = null
         viewModelScope.launch {
@@ -152,14 +161,17 @@ class BloggerViewModel @Inject constructor(
             if (result is Resource.Success) {
                 val data = result.data ?: emptyList()
                 repository.insertPages(data)
+                Timber.d("Loaded %d pages successfully", data.size)
             } else if (result is Resource.Error) {
                 _error.value = result.message
+                Timber.e("Error loading pages: %s", result.message)
             }
             _isLoading.value = false
         }
     }
 
     fun loadPostDetails(postId: String) {
+        Timber.d("Loading post details, postId: %s", postId)
         detailsJob?.cancel()
         _isLoading.value = true
         _error.value = null
@@ -184,9 +196,11 @@ class BloggerViewModel @Inject constructor(
                     repository.insertPosts(listOf(post))
                 }
                 loadComments(postId)
+                Timber.d("Loaded post details successfully")
             } else {
                 if (result is Resource.Error) {
                     _error.value = result.message
+                    Timber.e("Error loading post details: %s", result.message)
                 }
                 _isLoading.value = false
             }
@@ -194,6 +208,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     fun loadPageDetails(pageId: String) {
+        Timber.d("Loading page details, pageId: %s", pageId)
         detailsJob?.cancel()
         _isLoading.value = true
         _error.value = null
@@ -225,9 +240,11 @@ class BloggerViewModel @Inject constructor(
                 if (page != null) {
                     repository.insertPages(listOf(page))
                 }
+                Timber.d("Loaded page details successfully")
             } else {
                 if (result is Resource.Error) {
                     _error.value = result.message
+                    Timber.e("Error loading page details: %s", result.message)
                 }
             }
             _isLoading.value = false
@@ -235,6 +252,7 @@ class BloggerViewModel @Inject constructor(
     }
 
     private fun loadComments(postId: String) {
+        Timber.d("Loading comments for postId: %s", postId)
         viewModelScope.launch {
             repository.getCachedComments(postId).collect { cached ->
                 if (cached.isNotEmpty()) {
@@ -257,8 +275,10 @@ class BloggerViewModel @Inject constructor(
                 } ?: emptyList()
                 _comments.value = commentsList
                 repository.insertComments(postId, commentsList)
+                Timber.d("Loaded %d comments successfully", commentsList.size)
             } else if (result is Resource.Error) {
                 _error.value = result.message
+                Timber.e("Error loading comments: %s", result.message)
             }
             _isLoading.value = false
         }

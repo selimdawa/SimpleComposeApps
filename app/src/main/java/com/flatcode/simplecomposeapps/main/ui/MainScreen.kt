@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.main.MainViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
@@ -40,8 +40,8 @@ import io.selimdawa.multicolors.MultiColorButton
 fun MainScreen(
     viewModel: MainViewModel, onInfoClick: () -> Unit
 ) {
-    val items by viewModel.dataMain.observeAsState(null)
-    val isLoading by viewModel.isLoading.observeAsState(true)
+    val items by viewModel.dataMain.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -84,7 +84,7 @@ fun MainScreen(
             if (isLoading || items == null) {
                 CustomProgressBar(
                     modifier = Modifier.align(Alignment.Center),
-                    size = 50.dp,
+                    size = 40.dp,
                     color = MC_TRACK
                 )
             } else if (items!!.isEmpty()) {

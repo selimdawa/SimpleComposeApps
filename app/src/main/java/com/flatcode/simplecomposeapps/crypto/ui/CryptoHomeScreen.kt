@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -35,9 +35,9 @@ fun CryptoHomeScreen(
     onCoinClick: (String, Int) -> Unit,
     viewModel: CryptoHomeViewModel = hiltViewModel()
 ) {
-    val cryptoList by viewModel.cryptoList.observeAsState(emptyList())
-    val isLoading by viewModel.isLoading.observeAsState(true)
-    val errorMessage by viewModel.error.observeAsState()
+    val cryptoList by viewModel.cryptoList.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.error.collectAsStateWithLifecycle()
 
     val listState = rememberLazyListState()
     val shouldLoadMore by remember {

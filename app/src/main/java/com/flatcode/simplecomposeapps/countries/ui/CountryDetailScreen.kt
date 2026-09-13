@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
@@ -43,7 +43,7 @@ import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 fun CountryDetailScreen(
     countryUuid: Int, onBack: () -> Unit, viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val country by viewModel.countryLiveData.observeAsState()
+    val country by viewModel.country.collectAsStateWithLifecycle()
 
     LaunchedEffect(countryUuid) {
         viewModel.getDataFromRoom(countryUuid)

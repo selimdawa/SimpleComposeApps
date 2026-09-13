@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.multipledelete.MultiDeleteViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
@@ -36,10 +36,10 @@ import com.flatcode.simplecomposeapps.utils.DATA
 
 @Composable
 fun MultiDeleteScreen(viewModel: MultiDeleteViewModel) {
-    val items by viewModel.items.observeAsState(emptyList())
-    val selectedItems by viewModel.selectedItems.observeAsState(emptySet())
-    val isSelectionMode by viewModel.isSelectionMode.observeAsState(false)
-    val isLoading by viewModel.isLoading.observeAsState(true)
+    val items by viewModel.items.collectAsStateWithLifecycle()
+    val selectedItems by viewModel.selectedItems.collectAsStateWithLifecycle()
+    val isSelectionMode by viewModel.isSelectionMode.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     Scaffold(

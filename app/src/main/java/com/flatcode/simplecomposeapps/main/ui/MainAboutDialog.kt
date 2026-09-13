@@ -17,7 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +33,7 @@ import com.flatcode.simplecomposeapps.ui.theme.Strings
 fun MainAboutDialog(
     infoViewModel: MainInfoViewModel, onDismiss: () -> Unit
 ) {
-    val infoItems by infoViewModel.dataMainInfo.observeAsState(emptyList())
+    val infoItems by infoViewModel.dataMainInfo.collectAsStateWithLifecycle()
 
     Dialog(onDismissRequest = onDismiss) {
         Card(

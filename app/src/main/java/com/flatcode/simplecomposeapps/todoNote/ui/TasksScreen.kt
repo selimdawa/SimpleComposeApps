@@ -19,9 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,13 +49,13 @@ fun TasksScreen(
     onEditTask: (Task) -> Unit,
     viewModel: TasksViewModel = hiltViewModel()
 ) {
-    val tasks by viewModel.tasks.observeAsState(null)
-    val searchQuery by viewModel.searchQuery.observeAsState("")
-    val preferences by viewModel.preferencesFlow.collectAsState(initial = null)
-    val resultState =
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Int>("add_edit_result")
-            ?.observeAsState()
-    val result = resultState?.value
+    val tasks by viewModel.tasks.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+    val preferences by viewModel.preferencesFlow.collectAsStateWithLifecycle(initialValue = null)
+    val result by navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.getStateFlow<Int?>("add_edit_result", null)
+        ?.collectAsStateWithLifecycle() ?: remember { mutableStateOf(null) }
 
     LaunchedEffect(result) {
         result?.let {

@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -27,7 +27,7 @@ import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 fun FavoritesMealsScreen(
     onMealClick: (String, String, String) -> Unit, viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
-    val favorites by viewModel.favoritesMeals.observeAsState(emptyList())
+    val favorites by viewModel.favoritesMeals.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier

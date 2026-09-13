@@ -1,6 +1,5 @@
 package com.flatcode.simplecomposeapps.meals.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,6 +9,7 @@ import androidx.room.Update
 import com.flatcode.simplecomposeapps.meals.model.Category
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.model.MealsByCategory
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MealDao {
@@ -24,13 +24,13 @@ interface MealDao {
     suspend fun delete(meal: Meal)
 
     @Query("SELECT * FROM mealInformation WHERE isFavorite = 1")
-    fun getAllMeals(): LiveData<List<Meal>>
+    fun getAllMeals(): Flow<List<Meal>>
 
     @Query("SELECT * FROM mealInformation")
     suspend fun getAllMealsList(): List<Meal>
 
     @Query("SELECT * FROM mealInformation WHERE idMeal = :id")
-    fun getMealById(id: String): LiveData<Meal?>
+    fun getMealById(id: String): Flow<Meal?>
 
     @Query("SELECT * FROM mealInformation WHERE idMeal = :id")
     suspend fun getMealByIdInternal(id: String): Meal?

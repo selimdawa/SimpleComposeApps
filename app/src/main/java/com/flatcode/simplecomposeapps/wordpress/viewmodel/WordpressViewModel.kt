@@ -2,14 +2,16 @@ package com.flatcode.simplecomposeapps.wordpress.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.wordpress.data.WordpressRepository
 import com.flatcode.simplecomposeapps.wordpress.model.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 data class WordpressUiState(
@@ -27,8 +29,8 @@ class WordpressViewModel @Inject constructor(
     private val repository: WordpressRepository
 ) : AndroidViewModel(application) {
 
-    private val _uiState = MutableLiveData(WordpressUiState())
-    val uiState: LiveData<WordpressUiState> = _uiState
+    private val _uiState = MutableStateFlow(WordpressUiState())
+    val uiState: StateFlow<WordpressUiState> = _uiState.asStateFlow()
 
     init {
         observePosts()
@@ -38,19 +40,20 @@ class WordpressViewModel @Inject constructor(
     private fun observePosts() {
         viewModelScope.launch {
             repository.getAllPosts().collectLatest { posts ->
-                val currentState = _uiState.value ?: WordpressUiState()
-                _uiState.postValue(currentState.copy(
+                val currentState = _uiState.value
+                _uiState.value = currentState.copy(
                     posts = posts,
                     favoritePosts = posts.filter { p -> p.isFavorite },
                     isLoading = if (posts.isNotEmpty()) false else currentState.isLoading
-                ))
+                )
             }
         }
     }
 
     fun loadPosts(withProgress: Boolean = true) {
         viewModelScope.launch {
-            val currentState = _uiState.value ?: WordpressUiState()
+            Timber.d("Loading Wordpress posts, progress: %b", withProgress)
+            val currentState = _uiState.value
             val hasData = currentState.posts.isNotEmpty()
             if (withProgress && !hasData) _uiState.value = currentState.copy(isLoading = true)
             else _uiState.value = currentState.copy(isRefreshing = true)
@@ -58,14 +61,15 @@ class WordpressViewModel @Inject constructor(
             try {
                 repository.syncPosts()
                 
-                val updatedState = _uiState.value ?: WordpressUiState()
+                val updatedState = _uiState.value
                 _uiState.value = updatedState.copy(
                     isLoading = false,
                     isRefreshing = false,
                     errorMessage = null
                 )
-            } catch (_: Exception) {
-                val updatedState = _uiState.value ?: WordpressUiState()
+            } catch (e: Exception) {
+                Timber.e(e, "Error syncing Wordpress posts")
+                val updatedState = _uiState.value
                 _uiState.value = updatedState.copy(
                     isLoading = false,
                     isRefreshing = false,
@@ -76,11 +80,12 @@ class WordpressViewModel @Inject constructor(
     }
 
     fun selectPost(post: Post?) {
-        val currentState = _uiState.value ?: WordpressUiState()
+        val currentState = _uiState.value
         _uiState.value = currentState.copy(selectedPost = post)
     }
 
     fun toggleFavorite(post: Post) {
+        Timber.d("Toggling favorite for post: %d", post.id)
         viewModelScope.launch {
             repository.toggleFavorite(post.id)
         }

@@ -12,12 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.stopwatch.StopWatchViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -29,7 +29,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun StopWatchScreen(
     viewModel: StopWatchViewModel
 ) {
-    val lastTimeValue by viewModel.lastTime.observeAsState(DATA.ZERO_TIME)
+    val lastTimeValue by viewModel.lastTime.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {

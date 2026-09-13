@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.candycrushgame.CandyCrushViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -41,8 +41,8 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun CandyCrushScreen(
     viewModel: CandyCrushViewModel
 ) {
-    val score by viewModel.score.observeAsState(0)
-    val board by viewModel.board.observeAsState(emptyList())
+    val score by viewModel.score.collectAsStateWithLifecycle()
+    val board by viewModel.board.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(

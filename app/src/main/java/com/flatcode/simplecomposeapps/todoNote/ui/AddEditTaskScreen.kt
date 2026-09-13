@@ -23,7 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,8 +43,8 @@ import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 fun AddEditTaskScreen(
     onBack: (Int?) -> Unit, viewModel: AddEditTaskViewModel = hiltViewModel()
 ) {
-    val taskName by viewModel.taskName.observeAsState("")
-    val taskImportant by viewModel.taskImportant.observeAsState(false)
+    val taskName by viewModel.taskName.collectAsStateWithLifecycle()
+    val taskImportant by viewModel.taskImportant.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.addEditTaskEvent.collect { event ->
@@ -87,7 +87,7 @@ fun AddEditTaskScreen(
         ) {
             OutlinedTextField(
                 value = taskName,
-                onValueChange = { viewModel.taskName.value = it },
+                onValueChange = { viewModel.updateTaskName(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 5.dp),
@@ -109,7 +109,7 @@ fun AddEditTaskScreen(
             ) {
                 Checkbox(
                     checked = taskImportant,
-                    onCheckedChange = { viewModel.taskImportant.value = it },
+                    onCheckedChange = { viewModel.updateTaskImportance(it) },
                     colors = CheckboxDefaults.colors(
                         checkedColor = COLOR_ERROR,
                         uncheckedColor = COLOR_ERROR,

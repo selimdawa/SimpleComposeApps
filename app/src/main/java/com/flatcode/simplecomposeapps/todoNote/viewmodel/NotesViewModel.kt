@@ -2,8 +2,6 @@ package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.Notes
 import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
@@ -13,10 +11,15 @@ import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,23 +29,25 @@ class NotesViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("noteSearchQuery", "")
+    val searchQuery = MutableStateFlow(state.get<String>("noteSearchQuery") ?: "")
 
     private val notesEventChannel = Channel<NotesEvent>()
     val notesEvent = notesEventChannel.receiveAsFlow()
 
     val preferencesFlow = repository.notesPreferencesFlow
 
-    private val notesFlow = combine(
-        searchQuery.asFlow(),
+    val notes: StateFlow<List<Notes>?> = combine(
+        searchQuery,
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
         repository.getNotes(query, filterPreferences.sortOrder)
-    }
-
-    val notes = notesFlow.asLiveData()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         repository.updateSortOrderNotes(sortOrder)
@@ -53,11 +58,13 @@ class NotesViewModel @Inject constructor(
     }
 
     fun onNoteSwiped(note: Notes) = viewModelScope.launch {
+        Timber.d("Note swiped for deletion: %d", note.id)
         repository.deleteNote(note)
         notesEventChannel.send(NotesEvent.ShowUndoDeleteNoteMessage(listOf(note)))
     }
 
     fun onUndoDeleteClick(notes: List<Notes>) = viewModelScope.launch {
+        Timber.d("Restoring deleted notes count: %d", notes.size)
         repository.insertNotes(notes)
     }
 
@@ -70,6 +77,7 @@ class NotesViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllClick() = viewModelScope.launch {
+        Timber.d("Deleting all notes")
         val allNotes = repository.getAllNotesList()
         repository.deleteAllNotes()
         if (allNotes.isNotEmpty()) {

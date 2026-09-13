@@ -12,7 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -31,8 +31,8 @@ import com.flatcode.simplecomposeapps.utils.Resource
 fun PokemonScreen(
     onPokemonClick: (Int) -> Unit, viewModel: PokeViewModel = hiltViewModel()
 ) {
-    val pokemonList by viewModel.pokemon.observeAsState(emptyList())
-    val status by viewModel.status.observeAsState(Resource.Idle)
+    val pokemonList by viewModel.pokemon.collectAsStateWithLifecycle()
+    val status by viewModel.status.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {

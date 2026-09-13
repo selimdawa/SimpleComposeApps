@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.crypto.CryptoDetailViewModel
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
@@ -38,9 +38,9 @@ fun CryptoDetailScreen(
     onBack: () -> Unit,
     viewModel: CryptoDetailViewModel = hiltViewModel()
 ) {
-    val coinDetail by viewModel.cryptoDetail.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState(true)
-    val errorMessage by viewModel.error.observeAsState()
+    val coinDetail by viewModel.cryptoDetail.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.error.collectAsStateWithLifecycle()
 
     LaunchedEffect(coinId) {
         viewModel.getCryptoDetail(DATA.API_KEY_CRYPTO, coinId)

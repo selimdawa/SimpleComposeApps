@@ -20,11 +20,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -50,7 +50,7 @@ import com.flatcode.simplecomposeapps.utils.SimpleBlurTransformation
 fun RandomCatsImageContent(
     viewModel: RandomCatsImageViewModel, onDownload: (String) -> Unit
 ) {
-    val imageUrl by viewModel.imageUrl.observeAsState("")
+    val imageUrl by viewModel.imageUrl.collectAsStateWithLifecycle()
     var isFullScreen by remember { mutableStateOf(false) }
     var offsetX by remember { mutableFloatStateOf(0f) }
 

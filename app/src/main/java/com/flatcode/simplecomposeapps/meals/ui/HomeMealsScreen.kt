@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,9 +48,9 @@ fun HomeMealsScreen(
     onCategoryClick: (String) -> Unit,
     viewModel: MealsHomeViewModel = hiltViewModel()
 ) {
-    val randomMealResult by viewModel.randomMeal.observeAsState(Resource.Idle)
-    val popularItemsResult by viewModel.popularItems.observeAsState(Resource.Idle)
-    val categoriesResult by viewModel.categories.observeAsState(Resource.Idle)
+    val randomMealResult by viewModel.randomMeal.collectAsStateWithLifecycle()
+    val popularItemsResult by viewModel.popularItems.collectAsStateWithLifecycle()
+    val categoriesResult by viewModel.categories.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         if (randomMealResult.data == null) viewModel.getRandomMeal()

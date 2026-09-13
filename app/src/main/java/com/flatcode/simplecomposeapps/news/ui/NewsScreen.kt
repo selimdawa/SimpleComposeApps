@@ -28,10 +28,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,10 +54,10 @@ import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 fun NewsScreen(
     viewModel: NewsViewModel, onNewsClick: (NewsHeadlines) -> Unit
 ) {
-    val headlines by viewModel.headlines.observeAsState(emptyList())
-    val isLoading by viewModel.isLoading.observeAsState(false)
-    val errorMessage by viewModel.errorMessage.observeAsState()
-    val selectedCategory by viewModel.selectedCategory.observeAsState("general")
+    val headlines by viewModel.headlines.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
+    val selectedCategory by viewModel.selectedCategory.collectAsStateWithLifecycle()
 
     var searchQuery by remember { mutableStateOf("") }
 

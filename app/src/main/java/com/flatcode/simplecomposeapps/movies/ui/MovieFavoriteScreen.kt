@@ -12,7 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -32,7 +32,7 @@ fun MovieFavoriteScreen(
     onMovieClick: (MovieItemModel) -> Unit,
     viewModel: MovieFavoriteViewModel = hiltViewModel()
 ) {
-    val favorites by viewModel.allMovies.observeAsState(emptyList())
+    val favorites by viewModel.allMovies.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {

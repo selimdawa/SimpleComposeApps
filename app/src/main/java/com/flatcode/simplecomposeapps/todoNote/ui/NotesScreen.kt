@@ -18,7 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,13 +45,12 @@ fun NotesScreen(
     onEditNote: (Notes) -> Unit,
     viewModel: NotesViewModel = hiltViewModel()
 ) {
-    val notes by viewModel.notes.observeAsState(null)
-    val searchQuery by viewModel.searchQuery.observeAsState("")
-    val resultState = navController.currentBackStackEntry
+    val notes by viewModel.notes.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+    val result by navController.currentBackStackEntry
         ?.savedStateHandle
-        ?.getLiveData<Int>("add_edit_result")
-        ?.observeAsState()
-    val result = resultState?.value
+        ?.getStateFlow<Int?>("add_edit_result", null)
+        ?.collectAsStateWithLifecycle() ?: remember { mutableStateOf(null) }
 
     LaunchedEffect(result) {
         result?.let {

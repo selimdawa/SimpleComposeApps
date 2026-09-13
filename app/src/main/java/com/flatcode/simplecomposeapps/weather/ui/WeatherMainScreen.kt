@@ -25,11 +25,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -50,10 +50,10 @@ fun WeatherMainScreen(
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val weatherCurrent by viewModel.liveDataCurrent.observeAsState()
-    val weatherList by viewModel.liveDataList.observeAsState(emptyList())
-    val savedWeather by viewModel.savedWeather.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState(true)
+    val weatherCurrent by viewModel.liveDataCurrent.collectAsStateWithLifecycle()
+    val weatherList by viewModel.liveDataList.collectAsStateWithLifecycle()
+    val savedWeather by viewModel.savedWeather.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = DATA.WEATHER_TABS

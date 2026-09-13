@@ -2,17 +2,19 @@ package com.flatcode.simplecomposeapps.pdfreader.viewmodel
 
 import android.net.Uri
 import androidx.core.net.toUri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.pdfreader.data.PdfDao
 import com.flatcode.simplecomposeapps.pdfreader.data.PdfEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -65,8 +67,8 @@ class PdfViewModel @Inject constructor(
     private val pdfDao: PdfDao
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData(PdfUiState())
-    val uiState: LiveData<PdfUiState> = _uiState
+    private val _uiState = MutableStateFlow(PdfUiState())
+    val uiState: StateFlow<PdfUiState> = _uiState.asStateFlow()
 
     init {
         loadLastPdf()
@@ -78,8 +80,9 @@ class PdfViewModel @Inject constructor(
             val uri = settings?.lastUri
             val page = settings?.lastPage ?: 0
             if (uri != null) {
+                Timber.d("Loading last opened PDF: %s", uri)
                 setUri(uri.toUri())
-                val currentState = _uiState.value ?: PdfUiState()
+                val currentState = _uiState.value
                 _uiState.value = currentState.copy(currentPage = page)
             }
         }
@@ -87,7 +90,7 @@ class PdfViewModel @Inject constructor(
 
     fun setUri(uri: Uri?) {
         if (uri == null) return
-        val currentState = _uiState.value ?: PdfUiState()
+        val currentState = _uiState.value
         _uiState.value = currentState.copy(uri = uri, isLoading = true, errorMessage = null)
 
         viewModelScope.launch {
@@ -102,18 +105,22 @@ class PdfViewModel @Inject constructor(
         if (uri.scheme?.startsWith("http") == true) {
             downloadPdf(uri.toString())
         } else {
-            val updatedState = _uiState.value ?: PdfUiState()
+            val updatedState = _uiState.value
             _uiState.value = updatedState.copy(isLoading = false)
         }
     }
 
     private fun downloadPdf(url: String) {
         viewModelScope.launch {
+            Timber.d("Downloading PDF from URL: %s", url)
             val result = doDownload(url)
-            val currentState = _uiState.value ?: PdfUiState()
+            val currentState = _uiState.value
             _uiState.value = when (result) {
                 is ByteArray -> currentState.copy(pdfData = result, isLoading = false)
-                is String -> currentState.copy(errorMessage = result, isLoading = false)
+                is String -> {
+                    Timber.e("Error downloading PDF: %s", result)
+                    currentState.copy(errorMessage = result, isLoading = false)
+                }
                 else -> currentState.copy(errorMessage = "Unknown error", isLoading = false)
             }
         }
@@ -140,7 +147,7 @@ class PdfViewModel @Inject constructor(
     }
 
     fun onPageChange(page: Int, pageCount: Int) {
-        val currentState = _uiState.value ?: PdfUiState()
+        val currentState = _uiState.value
         _uiState.value = currentState.copy(currentPage = page, pageCount = pageCount)
         viewModelScope.launch {
             val current = pdfDao.getSettings().first()
@@ -149,12 +156,13 @@ class PdfViewModel @Inject constructor(
     }
 
     fun toggleBottomBar() {
-        val currentState = _uiState.value ?: PdfUiState()
+        val currentState = _uiState.value
         _uiState.value = currentState.copy(isBottomBarVisible = !currentState.isBottomBarVisible)
     }
 
     fun onError(t: Throwable) {
-        val currentState = _uiState.value ?: PdfUiState()
+        Timber.e(t, "Error loading PDF in viewer")
+        val currentState = _uiState.value
         _uiState.value = currentState.copy(
             errorMessage = t.message ?: "Failed to load PDF", isLoading = false
         )

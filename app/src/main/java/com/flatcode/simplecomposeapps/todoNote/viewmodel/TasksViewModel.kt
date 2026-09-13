@@ -2,8 +2,6 @@ package com.flatcode.simplecomposeapps.todoNote.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.todoNote.data.SortOrder
 import com.flatcode.simplecomposeapps.todoNote.data.Task
@@ -13,10 +11,15 @@ import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,22 +29,24 @@ class TasksViewModel @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("searchQuery", "")
+    val searchQuery = MutableStateFlow(state.get<String>("searchQuery") ?: "")
     val preferencesFlow = repository.tasksPreferencesFlow
 
     private val taskEventChannel = Channel<TasksEvent>()
     val tasksEvent = taskEventChannel.receiveAsFlow()
 
-    private val tasksFlow = combine(
-        searchQuery.asFlow(),
+    val tasks: StateFlow<List<Task>?> = combine(
+        searchQuery,
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
         repository.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
-    }
-
-    val tasks = tasksFlow.asLiveData()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         repository.updateSortOrderTasks(sortOrder)
@@ -60,11 +65,13 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
+        Timber.d("Task swiped for deletion: %d", task.id)
         repository.deleteTask(task)
         taskEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(listOf(task)))
     }
 
     fun onUndoDeleteClick(tasks: List<Task>) = viewModelScope.launch {
+        Timber.d("Restoring deleted tasks count: %d", tasks.size)
         repository.insertTasks(tasks)
     }
 
@@ -77,6 +84,7 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onConfirmDeleteAllCompletedClick() = viewModelScope.launch {
+        Timber.d("Deleting all completed tasks")
         val completedTasks = repository.getCompletedTasksList()
         repository.deleteCompletedTasks()
         if (completedTasks.isNotEmpty()) {

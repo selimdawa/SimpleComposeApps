@@ -12,8 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshotFlow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -32,8 +32,8 @@ import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 fun RickLocationsScreen(
     viewModel: RickLocationsViewModel = hiltViewModel()
 ) {
-    val state by viewModel.locations.observeAsState(Resource.Loading())
-    val isLoading by viewModel.isLoading.observeAsState(false)
+    val state by viewModel.locations.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
     LaunchedEffect(Unit) {

@@ -10,13 +10,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.countries.viewmodel.DashboardViewModel
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
@@ -31,7 +31,7 @@ import com.flatcode.simplecomposeapps.utils.Resource
 fun DashboardScreen(
     onCountryClick: (Int) -> Unit, viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val result by viewModel.countriesResult.observeAsState(Resource.Idle)
+    val result by viewModel.countriesResult.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {

@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.calculator.CalculatorViewModel
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
@@ -40,9 +40,9 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun CalculatorScreen(
     viewModel: CalculatorViewModel
 ) {
-    val expression by viewModel.expression.observeAsState("")
-    val result by viewModel.result.observeAsState("")
-    val history by viewModel.historyList.observeAsState(emptyList())
+    val expression by viewModel.expression.collectAsStateWithLifecycle()
+    val result by viewModel.result.collectAsStateWithLifecycle()
+    val history by viewModel.historyList.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

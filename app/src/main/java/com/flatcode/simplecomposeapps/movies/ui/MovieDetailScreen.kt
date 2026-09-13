@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,7 +46,7 @@ import com.flatcode.simplecomposeapps.utils.DATA
 fun MovieDetailScreen(
     movie: MovieItemModel, onBack: () -> Unit, viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
-    val isFavorite by viewModel.isFavorite.observeAsState(false)
+    val isFavorite by viewModel.isFavorite.collectAsStateWithLifecycle()
 
     LaunchedEffect(movie.id) {
         viewModel.checkFavoriteStatus(movie.id)

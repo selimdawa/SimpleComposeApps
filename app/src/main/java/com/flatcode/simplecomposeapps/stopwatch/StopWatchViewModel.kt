@@ -3,16 +3,18 @@ package com.flatcode.simplecomposeapps.stopwatch
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.stopwatch.data.StopWatchDao
 import com.flatcode.simplecomposeapps.stopwatch.data.StopWatchEntity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Locale
 import javax.inject.Inject
 
@@ -21,14 +23,14 @@ class StopWatchViewModel @Inject constructor(
     private val stopWatchDao: StopWatchDao
 ) : ViewModel() {
 
-    private val _timeDisplay = MutableLiveData(DATA.ZERO_TIME)
-    val timeDisplay: LiveData<String> = _timeDisplay
+    private val _timeDisplay = MutableStateFlow(DATA.ZERO_TIME)
+    val timeDisplay: StateFlow<String> = _timeDisplay.asStateFlow()
 
-    private val _lastTime = MutableLiveData(DATA.ZERO_TIME)
-    val lastTime: LiveData<String> = _lastTime
+    private val _lastTime = MutableStateFlow(DATA.ZERO_TIME)
+    val lastTime: StateFlow<String> = _lastTime.asStateFlow()
 
-    private val _isRunning = MutableLiveData(false)
-    val isRunning: LiveData<Boolean> = _isRunning
+    private val _isRunning = MutableStateFlow(false)
+    val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
 
     init {
         observeLastTime()
@@ -37,7 +39,7 @@ class StopWatchViewModel @Inject constructor(
     private fun observeLastTime() {
         viewModelScope.launch {
             stopWatchDao.getLastTime().collectLatest {
-                _lastTime.postValue(it ?: DATA.ZERO_TIME)
+                _lastTime.value = it ?: DATA.ZERO_TIME
             }
         }
     }
@@ -66,11 +68,13 @@ class StopWatchViewModel @Inject constructor(
     }
 
     fun startOrPause() {
-        if (!(_isRunning.value ?: false)) {
+        if (!_isRunning.value) {
+            Timber.d("Starting stopwatch")
             tStart = SystemClock.uptimeMillis()
             handler.postDelayed(runnable, 0)
             _isRunning.value = true
         } else {
+            Timber.d("Pausing stopwatch")
             tBuff += tMilliSec
             handler.removeCallbacks(runnable)
             _isRunning.value = false
@@ -78,8 +82,9 @@ class StopWatchViewModel @Inject constructor(
     }
 
     fun stop() {
-        if (!(_isRunning.value ?: false)) {
-            val finalTime = _timeDisplay.value ?: DATA.ZERO_TIME
+        if (!_isRunning.value) {
+            val finalTime = _timeDisplay.value
+            Timber.d("Stopping stopwatch with final time: %s", finalTime)
             _lastTime.value = finalTime
             viewModelScope.launch {
                 stopWatchDao.saveLastTime(StopWatchEntity(lastTime = finalTime))

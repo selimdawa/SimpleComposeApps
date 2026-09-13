@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,24 +26,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.ui.theme.Gray
+import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
-import com.flatcode.simplecomposeapps.ui.theme.Gray
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoUiState
 import com.flatcode.simplecomposeapps.videoplayer.viewmodel.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoPlayerScreen(
-    viewModel: VideoViewModel,
-    onVideoClick: (Int) -> Unit,
-    onFolderClick: (String) -> Unit
+    viewModel: VideoViewModel, onVideoClick: (Int) -> Unit, onFolderClick: (String) -> Unit
 ) {
-    val uiState by viewModel.uiState.observeAsState(VideoUiState())
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var selectedTab by remember { mutableIntStateOf(0) }
 
@@ -56,8 +53,7 @@ fun VideoPlayerScreen(
                     onClick = { selectedTab = 0 },
                     icon = {
                         Icon(
-                            imageVector = AppIcons.Folder,
-                            contentDescription = Strings.FOLDERS
+                            imageVector = AppIcons.Folder, contentDescription = Strings.FOLDERS
                         )
                     },
                     label = { Text(Strings.FOLDERS) },
@@ -74,8 +70,7 @@ fun VideoPlayerScreen(
                     onClick = { selectedTab = 1 },
                     icon = {
                         Icon(
-                            imageVector = AppIcons.Video,
-                            contentDescription = Strings.FILES
+                            imageVector = AppIcons.Video, contentDescription = Strings.FILES
                         )
                     },
                     label = { Text(Strings.FILES) },
@@ -88,8 +83,7 @@ fun VideoPlayerScreen(
                     )
                 )
             }
-        },
-        containerColor = COLOR_ON_BACKGROUND
+        }, containerColor = COLOR_ON_BACKGROUND
     ) { paddingValues ->
         PullToRefreshBox(
             isRefreshing = uiState.isRefreshing,
@@ -124,14 +118,12 @@ fun VideoPlayerScreen(
                     if (selectedTab == 0) {
                         items(uiState.folderList) { folder ->
                             FolderItem(
-                                folder = folder,
-                                onClick = { onFolderClick(folder.name) })
+                                folder = folder, onClick = { onFolderClick(folder.name) })
                         }
                     } else {
                         itemsIndexed(uiState.videoFiles) { index, video ->
                             VideoItem(
-                                video = video,
-                                onClick = { onVideoClick(index) })
+                                video = video, onClick = { onVideoClick(index) })
                         }
                     }
                 }

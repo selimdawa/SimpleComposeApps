@@ -22,7 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,8 +42,8 @@ import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 fun AddEditNoteScreen(
     onBack: (Int?) -> Unit, viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
-    val noteTitle by viewModel.noteTitle.observeAsState("")
-    val noteContent by viewModel.noteContent.observeAsState("")
+    val noteTitle by viewModel.noteTitle.collectAsStateWithLifecycle()
+    val noteContent by viewModel.noteContent.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.addEditNoteEvent.collect { event ->
@@ -102,7 +102,7 @@ fun AddEditNoteScreen(
         ) {
             OutlinedTextField(
                 value = noteTitle,
-                onValueChange = { viewModel.noteTitle.value = it },
+                onValueChange = { viewModel.updateTitle(it) },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text(Strings.TITLE) },
                 label = { Text(Strings.TITLE) },
@@ -114,7 +114,7 @@ fun AddEditNoteScreen(
 
             OutlinedTextField(
                 value = noteContent,
-                onValueChange = { viewModel.noteContent.value = it },
+                onValueChange = { viewModel.updateContent(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(270.dp),

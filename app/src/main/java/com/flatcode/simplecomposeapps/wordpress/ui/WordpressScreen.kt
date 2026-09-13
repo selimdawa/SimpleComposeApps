@@ -10,27 +10,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import com.flatcode.simplecomposeapps.ui.ToolbarContentFav
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.utils.DATA
-import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressUiState
 import com.flatcode.simplecomposeapps.wordpress.viewmodel.WordpressViewModel
 
 @Composable
 fun WordpressScreen(
     viewModel: WordpressViewModel, onPostClick: (Int) -> Unit, onFavoritesClick: () -> Unit
 ) {
-    val uiState by viewModel.uiState.observeAsState(WordpressUiState())
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -60,7 +59,8 @@ fun WordpressScreen(
                 )
             } else {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 10.dp)
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 10.dp)
                 ) {
                     itemsIndexed(uiState.posts) { index, post ->
                         WordpressItem(post = post, onClick = { onPostClick(index) })

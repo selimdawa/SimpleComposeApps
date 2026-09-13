@@ -1,13 +1,15 @@
 package com.flatcode.simplecomposeapps.multipledelete
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.multipledelete.data.MultiDeleteRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,17 +17,17 @@ class MultiDeleteViewModel @Inject constructor(
     private val repository: MultiDeleteRepository
 ) : ViewModel() {
 
-    private val _items = MutableLiveData<List<String>>(emptyList())
-    val items: LiveData<List<String>> = _items
+    private val _items = MutableStateFlow<List<String>>(emptyList())
+    val items: StateFlow<List<String>> = _items.asStateFlow()
 
-    private val _selectedItems = MutableLiveData<Set<String>>(emptySet())
-    val selectedItems: LiveData<Set<String>> = _selectedItems
+    private val _selectedItems = MutableStateFlow<Set<String>>(emptySet())
+    val selectedItems: StateFlow<Set<String>> = _selectedItems.asStateFlow()
 
-    private val _isSelectionMode = MutableLiveData(false)
-    val isSelectionMode: LiveData<Boolean> = _isSelectionMode
+    private val _isSelectionMode = MutableStateFlow(false)
+    val isSelectionMode: StateFlow<Boolean> = _isSelectionMode.asStateFlow()
 
-    private val _isLoading = MutableLiveData(true)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     init {
         observeItems()
@@ -34,8 +36,8 @@ class MultiDeleteViewModel @Inject constructor(
     private fun observeItems() {
         viewModelScope.launch {
             repository.getAllItems().collectLatest { entities ->
-                _items.postValue(entities.map { it.text })
-                _isLoading.postValue(false)
+                _items.value = entities.map { it.text }
+                _isLoading.value = false
             }
         }
     }
@@ -47,13 +49,14 @@ class MultiDeleteViewModel @Inject constructor(
     }
 
     fun restoreItems(initialItems: List<String>) {
+        Timber.d("Restoring elements to database")
         viewModelScope.launch {
             repository.restoreItems(initialItems)
         }
     }
 
     fun toggleSelection(item: String) {
-        val currentSelected = (_selectedItems.value ?: emptySet()).toMutableSet()
+        val currentSelected = _selectedItems.value.toMutableSet()
         if (currentSelected.contains(item)) {
             currentSelected.remove(item)
             if (currentSelected.isEmpty()) {
@@ -67,8 +70,9 @@ class MultiDeleteViewModel @Inject constructor(
     }
 
     fun enterSelectionMode(item: String) {
+        Timber.d("Entering multi-selection mode")
         _isSelectionMode.value = true
-        val currentSelected = (_selectedItems.value ?: emptySet()).toMutableSet()
+        val currentSelected = _selectedItems.value.toMutableSet()
         currentSelected.add(item)
         _selectedItems.value = currentSelected
     }
@@ -79,8 +83,8 @@ class MultiDeleteViewModel @Inject constructor(
     }
 
     fun selectAll() {
-        val currentItems = _items.value ?: emptyList()
-        if ((_selectedItems.value ?: emptySet()).size == currentItems.size) {
+        val currentItems = _items.value
+        if (_selectedItems.value.size == currentItems.size) {
             _selectedItems.value = emptySet()
             _isSelectionMode.value = false
         } else {
@@ -91,7 +95,8 @@ class MultiDeleteViewModel @Inject constructor(
 
     fun deleteSelected() {
         viewModelScope.launch {
-            val selected = _selectedItems.value?.toList() ?: emptyList()
+            val selected = _selectedItems.value.toList()
+            Timber.d("Deleting selected items count: %d", selected.size)
             repository.deleteByTexts(selected)
             exitSelectionMode()
         }

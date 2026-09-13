@@ -11,8 +11,12 @@ import com.flatcode.simplecomposeapps.todoNote.data.TodoRepository
 import com.flatcode.simplecomposeapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,34 +30,47 @@ class AddEditNoteViewModel @Inject constructor(
     var note by mutableStateOf<Notes?>(null)
         private set
 
-    val noteTitle = state.getLiveData("noteTitle", "")
-    val noteContent = state.getLiveData("noteContent", "")
+    private val _noteTitle = MutableStateFlow(state.get<String>("noteTitle") ?: "")
+    val noteTitle: StateFlow<String> = _noteTitle.asStateFlow()
+
+    private val _noteContent = MutableStateFlow(state.get<String>("noteContent") ?: "")
+    val noteContent: StateFlow<String> = _noteContent.asStateFlow()
 
     init {
         if (noteId != -1) {
             viewModelScope.launch {
                 note = repository.getNoteById(noteId)
                 note?.let {
-                    noteTitle.value = it.title
-                    noteContent.value = it.content
+                    _noteTitle.value = it.title
+                    _noteContent.value = it.content
                 }
             }
         }
+    }
+
+    fun updateTitle(title: String) {
+        _noteTitle.value = title
+    }
+
+    fun updateContent(content: String) {
+        _noteContent.value = content
     }
 
     private val _addEditNoteEvent = MutableSharedFlow<AddEditNoteEvent>()
     val addEditNoteEvent: SharedFlow<AddEditNoteEvent> = _addEditNoteEvent
 
     fun onSaveClick() {
-        val title = noteTitle.value ?: ""
-        val content = noteContent.value ?: ""
+        val title = _noteTitle.value
+        val content = _noteContent.value
         if (title.isBlank()) return
 
         val currentNote = note
         if (currentNote != null) {
+            Timber.d("Updating existing note: %d", currentNote.id)
             val updatedNote = currentNote.copy(title = title, content = content)
             updateNote(updatedNote)
         } else {
+            Timber.d("Creating new note")
             val newNote = Notes(title = title, content = content)
             createNote(newNote)
         }

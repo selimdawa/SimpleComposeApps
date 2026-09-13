@@ -1,7 +1,5 @@
 package com.flatcode.simplecomposeapps.candycrushgame
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simplecomposeapps.candycrushgame.data.CandyCrushDao
@@ -9,8 +7,12 @@ import com.flatcode.simplecomposeapps.candycrushgame.data.CandyCrushEntity
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
@@ -27,16 +29,17 @@ class CandyCrushViewModel @Inject constructor(
     )
     val notCandy = -1
 
-    private val _board = MutableLiveData<List<Int>>(emptyList())
-    val board: LiveData<List<Int>> = _board
+    private val _board = MutableStateFlow<List<Int>>(emptyList())
+    val board: StateFlow<List<Int>> = _board.asStateFlow()
 
-    private val _score = MutableLiveData(0)
-    val score: LiveData<Int> = _score
+    private val _score = MutableStateFlow(0)
+    val score: StateFlow<Int> = _score.asStateFlow()
 
-    private val _highScore = MutableLiveData(0)
+    private val _highScore = MutableStateFlow(0)
 
     init {
         viewModelScope.launch {
+            Timber.d("Initializing CandyCrushViewModel")
             val data = candyCrushDao.getCandyCrushData().first()
             if (data != null && data.boardState.isNotEmpty()) {
                 _highScore.value = data.highScore
@@ -45,10 +48,13 @@ class CandyCrushViewModel @Inject constructor(
                 // Reset board if it contains resource IDs from previous version
                 if (savedBoard.all { it in candies.indices || it == notCandy }) {
                     _board.value = savedBoard
+                    Timber.d("Loaded saved board state")
                 } else {
+                    Timber.d("Saved board state invalid, creating new board")
                     createBoard()
                 }
             } else {
+                Timber.d("No saved game data, creating new board")
                 createBoard()
             }
             startGameLoop()
@@ -93,37 +99,38 @@ class CandyCrushViewModel @Inject constructor(
     }
 
     private fun updateHighScore() {
-        val currentScore = _score.value ?: 0
-        val currentHighScore = _highScore.value ?: 0
+        val currentScore = _score.value
+        val currentHighScore = _highScore.value
         if (currentScore > currentHighScore) {
             _highScore.value = currentScore
         }
     }
 
     private suspend fun saveGameData() {
-        val currentBoard = _board.value ?: emptyList()
+        val currentBoard = _board.value
         val boardState = currentBoard.joinToString(",")
         candyCrushDao.saveCandyCrushData(
             CandyCrushEntity(
-                highScore = _highScore.value ?: 0,
-                score = _score.value ?: 0,
+                highScore = _highScore.value,
+                score = _score.value,
                 boardState = boardState
             )
         )
     }
 
     fun swapCandies(draggedIndex: Int, replacedIndex: Int) {
-        val currentBoard = (_board.value ?: emptyList()).toMutableList()
+        val currentBoard = _board.value.toMutableList()
         if (replacedIndex in currentBoard.indices) {
             val temp = currentBoard[draggedIndex]
             currentBoard[draggedIndex] = currentBoard[replacedIndex]
             currentBoard[replacedIndex] = temp
             _board.value = currentBoard
+            Timber.d("Swapped candies: %d and %d", draggedIndex, replacedIndex)
         }
     }
 
     private fun checkRowForThree() {
-        val currentBoard = (_board.value ?: emptyList()).toMutableList()
+        val currentBoard = _board.value.toMutableList()
         if (currentBoard.isEmpty()) return
         var changed = false
         for (i in 0..61) {
@@ -132,7 +139,7 @@ class CandyCrushViewModel @Inject constructor(
             val notValid = arrayOf(6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55)
             if (i !in notValid) {
                 if (currentBoard[i] == chosenCandy && !isBlank && currentBoard[i + 1] == chosenCandy && currentBoard[i + 2] == chosenCandy) {
-                    _score.postValue((_score.value ?: 0) + 3)
+                    _score.value += 3
                     currentBoard[i] = notCandy
                     currentBoard[i + 1] = notCandy
                     currentBoard[i + 2] = notCandy
@@ -140,29 +147,35 @@ class CandyCrushViewModel @Inject constructor(
                 }
             }
         }
-        if (changed) _board.postValue(currentBoard)
+        if (changed) {
+            _board.value = currentBoard
+            Timber.d("Match found in row, score: %d", _score.value)
+        }
     }
 
     private fun checkColumnForThree() {
-        val currentBoard = (_board.value ?: emptyList()).toMutableList()
+        val currentBoard = _board.value.toMutableList()
         if (currentBoard.isEmpty()) return
         var changed = false
         for (i in 0..46) {
             val chosenCandy = currentBoard[i]
             val isBlank = currentBoard[i] == notCandy
             if (currentBoard[i] == chosenCandy && !isBlank && currentBoard[i + noOfBlocks] == chosenCandy && currentBoard[i + 2 * noOfBlocks] == chosenCandy) {
-                _score.postValue((_score.value ?: 0) + 3)
+                _score.value += 3
                 currentBoard[i] = notCandy
                 currentBoard[i + noOfBlocks] = notCandy
                 currentBoard[i + 2 * noOfBlocks] = notCandy
                 changed = true
             }
         }
-        if (changed) _board.postValue(currentBoard)
+        if (changed) {
+            _board.value = currentBoard
+            Timber.d("Match found in column, score: %d", _score.value)
+        }
     }
 
     private fun moveDownCandies() {
-        val currentBoard = (_board.value ?: emptyList()).toMutableList()
+        val currentBoard = _board.value.toMutableList()
         if (currentBoard.isEmpty()) return
         var changed = false
         val firstRow = arrayOf(0, 1, 2, 3, 4, 5, 6, 7)
@@ -184,6 +197,6 @@ class CandyCrushViewModel @Inject constructor(
                 changed = true
             }
         }
-        if (changed) _board.postValue(currentBoard)
+        if (changed) _board.value = currentBoard
     }
 }

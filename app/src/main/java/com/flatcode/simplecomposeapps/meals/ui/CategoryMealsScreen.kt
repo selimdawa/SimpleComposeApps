@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -36,7 +36,7 @@ fun CategoryMealsScreen(
     onMealClick: (String, String, String) -> Unit,
     viewModel: CategoriesMealsViewModel = hiltViewModel()
 ) {
-    val mealsResult by viewModel.meals.observeAsState(Resource.Idle)
+    val mealsResult by viewModel.meals.collectAsStateWithLifecycle()
 
     LaunchedEffect(categoryName) {
         viewModel.getMealsByCategory(categoryName)

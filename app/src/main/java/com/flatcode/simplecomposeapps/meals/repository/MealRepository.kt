@@ -8,6 +8,7 @@ import com.flatcode.simplecomposeapps.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
 @Singleton
@@ -118,7 +119,7 @@ class MealRepository @Inject constructor(
         mealDao.upsert(meal)
     }
 
-    fun getFavoriteMeals() = mealDao.getAllMeals()
+    fun getFavoriteMeals(): Flow<List<Meal>> = mealDao.getAllMeals()
 
-    fun getMealById(id: String) = mealDao.getMealById(id)
+    fun getMealById(id: String): Flow<Meal?> = mealDao.getMealById(id)
 }
