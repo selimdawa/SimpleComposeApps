@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.calculator.data.CalculatorDao
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorEntity
+import com.flatcode.simplecomposeapps.calculator.data.CalculatorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import net.objecthunter.exp4j.ExpressionBuilder
 import javax.inject.Inject
 
 @HiltViewModel
-class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
+class CalculatorViewModel @Inject constructor(private val repository: CalculatorRepository) :
     ViewModel() {
 
     private val _expression = MutableLiveData("")
@@ -24,7 +24,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
     private val _result = MutableLiveData("")
     val result: LiveData<String> = _result
 
-    val historyList: LiveData<List<CalculatorEntity>> = calculatorDao.getAllHistory().asLiveData()
+    val historyList: LiveData<List<CalculatorEntity>> = repository.getAllHistory().asLiveData()
 
     fun appendValue(value: String) {
         _expression.value = (_expression.value ?: "") + value
@@ -75,7 +75,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
     fun saveToHistory(exp: String, res: String) {
         viewModelScope.launch {
             if (exp.isNotEmpty() && res.isNotEmpty()) {
-                calculatorDao.insertHistory(
+                repository.insertHistory(
                     CalculatorEntity(expression = exp, result = res)
                 )
             }
@@ -84,7 +84,7 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
 
     fun clearHistory() {
         viewModelScope.launch {
-            calculatorDao.clearHistory()
+            repository.clearHistory()
         }
     }
 }

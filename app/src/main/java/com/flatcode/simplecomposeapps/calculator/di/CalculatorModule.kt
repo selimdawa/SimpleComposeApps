@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorDao
 import com.flatcode.simplecomposeapps.calculator.data.CalculatorDatabase
+import com.flatcode.simplecomposeapps.calculator.data.CalculatorRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +32,11 @@ object CalculatorModule {
     @Singleton
     fun provideCalculatorDao(database: CalculatorDatabase): CalculatorDao {
         return database.calculatorDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCalculatorRepository(calculatorDao: CalculatorDao): CalculatorRepository {
+        return CalculatorRepository(calculatorDao)
     }
 }
