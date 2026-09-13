@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.web.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.web.data.WebDao
 import com.flatcode.simplecomposeapps.web.data.WebEntity
+import com.flatcode.simplecomposeapps.web.data.WebRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,7 @@ data class WebAppUiState(
 
 @HiltViewModel
 class WebAppViewModel @Inject constructor(
-    private val webDao: WebDao
+    private val repository: WebRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(WebAppUiState())
@@ -39,7 +39,7 @@ class WebAppViewModel @Inject constructor(
 
     private fun observeHistory() {
         viewModelScope.launch {
-            webDao.getItemsByType("HISTORY").collectLatest { list ->
+            repository.getItemsByType("HISTORY").collectLatest { list ->
                 _uiState.update { it.copy(history = list) }
             }
         }
@@ -47,7 +47,7 @@ class WebAppViewModel @Inject constructor(
 
     private fun observeBookmarks() {
         viewModelScope.launch {
-            webDao.getItemsByType("BOOKMARK").collectLatest { list ->
+            repository.getItemsByType("BOOKMARK").collectLatest { list ->
                 _uiState.update { it.copy(bookmarks = list) }
             }
         }
@@ -59,7 +59,7 @@ class WebAppViewModel @Inject constructor(
         if (url.isBlank() || url == lastAddedUrl) return
         lastAddedUrl = url
         viewModelScope.launch {
-            webDao.insertItem(WebEntity(title = title.ifBlank { url }, url = url, type = "HISTORY"))
+            repository.insertItem(WebEntity(title = title.ifBlank { url }, url = url, type = "HISTORY"))
         }
     }
 
@@ -69,10 +69,10 @@ class WebAppViewModel @Inject constructor(
             val isBookmarked = _uiState.value.bookmarks.any { it.url == url }
             if (isBookmarked) {
                 _uiState.value.bookmarks.find { it.url == url }?.let {
-                    webDao.deleteItem(it)
+                    repository.deleteItem(it)
                 }
             } else {
-                webDao.insertItem(
+                repository.insertItem(
                     WebEntity(
                         title = title.ifBlank { url },
                         url = url,
@@ -85,7 +85,19 @@ class WebAppViewModel @Inject constructor(
 
     fun deleteItem(item: WebEntity) {
         viewModelScope.launch {
-            webDao.deleteItem(item)
+            repository.deleteItem(item)
+        }
+    }
+
+    fun clearHistory() {
+        viewModelScope.launch {
+            repository.clearByType("HISTORY")
+        }
+    }
+
+    fun clearBookmarks() {
+        viewModelScope.launch {
+            repository.clearByType("BOOKMARK")
         }
     }
 

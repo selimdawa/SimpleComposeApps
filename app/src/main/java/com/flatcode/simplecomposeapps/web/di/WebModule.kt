@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.web.data.WebDao
 import com.flatcode.simplecomposeapps.web.data.WebDatabase
+import com.flatcode.simplecomposeapps.web.data.WebRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +29,11 @@ object WebModule {
     @Provides
     fun provideWebDao(database: WebDatabase): WebDao {
         return database.webDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWebRepository(webDao: WebDao): WebRepository {
+        return WebRepository(webDao)
     }
 }
