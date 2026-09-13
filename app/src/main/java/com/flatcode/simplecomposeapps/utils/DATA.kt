@@ -80,7 +80,7 @@ object DATA {
         MainInfo(CANDY_CRUSH, 1, 1, 1, 1),
         MainInfo(MULTI_DELETE, 1, 1, 1, 1),
         MainInfo(RANDOM_IMAGE, 1, 1, 1, 1),
-        MainInfo(BLOGGER, 1, 1, 0, 0),
+        MainInfo(BLOGGER, 1, 1, 1, 1),
         MainInfo(JOKE, 1, 1, 1, 1),
         MainInfo(NEWS, 1, 1, 1, 1),
         MainInfo(PDF_READER, 1, 1, 1, 1),
@@ -324,13 +324,6 @@ object DATA {
     // JSON Keys & Params
     const val MAX_POST_RESULTS = "10"
     const val LIMIT_CRYPTO = "10"
-    const val POSTS = "posts"
-    const val PAGES = "pages"
-    const val SEARCH = "search"
-    const val COMMENTS_KEY = "comments"
-    const val MAX_RESULTS = "maxResults"
-    const val PAGE_TOKEN = "pageToken"
-    const val Q = "q"
     const val KEY = "key"
     const val CONDITION = "condition"
     const val TEXT = "text"

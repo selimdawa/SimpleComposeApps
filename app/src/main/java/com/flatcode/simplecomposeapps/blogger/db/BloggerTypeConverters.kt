@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.blogger.data
+package com.flatcode.simplecomposeapps.blogger.db
 
 import androidx.room.TypeConverter
 import com.flatcode.simplecomposeapps.blogger.model.Author

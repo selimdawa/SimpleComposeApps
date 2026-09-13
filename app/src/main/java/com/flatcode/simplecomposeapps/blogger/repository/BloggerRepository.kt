@@ -1,16 +1,16 @@
-package com.flatcode.simplecomposeapps.blogger.data.repository
+package com.flatcode.simplecomposeapps.blogger.repository
 
-import com.flatcode.simplecomposeapps.blogger.data.BloggerDao
-import com.flatcode.simplecomposeapps.blogger.data.BloggerPostEntity
-import com.flatcode.simplecomposeapps.blogger.data.BloggerPageEntity
-import com.flatcode.simplecomposeapps.blogger.data.BloggerCommentEntity
-import com.flatcode.simplecomposeapps.blogger.data.network.BloggerApi
+import com.flatcode.simplecomposeapps.blogger.db.BloggerCommentEntity
+import com.flatcode.simplecomposeapps.blogger.db.BloggerDao
+import com.flatcode.simplecomposeapps.blogger.db.BloggerPageEntity
+import com.flatcode.simplecomposeapps.blogger.db.BloggerPostEntity
+import com.flatcode.simplecomposeapps.blogger.network.BloggerApi
 import com.flatcode.simplecomposeapps.blogger.model.Author
 import com.flatcode.simplecomposeapps.blogger.model.BloggerResponse
+import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.blogger.model.CommentItem
 import com.flatcode.simplecomposeapps.blogger.model.Page
 import com.flatcode.simplecomposeapps.blogger.model.Post
-import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.ui.theme.Strings
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.Resource

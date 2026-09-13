@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simplecomposeapps.blogger.data.repository.BloggerRepository
+import com.flatcode.simplecomposeapps.blogger.repository.BloggerRepository
 import com.flatcode.simplecomposeapps.blogger.model.Comment
 import com.flatcode.simplecomposeapps.blogger.model.Label
 import com.flatcode.simplecomposeapps.blogger.model.Page

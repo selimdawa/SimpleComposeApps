@@ -2,8 +2,8 @@ package com.flatcode.simplecomposeapps.blogger.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.simplecomposeapps.blogger.data.BloggerDao
-import com.flatcode.simplecomposeapps.blogger.data.BloggerDatabase
+import com.flatcode.simplecomposeapps.blogger.db.BloggerDao
+import com.flatcode.simplecomposeapps.blogger.db.BloggerDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +21,7 @@ object BloggerDatabaseModule {
         return Room.databaseBuilder(
             context,
             BloggerDatabase::class.java,
-            "blogger_database"
+            "blogger_db"
         ).build()
     }
 

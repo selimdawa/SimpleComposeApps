@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.blogger.data
+package com.flatcode.simplecomposeapps.blogger.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

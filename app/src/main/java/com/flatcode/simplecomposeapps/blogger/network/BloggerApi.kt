@@ -1,4 +1,4 @@
-package com.flatcode.simplecomposeapps.blogger.data.network
+package com.flatcode.simplecomposeapps.blogger.network
 
 import com.flatcode.simplecomposeapps.utils.DATA
 import io.ktor.client.HttpClient
