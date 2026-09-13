@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simplecomposeapps.wordpress.data.PostDao
 import com.flatcode.simplecomposeapps.wordpress.data.PostDatabase
+import com.flatcode.simplecomposeapps.wordpress.data.WordpressRepository
+import com.flatcode.simplecomposeapps.wordpress.data.network.WordPressApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,5 +30,11 @@ object WordpressModule {
     @Provides
     fun providePostDao(database: PostDatabase): PostDao {
         return database.postDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWordpressRepository(api: WordPressApi, dao: PostDao): WordpressRepository {
+        return WordpressRepository(api, dao)
     }
 }
