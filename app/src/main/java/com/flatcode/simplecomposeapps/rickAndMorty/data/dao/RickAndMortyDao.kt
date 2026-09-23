@@ -1,0 +1,40 @@
+package com.flatcode.simplecomposeapps.rickAndMorty.data.local
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Character
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Episode
+import com.flatcode.simplecomposeapps.rickAndMorty.model.Location
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface RickAndMortyDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacters(characters: List<Character>)
+
+    @Query("SELECT * FROM characters")
+    fun getAllCharacters(): Flow<List<Character>>
+
+    @Query("SELECT * FROM characters")
+    suspend fun getCharacters(): List<Character>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEpisodes(episodes: List<Episode>)
+
+    @Query("SELECT * FROM episodes")
+    fun getAllEpisodes(): Flow<List<Episode>>
+
+    @Query("SELECT * FROM episodes")
+    suspend fun getEpisodes(): List<Episode>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLocations(locations: List<Location>)
+
+    @Query("SELECT * FROM locations")
+    fun getAllLocations(): Flow<List<Location>>
+
+    @Query("SELECT * FROM locations")
+    suspend fun getLocations(): List<Location>
+}
