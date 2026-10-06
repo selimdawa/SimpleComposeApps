@@ -26,7 +26,7 @@
         android:label="${appName}"
         android:roundIcon="@drawable/logo_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MC.G2_10"
+        android:theme="@style/Theme.MC.S1"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".main.SplashActivity"
