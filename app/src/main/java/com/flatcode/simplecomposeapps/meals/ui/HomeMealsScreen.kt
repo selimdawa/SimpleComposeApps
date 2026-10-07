@@ -21,25 +21,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.flatcode.simplecomposeapps.ui.CustomProgressBar
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.meals.model.Meal
 import com.flatcode.simplecomposeapps.meals.viewmodel.MealsHomeViewModel
+import com.flatcode.simplecomposeapps.ui.CustomProgressBar
+import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
-import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.Resource
 
 @Composable
@@ -70,7 +69,7 @@ fun HomeMealsScreen(
             text = Strings.WHAT_WOULD_YOU_LIKE_TO_EAT,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = COLOR_ERROR
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -82,6 +81,7 @@ fun HomeMealsScreen(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
+
             is Resource.Success -> {
                 randomMealResult.data?.let { meal ->
                     Card(
@@ -129,7 +129,7 @@ fun HomeMealsScreen(
             text = Strings.OVER_POPULAR_ITEMS,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = COLOR_ERROR
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -140,6 +140,7 @@ fun HomeMealsScreen(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
+
             is Resource.Success -> {
                 val popularItems = popularItemsResult.data ?: emptyList()
                 if (popularItems.isEmpty()) {
@@ -217,6 +218,7 @@ fun HomeMealsScreen(
                     }
                 }
             }
+
             else -> {}
         }
 
@@ -228,7 +230,7 @@ fun HomeMealsScreen(
             text = Strings.CATEGORIES,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = COLOR_ERROR
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -239,6 +241,7 @@ fun HomeMealsScreen(
                     modifier = Modifier.align(Alignment.CenterHorizontally), color = MC_TRACK
                 )
             }
+
             is Resource.Success -> {
                 val categories = categoriesResult.data ?: emptyList()
                 if (categories.isEmpty()) {
@@ -271,6 +274,7 @@ fun HomeMealsScreen(
                     }
                 }
             }
+
             else -> {}
         }
     }

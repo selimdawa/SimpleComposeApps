@@ -44,7 +44,7 @@ class PdfReaderActivity : ComponentActivity() {
 
         intent.data?.let { handleUri(it) }
 
-        if (viewModel.uiState.value?.uri == null) {
+        if (viewModel.uiState.value.uri == null) {
             documentPickerLauncher.launch(arrayOf("application/pdf"))
         }
 
@@ -70,7 +70,7 @@ class PdfReaderActivity : ComponentActivity() {
     }
 
     private fun shareFile() {
-        val uri = viewModel.uiState.value?.uri
+        val uri = viewModel.uiState.value.uri
         uri?.let {
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/pdf"
@@ -83,7 +83,7 @@ class PdfReaderActivity : ComponentActivity() {
 
     private fun printDocument() {
         val mgr = getSystemService(PRINT_SERVICE) as PrintManager
-        val uri = viewModel.uiState.value?.uri
+        val uri = viewModel.uiState.value.uri
         uri?.let {
             mgr.print("PDF Document", SimplePdfPrintAdapter(this, it), null)
         }
