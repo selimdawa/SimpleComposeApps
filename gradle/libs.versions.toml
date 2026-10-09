@@ -1,9 +1,9 @@
-[versions]
+﻿[versions]
 agp = "9.4.1"
 coreKtx = "1.19.1"
 activityCompose = "1.13.0"
 lifecycle = "2.11.0"
-kotlin = "2.4.20"
+kotlin = "2.4.21"
 kotlinxSerializationJson = "1.11.0"
 composeBom = "2026.09.00"
 ksp = "2.3.12"
