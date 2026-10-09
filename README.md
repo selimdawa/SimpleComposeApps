@@ -9,9 +9,262 @@
 
 ## Images
 
+# `.0 Main` :
+
+## Day Mode
+Splash | Main | Info Apps 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhWd1faVkRXVFGo22IIAfsWfp0PfD6ll9YRky7imdizeUel4ZQjaE7H5J7gTQzUQl7Z9iISvJSbfCHtPyTRGfWgjwfij2dVtTUY527x2RGDrQ-_AHN3EgNlhYkZ4jZ6J63ioPLfTaUYsGoO4V4Znsrt4EL3oMIdLfCc_zFBJlcvj6FzL-3pr95dTmaYjA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiP_f4boka9PETq77BNhGJYlYm6LWTSY8gx2HF3VqpAsZ3-zvcc9s8vLMFbEUIRxecS0a6TdU-TCKaez0K0HtRs5DsQqUqQjZhZ_m3huS1IjSc-NDagXrXzW5y1ss1K73l7jheUBfFrVos1hl1solfGKblbHG3pxMtOQKKD1ArPjaPGPJGfkib8HhCwdQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjHHKMAxDyGxl9wLrm3PZVjXT13TCV91ufxCOZcCVYXirlvUOXQHevvfUjNS-Zdnv-ON__Kv21Spes1Oq4F3DRkG2nTXPaJiesoA-ofbGuA6igkHuVZk-e4QotGbTY-JKbyBH9lQjYcMem9DYTYl1ZqHbs2B9ioUPrImXyw3_-g2KeerAvFnNBbNPKAyw) | 
+
+## Night Mode
+Splash | Main | Info Apps 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjC2vksgujkbhz03xzR29SawDPVBUwltPp2_KQwgbLKABzLqvTz2J_chQ3tpSEaLlVbn8fWzqAveCV2PSHc-0_SSq5VRB_QLHqglTo5WVvYytG1ev_wgfj4mJogqPtt5JsiK0CLbTB1nDmrVdeid9JWaeBn0D3s7Qmdhk-qLt0DQ_rilo9CuT5Go6asHg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjrVpwkFKObo1syM3JCtoyPexvE1NuhUH85Faw6eCXSc4w1u6T_uBowrMazJ_W7hitVDjeYfbz--LDc0ie_qkxSpOCzulr6zoP8WTsjMA0wkNs_DWURzwt6crBjOClC2wd6mtun8haBFeCNo469VknjpxtBGzDjAH1TtG5SjD_tY2FvXKusoH5EAdJxEA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj-F8BTXOEW_SqaGEy6Rl3z7LbABWYUq2HDpwteHpMdYiol1EG_PRDm0QMDOk6vcZfImB0bjbiELfP3swuqJeGTrtKvSZZMDEOolVKdGeOxOf3aNVMR067dBCeyc1rK9qHrsYQdE_OFU9jKww46SptN0ffXCLUA-WEAOiotnmeSGL7e7RUQeTzi6Wticg) | 
+
+# `.1 Blogger` :
+ 
+## Day Mode
 One | Two | Three 
 --- | --- | --- | 
-| | |
+![](https://blogger.googleusercontent.com/img/a/AVvXsEglGTPnq76LkSXgseOgIfkAcG3Zh8FQEpNKxnPeEAtVrbnK8E6m3_-e6yJqmp2TEoJZb02bjSsgHiMwRigP6igCA5szJlPWMccov-RCl1nIMFZylfUQRb20PIeQxorGAHUeg9Zr0fDe8WFwNcC4cZyj4uurluGm-v_ZreycOxYmJrp2Eli3vLK81GkCiQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEirjBJGQa8uzzRPp-4Vg-Wv1M_K-ftpiPDaMirXGdJfckxOVa59TZELZlmhvgCFd6NqqygNDT0hm6KmT0AHEY8hevzfI-NjZkAzW9wWe5ZQuIY6F6jNoC7K90luyyGNrAAq6Y5JMzWCg0eg-oYQ7hQF_PDtd9KdwCTR2mGBpE2s7usKa03FlGnOIVQT0g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhLf_wLOyM6haiMmZJVelPYRi5Nf8h6tY4fpAoxCHrobIXtsE8Mj6T42UbsZZidUaAwaL3udRTIkJNCFvwzTUxAkg8isSnt4Ys8ktkZO14fBiDoNIl_u9ABBKpKW77rMS1cotaH8Ajt1G93vXAFXA0IfVbgE1DMR0iCYmvY_dUzJHjWnwOXfQ_kSQKiJQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhATYqnIORJ-drWliOcA1aMj6cPQ3CfDKzBh0Izum0od9vU8yp0XyZmcomF0OHSq9Vc7g7cIRhi0bpcqE6dgF26U_aAoDIy6w80OxEpxNFvaX2qLhykhbDsKmR3oNJE_xZLGkUF9nwaU5XD95P6PkZoi_dAylahAXMLGannc-vOcNvcypHMAzMq1hWO5w) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjhFFcqobslV94OulG7lQVCpxGl-ogGoqdCdeDwU0ln2KxDuhuQq7DFIjKV5suc5L_GKhLS5hwBFw6AwvXS6BBT9XVSA9lBLnun8ZX6Cmh_2KnF6NA3seUqmaVAyjbI9dzNbIvfYeuA5ljhMfxyHGJggQncEeFdPDAYGFrabrw6X2yA6FmbordqiEoU4w) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgRuRs5fCLowr7hiLX82d0R05q1-LpyDoP8nqA6gGCYqzB9ENVB_KqICgrYgtO8KdheI7rnxFpatBBlzatYwlMhAn-LYw7zRQ4n7axuaObEhEca0Qb56LtNIyR4TeeveBBUZt8mNmaGYz-OF4IdThxBAz5nlTg9j--CbxbWw1LdCRxmkgA_kLpr-1cwWQ) | 
+
+# `.2 Calculator` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEioorwp4GHrkpDN99WmiVeVZgkcE7XjaBMJJ1W9OqreaPGjf1m-kr1b2gCkS4KxonVHFHiNzwkhKqyEnDPB1P3U1Rd5RyrJvJPP7sDfYQ4Ji1uh25q3TB9SN-UI2kijkjLITEHc-goVPVBnpKfVx-AHarRmqvT4ZdLJ_RmSvb6PrfbMNTNJBcLKjYZKhA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjKLyahwhg2BiT7WvOmMLtf9ZBH6yxZEZk8pSSpPkzhlUXI8jPVdee8wR5Nayyqf3Qwf0MiwW03_ckA4t-qQErHZhYJvQOuTBQ6tsg2TXCR7xC_tdwKzFSQSyL2uH1fLZwC82P94vRrZJvRUUqthejSNmXYcUY3UDSzCMjmtX18ija8YQEeFk_H7osUVA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj9M0kaUKWgpwjGGT6AZJFMgfPB4Fp0G9Ay6qH0Iw3YKtWZMu2BXQJqzhvDliKpIslTg0la7S7cawCZiGR5n5y0uDMqYjkxkp6UMDK5TfWCSDgHWHCEzaLBTAoNg-578N1I0Y5qlBHKq2kw9pQqSoYBrP-UeYaTNJGtYXk5OgZw4vYTp9i7zZcUr1EDrw) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEgu8gZWgVg9pba0-8vKEuqwm92e2fc_0OqH_V2rjWagf0kj_WcWlcwplzkmK4ZwrRa0X9dCUJYNNHt9vv2-waHNfi5muq1qDtsgdup6Gy4yD79RAJd4MigLszPWgvEzftY8aD1UphjPmAp_Fc2btFvco3DbOn7zEaFARPRnJlCpWFdXP12eFpALA77R-g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjgoryyfUclsOMVIAEdeq6BHcbtadVrpH0xioBS0lutThs_nfsUoIAAZqH9j-6JuB9Xp95_KFfYSNakyG80EvRgpL7w17c_zTJtNZ_BdRvA5WioorB1EAhNy1KDhaYtHGUkjnRyc5ZhG3_m0jwl55l0szp-MjHe3Hj19_EdwgTTVSQrbZEAKelWlC5Zhw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEisPfWfgk4tZxGCd19SEM82MDnaeJ4bSIEMoD9dU_3ML-kzghrgL9lmCau4r7SR1M6YePPJDTwH-RQlXXDvcFZVhb8yEA6FN5L1W58f-RcCJ5RF9v8RUPH_6KfuE9Ocfz5E5HbfPKLaFo3zFsHWvZfHK4-Uqat0z_kh-8Ki2yWjG9WINJaCsAL5nP8KEA) | 
+
+# `.3 Candy Crush Game` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhFD5Yb6NCQQK2yFbasK3nt0cvcZQroWrGAgtwIQtQp-VIl_Iw6cK03DtKB-CIdgQO-vLa_9LgNJrAWTuGSzXNFnJw0HVfo4iTV_pHCSjvQk3g_Vl--8C1haOX58mY3eVPceHFEgRs4vPpj3R2Cpri38yuQo1YUlRaDcpg4N5MIoKwCxqTM8_LL4cz4rw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjyNKmXRgji5_tFxj0I41piMH9dzCo8uDWsDm-wbjSqWl8HQzBZp79Kxq6eqwwgSHwwZpogf8ONCQ_O7Fdbg_w120L7BGgkKXH6_OuMzqtdaQpO6S9tMBKWN7lkniay4VwGNGH1sKc_ZBRb9P90LC9uOUrRPzGS4KYi8ZP6jgwy-S1Oudk2QD5fICA2Sw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgTyCSTKAACuvD3Lm11gO7hABLA4deWWhjYnDxlnHu_mqr4XKXXabGp5qLTcdsTjll1JbvrqHBEDvaYkIi55O7lirEawiF0rDFVu48D1-ofaIfqQW0QcTNYEfi7k8znk2Q4sZAODcWZbjUxTqknN-DzYV47aN6hyjb_LrrzQqfQ2uTan_O8UbPFuBcmvw) | 
+
+# `.4 Countries` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhCc36_HGBwGml4pROw8O8ZgJ5ybArrwsa9K4muM4DlvBvmENkQd6c4J1TKQkDEjUmVG4fOtJaJVMDBNYK0rgyL8e4_9pNyQ7NVO1WI_xCwZUcC4XiQhvrQRveiEUQ3HPYdG5mmaQe4PCBdOR5veGqgec8YBK6iobr3Vtj0GfxExcCF3j8f2Mo0obArdw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjrs8k3CMv5vjs4UpiwyFq4UWudHSPPyQb1gjKbx9j4OArtaPsQAxriDXhtq7nRdLd-KSVsp4RMZnV0EQMxChWVo3e13KW7pCw67kuc6-Jkb06x16ehVavIvtRhc0Zr2ComUZ11i-fs6-YbwpisZdBcONlfWM8TvBtKpuM4GWmpgHsnwJxw8GEa7BHMuA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjDOuzmRQTMux5S2KSnw5E-86XkVd4BI1-Wfm_iOhkt8ZNXlaakTfYQqsPPrO6ud7T4oeZ2KQwKvib4Ubh7U_iTkhFJA5OQyUKboCiCnR24CuKs4GiT16_WzcMKHENatoWZNQ0sxX74q-VqyxIO66ppyxM-aqJLOUL8Dweam0xqcnulTIXe9ZmRdMC8Bw) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiWeuyJnKtBRW0cTgVzKVbly6EXjaIVt08jrffYLFx96wb3HW3k6Nj3TxZoCljxRI4P5K12v5BPRcXB6f5nrPszx3u4BiAgQbXLdgRpwCJMQirauVWNmd-ozfCsIPk6l6zRifMFQ90IZSUrdR2NnFcAopgWyHGW8eNCWReHticXpb4OVwaGsxpWr2EUsQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEg38iLq7T9VI4AA6LRfiJwlobNYG0UUtUoyTXt6elKMjdSHMsiUHXtwY8JlrBCJy7y4iEU9Jpb1pC_ahhAwwQShoVnwxx0PFe6wUDGjI3am-45nL0hlH96usuuiRWsUZ073XKK8cN1eFbaEZbowLNJWMkIZQ7-MPsnpU8IHYDp9iUYOR3dvWf1K-GM1cg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjjjRbOqoYDhXF_nkKLdht875rLOrKQfy5mC7458UtK7QR9B3h0sVAlc1FHrpCFO15XYHPQXxm3tg19fkgc6qpExJ58uVm-R2aSAuRKJf1MDgd5JpC3Mpm_aC1Yia1sgSdYm2OEzDOPI_sgxXO7iFR66WSZNvcT1KbnlzCVrQ7qAq6n9WL5_4lvA-hjUg) | 
+
+# `.5 Crypto` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyNiP0CE8Yls9bU8jy9KEP5m1FC81RPs6yUCAyziqfL2dIuFxSm1t8RUTuBolnle0cvgiwNmnoJImqaLKWvLH_QVslNPZUpDnu5gFQpnGIyeAwJADLZ6Wige-qoAqynqTJ1Uk1xMgDAuogxmnxgOHsXlSh-GLvggFcz4apL4ypbvtkwuOP9_cQuwqad6c/s1280/photo_2026-06-17_06-00-50.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgz54Fi0jpMlVzvnNA8RIoJSrlM4tPy6A0Uwphtg82TRIOnv2Njkjw9QEATmtpjoRShHAlbGfhA9HeLEZyQpLfQ8UT3VvkawQkB8xD24j_0SnKiFMU9OPQNUcN_ALTRWai3_GvrJtsN_C2OhHkO1xpudH8rPS5k4Xv5WYOepGTIm7pBxPRtQvGoZbApkr8/s1280/photo_2026-06-17_06-00-36.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8RXsKMEF4C2lTdQdj3LPKKltDpZo4QmXbeqDGv34ydVXk9s_-_vOHvi52QCMxOy3qTe7dqDJZjm75qx_MnZtLPXmYvGc7_B1_rxm82Fs6iEG_jYFztispmZlukOirmLAklH-mhU5hUY8l0GziyfeJ6aQJhVLx4rwYSovF0ahAEY3Rr8gMzIRKq7Q_YyU/s1280/photo_2026-06-17_06-00-36%20(2).jpg) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5sDmxX5RzxB4oILqqKGc0vjZXhs4l4epsyRhqP_mYgEmV3B8a-JV56r4YpLtK97gF9gX4DyZshvAv_jBXgJ4IkUZiAFaa1gbbnmtUYTOeEcFtqAl4frXOFqckE_Xn3ZhWbZSwvdR0F-zDrpzWuTEEt37GdO68JB6dwBeCcRFYzS5lDF1TnFjd71qBQ7Y/s1280/photo_2026-06-17_06-00-35.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3xyoiFgjnMT_nzMXXl7hN6jaEm9WfCOlbsMhgjmEH30XJAnhZ7-rJD06gGp2VKsx6nPLOVu4DINra370vVH09weewFdSgnxdQJUvU6efBOS6sr9fUXYmkflLnsKJEXtbQe3zNryVkRKC0hRbDou_FSULpX8yl1MLhLKU9_Zjc5ast0ZZHFdEJYJ9gvSg/s1280/photo_2026-06-17_06-00-34.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEix4ANWJn1PWjc2FMu08rXvZRgDfnDZfBiE_y6EExvPN_0d1vIaztaQn7dTItyh1wORP-UqBlpFYEj-gyKLbHhLPUtOdaLJHPgemH_BQwN4nHG22k7dQTlQQQsEqAUcQu1OBGAJLEXPCGt9yeD7atzVZajbsh_KO0lJi6Y3Nbq_1qxHg-g-ir2PHPx8Nq4/s1280/photo_2026-06-17_06-00-33.jpg) | 
+
+# `.6 Dictionary` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiWFtpYLOJXLoT2JLum9_tyOsnrZcgcCuXf-TsGE16JjWz75Ms7rAAql-bd5RqpE6jM_ASbs6g_IxvgcoRBuHTmXgZiq71CgT_Vkole7Qs1ojCe5HAokFYPv70zyysWeaay10mQSwCyBOKE8xdB-q2jfHZ-DfgVWW1A1gTTbOvEokxRlVSTfP9BJBqzqw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgWiy5r4YkP7L-TD6nElhq0041qnkwrFKDFZOFIQKp9oawA4Dn3su5TjQHhaHURSXMqS4sXmcbM0wluEmfgm0p6NYGJoolmuvWCtrKFhnVRgj3ka1K2g51g_mYO-Bmjn2EW-OYQ5fcSdpwDKfmoYg2TJrejkrgDBMSGT5XquSyjzrAldAdvzlV2GEHE5g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiff4UMU6nbIHPJXstvNrNWTNviZ19rtg3g_cDwWfVWPERSiljU60Frq0LOkBUPiw7n9gI5sdBZq1nJ_3_XSebge2rUHCzYmXDqDRcHCnwg1LAE4xc4QcC3hnWGPlvnQFQfFbPp9ydt4y6CObT4LdS6xpsq2Sg8_Un4qpmgHA3va4BxDsHHG1b28e7EoQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjmNuH86pcA5BU-VmHFtUmvfzxSZzCaURrFp9pfh6y1bDWy9P5vEZ0dgUhF4N-FwnAjN7C1fqy5agkGVTl3R4NjI3m0D7KrnWKa7KBRy8fevi79EUqGuecsthEM_H7IJ9BcYCC52HHUEjvmyEN5qboH7IbV762way6NXcmykCe4Un1vaB2ZWV2LOiaxdA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgpK54kaUa_Dolp5h2jtV8bkQ4IqqqZve7ez1GdxbMVg2jAAXw3nVdegDz66lZhRumLBfZAf2zN5X2ceBWeghFQT0qk8XbfrqjMDaauy4db2A5qs6-vIdUEjjBGugAkN7duuwoBsELhyRtaPzwJd7yCHp9XR-_iGCsz1RDkC93-5QTA7fZy4IRrS9VirA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgBLRMqFcxYS32An1ttOnp3EC0fyomOi8GpUgzM35BiW1S69YCi9LZ2jDfVbVudaQuzaDJFFKiToTkShi5xX98q-8GAno5zOH0qCl8MtMftwyGxrFu6K_6Vzbf42xOEHrEYdWr5VXh6XHAj3LMCLHJAXHtzfzDUGcR2LDHozDI8Sfj7uNbeiloGnIe7jQ) | 
+
+# `.7 Dogs` :
+
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEj8yPmG13-dbYyxF4il4Rbt-kLNW-hosY2Jnt1g8IYmiICFszBhNEgY3d5EDbSS7VQdT8GCt8ej9zS4yWBA69wNcbgAgctkS91JG3TN_Xgvw2MP9Id38jwHsWR8sC_jUhfSoK9vNWMPV0l3ImAHobP7JnYqobW2OKM5QPrvdEdlcRseVDbfXQawUtALyw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgzQLrlwojKbg_ZbMxQMQ5id9o2U46EhOFL5nqsQbMHeJyqrUVE-244lYB5ewSDwpKhN-_03O2IHCn2S6We5TSJAQd6cWc-b8kzubUy9jibMSZ4A3gepbDROGCYrIO_1lzflS7y9JdACi27cOzuCP0RoKX6W9Yn0JmLF6iIF68JZNUVfMVFjpvZYKw4sg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEi62FmOmTTFyrKWiD916t2bYDaq7yoVJnzD6QnSyehdqHwaO0WtTbrKRpam0cqistfTLuBnUqUfE8nT7nlUhN04wW790MmndWX0ZivvITtiR0UJfZMNroixBcVOFOzKTE4TtpHTHZ47JjEWnzovZ-VpwRka65FEPPO0ZLOKZyUDk_5uNevUYf7JBeDhTA) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiFOezO_MYfZjIwVqhtyR3giqXdo9FdAo6d2bxZeBlnj9bzsBoLXuHPrRieLmJKro7P1arIRwOPfXi_LWvcOT9BlvRPIejNmCKKe8FZ8jW9GL7hcJH3udNSEvirL1maYqaS94rgSfvGOtYjEUWhCidNoyO1oVVhWKUg0WAGjge3txXwiyt0vw_1ec9RPA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhplQfImkmIpnrMDIfRmB7uo_DbjL1051q8gL-hfVPtH7J-yQQ8p5PtRUyB_VT4hilZ8VrZSiy7m-ow03bdpAb1vco-KupzeviajcSaq2ZJmsAfNhENaOGO6fo555JwQECggJb_1OZGNN9wa7uFNBuQ3XNYU3VLLlrn954CG32JyLGCh9mnWGetkWdM4g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgSMaypKNEtUGDnn0AGcXr77yQPLAgEJX4FlnEmOk-dXRRxLs8pooZIXfTNr-q90mQmWgQadc0SCEDmZFF_uOaDJtKOxFM0E4Y5PbTLqU2ZGrcaf30RjTZyR53Rl9cTvZafSDb6iRSFmiVpuK2UbHAU5T5OvJ6mPqAs23ISa2ASVViidejyqU3aG5s3Xw) | 
+
+# `.8 Joke App` :
+
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEg8h05M_re99alT_7r1AyLjP-3hgb37kyzHir2yyvtJ9OUPx6eYRdkZYZBgUuaq4kIpWsERIvh6Fu8pfDRCuBj8Vfmbwv7QAI5H31JtznfKmCklxbejkdGu9Gc1SGuGrjsy9ScvKVwCETM9dDTpKSve3roz_yXQgdqFV4ws7uHKWfgquc9T940eSP25hA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhz5SXom9v8yXKAS7WvgtBcGLEZfvAKnVGvsfPauipuYgcTw5OC45_oCe9H0TSc3gsWNguaXAQ2dw-ajZ8_RK8uGeKK5CIZvrhLNSiB82C6KMN_JP2dZID_RS3tR27cxvlettAjDY833COytlCvdjsfwbr5rWfIbBIFGJg8W2VmzH1ar9LBTeFDVEGR1A) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEheZYkIOQ2MvDIzoR47GHy7RxiJU8yRLKAgIWNaIjVxvDgDbBTSMk4kHtqbUlJi-SQtwCRihtYeydxshdjkAU618WakMHvQXK0pQV7MjP5aKK7paTYVS1RMiEbK5afWx-o-L_cgsf680Zj2Yhc7BKBbQbqu4VtDS4kHjpTZEvFSHsM_TNhMwjSepCmJQg) | 
+
+# `.9 Meals` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEh_vqH3-dg0C4TOFt_uh8vAw3bSGIxaE_FfWRlCVzBjSacFxkAEMbyHPMZWXiSsCFjpUyeFq_BLDWJCmuC4HE2Fp3NLZsTS1dMbNywXGCg1NCNBhdbL5S3a5SjVkM8LNebEKdKmRsazCEh8Dxnt3v8fpZdpiSRELbUgG3vXfIXaynfMHZZfQ9leoCWtsA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgBEObLx3nxZz0mgNrPANaVpItFcCKoUxAf9kGxr9gM84nFCJ40lAfVbJNOFtpRL4A1ZSOwF3iCc-pck8W4GvhzLO7fLZGgUFp0Cp2e4SNDpdMuG_xHGRs1svZgmrqTglMpmlird0V6oq93aSN0QpFG-glkU3tdVQdX6x2u61jp9z2FNGNuUCN7IuqIjw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgksI9boaQd1sM3f1lddWPHCwr8nXYhaj6ErM9F-nxkKRvtJCz05Ew0BsJrSW38RnqXxjL_LqcS2nDwowPFcZeooSCS66VD5TSLnRPp6JhSKZYkIw6nYubxC9fymI4OWPk7cAY7HmXFH-JKE2aFM6CGFFwA7kd1hRAH8s3IuNOlLC_htjBP5LrHfnRTcQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEg6nSESS7nrDaoTeL6SlhVBwAhC3g_BvhOAZMN9rPm_HHlYZuF_a7CotAd3_ldOfUulQCkG-A3qxi4dDIzUdewj-XOmRjpHFo2pP4ZWCXPQsVLJsg8Pl0Dt4k5HUDGQKsVYU_97ogVzg5SmcGttOBUx3qQbTZp7o01AtkYg7qVAVnYhCb0vMb4GJ2AsHA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgY8yYTHRiJZYVWkEhzALUI1j-ja9h_f6FN_XIteEdCgHtSWEnvuj1LMG_rsCE5D35NaoSf_zOqAEPmMhceiCyFCYIC1klhG5C2Tthz3VRNpfNCSU2OqZqY-besQjhOZ36sMyFSvYkChcQP0Nh0zcfg2WJ5H3i6qa3BgpwH_82cOgY1uhg4TlHBZrYS9A) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj6EguOA8fCYGNNoBT5_nAQKlNg0jnVyn6NB6Sy3ru3AuCXBlCW3sHbXeA0i2tyox9L7AQ_DcgGV_tMFQcr8glrkkJYIpu-_Hs34RzTsa_oMQh-3RChd70S3OXPSdJL_1hTkmXVRTrYS-cqOR1KRVzg5Fovxdlhxg_GOAFJXaxdI0ozXY5GUiVfCkgZ1g) | 
+
+# `.10 Movies` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjJvjPlAgi_R-_tEfFBs198YjBhlrocYlagYbKIrW2zQAw0N9mXaXABbRnl1PRuiljjtoCuMw167uWumh6K44N09_WrnCsrVPZKR5RTRprdahgkVKLMjJq4khrEqpKFsaIObAgLZDoLwOYt2PsfG-fj8euFe7cKx8WQ38ZuiHMsrbnQ9e_UIFH_3WIbjg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiRnFieJMPBceDWJkFHMl399515By0E5tKJ-pQuilsW-kFQsQ2vEhly3Wa-RJexeAKzmo0PmYtACCSyFOQezqvCYbpjO71dQjBGJypzdHRpHvhvm4qcNGJDunCJ5nktoHyWlaUuuIccjrayB1BCTA8EEHp2moOfZk7weqlxvHcHBy3Pvnhqtk82cT9v5A) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgH8-6n_-LECH1zFmfrdaVkf4LemVzQRVmhRwLnX8BMtKgE8l-Kc01qV97-ZExvSUykULYXL0dxb8ccB7rqpdX6-ytTDWJR8E9GFswef9j4470mRJrMZ3qR_jJOzYQgH_K1c1ncBH9K1hFUIH_OkEQ_-N1g-aNBokGLXuvN5880Np05hK-21Cvwfe7HuQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEgbIByb2EFCZeOLuT6HYAM9ooa93xxRCnJIQ-VDSFTJRO0R3im68O1kzSw3GZjyfQx6O_3Yu2pnsxHZQUob9vvSw6t6H9CWKbVF0AwngHTZJadh63zVpM1azESZ0k0ue4UuMBXfEkm8k0CMrru8lpKdSqEOL1sBbRLIRPbnLhSQ2_7a8tX20d2Ilbh0fg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj1co_TQzweJgPtYP6QIvBGNZp1YB046BzkpujNMTA_wjXC9U96SaAG6_Xbe_l2d7IgQbsk2-CpjKaqjm9XRGsrEBNHq7OzpoLT05J22jMTSTqMicf-XKLbEqUo937HVDxEaFOCu7N_wDFreEpahBpXB25KS7CtWMCqg8uVSLcHZRQjzNfMM3PhAizkqw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhE-FyKGqaESSpFsCCrDx0ZtgFW_GfGy2_pWnYoGywrLBUZeX8r8dMF9kBRrLS4xrC-Es1t_Sn4qWp15MGdnMgXrz2VNrbyTJcDInin3gT-gAmzRnj43ztmKDD0Eye3YrRV8C1ewg3ECg343PTE7GWeZei3ili8RPXxjh_qzlESbXOOpzdgueWeBnDXSQ) | 
+
+# `.11 Multiple Delete` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhpNVCIR1B3xWQ9NtyqpkvJfBusDUvTnzBffxtdQThKAw4DZStwGu6eK3kDe9SivBW-px_jciHJrcpLtEkfjt3rvyN0yGJ8L4t8yFe4DOZsj-mdnPovxs6yqYp4ZCP2iRGoaOZcTTD-bWp8ZqqbF5h-E6MAyoEQBX4tl5KXkFRMPEARmzjGUVv10XEDaQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiKI43L80uT3f4vk3qrtOOjHyEJ4BOPwT8GRDb9aKGXw4OIi02-B-6PC0kpCPVUDoYkwaGGEg9DKBxObJWaVL9mx6KcV7pt1dycQE48Xx_64FvrxfGGm7e0jqHTnXZmYeBfFzXIfSaTeGej_rnlwmsfFkY_n9-x790hZQS2pANnLGhSjdNI-7jBgKtjxA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEi5MqF5TMhai2Lz5-iP-V-sSsqpVPnh_8xaKJdBy0QpeI9efAPYW-dsjIF57n99RAU2_a0EQD81j6N7MCuBLU-fCl7rBd1cpDdwYetmZBK869UzOv--C4ZfyG2BwjwkcsN-8GdkrnmRJ9eNY6lOTUdVQSEKNVvVbjQsyKeZMB2KYMdppsiPEFnLdBiYZw) | 
+
+# `.12 News` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEi3Zp8PhItrxHzHeTdtkDxlwY3QoVDPr2IvUEj6IU8G6fgsP1WPuYybzV_twclEjWP1JZFgjTZvTLVjhyO-1aqKXX-fh1Ch9H0Gt4HpRGSy4TOrvU727syozkNT3aZeNR3m7HqLFV7xNC-1qksCK9KZizHG6Q0yTDWEk8rnodb4Y5I2svIvfKA732wGfw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjdFLQCIYPyp_QL0Arpd6YlYYxND9KlqXCbErU-1yTLALVyEYnBTAXuoB61m5tmVB_WJ69Z0BVfMji8gmNaK4sIX7TCJvfqafLj62RJ4MLUQYGX0Yw7dwpODZQw_gEB4E-3YgHAQlrO11ZaN3nQBnTObFIZcRkZqTgje7Sjypn0H-40nMHJKL9jB8Agzg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEguHJCwmvk8jn9mo09jzj3wJ4uhwW1HaRBFTGZ_TEHz_vy9YBO0FVLPNGhLLn4b0hkdMycJ66ZxeUongO_2qCiYfbnoh9S8fMEtuim7SKNEcx6XHugWGv-S1EajtmXCTwX_VRzic2luOAla6sxLCgtg9whoE8dXCtbom6dlMFn6uSimcTG6r1o7DPiCEA) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEg_jHtB6KF7MZ88tIsblpZ7h3mUJJXl0ubtzj0wrbYkU8S_DtpiWOmDcPROyk15L_XXcfZmzgnmCt_vUlzC1Eru-JVodflJRAChukKoMMRIZ8x1rgps9erD0qHcOPwOy8CfePSjlpUtgWplwfbuKhSJXPtNQ7sZxfbQ3hJvTrmyKnaS84oss3-jsOCHEQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiNrCZEoG1XR1o1dmMSygVrcGG6WG--oShudL6IWAsmeyqS6G1dl5TvaQmer87wtNcg554W8mX54aiFh5FDiWitpB1Ek1p5QqzuYqbEFqh3FfbbbgiqjFDF3sk9iEXnszTB4Gfkcn1LrunwCrLdRbhfe62_wXB5Jm9uhSlHZ9JP43BfSW5YAEeGMPuZxw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhK8vgXrJdtfgRVosDuCDmZb5iaCyTfm2FQTke9QmP-l_TwKg-voWNlwJ1LobmngN9Iou6lnQu9rSCOFrhFUjvCsj4XsecTQuuDAL-ezQj7PGyAkjzKDMnsJ7YE0fl6lfTVSiUj3LEWjiMc0V5K3Xps7ESkWAJCVwKP_oDBRrcBBWdVl00iDQCPorypSg) | 
+
+# `.13 News 2` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEgxXNTKwNKhL378-VfScKW4HJS9CYJRUKrRNScHdwqpwVvjxEeaGW2mchp7DTRAfxUKG1W65ZiDWwu2M7hwM9eE7PDRtSaiKyshM1QwXo0-ldz5HKU6L5yg2b_uUb2Ib8CAHOdM3BV3cY4bCr3nvu-qDARs14zbTAPJSPjs_VOe16PN4wCl4uRfVzhR0Q) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgEGIjnOb58F_brfPoQCJhYKFi1vHSLCmmE7C9cJURQIpq9aMB1rZaA4D-p5aJI6t13rYaDiqpNVnqgCfgU7217AF33FXZPDcXOysaWeqVoxUS8F4XUGE8YKYpa-ZexF9QuKqL2FWOOYWigEffolBuFM-VElFrDkKBhYGq-KB6b_AP33hSo5OKjS-rwGg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEg-XN-gevhWDCztQWbQGZLOAKLCarLSuA_OiPH3pGKw4Py4LT8aDyjo2NjqpZ_nBaMDna9m80ZOEcQnKm3o-Rug4O_o7x91kuGIPMYa62Vv2zqiUA3DKOTv246AlYEnYdtJYsQMAK_EFiGXgBmT6GBveJHgDW4eNoyK4aThmxdushwu9_qb7UDWH7Kaow) | 
+
+# `.14 PDF Reader` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiy2JETlmnuTbsX_E6Umn9mU3OL2G-dPNAq9bUw5M10rO4BXUHji0KOwpfRjFxqJR8pnCmupILaVK-SRUYJYmU-F-g-H05IKUzV2yqSFmu5wDSgJ5ONRkHm2g51l0vo_x4otaSq026U0BdH78fWA0OQ5vXYXiRM0tknzhwC-3Hgag6wWv5_vruQsoeB1g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjTVbd2TyJzgZQtcr_re7S_38t1IaWNEDOGAmhH1CYDrNx-Q7OVYVbnz1uR0PgPEo8Vo0qqbJBGITDwHpdhSII46BmLg84KceZKeKkudOx-8x2_856eDpcL1erCZIO83yOTIMsEAWFyjIxt83J6DXJxJ3uwnC4jkyNs6x8e-6eBKJ115tHjeAvUmPo2OQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEilZ6Y82LY3YvgyysFC3YhnuZUcECgzBxmAZk-DFyTfMvP-ULSBQFhT-0yNwCvZHRQZGqy600sZ3wUMZSBcoZ4oeQ0hRmEZWzNo3fi2W0L_Ruzjk233WPkPTDGORYeYmh7DJ7W0cpg-8CC_aYYK2yx-_RbJgHV45eVHqdpBJi_PwyiRQO3XlR6kwh0mkA) | 
+
+# `.15 Pokémon` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhXnjXHQNo3HTlLFTNgeR1hZjLX28nLC66SSg2W2_cr0aiApPmGUzBgaqazYayssLAgWpFmUWD_C4FY2fBrnObTcRD_S2E2DVlgIv7zZVjECBTpAMhgXA3gHcrTyofY5FgtSyeq_c0EOfzCOfTftGrums57NKDdZuHQEHKi-RAqsJwR6oXL0J-oy5xp4Q) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgOLH8ilS_xqNwxIilbMbu2oSYUFsinhx4X7BVEsgSUKyx_eJmbxeONaWx7qItxlucvev7Q_D1Qv3zYm6l49JjCzSrzOf9Q5JSMpZeYXrExsGYc1wZ8reXCHVQXl4EbhVbLovxBXIFLcYLyj8nqtEWkp6BeOu9Icg9qOhk0YgcVgm_t5JGt7OUU4USVeQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhflC0MLkwXSTECZOF8_v0VgO3Lx8n6imnPnk5aXUa1PLkN57jAobfQdXE4UPuTLUypFVfzAYrCqlgxt60nqmuZ_U7_3GQKnoCXdCKzzS78CAeUmimUfA47riZtei-Ijs1rAct1HoBW2dt0X4-rHwk-yJtKhVicAoJKom8zS1gnmtLVqubhfWqVqn8fbQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEj6fdqhqzPy1q6Bt4BHpI2vQgQc0h50SC6lf5K14aW8i9vLSxFkJY7ejhhYAsT1zEYmvEW-X6LSGX2YA4Q1UNBLvNo2Fz_AT2HToSwuuiSauovU3FTyeipAmRi9xa_SX7EImmYqV1WOc9BmQatJ4Zl12QoPXHrz58_77UfS_J8Lvz9s4q_ySv5uAzmLxA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjDcSDY_SrtTHKsfbc2TiR9BtJECsLOCMXzjdm5HCMNxsp7U3mYZ6dBFw_ibuDs6aNpFzTS-WqeRNrmdF4mTeeYJmjIkbJkqs5be-JZ7bYQglas4MFFawv4LSeeRyCYCnmmeKM6_bmnzJ__VXeOFstZuplF0SAfl1Fpt9PU7seVV7JPOJLKnMLx_Y65hA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgoPln3hn64tTjR_Lm6NJKOk12ghWXI-pKwl_bN1jxenZAjuaOJJluEgtviEV-Bg0AoybZouBMkOGvd9kgc6krhb56wQlFcy-trZhE3e2Bwbm5kBVnZlR6tikZt1v5qIbWYUxRXykhM4r__Pf5T32fbW9WMleqFisF_UO-Pgr2ZnYlDHtckeRVhBseR0g) | 
+
+# `.16 Pop` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEizp1RmvNlRBPqdlrSRuSiw63vK91vAPS3iHNe9u2joVqGGdD79EPHoVbdow6PYDK1ufTndjTZRyrQ6dqmTBR_ObupFQee2SEGXdoK5WYcKgPO7ceIQOez8tGoe_sththDwAUv150X8rEQRJAi2M7bDTOEWBwMxFxutQuVFa4RMp2IINa-spSHBLVialw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjKBjVmnYR-F7v-GpWuoXmo6TDyLboRvPifkkE2puZR8MecDs3OabZ0o96zK7uq1CVBZ8bpRiZZ7ZgBauILMytRJcRYc5cG1eAGaKAk8eNyQsFNMNrVk4EWG3Ieod-B1-OxMtxrsJAwDjtQyF-yj0G6Oz-sv8hNPq-oNsmoOGQ1xyIxRvUBqRWA_cPx_w) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhkedJ2bBj_LUeVo9xLOs1idyzh2rlgg8XSzDK4fj3r1OC7rjCMM5U-qS4WJIcfdr1qZj_qPbr4Ie_mHW2XLM-5wZrZXAwReo_xUa7FZTfG0wcdUR3s-5iI9PraWnqWikeDRd36mfgbLozjr_9eZ2JFkGC9OezauRit0RwyHiR6zU_7oco6I62LaHwvLA) | 
+
+# `.17 Random Cats Image` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEgDLqSTlI5q3WjXy1b1UL9C7CXSxgjDL-aPwQcgNNWT9SeToGG94lsB_bQpC8Hr6_11b4uN5mXb0G0eQj60oCj204fvLaw17gkGv3UDb489PGf9_QD0wqK39KYv_XSbVLAZPpzroERXVuDJxBKXh_O8R-Bpo6QpfdEB22S9F6wjh4gA-jLaF6YaY6F2XQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgMQ2Q7taLPpqPR7Qw-k4SmzrKhlxH4EHyMaQV3tGy87JcslwhswVWeL-Os_CKAbULboK54F0X2aApcqFjhLp1iwv7ju9lkLwytDZ9wgDVJaWl8-DBZ_z75997_25b8DArPjperAts_cqBL0pAgHG2AS1emlVn3qhion7_cGcthDaND_JSU096kiHjOhg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj5wkb2xfgK7FyUIttM1hyvXYuaQ3vDwCGI1NSB6pm98Bu4ZbMatKUjW0SdesFrLqONE-SUIJBjnYdjO2XMiXCbLh7foNJeIhFdA_QxiKRb2VU5rJc1_r1KCxy9YkYIk8o1KR0i5PpUYF_TtenUGdxeVUbjuPjb19cpbXGJnlu-iM2DXd9_dzaxf0gG7g) | 
+
+# `.18 Rick & Morty` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiKv17AHn-cSpdt6U_rz7IAVLPKwRzhk5RbNxOaRVdv9NqiX6T1et7yjYVSHHiMqpyJ9O2eHUe7tVY372_uHaupOxohdBJEiXuCCL0MFCp2kqlSrR0IIkfuRC9S1CbEJ1rHleoMX46GNYGk8ExdHKw-kBOIvc-UMp1p-lzPlZMYo7aqrQo6ybc61amsMA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgVYTOIz3K-syNeuMxqTk70AEEQJ-LbsBuuRBS-wwkgJoSIo_U7HBFbRI4ieA4jy_6mK_wrSxqbPhyL7Xrctn1jYfTnN3ynENuBne38CpFQqrH0NkLKBV9BA614zTWjAKiUF_4tbotpwT4s3Brk27n9EBZAHaMdxUAMosq5v0xB6xGTdOARfTeSqjVO9g) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiIYJeaJiE9nEA_Sp6RQ9HZESd3_ae_1C-cHiHCsxaj-VS1aEFIuEtt0NXAo3pcLlhTZDojvjYSYshYT6XuK3BmVJxh5SL6_izU2HcH-I6mh3sJLDEowKYcaQC4clTzc_XfxP64Yx2mAtAWGexZMuLKKrPOZLxENvafk9y8520oTHDefa0523hXCqJYnQ) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEi9Vt3d4n0Hvv4La0orgVujkytDBmDmJKlqaF_WqMFkzx-il_Bp1n49gUuw7VZ3lujx3VWJHzWGgJUKjDT4Y_8WxqrcB-ooB-CmCa3beH4KHttcQykH8cdxaMkgCrKXd6RbMiCkzYDdhMPLvD6CTdTFPV8LS4551ADeSU3benxnegbllO03BePMlzyMLA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiCzFJzcieLga2hC-1kCv8zxwJHfAKQZlF7P5HAe8g3IcZfnYnOoRhPOO5acGYKUDhamX_Bz0VJMTzcq3hAIGIHpcTYM5xNP1KXuxLa8TbvP2kX_C5kd0L_--pIlLQpSQcnfBV62sy4WXDimZaqqMX_TZJVNBOqhHLAnWbWSMcPS5kOTVteYe8DcydpLA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEh1aW_ZbAyg6080NXA_NlwAJpD3chQrJMRCLaXyj86V7KKn4rFg_brxlqBa7ajsFFtMHjwPH9fMocFK-SH0_nKsB4d1I7QOaHNY9xkiV3X88dkzPZTHw4-v7S7KjlHTkO50z7WC-RI9-Wv8Q1hE4l1UZbQa2srh1eCkkfy9i6G3b48V0UzYiFSl35NbMQ) | 
+
+# `.19 Stock Market` :
+
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhYecMPMTzTIiZv-sHoI8DLehXnOLyy8R49gddhbB-CxVnMYTJAPW2TC-TEa5IID2hrzEAdAQVpbQFzx0preITn1T7dwIK2hLz-9ARl96osKrhYORxZe4kSz7luE_CBXfN4s4Va-zabGSjIqgICQigYCb3m5HM8J_rKRyCWoe1g8MtExPlpgm_pZfo6GQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhGrcuqg5YHkqykcFYUGAoqQO1cVucUSXMCtjGHJh7LycAqd03aNz4miwsTCE3aZk5LELxG38DZOh5S-cw9vbBzZDbYpKNKGPqCBRDg7ATq2wOfegPKgcUCl3NraSkJ6e5nyS-eF6XqvbavGKEXaCIrG7Gr2BHV5NW0RRNqkyc9OlcUqGjV3ricbHqLaA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhXc6gfFEQbVePaFgJzzErZHZUy0D6jAf20sq53IJG9X3fklgG33AJCwQfjvVQG3ckd3LPID0TTkn-LhxWrhzi4T7f1wFsI-8_izxeVLwhMOIkGtBoeC8i0Xuo-pgW_aLnGp7eS5vtV5BrLsvV-rfaeXS_EM3IO9vuORlgtLwpw68iHnKD3Xt4lD1b6jw) |
+
+# `.20 Stopwatch` :
+
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjlW942Vx2MXkiD4KrTGiVkSdLg0wd4L_WesvvYknvTJh6fjiHxbwxmhU-uXQzUcQnpUqLSGWnQrvFeCFsCs7JMqx8BQ3OVwUw6te3Dnk8Uqz18jK-4fYUgVcM6GdZ2dFgzgckI7J9S8OgIsjnVIj8DV8kEggi5HNdzRBT8b4syflElWX36zOv_gpJK1Q) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj59A6CuRQX5bry79My4f0aYnLIREGqYoKRTZyaZj8AZDJZoLquVwltWz5h3E1cdeWMb7R0rkNa3l-f02wJBrZcTTaKgVAW6cSm1ZXlCj7hYtLxJKzizYeTEm6RsXIFgXmn8iTlQv2Py5P3VaOSZr0OUcW44ffLAHeQm7lunLtIOxTGBEkvlA-G4fBHMw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiWxgBRYXMTrrLTinMxc-8fjl3yluMvqJtowasliYEvZ1Gu1EDUjA6H4NXOkh64zQZtiMlhsMe3BnStXUlvTsuxum3V9ModC51xLq2XEBUhoxtphv3w3lLFBRkRJiWHdTLCfRo7Gn51R_X0RnEdXbDF_10_osPASsaBnrHCurmfTvzkQPQ8jr0yeKYTSg) | 
+
+# `.21 To-Do & Notes` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigaviyOzmphRyZrk8T2BvUYE95ygNGaGZ9VMhLtRPKy-yfCRJzn0IKjTkAgwR0mdJLSJbKfTN2pQQa0jK9jPHzWK3WslSMJEEjKV9piY8FpdCi_VT7RQgVnA0s89wZja_uSwsSd7JmE67huiuXJ6E8Xq1GN8IGvPRiIMVr-xmsKW7O_vXX1V6aCqs_BVM/s16000/photo_2026-06-17_05-31-12.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigaviyOzmphRyZrk8T2BvUYE95ygNGaGZ9VMhLtRPKy-yfCRJzn0IKjTkAgwR0mdJLSJbKfTN2pQQa0jK9jPHzWK3WslSMJEEjKV9piY8FpdCi_VT7RQgVnA0s89wZja_uSwsSd7JmE67huiuXJ6E8Xq1GN8IGvPRiIMVr-xmsKW7O_vXX1V6aCqs_BVM/s1280/photo_2026-06-17_05-31-12.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjCZjDXREOAescc5YzjbZngX2OV9IFlEt-ADMFWuETGKVHXnQhXV-q_6e1CjHqK5XTLlWYx6Kjy3T8FGK0KlkYJAyEgrakn0Px0ZaRhot5gbKyjw7RwU6NvT5P_svxFodRWWsWRCXVx7K0p1fvfkWfLpSfoOkv1ZHLoume8FjAzX8hjR5h4d79V9gWgA-E/s1280/photo_2026-06-17_05-31-13.jpg) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQVH5FnSpB8T0915WzZg6RfhGFCvhUr3AeGhsHRDmWY0rfC9m5pCaJ4E6BR3m6mVbcQNdhOvCg04h4wUAobr7ZtETfPf2i1p5n7lYUHqsE3t9q_GqSTro907KsC7F2YCp7C8wXpB4y0ToKzQsdQYu1iSRyyNOXIUz79ZUfXdMY6GgE_MaMMCYaURHYwOE/s1280/photo_2026-06-17_05-31-14.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8JcfZSjHeCvCny-ptgyDLnXtsDbNgdNHFjjD6vSUpjDLl8XT3B2cWHRrWKq2ZzFZeHlO5tEi3Ejm_MFGZI07gOH3DwMJAVRW_atGYzK_ljrVkfWPVlp_LG75uojasbOcDdbURNcuEDp13exrgQEBe_0pVY0Pd4mPHfvQy6lPVOjS3f2I2sH3QsYpuoA/s1280/photo_2026-06-17_05-31-14%20(2).jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQ9zgfyWd4B0ZpBuEreQURtiIN7aA1Lj0kZgsDBct43HHyGhjMS2g9jcVG04EPhbVAYy5ACkkCdEvc8g1FlGHTygI4ZsQnB_b8w4BSt_kHvueQL5Gk2pS6y9DNlP6Oz-0N8GmhH2VB7hj3lW4yYe9gxEjCli_sZ9DjtfddK0yJ-csvysmD2Hg26sWmgU4/s1280/photo_2026-06-17_05-31-14%20(3).jpg) | 
+
+# `.22 Video Player` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEiq-jMwYQYdxfeW3Er8qzNeICMpDQj2e8C113hv_BVjmxTRjLaUgNI9cpyR2bINKldyeAPKrEts9Hp90M1rugEe1a-zIny3lGWrZutFQzk1kmEWEb6CA7V09DvMj38Kgrjbh2lCJf8Pn_4jOr_wWlvZ7kogCDa2h0d9g2w_Hbog2xNrOA_MWPqax0UXJA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjVBflVleIX7PObzMgZxnGQk0BI0Yo0QS3-szUuhNJPnvGu9kM9RHtmQQhzjpyF4IfINYFMgpLmN1Ur2MsQ5vh6f6_2tnd2BTD37nVFi1i4Qk_FTilsJQYvDAHl6QcUEo7rNS0kzNJ3kYthaWuvduiWacVMFDmNKbentvRxzeCDeFY5ZBPb0dlWRwphpg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgEjTfIjgaNBTeNokpvvWfgIaSqlQId-Tsd2kgxEXSPtW7XHCfxI84_0TwkcNwyg2FvGz1xZqtjnOFUYnp-3svN68LoH537702fn-l0Ugi7yRf9QMc3vCeWUJQgmIio11xPhQca19EwqeZZY-Fv2MeAtal_xxPPml75yEMa2e3ifdNKKRjZYOSF-37QpQ) | 
+
+# `.23 Weather` :
+ 
+## Images
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhnqF_NXHMhE6cgqMvxU0LDrpUQ1n4jZq3VC0MlZFCwzzXF5x8ruVGrJKlLoRJ9VlSObkgrVsI3_HF_CcdrXsthENEQNawbrkRmoGgs2Ypf5bT65N-6W8uwcA-23rN-BxMXDNJt-Vz-kOk01BdBjDjs0D59xv4ZNH745UynqSypO65z3g71rdlgw-5KOA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiuXsfjAioX9UPjjam79mzh5LuTtaAxePyrT3N2zidTMNfLY1BzwFiS6DPVZDGZnm6bbuysOfOQX4s2K4gNWLsM7cS1H62gEmC5gBXZqbV6VPtHQWWmmTTilFnImwHvjbYJstrrnKLQyCm5wKSXN6CAcDjgtXEo6p4jCFwZ8YtxFgaBzHEmrihfdIOMJw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEit09OnhMIpEzIyqLtCj6xUlPGPZpp7pNyLkCKv9iNrM2T3N7E7Gm0ElXQsyiB-q6Of4d-0zsqsIl5gMhW1C9p_U2IX6LK4Wjg_jUNrEikcmRWPD4yjANhJ-7v6UW601s6kGRrMoJginIM9rMDc_YLn2yiK1_zuPhHVrJPbPO6bvxQnAiyZB00aSQPodg) | 
+
+# `.24 Web App` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjR7iLj5Flzay5HePre8BvgK5ctrV_cBONijaJFKzIBZ-nJY4h7RsG4aGu9LUhNuflar8q4gqQl1wQuxjrST4vnOMSsikFBdsNdmgjQ-cO17A8_K3zXVQO57KnLAMnBBuEGk3w6xmrBx8hGWK-bMogy5KciPpb1YjOM_jfisV0F_cq7qnSk7HTDijhbVA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiLlfHjmeNxE4O0363J1rQGvNef3KfZLT9pZJrPLbk_gSJAQwyauwKgy062N0L2wCwda0mR3y-qlrfqgIhmj9MKVhYql-mPueIiG5x_co2Nf8bZdabs7APntvo-I2fdu4FgRFqATprgqd7KG_Bv40APBmpNh0F_2cXYwHTnJLI9cQ5tBF6zb1TbnPlpPg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgsxAjMHNUgk8VnTmvQUAb5SlU4HxfF7_VjeG69uyAL12CCMia33SL6AMJEVnSans11QI5x-z-IVcLJ6wC4rBNAvcW_ji14TM9REBDQtR5027OYjsJO4CS2isAZFgs2PHNSviowmGFCmH9-w9ZL5h9qsa8qU0-gpuxQc2T4A1xvKqsjZoCDa5kB1FWq-Q) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEhCKGPZVVdY73xcYRqX4BszPHwciN4QnV11AlAbgaKSVj6c2T7XwKNw6SdRi5N5h7rgZgtzyU-2mlYzrm_Tla0pdbTTe-wBaIlKpFAd-CuscdCqOr4XgoZ6KQEODFBsznukOHTI4c9zv9HvJ0cynF2jJOFt0i1mHPr_KasxJieIYOYrzHTtSCrWGcOuXg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEh6bOUmuqe5U3QCYONToJi4uMAQSPEgkFBrJv1iBMAxxfqJBKlFPHkCZ_z39--yHsQYjaPjSAE88G7EWxqxlMTuFwERcpbaga4hE8811l4nAWdvSSqaR8II8k6dBsSDowbIDfmQ2qb4O4RErMZe5M3rRV-oGYvuvIfCUd3GjrF1GFX-GJkXMGaaOPxpHw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjeCpg-BijgIHSunYAKbmx0BhF_Q1xM6TIyHPGjTjq9ruxE1evKekM-tdsVkU6gVaa5hz1ExhvAXIfQITp9stW0zagd0Ipo67jZwmi5LBhr0YOp2fF6fiY5RxoYw27QJ3HFKe3IS29V9dFPUW6MBtsJPVUfNnFQNlP95ApgVfxGHgpaEaev0GPlCUQMpQ) | 
+
+# `.25 Wordpress Blog` :
+ 
+## Day Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEg1clIlWCYlmE44sNxGdY3fkVZF8aoyliuCs4_yT4ZpCXaf7CbLOBX1bfvDdHG4jHgBz3zPsOBx5KfArj90Bxgm88_qQRtestUHTtixBvkK5w1BTuQl9npp7VFoKMKBh9k1HjdEcfi2EYATcv4OEyYNkn0RslhfpOoic1aOcDG6XiNYpWYdGxZ73oOttg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjR8hCWsIIlBudq8vHb2vKnNJjW5EX96Vz5-FiTaaoh8B9fxi01sQQXS7Z8nTuHmDHlbUDB-pZ6Q-7Au8BypuF-aWTT1pAsdOtzF4ubbZ02gvaZiNhKHkaBUVxbxFJVxvHTfUm1lhbfmtT8jHJj_osLW_MnAmTB8DHzXH-F6XNaa0UhsEVxsqiQXDcf9w) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiPG0bUM7QlD3cyKrWclHBQSuJ8ICKOpDAG44GeLWFw5YirPkZobvcH9gI7dsb179x1_jdmcI7IZfkxzfmP8dvUcI1YQyCzlylL3twt6vKgoTo-3wRspCYRtZLJ6nlqFFwrDcA0hTsH1nAaI3kdF_EiLx6Zmlfi2ruHSg3rDt8wO57AH6hItLuMTpjRAA) | 
+
+## Night Mode
+One | Two | Three 
+--- | --- | --- | 
+![](https://blogger.googleusercontent.com/img/a/AVvXsEj89LiGSZG6O6wSDMXsiZepZlmAAgyVC5j9ovLXARRPReU_FqRLbvI7GFG7eKg2ir5uof8ZdjE_dpjzdBe5KR0Nq9AFFDnTHOjpfm5Pf9pUf622D0_NeqM4erVYVkZINGIMM_2xR9X0HuFuZpu8Q2G248ek56IfAHneHWmaC1EpoDlPr7XUzyLwHx3Cxg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjHNwES0U-v6dhtmqIYAAvTDDUK0rnyxmUwYJSve3G5tgvs0eL7idDgnYXJ1NLVPluVYIxRTQ3A74pi3PItqsOuOK2wkfPqHPnpm5NQ89XUY8ROM0Ch53pNzLjfTbU0n8YGfALadZ2s77ogclgwmEUW-aYnx-Ll-S2GFaWVCuTH2KLUYibEITyjIQUNrQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiKtm216aaeCyUy0NNG43p3Uwb2-qNylu1-o5o4Tec6bhvZVPIXtO_AJpVQ9M25RBOKr9x5pG7MGQ2hGiXI5WxvV0wP4E0JbrcJhe-5N6CXEEqKuBj5nPgP0AGJxvrnyw0KO5HzOFAtjfN5Nxgi5TiicGz-oANOMd5MtwNIDm4LCFYG-mH2OYqSmLdBtQ) | 
 
 ---
 

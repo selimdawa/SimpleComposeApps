@@ -23,29 +23,21 @@ import com.flatcode.simplecomposeapps.utils.DATA.MC_TRACK
 
 @Composable
 fun CustomProgressBar(
-    modifier: Modifier = Modifier,
-    size: Dp = 40.dp,
-    strokeWidth: Dp = 4.dp,
-    color: Color = MC_TRACK
+    modifier: Modifier = Modifier, size: Dp = 40.dp, strokeWidth: Dp = 4.dp, color: Color = MC_TRACK
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "rotation")
     val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
+        initialValue = 0f, targetValue = 360f, animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing)
-        ),
-        label = "rotationAngle"
+        ), label = "rotationAngle"
     )
 
     Canvas(
-        modifier = modifier
-            .size(size)
+        modifier = modifier.size(size)
     ) {
         val sweepGradient = Brush.sweepGradient(
             colors = listOf(
-                color.copy(alpha = 0f),
-                color
+                color.copy(alpha = 0f), color
             )
         )
 
