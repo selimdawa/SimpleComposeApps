@@ -19,7 +19,7 @@ play-services-location = "21.4.0"
 shimmer-compose = "1.5.0"
 datastore = "1.2.1"
 timber = "5.0.1"
-multicolors = "1.0.10"
+multicolors = "1.1.0"
 androidPdfViewer = "3.2.0-beta06"
 media3Exoplayer = "1.11.1"
 jsoup = "1.23.2"
@@ -30,7 +30,7 @@ espressoCore = "3.7.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-multicolors = { module = "com.github.selimdawa:MultiColors", version.ref = "multicolors" }
+multicolors = { module = "io.github.selimdawa:multi-colors", version.ref = "multicolors" }
 # Compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
