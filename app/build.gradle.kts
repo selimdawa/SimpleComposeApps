@@ -17,8 +17,8 @@ android {
         applicationId = "com.flatcode.simplecomposeapps"
         minSdk = 24
         targetSdk = 37
-        versionCode = 7
-        versionName = "1.0.6"
+        versionCode = 8
+        versionName = "1.0.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appName"] = "Simple Compose Apps"

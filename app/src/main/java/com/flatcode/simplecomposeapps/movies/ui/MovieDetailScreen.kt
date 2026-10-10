@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,16 +30,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.flatcode.simplecomposeapps.movies.viewmodel.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.movies.model.MovieItemModel
-import com.flatcode.simplecomposeapps.ui.theme.AppIcons
+import com.flatcode.simplecomposeapps.movies.viewmodel.MovieDetailViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
-import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
+import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
-import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
+import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
 
 @Composable
 fun MovieDetailScreen(
@@ -93,7 +93,7 @@ fun MovieDetailScreen(
                     text = movie.title ?: "",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
-                    color = White,
+                    color = COLOR_ERROR,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -107,7 +107,7 @@ fun MovieDetailScreen(
                 ) {
                     Text(
                         text = Strings.releaseDate(movie.releaseDate ?: ""),
-                        color = White,
+                        color = COLOR_ERROR,
                         fontSize = 18.sp,
                         modifier = Modifier.weight(1f)
                     )
@@ -118,7 +118,7 @@ fun MovieDetailScreen(
                         Icon(
                             imageVector = if (isFavorite) AppIcons.Favorite else AppIcons.FavoriteBorder,
                             contentDescription = "Favorite",
-                            tint = White,
+                            tint = COLOR_ERROR,
                             modifier = Modifier.size(32.dp)
                         )
                     }
@@ -127,7 +127,7 @@ fun MovieDetailScreen(
                 Text(
                     text = movie.overview ?: "",
                     modifier = Modifier.padding(top = 16.dp),
-                    color = Color.White,
+                    color = COLOR_ERROR,
                     fontSize = 16.sp,
                     lineHeight = 24.sp
                 )
