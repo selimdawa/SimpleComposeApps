@@ -82,8 +82,8 @@ fun PopScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MC_TRACK,
                     unfocusedBorderColor = Color.Gray,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = COLOR_ERROR,
+                    unfocusedTextColor = COLOR_ERROR,
                     cursorColor = MC_TRACK
                 ),
                 shape = RoundedCornerShape(8.dp),

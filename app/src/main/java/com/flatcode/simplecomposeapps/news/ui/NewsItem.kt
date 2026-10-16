@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.flatcode.simplecomposeapps.news.model.NewsHeadlines
+import com.flatcode.simplecomposeapps.ui.theme.image_profile
 import com.flatcode.simplecomposeapps.utils.DATA.MC_BG
 import com.flatcode.simplecomposeapps.utils.DATA
 
@@ -54,7 +55,8 @@ fun NewsItem(headline: NewsHeadlines, onClick: () -> Unit) {
                         contentDescription = null,
                         modifier = Modifier
                             .weight(0.5f)
-                            .aspectRatio(2f / 1.4f),
+                            .aspectRatio(2f / 1.4f)
+                            .background(image_profile),
                         contentScale = ContentScale.Crop
                     )
 

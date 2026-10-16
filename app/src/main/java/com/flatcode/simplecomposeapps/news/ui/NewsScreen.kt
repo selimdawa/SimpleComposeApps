@@ -45,6 +45,7 @@ import com.flatcode.simplecomposeapps.news.viewmodel.NewsViewModel
 import com.flatcode.simplecomposeapps.ui.ToolbarContent
 import com.flatcode.simplecomposeapps.ui.theme.AppIcons
 import com.flatcode.simplecomposeapps.ui.theme.Strings
+import com.flatcode.simplecomposeapps.ui.theme.White
 import com.flatcode.simplecomposeapps.utils.DATA
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ERROR
 import com.flatcode.simplecomposeapps.utils.DATA.COLOR_ON_BACKGROUND
@@ -102,7 +103,7 @@ fun NewsScreen(
                         ) {
                             Text(
                                 text = category.replaceFirstChar { it.uppercase() },
-                                color = if (isSelected) COLOR_ERROR else COLOR_ON_BACKGROUND,
+                                color = if (isSelected) White else COLOR_ON_BACKGROUND,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )

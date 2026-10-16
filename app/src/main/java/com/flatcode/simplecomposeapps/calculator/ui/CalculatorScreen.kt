@@ -104,7 +104,7 @@ fun CalculatorScreen(
                 .fillMaxWidth()
                 .padding(bottom = 24.dp),
             textAlign = TextAlign.End,
-            color = Color.White,
+            color = COLOR_ERROR,
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold
         )
